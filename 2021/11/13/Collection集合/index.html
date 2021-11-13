@@ -88,8 +88,9 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113171108.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113193854.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113200814.png">
 <meta property="article:published_time" content="2021-11-13T08:53:33.000Z">
-<meta property="article:modified_time" content="2021-11-13T11:50:23.963Z">
+<meta property="article:modified_time" content="2021-11-13T12:10:54.311Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Java集合">
 <meta name="twitter:card" content="summary">
@@ -311,7 +312,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-13T19:50:23+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-11-13T20:10:54+08:00">
                 2021-11-13
               </time>
             
@@ -361,7 +362,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1.3k
                 </span>
               
 
@@ -377,7 +378,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  5
                 </span>
               
             </div>
@@ -432,8 +433,9 @@
 <p><strong>ArrayList</strong>: 作为List接口的主要实现类，线程不安全的，效率高;底层使用0bject[]eLementData存储<br><strong>LinkedList</strong>: 对于频繁的插入、删除操作，使用此类效率比ArrayList高;底层使用双向链表存储<br><strong>Vector</strong>:作为List接口的古老实现类；线程安全的，效率低。底层使用0bject[]eLementData存储  </p>
 </blockquote>
 </blockquote>
-<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><p>ArrayList的源码分析:<br><strong>jdk 7</strong>情况下<br>ArrayList list = new ArrayList();//底层创建了长度是10的object[]数组   eLementDatalist.add(123); //eLementData[size+1] = new Integer(123);<br>…<br>list.add(11);//如果此次的添加导致底层elementData数组容量不够，则扩容。<br>默认情况下，扩容为原来的容量的1.5倍，同时需要将原有数组中的数据复制到新的数组中。|<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113193854.png"></p>
+<h3 id="1-ArrayList"><a href="#1-ArrayList" class="headerlink" title="1.ArrayList"></a>1.ArrayList</h3><p>ArrayList的源码分析:<br><strong>jdk 7</strong>情况下<br>ArrayList list = new ArrayList();//底层创建了长度是10的object[]数组   eLementDatalist.add(123); //eLementData[size+1] = new Integer(123);<br>…<br>list.add(11);//如果此次的添加导致底层elementData数组容量不够，则扩容。<br>默认情况下，扩容为原来的容量的1.5倍，同时需要将原有数组中的数据复制到新的数组中。|<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113193854.png"></p>
 <p><strong>jdk 8</strong>中ArrayList的变化:<br>ArrayList list = new ArrayList();//底层object[] elementData初始化为{}.并没有创建数组长度为10的数组<br>list.add(123);//第一次调用add()时，底层才创建了长度10的数组，并将数据123添加到eLement数组中。<br>…<br>后续的添加和扩容操作与jdk 7无异。<br>小结: jdk7中的ArrayList的对象创建类似于单例的饿汉式，而jdk8中的ArrayList的对象<br>创建类似于懒汉式。  </p>
+<h3 id="1-LinkedList"><a href="#1-LinkedList" class="headerlink" title="1.LinkedList"></a>1.LinkedList</h3><p>jdk8：<br>LinkedList list = new LinkedList();内部声明了Node类型的first和Last属性，默认值为null<br>List.add ( 123);//将123封装到Node中，创建了Node对象。<br>其中，Node定义为:<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113200814.png"></p>
 
       
     </div>
@@ -627,7 +629,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8E%E9%9B%86%E5%90%88%E4%B8%8E%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1．集合与数组存储数据概述:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8E%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">2．数组存储的特点:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8E%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E7%9A%84%E5%BC%8A%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">3．数组存储的弊端:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6"><span class="nav-number"></span> <span class="nav-text">集合框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">Iterator迭代器接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">List接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList"><span class="nav-number">2.1.</span> <span class="nav-text">ArrayList</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%EF%BC%8E%E9%9B%86%E5%90%88%E4%B8%8E%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1．集合与数组存储数据概述:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%EF%BC%8E%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">2．数组存储的特点:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%EF%BC%8E%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E7%9A%84%E5%BC%8A%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">3．数组存储的弊端:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6"><span class="nav-number"></span> <span class="nav-text">集合框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">Iterator迭代器接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">List接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-ArrayList"><span class="nav-number">2.1.</span> <span class="nav-text">1.ArrayList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-LinkedList"><span class="nav-number">2.2.</span> <span class="nav-text">1.LinkedList</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -668,7 +670,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">2k</span>
+    <span title="博客全站字数">2.1k</span>
   
 </div>
 
