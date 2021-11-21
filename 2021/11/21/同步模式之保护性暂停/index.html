@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="动态规划," />
+  <meta name="keywords" content="Java并发," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="LC:零钱兑换这个题和完全平方数解题思路真的是太像了，做挺顺手的。 动态规划： 123456789101112131415public int coinChange(int[] coins, int amount) &amp;#123;        int []dp&#x3D;new int[amount+1];        List&lt;int[]&gt; ints &#x3D; Arrays.asList(coin">
+<meta name="description" content="定义：即 Guarded Suspension，用在一个线程等待另一个线程的执行结果要点  有一个结果需要从一个线程传递到另一个线程，让他们关联同一个 GuardedObject 如果有结果不断从一个线程到另一个线程那么可以使用消息队列（见生产者&#x2F;消费者） JDK 中，join 的实现、Future 的实现，采用的就是此模式 因为要等待另一方的结果，因此归类到同步模式123456789101112">
 <meta property="og:type" content="article">
-<meta property="og:title" content="零钱兑换">
-<meta property="og:url" content="https://blacke1111.github.io/2021/11/20/%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/index.html">
+<meta property="og:title" content="同步模式之保护性暂停">
+<meta property="og:url" content="https://blacke1111.github.io/2021/11/21/%E5%90%8C%E6%AD%A5%E6%A8%A1%E5%BC%8F%E4%B9%8B%E4%BF%9D%E6%8A%A4%E6%80%A7%E6%9A%82%E5%81%9C/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="LC:零钱兑换这个题和完全平方数解题思路真的是太像了，做挺顺手的。 动态规划： 123456789101112131415public int coinChange(int[] coins, int amount) &amp;#123;        int []dp&#x3D;new int[amount+1];        List&lt;int[]&gt; ints &#x3D; Arrays.asList(coin">
+<meta property="og:description" content="定义：即 Guarded Suspension，用在一个线程等待另一个线程的执行结果要点  有一个结果需要从一个线程传递到另一个线程，让他们关联同一个 GuardedObject 如果有结果不断从一个线程到另一个线程那么可以使用消息队列（见生产者&#x2F;消费者） JDK 中，join 的实现、Future 的实现，采用的就是此模式 因为要等待另一方的结果，因此归类到同步模式123456789101112">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-11-20T07:24:35.000Z">
-<meta property="article:modified_time" content="2021-11-20T07:30:12.273Z">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211121195525.png">
+<meta property="article:published_time" content="2021-11-21T11:54:22.000Z">
+<meta property="article:modified_time" content="2021-11-21T12:57:40.844Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="Java并发">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211121195525.png">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://blacke1111.github.io/2021/11/20/零钱兑换/"/>
+  <link rel="canonical" href="https://blacke1111.github.io/2021/11/21/同步模式之保护性暂停/"/>
 
 
 
 
 
-  <title>零钱兑换 | 蓝天の博客</title>
+  <title>同步模式之保护性暂停 | 蓝天の博客</title>
   
 
 
@@ -297,7 +299,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/11/20/%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/11/21/%E5%90%8C%E6%AD%A5%E6%A8%A1%E5%BC%8F%E4%B9%8B%E4%BF%9D%E6%8A%A4%E6%80%A7%E6%9A%82%E5%81%9C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张浩宇">
@@ -314,7 +316,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">零钱兑换</h1>
+          <h1 class="post-title" itemprop="name headline">同步模式之保护性暂停</h1>
         
 
         <div class="post-meta">
@@ -326,8 +328,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-20T15:24:35+08:00">
-                2021-11-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-21T19:54:22+08:00">
+                2021-11-21
               </time>
             
 
@@ -342,8 +344,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-20T15:30:12+08:00">
-                2021-11-20
+              <time title="更新于" itemprop="dateModified" datetime="2021-11-21T20:57:40+08:00">
+                2021-11-21
               </time>
             
           </span>
@@ -361,8 +363,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
+                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
+                    <span itemprop="name">java基础</span>
                   </a>
                 </span>
 
@@ -392,7 +394,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  113
+                  325
                 </span>
               
 
@@ -429,9 +431,13 @@
       
 
       
-        <h2 id="LC-零钱兑换"><a href="#LC-零钱兑换" class="headerlink" title="LC:零钱兑换"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/x2osfr/">LC:零钱兑换</a></h2><p>这个题和<a href="https://blacke1111.github.io/2021/11/19/%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/#more"><strong>完全平方数</strong></a>解题思路真的是太像了，做挺顺手的。</p>
-<p>动态规划：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> []dp=<span class="keyword">new</span> <span class="keyword">int</span>[amount+<span class="number">1</span>];</span><br><span class="line">        List&lt;<span class="keyword">int</span>[]&gt; ints = Arrays.asList(coins);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= amount; i++) &#123;</span><br><span class="line">            dp[i]=Integer.MAX_VALUE-<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; coins.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i - coins[j]&gt;=<span class="number">0</span>) &#123;</span><br><span class="line">                    dp[i] = Math.min(dp[i - coins[j]]+<span class="number">1</span>, dp[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> max=Integer.MAX_VALUE-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> dp[amount]==max?-<span class="number">1</span>:dp[amount];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h1><p>即 Guarded Suspension，用在一个线程等待另一个线程的执行结果<br>要点</p>
+<ul>
+<li>有一个结果需要从一个线程传递到另一个线程，让他们关联同一个 GuardedObject</li>
+<li>如果有结果不断从一个线程到另一个线程那么可以使用消息队列（见生产者/消费者）</li>
+<li>JDK 中，join 的实现、Future 的实现，采用的就是此模式</li>
+<li>因为要等待另一方的结果，因此归类到同步模式<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211121195525.png"><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test20</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        GuardedObject guardedObject = <span class="keyword">new</span> GuardedObject();</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;执行&quot;</span>);</span><br><span class="line">                Object res=   guardedObject.get(<span class="number">2000</span>);</span><br><span class="line">                log.debug(<span class="string">&quot;结果为&#123;&#125;&quot;</span>,res);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,<span class="string">&quot;t1&quot;</span>).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            log.debug(<span class="string">&quot;执行&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            guardedObject.put(<span class="keyword">null</span>);</span><br><span class="line">        &#125;,<span class="string">&quot;t1&quot;</span>).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GuardedObject</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span>  Object response;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">get</span><span class="params">(<span class="keyword">long</span> timeOut)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">            <span class="comment">//经历时间</span></span><br><span class="line">            <span class="keyword">long</span> passTime=<span class="number">0</span>;</span><br><span class="line">            <span class="comment">//开始时间</span></span><br><span class="line">            <span class="keyword">long</span> begin=System.currentTimeMillis();</span><br><span class="line">            <span class="keyword">while</span> (response==<span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="comment">//等待时间=超时时间-经理时间</span></span><br><span class="line">                <span class="keyword">long</span> waitTime=timeOut-passTime;</span><br><span class="line">                <span class="comment">//经历的时间超过了最大等待时间，就会超时，退出循环</span></span><br><span class="line">                <span class="keyword">if</span> (waitTime&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">this</span>.wait(waitTime);</span><br><span class="line">                passTime=System.currentTimeMillis()-begin;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> response;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title">put</span><span class="params">(Object response)</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.response=response;</span><br><span class="line">            <span class="keyword">this</span>.notifyAll();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -458,7 +464,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+            <a href="/tags/Java%E5%B9%B6%E5%8F%91/" rel="tag"># Java并发</a>
           
         </div>
       
@@ -471,8 +477,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/11/20/%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97/" rel="next" title="最长上升子序列">
-                <i class="fa fa-chevron-left"></i> 最长上升子序列
+              <a href="/2021/11/21/%E6%A3%80%E9%AA%8C%E5%9B%9E%E6%96%87%E6%95%B0/" rel="next" title="检验回文数">
+                <i class="fa fa-chevron-left"></i> 检验回文数
               </a>
             
           </div>
@@ -480,10 +486,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/11/20/pageMonitor/" rel="prev" title="Monitor和锁">
-                Monitor和锁 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -631,7 +633,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LC-%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">LC:零钱兑换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">定义：</span></a></li></ol></div>
             
 
           </div>
