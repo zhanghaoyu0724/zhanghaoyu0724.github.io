@@ -81,7 +81,7 @@
 
 <meta name="description" content="java对象头普通对象 数组对象： 其中 Mark Word 结构为  64位虚拟机： 原理之 Monitor(锁)Monitor 被翻译为监视器或管程每个 Java 对象都可以关联一个 Monitor 对象，如果使用 synchronized 给对象上锁（重量级）之后，该对象头的Mark Word 中就被设置指向 Monitor 对象的指针  刚开始 Monitor 中 Owner 为 null">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Monitor和锁">
+<meta property="og:title" content="Monitor和join原理和wait&#x2F;notifty原理和park等">
 <meta property="og:url" content="https://blacke1111.github.io/2021/11/20/pageMonitor/index.html">
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="java对象头普通对象 数组对象： 其中 Mark Word 结构为  64位虚拟机： 原理之 Monitor(锁)Monitor 被翻译为监视器或管程每个 Java 对象都可以关联一个 Monitor 对象，如果使用 synchronized 给对象上锁（重量级）之后，该对象头的Mark Word 中就被设置指向 Monitor 对象的指针  刚开始 Monitor 中 Owner 为 null">
@@ -105,8 +105,10 @@
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211120204502.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211121151345.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211121183400.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211122233003.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211122233052.png">
 <meta property="article:published_time" content="2021-11-20T12:11:04.000Z">
-<meta property="article:modified_time" content="2021-11-21T12:01:05.447Z">
+<meta property="article:modified_time" content="2021-11-22T15:31:32.073Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Java并发">
 <meta name="twitter:card" content="summary">
@@ -146,7 +148,7 @@
 
 
 
-  <title>Monitor和锁 | 蓝天の博客</title>
+  <title>Monitor和join原理和wait/notifty原理和park等 | 蓝天の博客</title>
   
 
 
@@ -334,7 +336,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Monitor和锁</h1>
+          <h1 class="post-title" itemprop="name headline">Monitor和join原理和wait/notifty原理和park等</h1>
         
 
         <div class="post-meta">
@@ -362,8 +364,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-21T20:01:05+08:00">
-                2021-11-21
+              <time title="更新于" itemprop="dateModified" datetime="2021-11-22T23:31:32+08:00">
+                2021-11-22
               </time>
             
           </span>
@@ -412,7 +414,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.6k
+                  4k
                 </span>
               
 
@@ -428,7 +430,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  15
+                  16
                 </span>
               
             </div>
@@ -575,6 +577,41 @@
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">19</span>:<span class="number">25</span>:<span class="number">44.019</span> c<span class="selector-class">.Test18</span> <span class="selector-attr">[t2]</span> - 执行</span><br><span class="line"><span class="number">19</span>:<span class="number">25</span>:<span class="number">44.019</span> c<span class="selector-class">.Test18</span> <span class="selector-attr">[t1]</span> - 执行</span><br><span class="line"><span class="number">19</span>:<span class="number">25</span>:<span class="number">45.018</span> c<span class="selector-class">.Test18</span> <span class="selector-attr">[main]</span> - 唤醒obj上其他线程</span><br><span class="line"><span class="number">19</span>:<span class="number">25</span>:<span class="number">45.018</span> c<span class="selector-class">.Test18</span> <span class="selector-attr">[t1]</span> - 其他代码执行</span><br><span class="line"><span class="number">19</span>:<span class="number">25</span>:<span class="number">45.018</span> c<span class="selector-class">.Test18</span> <span class="selector-attr">[t2]</span> - 其他代码执行</span><br></pre></td></tr></table></figure>
 
 
+<h2 id="park-amp-UnPark"><a href="#park-amp-UnPark" class="headerlink" title="park&amp;UnPark"></a>park&amp;UnPark</h2><p>基本使用<br>它们是 LockSupport 类中的方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 暂停当前线程</span></span><br><span class="line">LockSupport.park(); </span><br><span class="line"><span class="comment">// 恢复某个线程的运行</span></span><br><span class="line">LockSupport.unpark(暂停线程对象)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>与 Object 的 wait &amp; notify 相比</strong></p>
+<ul>
+<li>wait，notify 和 notifyAll 必须配合 Object Monitor 一起使用，而 park，unpark 不必</li>
+<li>park &amp; unpark 是以线程为单位来【阻塞】和【唤醒】线程，而 notify 只能随机唤醒一个等待线程，notifyAll是唤醒所有等待线程，就不那么【精确】</li>
+<li>park &amp; unpark 可以先 unpark，而 wait &amp; notify 不能先 notify</li>
+</ul>
+<h2 id="原理：park-amp-UnPark"><a href="#原理：park-amp-UnPark" class="headerlink" title="原理：park&amp;UnPark"></a><strong>原理：park&amp;UnPark</strong></h2><p>每个线程都有自己的一个 Parker 对象，由三部分组成 _counter ， _cond 和 _mutex 打个比喻<br>*线程就像一个旅人，Parker 就像他随身携带的背包，条件变量就好比背包中的帐篷。_counter 就好比背包中<br>的备用干粮（0 为耗尽，1 为充足）</p>
+<ul>
+<li>调用 park 就是要看需不需要停下来歇息<ul>
+<li>如果备用干粮耗尽，那么钻进帐篷歇息</li>
+<li>如果备用干粮充足，那么不需停留，继续前进</li>
+</ul>
+</li>
+<li>调用 unpark，就好比令干粮充足<ul>
+<li>如果这时线程还在帐篷，就唤醒让他继续前进</li>
+<li>如果这时线程还在运行，那么下次他调用 park 时，仅是消耗掉备用干粮，不需停留继续前进</li>
+</ul>
+</li>
+<li>因为背包空间有限，多次调用 unpark 仅会补充一份备用干粮</li>
+</ul>
+<ol>
+<li>当前线程调用 Unsafe.park() 方法</li>
+<li>检查 _counter ，本情况为 0，这时，获得 _mutex 互斥锁</li>
+<li>线程进入 _cond 条件变量阻塞</li>
+<li>设置 _counter = 0<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211122233003.png"></li>
+</ol>
+<ol>
+<li>调用 Unsafe.unpark(Thread_0) 方法，设置 _counter 为 1</li>
+<li>唤醒 _cond 条件变量中的 Thread_0</li>
+<li>Thread_0 恢复运行</li>
+<li>设置 _counter 为 0<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211122233052.png"></li>
+</ol>
+
       
     </div>
     
@@ -708,7 +745,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -773,7 +810,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E5%AF%B9%E8%B1%A1%E5%A4%B4"><span class="nav-number">1.</span> <span class="nav-text">java对象头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E4%B9%8B-Monitor-%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">原理之 Monitor(锁)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E5%8D%87%E7%BA%A7%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">锁的升级：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%88%E6%B2%A1%E6%9C%89%E7%AB%9E%E4%BA%89%EF%BC%89%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">轻量级锁（没有竞争）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E8%86%A8%E8%83%80%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">锁膨胀：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%97%8B%E4%BC%98%E5%8C%96"><span class="nav-number">3.3.</span> <span class="nav-text">自旋优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%8F%E5%90%91%E9%94%81%EF%BC%88%E6%B2%A1%E6%9C%89%E7%AB%9E%E4%BA%89%E5%8D%87%E7%BA%A7%E4%B8%BA%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%8800%EF%BC%89%EF%BC%8C%E6%9C%89%E7%9A%84%E8%AF%9D%E5%B0%B1%E5%8D%87%E7%BA%A7%E4%B8%BA%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%8810%EF%BC%89%EF%BC%89"><span class="nav-number">3.4.</span> <span class="nav-text">偏向锁（没有竞争升级为轻量级锁（00），有的话就升级为重量级锁（10））</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E9%87%8D%E5%81%8F%E5%90%91"><span class="nav-number">3.5.</span> <span class="nav-text">批量重偏向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%92%A4%E9%94%80"><span class="nav-number">3.6.</span> <span class="nav-text">批量撤销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E6%B6%88%E9%99%A4"><span class="nav-number">3.7.</span> <span class="nav-text">锁消除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wait-notify%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">wait&#x2F;notify原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E5%AF%B9%E8%B1%A1%E5%A4%B4"><span class="nav-number">1.</span> <span class="nav-text">java对象头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E4%B9%8B-Monitor-%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">原理之 Monitor(锁)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81%E7%9A%84%E5%8D%87%E7%BA%A7%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">锁的升级：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%88%E6%B2%A1%E6%9C%89%E7%AB%9E%E4%BA%89%EF%BC%89%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">轻量级锁（没有竞争）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E8%86%A8%E8%83%80%EF%BC%9A"><span class="nav-number">3.2.</span> <span class="nav-text">锁膨胀：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E6%97%8B%E4%BC%98%E5%8C%96"><span class="nav-number">3.3.</span> <span class="nav-text">自旋优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%8F%E5%90%91%E9%94%81%EF%BC%88%E6%B2%A1%E6%9C%89%E7%AB%9E%E4%BA%89%E5%8D%87%E7%BA%A7%E4%B8%BA%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%8800%EF%BC%89%EF%BC%8C%E6%9C%89%E7%9A%84%E8%AF%9D%E5%B0%B1%E5%8D%87%E7%BA%A7%E4%B8%BA%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81%EF%BC%8810%EF%BC%89%EF%BC%89"><span class="nav-number">3.4.</span> <span class="nav-text">偏向锁（没有竞争升级为轻量级锁（00），有的话就升级为重量级锁（10））</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E9%87%8D%E5%81%8F%E5%90%91"><span class="nav-number">3.5.</span> <span class="nav-text">批量重偏向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%B9%E9%87%8F%E6%92%A4%E9%94%80"><span class="nav-number">3.6.</span> <span class="nav-text">批量撤销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E6%B6%88%E9%99%A4"><span class="nav-number">3.7.</span> <span class="nav-text">锁消除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wait-notify%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">wait&#x2F;notify原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#park-amp-UnPark"><span class="nav-number">5.</span> <span class="nav-text">park&amp;UnPark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%EF%BC%9Apark-amp-UnPark"><span class="nav-number">6.</span> <span class="nav-text">原理：park&amp;UnPark</span></a></li></ol></div>
             
 
           </div>
@@ -814,7 +851,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">15.4k</span>
+    <span title="博客全站字数">18.2k</span>
   
 </div>
 
