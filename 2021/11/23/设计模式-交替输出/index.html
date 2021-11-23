@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="字符串," />
+  <meta name="keywords" content="并发设计模式," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="检验回文数:本题简单就是删除不符合条件的字符加入一个StringBuffer中，然后前后遍历比较不符合条件直接返回false： 1234567891011121314151617181920212223242526public static boolean isPalindrome(String s) &amp;#123;        StringBuffer stringBuffer&#x3D;new Stri">
+<meta name="description" content="线程 1 输出 a 5 次，线程 2 输出 b 5 次，线程 3 输出 c 5 次。现在要求输出 abcabcabcabcabc 怎么实现 wait notify 版123456789101112131415161718192021222324252627282930313233343536373839404142public class Test25 &amp;#123;    public stati">
 <meta property="og:type" content="article">
-<meta property="og:title" content="检验回文数">
-<meta property="og:url" content="https://blacke1111.github.io/2021/11/21/%E6%A3%80%E9%AA%8C%E5%9B%9E%E6%96%87%E6%95%B0/index.html">
+<meta property="og:title" content="设计模式-交替输出">
+<meta property="og:url" content="https://blacke1111.github.io/2021/11/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BA%A4%E6%9B%BF%E8%BE%93%E5%87%BA/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="检验回文数:本题简单就是删除不符合条件的字符加入一个StringBuffer中，然后前后遍历比较不符合条件直接返回false： 1234567891011121314151617181920212223242526public static boolean isPalindrome(String s) &amp;#123;        StringBuffer stringBuffer&#x3D;new Stri">
+<meta property="og:description" content="线程 1 输出 a 5 次，线程 2 输出 b 5 次，线程 3 输出 c 5 次。现在要求输出 abcabcabcabcabc 怎么实现 wait notify 版123456789101112131415161718192021222324252627282930313233343536373839404142public class Test25 &amp;#123;    public stati">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-11-21T05:56:32.000Z">
-<meta property="article:modified_time" content="2021-11-21T06:05:59.863Z">
+<meta property="article:published_time" content="2021-11-23T13:14:03.000Z">
+<meta property="article:modified_time" content="2021-11-23T13:19:44.076Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="字符串">
+<meta property="article:tag" content="并发设计模式">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://blacke1111.github.io/2021/11/21/检验回文数/"/>
+  <link rel="canonical" href="https://blacke1111.github.io/2021/11/23/设计模式-交替输出/"/>
 
 
 
 
 
-  <title>检验回文数 | 蓝天の博客</title>
+  <title>设计模式-交替输出 | 蓝天の博客</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/11/21/%E6%A3%80%E9%AA%8C%E5%9B%9E%E6%96%87%E6%95%B0/">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/11/23/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BA%A4%E6%9B%BF%E8%BE%93%E5%87%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张浩宇">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">检验回文数</h1>
+          <h1 class="post-title" itemprop="name headline">设计模式-交替输出</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-21T13:56:32+08:00">
-                2021-11-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-23T21:14:03+08:00">
+                2021-11-23
               </time>
             
 
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-21T14:05:59+08:00">
-                2021-11-21
+              <time title="更新于" itemprop="dateModified" datetime="2021-11-23T21:19:44+08:00">
+                2021-11-23
               </time>
             
           </span>
@@ -361,8 +361,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
+                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  141
+                  506
                 </span>
               
 
@@ -408,7 +408,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -429,8 +429,12 @@
       
 
       
-        <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xah8k6/">检验回文数</a>:<br>本题简单就是删除不符合条件的字符加入一个StringBuffer中，然后前后遍历比较不符合条件直接返回false：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        StringBuffer stringBuffer=<span class="keyword">new</span> StringBuffer();</span><br><span class="line">        String s1=s.toLowerCase();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s1.length(); i++) &#123;</span><br><span class="line">             <span class="keyword">char</span> a=s1.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> ( (a&gt;<span class="number">96</span>&amp;&amp;a&lt;<span class="number">123</span>) || (a&gt;<span class="number">47</span>&amp;&amp;a&lt;<span class="number">58</span>) )&#123;</span><br><span class="line">                stringBuffer.append(a);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        String s2=stringBuffer.toString();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> start=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> end=s2.length()-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (start&lt;end)&#123;</span><br><span class="line">            <span class="keyword">char</span> a1=s2.charAt(start);</span><br><span class="line">            <span class="keyword">char</span> a2=s2.charAt(end);</span><br><span class="line">            <span class="keyword">if</span> (a1==a2)&#123;</span><br><span class="line">                start++;</span><br><span class="line">                end--;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span>  <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+        <p>线程 1 输出 a 5 次，线程 2 输出 b 5 次，线程 3 输出 c 5 次。现在要求输出 abcabcabcabcabc 怎么实现</p>
+<h3 id="wait-notify-版"><a href="#wait-notify-版" class="headerlink" title="wait notify 版"></a>wait notify 版</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test25</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        WaitNotify waitNotify = <span class="keyword">new</span> WaitNotify(<span class="number">5</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            waitNotify.print(<span class="string">&quot;a&quot;</span>,<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">        &#125;).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            waitNotify.print(<span class="string">&quot;b&quot;</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            waitNotify.print(<span class="string">&quot;c&quot;</span>,<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WaitNotify</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> flag=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> loopNumber;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WaitNotify</span><span class="params">(<span class="keyword">int</span> loopNumber)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.loopNumber = loopNumber;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(String str,<span class="keyword">int</span> tFlag, <span class="keyword">int</span> nextFlag)</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopNumber; i++) &#123;</span><br><span class="line">                <span class="keyword">while</span> (!(tFlag==flag))&#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="keyword">this</span>.wait();</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">this</span>.flag=nextFlag;</span><br><span class="line">                <span class="keyword">this</span>.notifyAll();</span><br><span class="line">                System.out.print(str);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Lock-条件变量版"><a href="#Lock-条件变量版" class="headerlink" title="Lock 条件变量版"></a>Lock 条件变量版</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test26</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        AwaitSignal awaitSignal = <span class="keyword">new</span> AwaitSignal(<span class="number">5</span>);</span><br><span class="line">        Condition c1 = awaitSignal.newCondition();</span><br><span class="line">        Condition c2 = awaitSignal.newCondition();</span><br><span class="line">        Condition c3 = awaitSignal.newCondition();</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            awaitSignal.print(<span class="string">&quot;a&quot;</span>,c1,c2);</span><br><span class="line">        &#125;).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            awaitSignal.print(<span class="string">&quot;b&quot;</span>,c2,c3);</span><br><span class="line">        &#125;).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            awaitSignal.print(<span class="string">&quot;c&quot;</span>,c3,c1);</span><br><span class="line">        &#125;).start();</span><br><span class="line">        awaitSignal.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            c1.signal();</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            awaitSignal.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AwaitSignal</span> <span class="keyword">extends</span> <span class="title">ReentrantLock</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> loopNumber;</span><br><span class="line">    <span class="keyword">private</span>  <span class="keyword">int</span> flag=<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AwaitSignal</span><span class="params">( <span class="keyword">int</span> loopNumber)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.loopNumber = loopNumber;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(String str,Condition condition,Condition nextCondition)</span></span>&#123;</span><br><span class="line">        lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopNumber; i++) &#123;</span><br><span class="line">               condition.await();</span><br><span class="line">                System.out.print(str);</span><br><span class="line">                nextCondition.signalAll();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Park-Unpark-版"><a href="#Park-Unpark-版" class="headerlink" title="Park Unpark 版"></a>Park Unpark 版</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test27</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SyncPark syncPark = <span class="keyword">new</span> SyncPark(<span class="number">5</span>);</span><br><span class="line">        Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            syncPark.print(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            syncPark.print(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        Thread t3 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            syncPark.print(<span class="string">&quot;c\n&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        syncPark.setThreads(t1, t2, t3);</span><br><span class="line">        syncPark.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SyncPark</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> loopNumber;</span><br><span class="line">    <span class="keyword">private</span> Thread[] threads;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SyncPark</span><span class="params">(<span class="keyword">int</span> loopNumber)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.loopNumber = loopNumber;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setThreads</span><span class="params">(Thread... threads)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.threads = threads;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; loopNumber; i++) &#123;</span><br><span class="line">            LockSupport.park();</span><br><span class="line">            System.out.print(str);</span><br><span class="line">            LockSupport.unpark(nextThread());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> Thread <span class="title">nextThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Thread current = Thread.currentThread();</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threads.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(threads[i] == current) &#123;</span><br><span class="line">                index = i;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(index &lt; threads.length - <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> threads[index+<span class="number">1</span>];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> threads[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (Thread thread : threads) &#123;</span><br><span class="line">            thread.start();</span><br><span class="line">        &#125;</span><br><span class="line">        LockSupport.unpark(threads[<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
       
@@ -458,7 +462,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 字符串</a>
+            <a href="/tags/%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 并发设计模式</a>
           
         </div>
       
@@ -471,8 +475,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/11/21/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E8%B7%AF%E5%BE%84/" rel="next" title="矩阵中的最长递增路径">
-                <i class="fa fa-chevron-left"></i> 矩阵中的最长递增路径
+              <a href="/2021/11/23/ReentrantLock/" rel="next" title="ReentrantLock">
+                <i class="fa fa-chevron-left"></i> ReentrantLock
               </a>
             
           </div>
@@ -481,8 +485,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/11/21/%E5%90%8C%E6%AD%A5%E6%A8%A1%E5%BC%8F%E4%B9%8B%E4%BF%9D%E6%8A%A4%E6%80%A7%E6%9A%82%E5%81%9C/" rel="prev" title="同步模式之保护性暂停">
-                同步模式之保护性暂停 <i class="fa fa-chevron-right"></i>
+              <a href="/2021/11/23/java%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" rel="prev" title="java内存模型">
+                java内存模型 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -537,8 +541,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -612,6 +625,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#wait-notify-%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">wait notify 版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lock-%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F%E7%89%88"><span class="nav-number">2.</span> <span class="nav-text">Lock 条件变量版</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Park-Unpark-%E7%89%88"><span class="nav-number">3.</span> <span class="nav-text">Park Unpark 版</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

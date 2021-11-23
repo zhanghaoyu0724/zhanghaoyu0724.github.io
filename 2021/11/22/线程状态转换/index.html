@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="情况 1 NEW –&gt; RUNNABLE当调用 t.start() 方法时，由 NEW –&gt; RUNNABLE 情况 2 RUNNABLE &lt;–&gt; WAITINGt 线程用 synchronized(obj) 获取了对象锁后  调用 obj.wait() 方法时，t 线程从 RUNNABLE –&gt; WAITING 调用 obj.notify() ， obj.notif">
+<meta name="description" content="线程状态转换情况 1 NEW –&gt; RUNNABLE当调用 t.start() 方法时，由 NEW –&gt; RUNNABLE 情况 2 RUNNABLE &lt;–&gt; WAITINGt 线程用 synchronized(obj) 获取了对象锁后  调用 obj.wait() 方法时，t 线程从 RUNNABLE –&gt; WAITING 调用 obj.notify() ， obj">
 <meta property="og:type" content="article">
-<meta property="og:title" content="线程状态转换">
+<meta property="og:title" content="线程状态转换和多把锁">
 <meta property="og:url" content="https://blacke1111.github.io/2021/11/22/%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="情况 1 NEW –&gt; RUNNABLE当调用 t.start() 方法时，由 NEW –&gt; RUNNABLE 情况 2 RUNNABLE &lt;–&gt; WAITINGt 线程用 synchronized(obj) 获取了对象锁后  调用 obj.wait() 方法时，t 线程从 RUNNABLE –&gt; WAITING 调用 obj.notify() ， obj.notif">
+<meta property="og:description" content="线程状态转换情况 1 NEW –&gt; RUNNABLE当调用 t.start() 方法时，由 NEW –&gt; RUNNABLE 情况 2 RUNNABLE &lt;–&gt; WAITINGt 线程用 synchronized(obj) 获取了对象锁后  调用 obj.wait() 方法时，t 线程从 RUNNABLE –&gt; WAITING 调用 obj.notify() ， obj">
 <meta property="og:locale">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/Snipaste_2021-11-18_20-44-09.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123183119.png">
 <meta property="article:published_time" content="2021-11-22T15:32:17.000Z">
-<meta property="article:modified_time" content="2021-11-22T15:52:30.853Z">
+<meta property="article:modified_time" content="2021-11-23T11:51:42.429Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Java并发">
 <meta name="twitter:card" content="summary">
@@ -128,7 +129,7 @@
 
 
 
-  <title>线程状态转换 | 蓝天の博客</title>
+  <title>线程状态转换和多把锁 | 蓝天の博客</title>
   
 
 
@@ -316,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">线程状态转换</h1>
+          <h1 class="post-title" itemprop="name headline">线程状态转换和多把锁</h1>
         
 
         <div class="post-meta">
@@ -344,8 +345,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-22T23:52:30+08:00">
-                2021-11-22
+              <time title="更新于" itemprop="dateModified" datetime="2021-11-23T19:51:42+08:00">
+                2021-11-23
               </time>
             
           </span>
@@ -394,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  734
+                  1.7k
                 </span>
               
 
@@ -410,7 +411,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  7
                 </span>
               
             </div>
@@ -431,7 +432,7 @@
       
 
       
-        <p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/Snipaste_2021-11-18_20-44-09.png"><br><strong>情况 1 NEW –&gt; RUNNABLE</strong><br>当调用 t.start() 方法时，由 NEW –&gt; RUNNABLE</p>
+        <h1 id="线程状态转换"><a href="#线程状态转换" class="headerlink" title="线程状态转换"></a>线程状态转换</h1><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/Snipaste_2021-11-18_20-44-09.png"><br><strong>情况 1 NEW –&gt; RUNNABLE</strong><br>当调用 t.start() 方法时，由 NEW –&gt; RUNNABLE</p>
 <p><strong>情况 2 RUNNABLE &lt;–&gt; WAITING</strong><br>t 线程用 synchronized(obj) 获取了对象锁后</p>
 <ul>
 <li>调用 obj.wait() 方法时，t 线程从 RUNNABLE –&gt; WAITING</li>
@@ -495,6 +496,27 @@
 <ul>
 <li>当前线程所有代码运行完毕，进入 TERMINATED</li>
 </ul>
+<h1 id="多把锁"><a href="#多把锁" class="headerlink" title="多把锁"></a>多把锁</h1><p><strong>多把不相干的锁</strong><br>一间大屋子有两个功能：睡觉、学习，互不相干。<br>现在小南要学习，小女要睡觉，但如果只用一间屋子（一个对象锁）的话，那么并发度很低<br>解决方法是准备多个房间（多个对象锁）<br>例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BigRoom</span> </span>&#123;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sleep</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;sleeping 2 小时&quot;</span>);</span><br><span class="line"> Sleeper.sleep(<span class="number">2</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">study</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;study 1 小时&quot;</span>);</span><br><span class="line"> Sleeper.sleep(<span class="number">1</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BigRoom bigRoom = <span class="keyword">new</span> BigRoom();</span><br><span class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"> bigRoom.compute();</span><br><span class="line">&#125;,<span class="string">&quot;小南&quot;</span>).start();</span><br><span class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"> bigRoom.sleep();</span><br><span class="line">&#125;,<span class="string">&quot;小女&quot;</span>).start()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12</span>:<span class="number">13</span>:<span class="number">54.471</span> [小南] c.BigRoom - study <span class="number">1</span> 小时</span><br><span class="line"><span class="number">12</span>:<span class="number">13</span>:<span class="number">55.476</span> [小女] c.BigRoom - sleeping <span class="number">2</span> 小时</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="活跃性"><a href="#活跃性" class="headerlink" title="活跃性:"></a>活跃性:</h2><p>有这样的情况：一个线程需要同时获取多把锁，这时就容易发生死锁<br>t1 线程 获得 A对象 锁，接下来想获取 B对象 的锁 t2 线程 获得 B对象 锁，接下来想获取 A对象 的锁 例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Object A = <span class="keyword">new</span> Object();</span><br><span class="line">Object B = <span class="keyword">new</span> Object();</span><br><span class="line">Thread t1 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"> <span class="keyword">synchronized</span> (A) &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;lock A&quot;</span>);</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">synchronized</span> (B) &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;lock B&quot;</span>);</span><br><span class="line"> log.debug(<span class="string">&quot;操作...&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;, <span class="string">&quot;t1&quot;</span>);</span><br><span class="line">Thread t2 = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"> <span class="keyword">synchronized</span> (B) &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;lock B&quot;</span>);</span><br><span class="line"> sleep(<span class="number">0.5</span>);</span><br><span class="line"> <span class="keyword">synchronized</span> (A) &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;lock A&quot;</span>);</span><br><span class="line">log.debug(<span class="string">&quot;操作...&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;, <span class="string">&quot;t2&quot;</span>);</span><br><span class="line">t1.start();</span><br><span class="line">t2.start();</span><br></pre></td></tr></table></figure>
+<p><strong>避免死锁要注意加锁顺序</strong><br>另外如果由于某个线程进入了死循环，导致其它线程一直等待，对于这种情况 linux 下可以通过 top 先定位到<br>CPU 占用高的 Java 进程，再利用 top -Hp 进程id 来定位是哪个线程，最后再用 jstack 排查</p>
+<h2 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h2><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123183119.png"><br>有五位哲学家，围坐在圆桌旁。<br>他们只做两件事，思考和吃饭，思考一会吃口饭，吃完饭后接着思考。<br>吃饭时要用两根筷子吃，桌上共有 5 根筷子，每位哲学家左右手边各有一根筷子。<br>如果筷子被身边的人拿着，自己就得等待</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EatingExperts</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Chopsticks c1 = <span class="keyword">new</span> Chopsticks(<span class="string">&quot;c1&quot;</span>);</span><br><span class="line">        Chopsticks c2 = <span class="keyword">new</span> Chopsticks(<span class="string">&quot;c2&quot;</span>);</span><br><span class="line">        Chopsticks c3 = <span class="keyword">new</span> Chopsticks(<span class="string">&quot;c3&quot;</span>);</span><br><span class="line">        Chopsticks c4 = <span class="keyword">new</span> Chopsticks(<span class="string">&quot;c4&quot;</span>);</span><br><span class="line">        Chopsticks c5 = <span class="keyword">new</span> Chopsticks(<span class="string">&quot;c5&quot;</span>);</span><br><span class="line">        Export e1 = <span class="keyword">new</span> Export(<span class="string">&quot;亚里士多德&quot;</span>, c1, c2);</span><br><span class="line">        Export e2 = <span class="keyword">new</span> Export(<span class="string">&quot;马克思&quot;</span>, c2, c3);</span><br><span class="line">        Export e3 = <span class="keyword">new</span> Export(<span class="string">&quot;&quot;</span>, c3, c4);</span><br><span class="line">        Export e4 = <span class="keyword">new</span> Export(<span class="string">&quot;&quot;</span>, c4, c5);</span><br><span class="line">        Export e5 = <span class="keyword">new</span> Export(<span class="string">&quot;&quot;</span>, c5, c1);</span><br><span class="line">        e1.start();</span><br><span class="line">        e2.start();</span><br><span class="line">        e3.start();</span><br><span class="line">        e4.start();</span><br><span class="line">        e5.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf4j(topic = &quot;c.Export&quot;)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Export</span> <span class="keyword">extends</span>  <span class="title">Thread</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span>  String name;</span><br><span class="line">    <span class="keyword">private</span>  Chopsticks left;</span><br><span class="line">    <span class="keyword">private</span>  Chopsticks right;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Export</span><span class="params">(String name, Chopsticks left, Chopsticks right)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.left = left;</span><br><span class="line">        <span class="keyword">this</span>.right = right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)</span><br><span class="line">            eating();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eating</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (left)&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (right)&#123;</span><br><span class="line">                log.debug(<span class="string">&quot;&#123;&#125;正在就餐。。。。。。。。。。&quot;</span>,name);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chopsticks</span></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Chopsticks</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Chopsticks</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;chopsticks&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行一段时间就会产生死锁。</p>
+<h2 id="活锁"><a href="#活锁" class="headerlink" title="活锁"></a>活锁</h2><p>活锁出现在两个线程互相改变对方的结束条件，最后谁也无法结束，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestLiveLock</span> </span>&#123;</span><br><span class="line"> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> count = <span class="number">10</span>;</span><br><span class="line"> <span class="keyword">static</span> <span class="keyword">final</span> Object lock = <span class="keyword">new</span> Object();</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"> <span class="comment">// 期望减到 0 退出循环</span></span><br><span class="line"> <span class="keyword">while</span> (count &gt; <span class="number">0</span>) &#123;</span><br><span class="line"> sleep(<span class="number">0.2</span>);</span><br><span class="line"> count--;</span><br><span class="line"> log.debug(<span class="string">&quot;count: &#123;&#125;&quot;</span>, count);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;, <span class="string">&quot;t1&quot;</span>).start();</span><br><span class="line"> <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"> <span class="comment">// 期望超过 20 退出循环</span></span><br><span class="line"> <span class="keyword">while</span> (count &lt; <span class="number">20</span>) &#123;</span><br><span class="line"> sleep(<span class="number">0.2</span>);</span><br><span class="line"> count++;</span><br><span class="line"> log.debug(<span class="string">&quot;count: &#123;&#125;&quot;</span>, count);</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;, <span class="string">&quot;t2&quot;</span>).start();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="饥饿"><a href="#饥饿" class="headerlink" title="饥饿"></a>饥饿</h2><p>很多教程中把饥饿定义为，一个线程由于优先级太低，始终得不到 CPU 调度执行，也不能够结束，饥饿的情况不<br>易演示，讲读写锁时会涉及饥饿问题</p>
 
       
     </div>
@@ -543,6 +565,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/11/23/%E5%89%8D%E7%BC%80%E6%A0%91/" rel="prev" title="前缀树">
+                前缀树 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -596,8 +622,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -616,7 +651,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -627,7 +662,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -638,7 +673,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -671,6 +706,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">线程状态转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%8A%8A%E9%94%81"><span class="nav-number">2.</span> <span class="nav-text">多把锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B4%BB%E8%B7%83%E6%80%A7"><span class="nav-number">2.1.</span> <span class="nav-text">活跃性:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%B0%B1%E9%A4%90%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.</span> <span class="nav-text">哲学家就餐问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B4%BB%E9%94%81"><span class="nav-number">2.3.</span> <span class="nav-text">活锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A5%A5%E9%A5%BF"><span class="nav-number">2.4.</span> <span class="nav-text">饥饿</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -706,7 +757,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">18.2k</span>
+    <span title="博客全站字数">22.3k</span>
   
 </div>
 
