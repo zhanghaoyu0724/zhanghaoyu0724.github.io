@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202205745.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202205804.png">
 <meta property="article:published_time" content="2021-11-30T14:23:45.000Z">
-<meta property="article:modified_time" content="2021-12-02T13:01:12.331Z">
+<meta property="article:modified_time" content="2021-12-02T13:56:00.351Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Java并发">
 <meta name="twitter:card" content="summary">
@@ -346,7 +346,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-12-02T21:01:12+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-12-02T21:56:00+08:00">
                 2021-12-02
               </time>
             
@@ -543,7 +543,7 @@
 <li>扩容，扩容时以 bin 为单位进行，需要对 bin 进行 synchronized，但这时妙的是其它竞争线程也不是无事可做，它们会帮助把其它 bin 进行扩容，扩容时平均只有 1/6 的节点会把复制到新 table 中</li>
 <li>size，元素个数保存在 baseCount 中，并发时的个数变动保存在 CounterCell[] 当中。最后统计数量时累加即</li>
 </ul>
-<h2 id="JDK-7-ConcurrentHashMap"><a href="#JDK-7-ConcurrentHashMap" class="headerlink" title="JDK 7 ConcurrentHashMap"></a><strong>JDK 7 ConcurrentHashMap</strong></h2><p>它维护了一个 segment 数组，每个 segment 对应一把锁</p>
+<h2 id="ConcurrentHashMap-jdk7"><a href="#ConcurrentHashMap-jdk7" class="headerlink" title="ConcurrentHashMap   jdk7"></a><strong>ConcurrentHashMap</strong>   jdk7</h2><p>它维护了一个 segment 数组，每个 segment 对应一把锁</p>
 <p>优点：如果多个线程访问不同的 segment，实际是没有冲突的，这与 jdk8 中是类似的</p>
 <p>缺点：Segments 数组默认大小为16，这个容量初始化指定后就不能改变了，并且不是懒惰初始化</p>
 <p><strong>构造器分析</strong></p>
@@ -628,6 +628,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2021/12/02/LinkedBlockingQueue%E5%92%8CConcurrentLinkedQueue/" rel="prev" title="LinkedBlockingQueue和ConcurrentLinkedQueue">
+                LinkedBlockingQueue和ConcurrentLinkedQueue <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -709,7 +713,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -774,7 +778,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CountdownLatch"><span class="nav-number">1.</span> <span class="nav-text">CountdownLatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E4%B9%8B%E5%90%8C%E6%AD%A5%E7%AD%89%E5%BE%85%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%87%86%E5%A4%87%E5%AE%8C%E6%AF%95"><span class="nav-number">2.</span> <span class="nav-text">应用之同步等待多线程准备完毕</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CyclicBarrier"><span class="nav-number">3.</span> <span class="nav-text">CyclicBarrier</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%9B%86%E5%90%88%E7%B1%BB%E6%A6%82%E8%BF%B0"><span class="nav-number">4.</span> <span class="nav-text">线程安全集合类概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap-jdk-8"><span class="nav-number">4.1.</span> <span class="nav-text">ConcurrentHashMap  jdk 8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.1.</span> <span class="nav-text">重要方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK-7-ConcurrentHashMap"><span class="nav-number">4.2.</span> <span class="nav-text">JDK 7 ConcurrentHashMap</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CountdownLatch"><span class="nav-number">1.</span> <span class="nav-text">CountdownLatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E4%B9%8B%E5%90%8C%E6%AD%A5%E7%AD%89%E5%BE%85%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%87%86%E5%A4%87%E5%AE%8C%E6%AF%95"><span class="nav-number">2.</span> <span class="nav-text">应用之同步等待多线程准备完毕</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CyclicBarrier"><span class="nav-number">3.</span> <span class="nav-text">CyclicBarrier</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E9%9B%86%E5%90%88%E7%B1%BB%E6%A6%82%E8%BF%B0"><span class="nav-number">4.</span> <span class="nav-text">线程安全集合类概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap-jdk-8"><span class="nav-number">4.1.</span> <span class="nav-text">ConcurrentHashMap  jdk 8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.1.</span> <span class="nav-text">重要方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap-jdk7"><span class="nav-number">4.2.</span> <span class="nav-text">ConcurrentHashMap   jdk7</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -815,7 +819,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">52.6k</span>
+    <span title="博客全站字数">53.8k</span>
   
 </div>
 
