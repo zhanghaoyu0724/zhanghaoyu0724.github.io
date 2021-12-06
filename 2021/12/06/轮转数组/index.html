@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java并发," />
+  <meta name="keywords" content="数组," />
 
 
 
@@ -79,30 +79,18 @@
 
 
 
-<meta name="description" content="LinkedBlockingQueue1.基本的入队出队1234567891011121314public class LinkedBlockingQueue&lt;E&gt; extends AbstractQueue&lt;E&gt; implements BlockingQueue&lt;E&gt;, java.io.Serializable &amp;#123; static class Node">
+<meta name="description" content="轮转数组刚做这个题的第一个思路： ​    使用另外一个数组存储移动后的位置，不需要改变原数组： 12345678public void rotate(int[] nums, int k) &amp;#123;        int res[]&#x3D;new int[nums.length];        for (int i &#x3D; 0; i &lt; nums.length; i++) &amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LinkedBlockingQueue和ConcurrentLinkedQueue">
-<meta property="og:url" content="https://blacke1111.github.io/2021/12/02/LinkedBlockingQueue%E5%92%8CConcurrentLinkedQueue/index.html">
+<meta property="og:title" content="轮转数组">
+<meta property="og:url" content="https://blacke1111.github.io/2021/12/06/%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="LinkedBlockingQueue1.基本的入队出队1234567891011121314public class LinkedBlockingQueue&lt;E&gt; extends AbstractQueue&lt;E&gt; implements BlockingQueue&lt;E&gt;, java.io.Serializable &amp;#123; static class Node">
+<meta property="og:description" content="轮转数组刚做这个题的第一个思路： ​    使用另外一个数组存储移动后的位置，不需要改变原数组： 12345678public void rotate(int[] nums, int k) &amp;#123;        int res[]&#x3D;new int[nums.length];        for (int i &#x3D; 0; i &lt; nums.length; i++) &amp;#123;">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213830.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213854.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213954.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214029.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214050.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214108.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214125.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214212.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214542.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202215411.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202215426.png">
-<meta property="article:published_time" content="2021-12-02T13:36:19.000Z">
-<meta property="article:modified_time" content="2021-12-02T13:55:03.497Z">
+<meta property="article:published_time" content="2021-12-06T12:31:17.000Z">
+<meta property="article:modified_time" content="2021-12-06T13:19:36.029Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="Java并发">
+<meta property="article:tag" content="数组">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213830.png">
 
 
 
@@ -132,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://blacke1111.github.io/2021/12/02/LinkedBlockingQueue和ConcurrentLinkedQueue/"/>
+  <link rel="canonical" href="https://blacke1111.github.io/2021/12/06/轮转数组/"/>
 
 
 
 
 
-  <title>LinkedBlockingQueue和ConcurrentLinkedQueue | 蓝天の博客</title>
+  <title>轮转数组 | 蓝天の博客</title>
   
 
 
@@ -309,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/12/02/LinkedBlockingQueue%E5%92%8CConcurrentLinkedQueue/">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/12/06/%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张浩宇">
@@ -326,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">LinkedBlockingQueue和ConcurrentLinkedQueue</h1>
+          <h1 class="post-title" itemprop="name headline">轮转数组</h1>
         
 
         <div class="post-meta">
@@ -338,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-12-02T21:36:19+08:00">
-                2021-12-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-12-06T20:31:17+08:00">
+                2021-12-06
               </time>
             
 
@@ -354,8 +342,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-12-02T21:55:03+08:00">
-                2021-12-02
+              <time title="更新于" itemprop="dateModified" datetime="2021-12-06T21:19:36+08:00">
+                2021-12-06
               </time>
             
           </span>
@@ -373,8 +361,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -404,7 +392,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  392
                 </span>
               
 
@@ -420,7 +408,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  1
                 </span>
               
             </div>
@@ -441,96 +429,21 @@
       
 
       
-        <h1 id="LinkedBlockingQueue"><a href="#LinkedBlockingQueue" class="headerlink" title="LinkedBlockingQueue"></a>LinkedBlockingQueue</h1><h2 id="1-基本的入队出队"><a href="#1-基本的入队出队" class="headerlink" title="1.基本的入队出队"></a>1.基本的入队出队</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedBlockingQueue</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractQueue</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class"> <span class="keyword">implements</span> <span class="title">BlockingQueue</span>&lt;<span class="title">E</span>&gt;, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line"> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">     E item;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 下列三种情况之一</span></span><br><span class="line"><span class="comment"> * - 真正的后继节点</span></span><br><span class="line"><span class="comment"> * - 自己, 发生在出队时</span></span><br><span class="line"><span class="comment"> * - null, 表示是没有后继节点, 是最后了</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> Node&lt;E&gt; next;</span><br><span class="line"> Node(E x) &#123; item = x; &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>初始化链表 last = head = new Node<E>(null); Dummy 节点用来占位，item 为 null</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213830.png"></p>
-<p>当一个节点入队 last = last.next = node;</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213854.png"></p>
-<p>再来一个节点入队 last = last.next = node;</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213954.png"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Node&lt;E&gt; h = head;</span><br><span class="line">Node&lt;E&gt; first = h.next; h.next = h; <span class="comment">// help GC</span></span><br><span class="line">head = first; E x = first.item;</span><br><span class="line">first.item = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">return</span> x;</span><br></pre></td></tr></table></figure>
-
-<p><strong>h = head</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214029.png"></p>
-<p><strong>first = h.next</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214050.png"></p>
-<p><strong>h.next = h</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214108.png"></p>
-<p><strong>head = first</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214125.png"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E x = first.item;</span><br><span class="line">first.item = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">return</span> x;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214212.png"></p>
-<h2 id="2-加锁分析"><a href="#2-加锁分析" class="headerlink" title="2. 加锁分析"></a><strong>2.</strong> <strong>加锁分析</strong></h2><p>==高明之处==在于用了两把锁和 dummy 节点</p>
-<ul>
-<li>用一把锁，同一时刻，最多只允许有一个线程（生产者或消费者，二选一）执行</li>
-<li>用两把锁，同一时刻，可以允许两个线程同时（一个生产者与一个消费者）执行<ul>
-<li>消费者与消费者线程仍然串行</li>
-<li>生产者与生产者线程仍然串行</li>
-</ul>
-</li>
-</ul>
-<p>线程安全分析</p>
-<ul>
-<li>当节点总数大于 2 时（包括 dummy 节点），putLock 保证的是 last 节点的线程安全，takeLock 保证的是head 节点的线程安全。两把锁保证了入队和出队没有竞争</li>
-<li>当节点总数等于 2 时（即一个 dummy 节点，一个正常节点）这时候，仍然是两把锁锁两个对象，不会竞争</li>
-<li>当节点总数等于 1 时（就一个 dummy 节点）这时 take 线程会被 notEmpty 条件阻塞，有竞争，会阻塞</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用于 put(阻塞) offer(非阻塞)</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ReentrantLock putLock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"><span class="comment">// 用户 take(阻塞) poll(非阻塞)</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ReentrantLock takeLock = <span class="keyword">new</span> ReentrantLock();</span><br></pre></td></tr></table></figure>
-
-<p>put 操作</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(E e)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line"> <span class="keyword">int</span> c = -<span class="number">1</span>;</span><br><span class="line"> Node&lt;E&gt; node = <span class="keyword">new</span> Node&lt;E&gt;(e);</span><br><span class="line"> <span class="keyword">final</span> ReentrantLock putLock = <span class="keyword">this</span>.putLock;</span><br><span class="line"> <span class="comment">// count 用来维护元素计数</span></span><br><span class="line"> <span class="keyword">final</span> AtomicInteger count = <span class="keyword">this</span>.count;</span><br><span class="line"> putLock.lockInterruptibly();</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> <span class="comment">// 满了等待</span></span><br><span class="line"> <span class="keyword">while</span> (count.get() == capacity) &#123;</span><br><span class="line"> <span class="comment">// 倒过来读就好: 等待 notFull</span></span><br><span class="line"> notFull.await();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 有空位, 入队且计数加一</span></span><br><span class="line"> enqueue(node);</span><br><span class="line"> c = count.getAndIncrement(); </span><br><span class="line"> <span class="comment">// 除了自己 put 以外, 队列还有空位, 由自己叫醒其他 put 线程</span></span><br><span class="line"> <span class="keyword">if</span> (c + <span class="number">1</span> &lt; capacity)</span><br><span class="line"> notFull.signal();</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> putLock.unlock();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 如果队列中有一个元素, 叫醒 take 线程</span></span><br><span class="line"> <span class="keyword">if</span> (c == <span class="number">0</span>)</span><br><span class="line"> <span class="comment">// 这里调用的是 notEmpty.signal() 而不是 notEmpty.signalAll() 是为了减少竞争</span></span><br><span class="line"> signalNotEmpty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>take 操作</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">take</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"> E x;</span><br><span class="line"> <span class="keyword">int</span> c = -<span class="number">1</span>;</span><br><span class="line"> <span class="keyword">final</span> AtomicInteger count = <span class="keyword">this</span>.count;</span><br><span class="line"> <span class="keyword">final</span> ReentrantLock takeLock = <span class="keyword">this</span>.takeLock;</span><br><span class="line"> takeLock.lockInterruptibly();</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> <span class="keyword">while</span> (count.get() == <span class="number">0</span>) &#123;</span><br><span class="line"> notEmpty.await();</span><br><span class="line"> &#125;</span><br><span class="line"> x = dequeue();</span><br><span class="line"> c = count.getAndDecrement();</span><br><span class="line"> <span class="keyword">if</span> (c &gt; <span class="number">1</span>)</span><br><span class="line"> notEmpty.signal();</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> takeLock.unlock();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 如果队列中只有一个空位时, 叫醒 put 线程</span></span><br><span class="line"> <span class="comment">// 如果有多个线程进行出队, 第一个线程满足 c == capacity, 但后续线程 c &lt; capacity</span></span><br><span class="line"> <span class="keyword">if</span> (c == capacity)</span><br><span class="line"> <span class="comment">// 这里调用的是 notFull.signal() 而不是 notFull.signalAll() 是为了减少竞争</span></span><br><span class="line"> signalNotFull()</span><br><span class="line">     <span class="keyword">return</span> x; &#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="轮转数组"><a href="#轮转数组" class="headerlink" title="轮转数组"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xm42hs/">轮转数组</a></h1><p>刚做这个题的第一个思路：</p>
+<p>​    使用另外一个数组存储移动后的位置，不需要改变原数组：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res[]=<span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> index =( i + k )% nums.length;</span><br><span class="line">            res[index]=nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        System.arraycopy(res,<span class="number">0</span>,nums,<span class="number">0</span>,nums.length);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="3-性能比较"><a href="#3-性能比较" class="headerlink" title="3. 性能比较"></a>3. <strong>性能比较</strong></h2><p>主要列举 LinkedBlockingQueue 与 ArrayBlockingQueue 的性能比较</p>
-<ul>
-<li>Linked 支持有界，Array 强制有界</li>
-<li>Linked 实现是链表，Array 实现是数组</li>
-<li>Linked 是懒惰的，而 Array 需要提前初始化 Node 数组</li>
-<li>Linked 每次入队会生成新 Node，而 Array 的 Node 是提前创建好的</li>
-<li>Linked 两把锁，Array 一把锁</li>
-</ul>
-<h1 id="ConcurrentLinkedQueue"><a href="#ConcurrentLinkedQueue" class="headerlink" title="ConcurrentLinkedQueue"></a>ConcurrentLinkedQueue</h1><p>ConcurrentLinkedQueue 的设计与 LinkedBlockingQueue 非常像，也是</p>
-<ul>
-<li>两把【锁】，同一时刻，可以允许两个线程同时（一个生产者与一个消费者）执行</li>
-<li>dummy 节点的引入让两把【锁】将来锁住的是不同对象，避免竞争</li>
-<li>只是这【锁】使用了 cas 来实现</li>
-</ul>
-<p>事实上，ConcurrentLinkedQueue 应用还是非常广泛的<br>例如之前讲的 Tomcat 的 Connector 结构时，Acceptor 作为生产者向 Poller 消费者传递事件信息时，正是采用了<br>ConcurrentLinkedQueue 将 SocketChannel 给 Poller 使用</p>
-<p>tomcat:</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214542.png"></p>
-<h1 id="CopyOnWriteArraySet"><a href="#CopyOnWriteArraySet" class="headerlink" title="CopyOnWriteArraySet"></a>CopyOnWriteArraySet</h1><p>是它的马甲 底层实现采用了 写入时拷贝 的思想，增删改操作会将底层数组拷贝一份，更</p>
-<p>改操作在新数组上执行，这时不影响其它线程的<strong>并发读</strong>，<strong>读写分离</strong>。 以新增为例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line"> <span class="comment">// 获取旧的数组</span></span><br><span class="line"> Object[] es = getArray();</span><br><span class="line"> <span class="keyword">int</span> len = es.length;</span><br><span class="line"> <span class="comment">// 拷贝新的数组（这里是比较耗时的操作，但不影响其它读线程）</span></span><br><span class="line"> es = Arrays.copyOf(es, len + <span class="number">1</span>);</span><br><span class="line"> <span class="comment">// 添加新元素</span></span><br><span class="line"> es[len] = e;</span><br><span class="line"> <span class="comment">// 替换旧的数组</span></span><br><span class="line"> setArray(es);</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到题解有一个个人觉得，很穷巧妙的思路：</p>
+<h1 id="数组翻转："><a href="#数组翻转：" class="headerlink" title="数组翻转："></a>数组翻转：</h1><p>看到题解自己写的代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">       k=k%nums.length;</span><br><span class="line">       nums=reverse(nums);</span><br><span class="line">       <span class="keyword">int</span> data1[]=reverse(Arrays.copyOf(nums,k));</span><br><span class="line">       <span class="keyword">int</span> data2[]=reverse(Arrays.copyOfRange(nums,k,nums.length));</span><br><span class="line">       <span class="keyword">int</span> res[]= IntStream.concat(Arrays.stream(data1), Arrays.stream(data2)).toArray();</span><br><span class="line">       System.arraycopy(res,<span class="number">0</span>,nums,<span class="number">0</span>,nums.length);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span>[] reverse(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">    <span class="keyword">int</span> start=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> end=nums.length-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (start&lt;=end)&#123;</span><br><span class="line">        <span class="keyword">int</span> temp=nums[start];</span><br><span class="line">        nums[start]=nums[end];</span><br><span class="line">        nums[end]=temp;</span><br><span class="line">        start++;</span><br><span class="line">        end--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> nums;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>这里的源码版本是 Java 11，在 Java 1.8 中使用的是可重入锁而不是 synchronized</p>
-</blockquote>
-<p>其它读操作并未加锁，例如：`</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEach</span><span class="params">(Consumer&lt;? <span class="keyword">super</span> E&gt; action)</span> </span>&#123;</span><br><span class="line"> Objects.requireNonNull(action);</span><br><span class="line"> <span class="keyword">for</span> (Object x : getArray()) &#123;</span><br><span class="line"> <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span> E e = (E) x;</span><br><span class="line"> action.accept(e);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>时间花的比我之前的还多， 。。。。</p>
+<p>仔细一想，我为啥要切割原来的数组的呢？真的菜，</p>
+<p><strong>下次一想到关于数组的位置变化时， 第一先想一想能不能再原来的数组上实现。</strong></p>
+<h1 id="力扣题解代码："><a href="#力扣题解代码：" class="headerlink" title="力扣题解代码："></a>力扣题解代码：</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        k %= nums.length;</span><br><span class="line">        reverse(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">        reverse(nums, <span class="number">0</span>, k - <span class="number">1</span>);</span><br><span class="line">        reverse(nums, k, nums.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (start &lt; end) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = nums[start];</span><br><span class="line">            nums[start] = nums[end];</span><br><span class="line">            nums[end] = temp;</span><br><span class="line">            start += <span class="number">1</span>;</span><br><span class="line">            end -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">作者：LeetCode-Solution</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/rotate-array/solution/xuan-zhuan-shu-zu-by-leetcode-solution-nipk/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
 
-<p>适合『读多写少』的应用场景</p>
-<p><strong>get</strong> <strong>弱一致性</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202215411.png"></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202215426.png"></p>
-<blockquote>
-<p>不容易测试，但问题确实存在</p>
-</blockquote>
-<p><strong>迭代器弱一致性</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CopyOnWriteArrayList&lt;Integer&gt; list = <span class="keyword">new</span> CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">list.add(<span class="number">1</span>);</span><br><span class="line">list.add(<span class="number">2</span>);</span><br><span class="line">list.add(<span class="number">3</span>);</span><br><span class="line">Iterator&lt;Integer&gt; iter = list.iterator();</span><br><span class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"> list.remove(<span class="number">0</span>);</span><br><span class="line"> System.out.println(list);</span><br><span class="line">&#125;).start();</span><br><span class="line">sleep1s();</span><br><span class="line"><span class="keyword">while</span> (iter.hasNext()) &#123;</span><br><span class="line"> System.out.println(iter.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>不要觉得弱一致性就不好</p>
-<ul>
-<li><p>数据库的 MVCC 都是弱一致性的表现</p>
-</li>
-<li><p>并发高和一致性是矛盾的，需要权衡</p>
-</li>
-</ul>
 
       
     </div>
@@ -557,7 +470,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java%E5%B9%B6%E5%8F%91/" rel="tag"># Java并发</a>
+            <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"># 数组</a>
           
         </div>
       
@@ -570,8 +483,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/11/30/CountdownLatch%E5%92%8CConcurrentHashMap/" rel="next" title="CountdownLatch和CyclicBarrier和ConcurrentHashMap">
-                <i class="fa fa-chevron-left"></i> CountdownLatch和CyclicBarrier和ConcurrentHashMap
+              <a href="/2021/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E8%BF%B0/" rel="next" title="计算机网络的概述">
+                <i class="fa fa-chevron-left"></i> 计算机网络的概述
               </a>
             
           </div>
@@ -579,10 +492,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/12/04/%E5%A4%A9%E9%99%85%E7%BA%BF%E9%97%AE%E9%A2%98/" rel="prev" title="天际线问题">
-                天际线问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -730,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LinkedBlockingQueue"><span class="nav-number">1.</span> <span class="nav-text">LinkedBlockingQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%85%A5%E9%98%9F%E5%87%BA%E9%98%9F"><span class="nav-number">1.1.</span> <span class="nav-text">1.基本的入队出队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8A%A0%E9%94%81%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">2. 加锁分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83"><span class="nav-number">1.3.</span> <span class="nav-text">3. 性能比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ConcurrentLinkedQueue"><span class="nav-number">2.</span> <span class="nav-text">ConcurrentLinkedQueue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CopyOnWriteArraySet"><span class="nav-number">3.</span> <span class="nav-text">CopyOnWriteArraySet</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84"><span class="nav-number">1.</span> <span class="nav-text">轮转数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%BF%BB%E8%BD%AC%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">数组翻转：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%9B%E6%89%A3%E9%A2%98%E8%A7%A3%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">力扣题解代码：</span></a></li></ol></div>
             
 
           </div>
