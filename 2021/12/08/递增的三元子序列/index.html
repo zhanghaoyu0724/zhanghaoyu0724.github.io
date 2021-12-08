@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="动态规划," />
+  <meta name="keywords" content="数组," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="矩阵中的最长递增路径: 动态规划：我们首先创建一个和矩阵一样大小的整型二维数组，用来记录当前矩阵位置的最打增长路径。然后我们循环每个矩阵元素让他去递归。然后就可以得到结果了。 1234567891011121314151617181920212223242526272829303132333435public int longestIncreasingPath(int[][] matrix) &amp;#">
+<meta name="description" content="递增的三元子序列做这题真的时被自己绕晕了，总是想着在原数组上 选定3个位置  像滑动窗口一样 移动 并改变滑动窗口的大小，知道是一个递增序列。 做了好久没做出来 ，看了题解。。。。。, 还是太菜了，还需要继续做题。。。。 题解直接定义了2个变量 指定 最小元素，和第二小的元素 ，然后移动数组索引，改变one，two着两个变量。 [【剖析本质】一文帮你看清题意，6行代码实现O(n)+O(1)]（）]">
 <meta property="og:type" content="article">
-<meta property="og:title" content="矩阵中的最长递增路径">
-<meta property="og:url" content="https://blacke1111.github.io/2021/11/21/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:title" content="递增的三元子序列">
+<meta property="og:url" content="https://blacke1111.github.io/2021/12/08/%E9%80%92%E5%A2%9E%E7%9A%84%E4%B8%89%E5%85%83%E5%AD%90%E5%BA%8F%E5%88%97/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="矩阵中的最长递增路径: 动态规划：我们首先创建一个和矩阵一样大小的整型二维数组，用来记录当前矩阵位置的最打增长路径。然后我们循环每个矩阵元素让他去递归。然后就可以得到结果了。 1234567891011121314151617181920212223242526272829303132333435public int longestIncreasingPath(int[][] matrix) &amp;#">
+<meta property="og:description" content="递增的三元子序列做这题真的时被自己绕晕了，总是想着在原数组上 选定3个位置  像滑动窗口一样 移动 并改变滑动窗口的大小，知道是一个递增序列。 做了好久没做出来 ，看了题解。。。。。, 还是太菜了，还需要继续做题。。。。 题解直接定义了2个变量 指定 最小元素，和第二小的元素 ，然后移动数组索引，改变one，two着两个变量。 [【剖析本质】一文帮你看清题意，6行代码实现O(n)+O(1)]（）]">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-11-21T05:56:21.000Z">
-<meta property="article:modified_time" content="2021-11-21T06:04:10.924Z">
+<meta property="article:published_time" content="2021-12-08T12:18:09.000Z">
+<meta property="article:modified_time" content="2021-12-08T15:06:51.485Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="数组">
 <meta name="twitter:card" content="summary">
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://blacke1111.github.io/2021/11/21/矩阵中的最长递增路径/"/>
+  <link rel="canonical" href="https://blacke1111.github.io/2021/12/08/递增的三元子序列/"/>
 
 
 
 
 
-  <title>矩阵中的最长递增路径 | 蓝天の博客</title>
+  <title>递增的三元子序列 | 蓝天の博客</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/11/21/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E8%B7%AF%E5%BE%84/">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/12/08/%E9%80%92%E5%A2%9E%E7%9A%84%E4%B8%89%E5%85%83%E5%AD%90%E5%BA%8F%E5%88%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张浩宇">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">矩阵中的最长递增路径</h1>
+          <h1 class="post-title" itemprop="name headline">递增的三元子序列</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-21T13:56:21+08:00">
-                2021-11-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-12-08T20:18:09+08:00">
+                2021-12-08
               </time>
             
 
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-21T14:04:10+08:00">
-                2021-11-21
+              <time title="更新于" itemprop="dateModified" datetime="2021-12-08T23:06:51+08:00">
+                2021-12-08
               </time>
             
           </span>
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  311
+                  254
                 </span>
               
 
@@ -429,9 +429,12 @@
       
 
       
-        <p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/x2osfr/">矩阵中的最长递增路径</a>:</p>
-<p>动态规划：<br>我们首先创建一个和矩阵一样大小的整型二维数组，用来记录当前矩阵位置的最打增长路径。然后我们循环每个矩阵元素让他去递归。然后就可以得到结果了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestIncreasingPath</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span>[][] states=<span class="keyword">new</span> <span class="keyword">boolean</span>[matrix.length][matrix[<span class="number">0</span>].length];</span><br><span class="line">        <span class="keyword">int</span> [] [] dp=<span class="keyword">new</span> <span class="keyword">int</span>[matrix.length][matrix[<span class="number">0</span>].length];</span><br><span class="line">        <span class="keyword">int</span> max=Integer.MIN_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; matrix[i].length; j++) &#123;</span><br><span class="line">                    max = Math.max(dFS(matrix, i, j,dp), max);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dFS</span><span class="params">(<span class="keyword">int</span>[][] matrix,<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> [] [] dp)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (dp[x][y] != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> dp[x][y];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (x - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; matrix[x][y] &gt; matrix[x - <span class="number">1</span>][y]) &#123; <span class="comment">//top</span></span><br><span class="line">                dp[x][y]=Math.max(dFS(matrix,x-<span class="number">1</span>,y,dp)+<span class="number">1</span>,dp[x][y]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (x + <span class="number">1</span> &lt; matrix.length &amp;&amp; matrix[x][y] &gt; matrix[x + <span class="number">1</span>][y]) &#123;<span class="comment">//low</span></span><br><span class="line">            dp[x][y]=Math.max(dFS(matrix,x+<span class="number">1</span>,y,dp)+<span class="number">1</span>,dp[x][y]);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (y - <span class="number">1</span> &gt;= <span class="number">0</span> &amp;&amp; matrix[x][y] &gt; matrix[x][y - <span class="number">1</span>]) &#123;  <span class="comment">//left</span></span><br><span class="line">            dp[x][y]=Math.max(dFS(matrix,x,y-<span class="number">1</span>,dp)+<span class="number">1</span>,dp[x][y]);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (y + <span class="number">1</span> &lt; matrix[x].length &amp;&amp; matrix[x][y] &gt; matrix[x][y + <span class="number">1</span>]) &#123;<span class="comment">//right</span></span><br><span class="line">            dp[x][y]=Math.max(dFS(matrix,x,y+<span class="number">1</span>,dp)+<span class="number">1</span>,dp[x][y]);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> dp[x][y]==<span class="number">0</span>?<span class="number">1</span>:dp[x][y];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="递增的三元子序列"><a href="#递增的三元子序列" class="headerlink" title="递增的三元子序列"></a><a href="">递增的三元子序列</a></h1><p>做这题真的时被自己绕晕了，总是想着在原数组上 选定3个位置  像滑动窗口一样 移动 并改变滑动窗口的大小，知道是一个递增序列。</p>
+<p>做了好久没做出来 ，看了题解。。。。。, 还是太菜了，还需要继续做题。。。。</p>
+<p>题解直接定义了2个变量 指定 最小元素，和第二小的元素 ，然后移动数组索引，改变one，two着两个变量。</p>
+<p>[<strong>【剖析本质】一文帮你看清题意，6行代码实现O(n)+O(1)]（）</strong>](<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/increasing-triplet-subsequence/solution/pou-xi-ben-zhi-yi-wen-bang-ni-kan-qing-t-3ye2/">https://leetcode-cn.com/problems/increasing-triplet-subsequence/solution/pou-xi-ben-zhi-yi-wen-bang-ni-kan-qing-t-3ye2/</a>)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IncreasingTriplet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> nums[]=&#123;<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">6</span>&#125;;</span><br><span class="line">        IncreasingTriplet i1 = <span class="keyword">new</span> IncreasingTriplet();</span><br><span class="line">        System.out.println(i1.increasingTriplet(nums));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">increasingTriplet</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> one=Integer.MAX_VALUE;</span><br><span class="line">      <span class="keyword">int</span> two=Integer.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> three=nums[i];</span><br><span class="line">            <span class="keyword">if</span> (three&gt;two)&#123;</span><br><span class="line">                <span class="keyword">return</span>  <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (three&lt;=one)&#123;</span><br><span class="line">                one=three;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            two=three;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -458,7 +461,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+            <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"># 数组</a>
           
         </div>
       
@@ -471,8 +474,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/11/20/pageMonitor/" rel="next" title="Monitor和join原理和wait/notifty原理和park等">
-                <i class="fa fa-chevron-left"></i> Monitor和join原理和wait/notifty原理和park等
+              <a href="/2021/12/08/%E6%89%93%E4%B9%B1%E6%95%B0%E7%BB%84/" rel="next" title="打乱数组">
+                <i class="fa fa-chevron-left"></i> 打乱数组
               </a>
             
           </div>
@@ -480,10 +483,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/11/21/%E6%A3%80%E9%AA%8C%E5%9B%9E%E6%96%87%E6%95%B0/" rel="prev" title="检验回文数">
-                检验回文数 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -537,8 +536,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -612,6 +620,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%92%E5%A2%9E%E7%9A%84%E4%B8%89%E5%85%83%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text">递增的三元子序列</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
