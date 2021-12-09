@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="除自身以外数组的乘积一拿到这个题，思路还是有的，一看说明不准我用除法，意思就是不能投机取巧，，， 我心里一万个🐎🐎🐎飞过。 想了下，我可以使用2个数组保证每个索引位置的前缀积和后缀积，，，nice思路出来了  ，由于最后一个元素没有后缀积和第一个元素没有前缀积，初始化为1，这是不会影响乘积的，，，然后就是代码实现，做完看了下题解，不错思路差不多，， nice 1234567891011121">
+<meta name="description" content="除自身以外数组的乘积一拿到这个题，思路还是有的，一看说明不准我用除法，意思就是不能投机取巧，，， 我心里一万个🐎🐎🐎飞过。 想了下，我可以使用2个数组保存每个索引位置的前缀积和后缀积，，，nice思路出来了  ，由于最后一个元素没有后缀积和第一个元素没有前缀积，初始化为1，这是不会影响乘积的，，，然后就是代码实现，做完看了下题解，不错思路差不多，， nice 1234567891011121">
 <meta property="og:type" content="article">
 <meta property="og:title" content="除自身以外数组的乘积">
 <meta property="og:url" content="https://blacke1111.github.io/2021/12/09/%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="除自身以外数组的乘积一拿到这个题，思路还是有的，一看说明不准我用除法，意思就是不能投机取巧，，， 我心里一万个🐎🐎🐎飞过。 想了下，我可以使用2个数组保证每个索引位置的前缀积和后缀积，，，nice思路出来了  ，由于最后一个元素没有后缀积和第一个元素没有前缀积，初始化为1，这是不会影响乘积的，，，然后就是代码实现，做完看了下题解，不错思路差不多，， nice 1234567891011121">
+<meta property="og:description" content="除自身以外数组的乘积一拿到这个题，思路还是有的，一看说明不准我用除法，意思就是不能投机取巧，，， 我心里一万个🐎🐎🐎飞过。 想了下，我可以使用2个数组保存每个索引位置的前缀积和后缀积，，，nice思路出来了  ，由于最后一个元素没有后缀积和第一个元素没有前缀积，初始化为1，这是不会影响乘积的，，，然后就是代码实现，做完看了下题解，不错思路差不多，， nice 1234567891011121">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-09T11:44:46.000Z">
-<meta property="article:modified_time" content="2021-12-09T11:50:32.611Z">
+<meta property="article:modified_time" content="2021-12-09T11:50:57.042Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="数组">
 <meta name="twitter:card" content="summary">
@@ -342,7 +342,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-12-09T19:50:32+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-12-09T19:50:57+08:00">
                 2021-12-09
               </time>
             
@@ -430,7 +430,7 @@
 
       
         <h1 id="除自身以外数组的乘积"><a href="#除自身以外数组的乘积" class="headerlink" title="除自身以外数组的乘积"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xmf6z5/">除自身以外数组的乘积</a></h1><p>一拿到这个题，思路还是有的，一看说明不准我用除法，意思就是不能投机取巧，，， 我心里一万个🐎🐎🐎飞过。</p>
-<p>想了下，我可以使用2个数组保证每个索引位置的前缀积和后缀积，，，nice思路出来了  ，由于最后一个元素没有后缀积和第一个元素没有前缀积，初始化为1，这是不会影响乘积的，，，然后就是代码实现，做完看了下题解，不错思路差不多，， nice</p>
+<p>想了下，我可以使用2个数组保存每个索引位置的前缀积和后缀积，，，nice思路出来了  ，由于最后一个元素没有后缀积和第一个元素没有前缀积，初始化为1，这是不会影响乘积的，，，然后就是代码实现，做完看了下题解，不错思路差不多，， nice</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> zhy</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2021/12/9 17:49</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProductExceptSelf</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">int</span> n = nums.length;</span><br><span class="line">        <span class="keyword">int</span> pers[]=<span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        <span class="keyword">int</span> nexts[]=<span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        pers[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        nexts[n-<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            pers[i]=nums[i-<span class="number">1</span>]*pers[i-<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = n-<span class="number">2</span>; i&gt;=<span class="number">0</span>; i--) &#123;</span><br><span class="line">            nexts[i]=nums[i+<span class="number">1</span>]*nexts[i+<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">            nums[i]=nexts[i]*pers[i];</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> data[]=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</span><br><span class="line">        ProductExceptSelf a = <span class="keyword">new</span> ProductExceptSelf();</span><br><span class="line">        <span class="keyword">int</span>[] ints = a.productExceptSelf(data);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> anInt : ints) &#123;</span><br><span class="line">            System.out.print(anInt+<span class="string">&quot;,&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
