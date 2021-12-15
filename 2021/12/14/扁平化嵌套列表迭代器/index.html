@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="(扁平化嵌套列表迭代器)[https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;top-interview-questions&#x2F;xa3tsv&#x2F;]今天这题比起昨天的基本计算器 ，还算是简单的,主要是把题目看懂就好了  （大脑表示没有那么累。。。） 先把所有元素添加到队列中：再出队就可以了， 1234567891011121314151617181920212223242526p">
+<meta name="description" content="扁平化嵌套列表迭代器今天这题比起昨天的基本计算器 ，还算是简单的,主要是把题目看懂就好了  （大脑表示没有那么累。。。） 先把所有元素添加到队列中：再出队就可以了， 1234567891011121314151617181920212223242526public class NestedIterator implements Iterator&lt;Integer&gt; &amp;#123;    p">
 <meta property="og:type" content="article">
 <meta property="og:title" content="扁平化嵌套列表迭代器">
 <meta property="og:url" content="https://blacke1111.github.io/2021/12/14/%E6%89%81%E5%B9%B3%E5%8C%96%E5%B5%8C%E5%A5%97%E5%88%97%E8%A1%A8%E8%BF%AD%E4%BB%A3%E5%99%A8/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="(扁平化嵌套列表迭代器)[https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;top-interview-questions&#x2F;xa3tsv&#x2F;]今天这题比起昨天的基本计算器 ，还算是简单的,主要是把题目看懂就好了  （大脑表示没有那么累。。。） 先把所有元素添加到队列中：再出队就可以了， 1234567891011121314151617181920212223242526p">
+<meta property="og:description" content="扁平化嵌套列表迭代器今天这题比起昨天的基本计算器 ，还算是简单的,主要是把题目看懂就好了  （大脑表示没有那么累。。。） 先把所有元素添加到队列中：再出队就可以了， 1234567891011121314151617181920212223242526public class NestedIterator implements Iterator&lt;Integer&gt; &amp;#123;    p">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-14T13:23:35.000Z">
-<meta property="article:modified_time" content="2021-12-14T13:29:15.668Z">
+<meta property="article:modified_time" content="2021-12-15T14:33:36.709Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="队列">
 <meta name="twitter:card" content="summary">
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-12-14T21:29:15+08:00">
-                2021-12-14
+              <time title="更新于" itemprop="dateModified" datetime="2021-12-15T22:33:36+08:00">
+                2021-12-15
               </time>
             
           </span>
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  159
+                  149
                 </span>
               
 
@@ -429,7 +429,7 @@
       
 
       
-        <h1 id="扁平化嵌套列表迭代器-https-leetcode-cn-com-leetbook-read-top-interview-questions-xa3tsv"><a href="#扁平化嵌套列表迭代器-https-leetcode-cn-com-leetbook-read-top-interview-questions-xa3tsv" class="headerlink" title="(扁平化嵌套列表迭代器)[https://leetcode-cn.com/leetbook/read/top-interview-questions/xa3tsv/]"></a>(扁平化嵌套列表迭代器)[<a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xa3tsv/]">https://leetcode-cn.com/leetbook/read/top-interview-questions/xa3tsv/]</a></h1><p>今天这题比起昨天的基本计算器 ，还算是简单的,主要是把题目看懂就好了  （大脑表示没有那么累。。。）</p>
+        <h1 id="扁平化嵌套列表迭代器"><a href="#扁平化嵌套列表迭代器" class="headerlink" title="扁平化嵌套列表迭代器"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xa3tsv/">扁平化嵌套列表迭代器</a></h1><p>今天这题比起昨天的基本计算器 ，还算是简单的,主要是把题目看懂就好了  （大脑表示没有那么累。。。）</p>
 <p>先把所有元素添加到队列中：再出队就可以了，</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NestedIterator</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Deque&lt;Integer&gt; deque=<span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NestedIterator</span><span class="params">(List&lt;NestedInteger&gt; nestedList)</span> </span>&#123;</span><br><span class="line">       dfs(nestedList);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(List&lt;NestedInteger&gt; list)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (NestedInteger nestedInteger : list) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nestedInteger.isInteger())&#123;</span><br><span class="line">                deque.addLast(nestedInteger.getInteger());</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                dfs(nestedInteger.getList());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !deque.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> deque.pollFirst();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -632,7 +632,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%81%E5%B9%B3%E5%8C%96%E5%B5%8C%E5%A5%97%E5%88%97%E8%A1%A8%E8%BF%AD%E4%BB%A3%E5%99%A8-https-leetcode-cn-com-leetbook-read-top-interview-questions-xa3tsv"><span class="nav-number">1.</span> <span class="nav-text">(扁平化嵌套列表迭代器)[https:&#x2F;&#x2F;leetcode-cn.com&#x2F;leetbook&#x2F;read&#x2F;top-interview-questions&#x2F;xa3tsv&#x2F;]</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%81%E5%B9%B3%E5%8C%96%E5%B5%8C%E5%A5%97%E5%88%97%E8%A1%A8%E8%BF%AD%E4%BB%A3%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">扁平化嵌套列表迭代器</span></a></li></ol></div>
             
 
           </div>
