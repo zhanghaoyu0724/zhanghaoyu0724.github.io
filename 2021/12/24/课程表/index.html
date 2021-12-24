@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="课程表方法一DFS（深度优先遍历）：首先来一个自己想到的思路： ​    主要利用3个变量： ​        变量1.已经走完的节点 i（课程） &#x2F;&#x2F;int[] status &#x3D; new int[numCourses]; ​            它的值有2个状态： ​                0：未访问过该节点 ​                1：这个节点（课程）可以走通 ​">
+<meta name="description" content="课程表方法一DFS（深度优先遍历）：首先来一个自己想到的思路： ​    主要利用3个变量： ​        变量1.已经走完的节点 i（课程） &#x2F;&#x2F;int[] status &#x3D; new int[numCourses]; ​            它的值有2个状态：  0：未访问过该节点  1：这个节点（课程）可以走通   ​        变量2. 状态数组本，记录本次DFS是否访问过该节点，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="课程表">
 <meta property="og:url" content="https://blacke1111.github.io/2021/12/24/%E8%AF%BE%E7%A8%8B%E8%A1%A8/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="课程表方法一DFS（深度优先遍历）：首先来一个自己想到的思路： ​    主要利用3个变量： ​        变量1.已经走完的节点 i（课程） &#x2F;&#x2F;int[] status &#x3D; new int[numCourses]; ​            它的值有2个状态： ​                0：未访问过该节点 ​                1：这个节点（课程）可以走通 ​">
+<meta property="og:description" content="课程表方法一DFS（深度优先遍历）：首先来一个自己想到的思路： ​    主要利用3个变量： ​        变量1.已经走完的节点 i（课程） &#x2F;&#x2F;int[] status &#x3D; new int[numCourses]; ​            它的值有2个状态：  0：未访问过该节点  1：这个节点（课程）可以走通   ​        变量2. 状态数组本，记录本次DFS是否访问过该节点，">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-24T13:51:15.000Z">
-<meta property="article:modified_time" content="2021-12-24T15:05:25.311Z">
+<meta property="article:modified_time" content="2021-12-24T15:09:30.089Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="图论">
 <meta name="twitter:card" content="summary">
@@ -342,7 +342,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-12-24T23:05:25+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2021-12-24T23:09:30+08:00">
                 2021-12-24
               </time>
             
@@ -392,7 +392,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  742
+                  737
                 </span>
               
 
@@ -433,15 +433,19 @@
 <p>​    主要利用3个变量：</p>
 <p>​        变量1.已经走完的节点 i（课程） //int[] status = new int[numCourses];</p>
 <p>​            它的值有2个状态：</p>
-<p>​                0：未访问过该节点</p>
-<p>​                1：这个节点（课程）可以走通</p>
+<ul>
+<li><p>0：未访问过该节点</p>
+</li>
+<li><p>1：这个节点（课程）可以走通</p>
+</li>
+</ul>
 <p>​        变量2. 状态数组本，记录本次DFS是否访问过该节点，true表示访问过，反之亦然。 //boolean[] visited = new boolean[numCourses];</p>
 <p>​        变量3.Map集合表示每个节点的邻接节点。//HashMap&lt;Integer, List<Integer>&gt; map = new HashMap&lt;&gt;();</p>
 <p>DFS流程：</p>
 <p>​    1.判断是否已经被其他节点访问过，如果走过直接返回true  </p>
 <p>​    2.如果是自己走过该节点，那就出现了死环，返回false</p>
 <p>​    3.设置该节点本次流程已经访问过</p>
-<p>​    4.得到该节点的邻接表，再循环他的每个邻接节点进行dfs，如果dfs返回false表示出现了死环，直接返回false，如果为true，设置该节点的status[i]=true ,方便其他节点。也就是DFS流程的第一步，如果该节点没有邻接表那就是该节点（课程）不需要选修其他课程，直接返回true；</p>
+<p>​    4.得到该节点的邻接表，再循环他的每个邻接节点进行dfs，如果dfs返回false表示出现了死环，直接返回false，如果为true，设置该节点的status[i]=true ,方便其他节点。也就是DFS流程的第一步，如果该节点没有邻接表那就是该节点（课程）不需要选修其他课程</p>
 <p>​    5，判断完上面的条件如果没返回false，也就是没有出现死环，返回true，</p>
 <p>​     说实话有点绕对于我自己来说， 代码修修改改了半个小时</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canFinish</span><span class="params">(<span class="keyword">int</span> numCourses, <span class="keyword">int</span>[][] prerequisites)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span>[] status = <span class="keyword">new</span> <span class="keyword">int</span>[numCourses];</span><br><span class="line">       HashMap&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span>[] prerequisite : prerequisites) &#123;</span><br><span class="line">           List&lt;Integer&gt; objects1=<span class="keyword">null</span>;</span><br><span class="line">           <span class="keyword">if</span> ((objects1=map.get(prerequisite[<span class="number">0</span>]))!=<span class="keyword">null</span>)&#123;</span><br><span class="line">               objects1.add(prerequisite[<span class="number">1</span>]);</span><br><span class="line">           &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">               objects1=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">               objects1.add(prerequisite[<span class="number">1</span>]);</span><br><span class="line">               map.put(prerequisite[<span class="number">0</span>],objects1);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prerequisites.length; i++) &#123;</span><br><span class="line">           <span class="keyword">boolean</span>[] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[numCourses];</span><br><span class="line">         <span class="keyword">if</span> (!dfs(prerequisites[i][<span class="number">0</span>],status,visited,map))&#123;</span><br><span class="line">             <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span>[] status, <span class="keyword">boolean</span>[] visited, HashMap&lt;Integer, List&lt;Integer&gt;&gt; map)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (status[i]==<span class="number">1</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (visited[i])&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       visited[i]=<span class="keyword">true</span>;</span><br><span class="line">       List&lt;Integer&gt; integers = map.get(i);</span><br><span class="line">       <span class="keyword">if</span> (integers!=<span class="keyword">null</span>)&#123;</span><br><span class="line">           <span class="keyword">boolean</span> flag=<span class="keyword">true</span>;</span><br><span class="line">           <span class="keyword">for</span> (Integer integer : integers) &#123;</span><br><span class="line">               flag=dfs(integer,status,visited,map);</span><br><span class="line">               <span class="keyword">if</span> (!flag)&#123;</span><br><span class="line">                   <span class="keyword">break</span>;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (!flag)&#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">           &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">               status[i]=<span class="number">1</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">           status[i]=<span class="number">1</span>;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
