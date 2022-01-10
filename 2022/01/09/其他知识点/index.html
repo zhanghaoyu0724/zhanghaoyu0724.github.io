@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="双向队列," />
+  <meta name="keywords" content="zhy, NexT" />
 
 
 
@@ -79,18 +79,21 @@
 
 
 
-<meta name="description" content="滑动窗口最大值总结：改变以往的固定删除思想，，多想想能不能延迟删除， 1234567891011121314151617181920212223242526272829303132333435public class MaxSlidingWindow &amp;#123;    public static void main(String[] args) &amp;#123;        MaxSlidingW">
+<meta name="description" content="幂等性概念用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用。举个最简单的例子，那就是支付，用户购买商品后支付，支付扣款成功，但是返回结果的时候网络异常，此时钱已经扣了，用户再次点击按钮，此时会进行第二次扣款，返回结果成功，用户查询余额发现多扣钱了，流水记录也变成了两条。在以前的单应用系统中，我们只需要把数据操作放入事务中即可，发生错误立即回滚，但是再响应客户">
 <meta property="og:type" content="article">
-<meta property="og:title" content="滑动窗口最大值(延迟删除思想)">
-<meta property="og:url" content="https://blacke1111.github.io/2021/12/12/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC%E2%80%94%E2%80%94%E5%BB%B6%E8%BF%9F%E5%88%A0%E9%99%A4%E6%80%9D%E6%83%B3/index.html">
+<meta property="og:title" content="Rabbitmq其他知识点">
+<meta property="og:url" content="https://blacke1111.github.io/2022/01/09/%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="滑动窗口最大值总结：改变以往的固定删除思想，，多想想能不能延迟删除， 1234567891011121314151617181920212223242526272829303132333435public class MaxSlidingWindow &amp;#123;    public static void main(String[] args) &amp;#123;        MaxSlidingW">
+<meta property="og:description" content="幂等性概念用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用。举个最简单的例子，那就是支付，用户购买商品后支付，支付扣款成功，但是返回结果的时候网络异常，此时钱已经扣了，用户再次点击按钮，此时会进行第二次扣款，返回结果成功，用户查询余额发现多扣钱了，流水记录也变成了两条。在以前的单应用系统中，我们只需要把数据操作放入事务中即可，发生错误立即回滚，但是再响应客户">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-12-12T11:58:43.000Z">
-<meta property="article:modified_time" content="2021-12-15T14:33:59.369Z">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220109225502.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220109225545.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220109230021.png">
+<meta property="article:published_time" content="2022-01-09T14:42:58.000Z">
+<meta property="article:modified_time" content="2022-01-10T14:04:27.332Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="双向队列">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220109225502.png">
 
 
 
@@ -120,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://blacke1111.github.io/2021/12/12/滑动窗口最大值——延迟删除思想/"/>
+  <link rel="canonical" href="https://blacke1111.github.io/2022/01/09/其他知识点/"/>
 
 
 
 
 
-  <title>滑动窗口最大值(延迟删除思想) | 蓝天の博客</title>
+  <title>Rabbitmq其他知识点 | 蓝天の博客</title>
   
 
 
@@ -297,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/12/12/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC%E2%80%94%E2%80%94%E5%BB%B6%E8%BF%9F%E5%88%A0%E9%99%A4%E6%80%9D%E6%83%B3/">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2022/01/09/%E5%85%B6%E4%BB%96%E7%9F%A5%E8%AF%86%E7%82%B9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张浩宇">
@@ -314,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">滑动窗口最大值(延迟删除思想)</h1>
+          <h1 class="post-title" itemprop="name headline">Rabbitmq其他知识点</h1>
         
 
         <div class="post-meta">
@@ -326,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-12-12T19:58:43+08:00">
-                2021-12-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-01-09T22:42:58+08:00">
+                2022-01-09
               </time>
             
 
@@ -342,8 +345,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-12-15T22:33:59+08:00">
-                2021-12-15
+              <time title="更新于" itemprop="dateModified" datetime="2022-01-10T22:04:27+08:00">
+                2022-01-10
               </time>
             
           </span>
@@ -361,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
+                  <a href="/categories/RabbitMQ/" itemprop="url" rel="index">
+                    <span itemprop="name">RabbitMQ</span>
                   </a>
                 </span>
 
@@ -392,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  310
+                  2.1k
                 </span>
               
 
@@ -408,7 +411,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  7
                 </span>
               
             </div>
@@ -429,9 +432,33 @@
       
 
       
-        <h1 id="滑动窗口最大值"><a href="#滑动窗口最大值" class="headerlink" title="滑动窗口最大值"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xatgye/">滑动窗口最大值</a></h1><p>总结：改变以往的固定删除思想，，多想想能不能延迟删除，</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MaxSlidingWindow</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MaxSlidingWindow window = <span class="keyword">new</span> MaxSlidingWindow();</span><br><span class="line">        <span class="keyword">int</span> nums[]=&#123;<span class="number">9</span>,<span class="number">10</span>,<span class="number">9</span>,-<span class="number">7</span>,-<span class="number">4</span>,-<span class="number">8</span>,<span class="number">2</span>,-<span class="number">6</span>&#125;;</span><br><span class="line">        nums= window.maxSlidingWindow(nums,<span class="number">5</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            System.out.print(nums[i]+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        LinkedList&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();   </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (queue.size()&gt;<span class="number">0</span>&amp;&amp;nums[i]&gt;nums[queue.getLast()])&#123;</span><br><span class="line">                <span class="comment">//保持我们的头节点为最大值。 并且链表的值是递减的。</span></span><br><span class="line">                queue.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            queue.addLast(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res[]=<span class="keyword">new</span> <span class="keyword">int</span>[nums.length-k+<span class="number">1</span>];</span><br><span class="line">        res[<span class="number">0</span>]=nums[queue.getFirst()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;nums.length-k; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (queue.size() &gt; <span class="number">0</span> &amp;&amp; nums[i + k] &gt; nums[queue.getLast()]) &#123;</span><br><span class="line">                <span class="comment">//保持我们的头节点为最大值，。 并且链表的值是递减的。</span></span><br><span class="line">                queue.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            queue.addLast(i + k);</span><br><span class="line">            <span class="keyword">while</span> (queue.peek() &lt;= i) &#123;  </span><br><span class="line">                <span class="comment">//如果首个元素在当前的滑动窗口内，这不会影响我们的结果，但是当我们的头节点，不在滑动窗口内，要把它删除，并循环检测他的下一个节点是不是在滑动窗口内，不是也删除，</span></span><br><span class="line">                queue.removeFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            res[i + <span class="number">1</span>] = nums[queue.getFirst()];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="幂等性"><a href="#幂等性" class="headerlink" title="幂等性"></a><strong>幂等性</strong></h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a><strong>概念</strong></h2><p>用户对于同一操作发起的一次请求或者多次请求的结果是一致的，不会因为多次点击而产生了副作用。举个最简单的例子，那就是支付，用户购买商品后支付，支付扣款成功，但是返回结果的时候网络异常，此时钱已经扣了，用户再次点击按钮，此时会进行第二次扣款，返回结果成功，用户查询余额发现多扣钱了，流水记录也变成了两条。在以前的单应用系统中，我们只需要把数据操作放入事务中即可，发生错误立即回滚，但是再响应客户端的时候也有可能出现网络中断或者异常等等</p>
+<h2 id="消息重复消费"><a href="#消息重复消费" class="headerlink" title="消息重复消费"></a><strong>消息重复消费</strong></h2><p>消费者在消费 MQ 中的消息时，MQ 已把消息发送给消费者，消费者在给 MQ 返回 ack 时网络中断，故 MQ 未收到确认信息，该条消息会重新发给其他的消费者，或者在网络重连后再次发送给该消费者，但实际上该消费者已成功消费了该条消息，造成消费者消费了重复的消息。</p>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a><strong>解决思路</strong></h2><p>MQ 消费者的幂等性的解决一般使用全局 ID 或者写个唯一标识比如时间戳 或者 UUID 或者订单消费者消费 MQ 中的消息也可利用 MQ 的该 id 来判断，或者可按自己的规则生成一个全局唯一 id，每次消费消息时用该 id 先判断该消息是否已消费过。</p>
+<h2 id="消费端的幂等性保障"><a href="#消费端的幂等性保障" class="headerlink" title="消费端的幂等性保障"></a><strong>消费端的幂等性保障</strong></h2><p>在海量订单生成的业务高峰期，生产端有可能就会重复发生了消息，这时候消费端就要实现幂等性，这就意味着我们的消息永远不会被消费多次，即使我们收到了一样的消息。业界主流的幂等性有两种操作:a.唯一 ID+指纹码机制,利用数据库主键去重, b.利用 redis 的原子性去实现</p>
+<h2 id="唯一-ID-指纹码机制"><a href="#唯一-ID-指纹码机制" class="headerlink" title="唯一 ID+指纹码机制"></a>唯一 ID+指纹码机制</h2><p>指纹码:我们的一些规则或者时间戳加别的服务给到的唯一信息码,它并不一定是我们系统生成的，基本都是由我们的业务规则拼接而来，但是一定要保证唯一性，然后就利用查询语句进行判断这个 id 是否存在数据库中,优势就是实现简单就一个拼接，然后查询判断是否重复；劣势就是在高并发时，如果是单个数据库就会有写入性能瓶颈当然也可以采用分库分表提升性能，但也不是我们最推荐的方式。</p>
+<h2 id="Redis-原子性"><a href="#Redis-原子性" class="headerlink" title="Redis 原子性"></a><strong>Redis 原子性</strong></h2><p>利用 redis 执行 setnx 命令，天然具有幂等性。从而实现不重复消费</p>
+<h1 id="优先级队列"><a href="#优先级队列" class="headerlink" title="优先级队列"></a><strong>优先级队列</strong></h1><h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a><strong>使用场景</strong></h2><p>在我们系统中有一个订单催付的场景，我们的客户在天猫下的订单,淘宝会及时将订单推送给我们，如果在用户设定的时间内未付款那么就会给用户推送一条短信提醒，很简单的一个功能对吧，但是，tmall商家对我们来说，肯定是要分大客户和小客户的对吧，比如像苹果，小米这样大商家一年起码能给我们创造很大的利润，所以理应当然，他们的订单必须得到优先处理，而曾经我们的后端系统是使用 redis 来存放的定时轮询，大家都知道 redis 只能用 List 做一个简简单单的消息队列，并不能实现一个优先级的场景，所以订单量大了后采用RabbitMQ 进行改造和优化,如果发现是大客户的订单给一个相对比较高的优先级，否则就是默认优先级。</p>
+<h2 id="如何添加"><a href="#如何添加" class="headerlink" title="如何添加"></a><strong>如何添加</strong></h2><h3 id="a-控制台页面添加"><a href="#a-控制台页面添加" class="headerlink" title="a.控制台页面添加"></a><strong>a.控制台页面添加</strong></h3><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220109225502.png"></p>
+<h3 id="b-队列中代码添加优先级"><a href="#b-队列中代码添加优先级" class="headerlink" title="b.队列中代码添加优先级"></a>b.队列中代码添加优先级</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap();</span><br><span class="line">params.put(<span class="string">&quot;x-max-priority&quot;</span>, <span class="number">10</span>);  <span class="comment">//设置队列中消息的最大优先级</span></span><br><span class="line">channel.queueDeclare(<span class="string">&quot;hello&quot;</span>, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, params);</span><br></pre></td></tr></table></figure>
 
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220109225545.png"></p>
+<h3 id="c-消息中代码添加优先级"><a href="#c-消息中代码添加优先级" class="headerlink" title="c.消息中代码添加优先级"></a>c.消息中代码添加优先级</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AMQP.BasicProperties properties = <span class="keyword">new</span> </span><br><span class="line">AMQP.BasicProperties().builder().priority(<span class="number">5</span>).build();   <span class="comment">//为消息设置优先级</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>d.注意事项</strong></p>
+<p>要让队列实现优先级需要做的事情有如下事情:队列需要设置为优先级队列，消息需要设置消息的优先级，消费者需要等待消息已经发送到队列中才去消费因为，这样才有机会对消息进行排序</p>
+<h2 id="实战"><a href="#实战" class="headerlink" title="实战"></a><strong>实战</strong></h2><h3 id="a-消息生产者"><a href="#a-消息生产者" class="headerlink" title="a.消息生产者"></a>a.消息生产者</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> (Channel channel = RabbitMqUtils.getChannel();) &#123;</span><br><span class="line">            <span class="comment">//给消息赋予一个 priority 属性</span></span><br><span class="line">            AMQP.BasicProperties properties = <span class="keyword">new</span></span><br><span class="line">                    AMQP.BasicProperties().builder().priority(<span class="number">5</span>).build();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; <span class="number">11</span>; i++) &#123;</span><br><span class="line">                String message = <span class="string">&quot;info&quot;</span> + i;</span><br><span class="line">                <span class="keyword">if</span> (i == <span class="number">5</span>) &#123;</span><br><span class="line">                    channel.basicPublish(<span class="string">&quot;&quot;</span>, QUEUE_NAME, properties, message.getBytes());</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    channel.basicPublish(<span class="string">&quot;&quot;</span>, QUEUE_NAME, <span class="keyword">null</span>, message.getBytes());</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;发送消息完成:&quot;</span> + message);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="b-消息消费者"><a href="#b-消息消费者" class="headerlink" title="b.消息消费者"></a>b.消息消费者</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Channel channel = RabbitMqUtils.getChannel();</span><br><span class="line">        <span class="comment">//设置队列的最大优先级 最大可以设置到 255 官网推荐 1-10 如果设置太高比较吃内存和 CPU</span></span><br><span class="line">        Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap();</span><br><span class="line">        params.put(<span class="string">&quot;x-max-priority&quot;</span>, <span class="number">10</span>);</span><br><span class="line">        channel.queueDeclare(QUEUE_NAME, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, params);</span><br><span class="line">        System.out.println(<span class="string">&quot;消费者启动等待消费......&quot;</span>);</span><br><span class="line">        DeliverCallback deliverCallback = (consumerTag, delivery) -&gt; &#123;</span><br><span class="line">            String receivedMessage = <span class="keyword">new</span> String(delivery.getBody());</span><br><span class="line">            System.out.println(<span class="string">&quot;接收到消息:&quot;</span> + receivedMessage);</span><br><span class="line">        &#125;;</span><br><span class="line">        channel.basicConsume(QUEUE_NAME, <span class="keyword">true</span>, deliverCallback, (consumerTag) -&gt; &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;消费者无法消费消息时调用，如队列被删除&quot;</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="惰性队列"><a href="#惰性队列" class="headerlink" title="惰性队列"></a><strong>惰性队列</strong></h2><h3 id="使用场景-1"><a href="#使用场景-1" class="headerlink" title="使用场景"></a><strong>使用场景</strong></h3><p>RabbitMQ 从 3.6.0 版本开始引入了惰性队列的概念。惰性队列会尽可能的将消息存入磁盘中，而在消费者消费到相应的消息时才会被加载到内存中，它的一个重要的设计目标是能够支持更长的队列，即支持更多的消息存储。当消费者由于各种各样的原因(比如消费者下线、宕机亦或者是由于维护而关闭等)而致使长时间内不能消费消息造成堆积时，惰性队列就很有必要了。默认情况下，当生产者将消息发送到 RabbitMQ 的时候，队列中的消息会尽可能的存储在内存之中，</p>
+<p>这样可以更加快速的将消息发送给消费者。即使是持久化的消息，在被写入磁盘的同时也会在内存中驻留一份备份。当 RabbitMQ 需要释放内存的时候，会将内存中的消息换页至磁盘中，这个操作会耗费较长的时间，也会阻塞队列的操作，进而无法接收新的消息。虽然 RabbitMQ 的开发者们一直在升级相关的算法，但是效果始终不太理想，尤其是在消息量特别大的时候。</p>
+<h3 id="两种模式"><a href="#两种模式" class="headerlink" title="两种模式"></a><strong>两种模式</strong></h3><p>队列具备两种模式：default 和 lazy。默认的为 default 模式，在 3.6.0 之前的版本无需做任何变更。lazy模式即为惰性队列的模式，可以通过调用 channel.queueDeclare 方法的时候在参数中设置，也可以通过Policy 的方式设置，如果一个队列同时使用这两种方式设置的话，那么 Policy 的方式具备更高的优先级。如果要通过声明的方式改变已有队列的模式的话，那么只能先删除队列，然后再重新声明一个新的。在队列声明的时候可以通过“x-queue-mode”参数来设置队列的模式，取值为“default”和“lazy”。</p>
+<p>下面示例中演示了一个惰性队列的声明细节：<br>Map&lt;String, Object&gt; args = new HashMap&lt;String, Object&gt;();<br>args.put(“x-queue-mode”, “lazy”);<br>channel.queueDeclare(“myqueue”, false, false, false, args);</p>
+<h3 id="内存开销对比"><a href="#内存开销对比" class="headerlink" title="内存开销对比"></a><strong>内存开销对比</strong></h3><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220109230021.png"></p>
+<p>在发送 1 百万条消息，每条消息大概占 1KB 的情况下，普通队列占用内存是 1.2GB，而惰性队列仅仅占用 1.5MB</p>
 
       
     </div>
@@ -456,12 +483,6 @@
 	</div>
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/%E5%8F%8C%E5%90%91%E9%98%9F%E5%88%97/" rel="tag"># 双向队列</a>
-          
-        </div>
-      
 
       
       
@@ -471,8 +492,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/12/11/%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/" rel="next" title="数据流中的中位数">
-                <i class="fa fa-chevron-left"></i> 数据流中的中位数
+              <a href="/2022/01/09/%E5%8F%91%E5%B8%83%E7%A1%AE%E8%AE%A4%E9%AB%98%E7%BA%A7/" rel="next" title="发布确认高级">
+                <i class="fa fa-chevron-left"></i> 发布确认高级
               </a>
             
           </div>
@@ -481,8 +502,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2021/12/13/%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8II/" rel="prev" title="基本计算器II">
-                基本计算器II <i class="fa fa-chevron-right"></i>
+              <a href="/2022/01/09/RabbitMQ%E9%9B%86%E7%BE%A4/" rel="prev" title="RabbitMQ集群">
+                RabbitMQ集群 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -631,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">滑动窗口最大值</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%82%E7%AD%89%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">幂等性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E6%B6%88%E8%B4%B9"><span class="nav-number">1.2.</span> <span class="nav-text">消息重复消费</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF"><span class="nav-number">1.3.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E8%B4%B9%E7%AB%AF%E7%9A%84%E5%B9%82%E7%AD%89%E6%80%A7%E4%BF%9D%E9%9A%9C"><span class="nav-number">1.4.</span> <span class="nav-text">消费端的幂等性保障</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%94%AF%E4%B8%80-ID-%E6%8C%87%E7%BA%B9%E7%A0%81%E6%9C%BA%E5%88%B6"><span class="nav-number">1.5.</span> <span class="nav-text">唯一 ID+指纹码机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="nav-number">1.6.</span> <span class="nav-text">Redis 原子性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7%E9%98%9F%E5%88%97"><span class="nav-number">2.</span> <span class="nav-text">优先级队列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B7%BB%E5%8A%A0"><span class="nav-number">2.2.</span> <span class="nav-text">如何添加</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%8E%A7%E5%88%B6%E5%8F%B0%E9%A1%B5%E9%9D%A2%E6%B7%BB%E5%8A%A0"><span class="nav-number">2.2.1.</span> <span class="nav-text">a.控制台页面添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E9%98%9F%E5%88%97%E4%B8%AD%E4%BB%A3%E7%A0%81%E6%B7%BB%E5%8A%A0%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">2.2.2.</span> <span class="nav-text">b.队列中代码添加优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E6%B6%88%E6%81%AF%E4%B8%AD%E4%BB%A3%E7%A0%81%E6%B7%BB%E5%8A%A0%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">2.2.3.</span> <span class="nav-text">c.消息中代码添加优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98"><span class="nav-number">2.3.</span> <span class="nav-text">实战</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E6%B6%88%E6%81%AF%E7%94%9F%E4%BA%A7%E8%80%85"><span class="nav-number">2.3.1.</span> <span class="nav-text">a.消息生产者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#b-%E6%B6%88%E6%81%AF%E6%B6%88%E8%B4%B9%E8%80%85"><span class="nav-number">2.3.2.</span> <span class="nav-text">b.消息消费者</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%B0%E6%80%A7%E9%98%9F%E5%88%97"><span class="nav-number">2.4.</span> <span class="nav-text">惰性队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="nav-number">2.4.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.4.2.</span> <span class="nav-text">两种模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%BC%80%E9%94%80%E5%AF%B9%E6%AF%94"><span class="nav-number">2.4.3.</span> <span class="nav-text">内存开销对比</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

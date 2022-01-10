@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="WorkQueues轮询机制：启动两个消费者，一个生产者，  这两个消费者轮询的消费生产者生产的消息。 生产者： 1234567891011121314public class Task01 &amp;#123;    private static final String QUEUE_NAME&#x3D;&quot;hello&quot;;    public static void main(String[]">
+<meta name="description" content="轮询机制：启动两个消费者，一个生产者，  这两个消费者轮询的消费生产者生产的消息。 生产者： 1234567891011121314public class Task01 &amp;#123;    private static final String QUEUE_NAME&#x3D;&quot;hello&quot;;    public static void main(String[] args) thro">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WorkQueues">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/06/WorkQueues/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="WorkQueues轮询机制：启动两个消费者，一个生产者，  这两个消费者轮询的消费生产者生产的消息。 生产者： 1234567891011121314public class Task01 &amp;#123;    private static final String QUEUE_NAME&#x3D;&quot;hello&quot;;    public static void main(String[]">
+<meta property="og:description" content="轮询机制：启动两个消费者，一个生产者，  这两个消费者轮询的消费生产者生产的消息。 生产者： 1234567891011121314public class Task01 &amp;#123;    private static final String QUEUE_NAME&#x3D;&quot;hello&quot;;    public static void main(String[] args) thro">
 <meta property="og:locale">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220106174234.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220106183854.png">
@@ -95,7 +95,7 @@
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220106194218.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220106200136.png">
 <meta property="article:published_time" content="2022-01-06T09:39:13.000Z">
-<meta property="article:modified_time" content="2022-01-06T12:03:53.899Z">
+<meta property="article:modified_time" content="2022-01-10T14:04:31.491Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220106174234.png">
@@ -350,8 +350,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-01-06T20:03:53+08:00">
-                2022-01-06
+              <time title="更新于" itemprop="dateModified" datetime="2022-01-10T22:04:31+08:00">
+                2022-01-10
               </time>
             
           </span>
@@ -437,7 +437,7 @@
       
 
       
-        <h1 id="WorkQueues"><a href="#WorkQueues" class="headerlink" title="WorkQueues"></a>WorkQueues</h1><h2 id="轮询机制："><a href="#轮询机制：" class="headerlink" title="轮询机制："></a>轮询机制：</h2><p>启动两个消费者，一个生产者， </p>
+        <h2 id="轮询机制："><a href="#轮询机制：" class="headerlink" title="轮询机制："></a>轮询机制：</h2><p>启动两个消费者，一个生产者， </p>
 <p>这两个消费者轮询的消费生产者生产的消息。</p>
 <p>生产者：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task01</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String QUEUE_NAME=<span class="string">&quot;hello&quot;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span>  Exception</span>&#123;</span><br><span class="line">        Channel channel = RabbitMqUtils.getChannel();</span><br><span class="line">        channel.queueDeclare(QUEUE_NAME, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">null</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;输入消息：&quot;</span>);</span><br><span class="line">        Scanner scanner=<span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">        <span class="keyword">while</span> (scanner.hasNext()) &#123;</span><br><span class="line">            String message = scanner.next();</span><br><span class="line">            channel.basicPublish(<span class="string">&quot;&quot;</span>, QUEUE_NAME, <span class="keyword">null</span>, message.getBytes());</span><br><span class="line">            System.out.println(<span class="string">&quot;消息发送完成&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -619,7 +619,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -684,7 +684,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WorkQueues"><span class="nav-number">1.</span> <span class="nav-text">WorkQueues</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AE%E8%AF%A2%E6%9C%BA%E5%88%B6%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">轮询机制：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%BA%94%E7%AD%94"><span class="nav-number">1.2.</span> <span class="nav-text">消息应答</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E8%87%AA%E5%8A%A8%E9%87%8D%E6%96%B0%E5%85%A5%E9%98%9F"><span class="nav-number">1.3.</span> <span class="nav-text">消息自动重新入队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.4.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.4.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.4.2.</span> <span class="nav-text">队列如何实现持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%AE%9E%E7%8E%B0%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">1.4.3.</span> <span class="nav-text">消息实现持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%85%AC%E5%B9%B3%E5%88%86%E5%8F%91"><span class="nav-number">1.4.4.</span> <span class="nav-text">不公平分发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%8F%96%E5%80%BC"><span class="nav-number">1.4.5.</span> <span class="nav-text">预取值</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AE%E8%AF%A2%E6%9C%BA%E5%88%B6%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">轮询机制：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%BA%94%E7%AD%94"><span class="nav-number">2.</span> <span class="nav-text">消息应答</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E8%87%AA%E5%8A%A8%E9%87%8D%E6%96%B0%E5%85%A5%E9%98%9F"><span class="nav-number">3.</span> <span class="nav-text">消息自动重新入队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">4.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">4.2.</span> <span class="nav-text">队列如何实现持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E5%AE%9E%E7%8E%B0%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">4.3.</span> <span class="nav-text">消息实现持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%85%AC%E5%B9%B3%E5%88%86%E5%8F%91"><span class="nav-number">4.4.</span> <span class="nav-text">不公平分发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E5%8F%96%E5%80%BC"><span class="nav-number">4.5.</span> <span class="nav-text">预取值</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -725,7 +725,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">86.8k</span>
+    <span title="博客全站字数">91.6k</span>
   
 </div>
 

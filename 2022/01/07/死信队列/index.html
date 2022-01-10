@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="死信队列 消息 TTL 过期 队列达到最大长度(队列满了，无法再添加数据到 mq 中) 消息被拒绝(basic.reject 或 basic.nack)并且 requeue&#x3D;false. 实战： 消息 TTL 过期看教程初始化交换机和队列，和它们之间的关系都是写在生产者或者消费者中，我这里是把他们单独写了一个配置·类 123456789101112131415161718192021222324">
+<meta name="description" content="消息 TTL 过期 队列达到最大长度(队列满了，无法再添加数据到 mq 中) 消息被拒绝(basic.reject 或 basic.nack)并且 requeue&#x3D;false. 实战： 消息 TTL 过期看教程初始化交换机和队列，和它们之间的关系都是写在生产者或者消费者中，我这里是把他们单独写了一个配置·类 123456789101112131415161718192021222324252627">
 <meta property="og:type" content="article">
 <meta property="og:title" content="死信队列">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/07/%E6%AD%BB%E4%BF%A1%E9%98%9F%E5%88%97/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="死信队列 消息 TTL 过期 队列达到最大长度(队列满了，无法再添加数据到 mq 中) 消息被拒绝(basic.reject 或 basic.nack)并且 requeue&#x3D;false. 实战： 消息 TTL 过期看教程初始化交换机和队列，和它们之间的关系都是写在生产者或者消费者中，我这里是把他们单独写了一个配置·类 123456789101112131415161718192021222324">
+<meta property="og:description" content="消息 TTL 过期 队列达到最大长度(队列满了，无法再添加数据到 mq 中) 消息被拒绝(basic.reject 或 basic.nack)并且 requeue&#x3D;false. 实战： 消息 TTL 过期看教程初始化交换机和队列，和它们之间的关系都是写在生产者或者消费者中，我这里是把他们单独写了一个配置·类 123456789101112131415161718192021222324252627">
 <meta property="og:locale">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220107232003.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220108190637.png">
 <meta property="article:published_time" content="2022-01-07T14:04:07.000Z">
-<meta property="article:modified_time" content="2022-01-09T13:18:30.553Z">
+<meta property="article:modified_time" content="2022-01-10T14:04:33.102Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220107232003.png">
@@ -344,8 +344,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-01-09T21:18:30+08:00">
-                2022-01-09
+              <time title="更新于" itemprop="dateModified" datetime="2022-01-10T22:04:33+08:00">
+                2022-01-10
               </time>
             
           </span>
@@ -431,7 +431,7 @@
       
 
       
-        <h1 id="死信队列"><a href="#死信队列" class="headerlink" title=" 死信队列 "></a><center> 死信队列 </center></h1><p>消息 TTL 过期</p>
+        <p>消息 TTL 过期</p>
 <p>队列达到最大长度(队列满了，无法再添加数据到 mq 中)</p>
 <p>消息被拒绝(basic.reject 或 basic.nack)并且 requeue=false.</p>
 <h2 id="实战："><a href="#实战：" class="headerlink" title="实战："></a>实战：</h2><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220107232003.png"></p>
@@ -604,7 +604,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">80</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -669,7 +669,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%BB%E4%BF%A1%E9%98%9F%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text"> 死信队列 </span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">实战：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF-TTL-%E8%BF%87%E6%9C%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">消息 TTL 过期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E8%BE%BE%E5%88%B0%E6%9C%80%E5%A4%A7%E9%95%BF%E5%BA%A6"><span class="nav-number">1.1.2.</span> <span class="nav-text">队列达到最大长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%92%E7%BB%9D%E7%AD%BE%E6%94%B6%E6%B6%88%E6%81%AF"><span class="nav-number">1.1.3.</span> <span class="nav-text">拒绝签收消息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97"><span class="nav-number">2.</span> <span class="nav-text">延迟队列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E6%A6%82%E5%BF%B5"><span class="nav-number">2.1.</span> <span class="nav-text">延迟队列概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.2.</span> <span class="nav-text">延迟队列使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ-%E4%B8%AD%E7%9A%84-TTL"><span class="nav-number">2.2.1.</span> <span class="nav-text">RabbitMQ 中的 TTL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E8%AE%BE%E7%BD%AE%E5%92%8C%E6%B6%88%E6%81%AF%E8%AE%BE%E7%BD%AE%E4%B8%A4%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.2.2.</span> <span class="nav-text">队列设置和消息设置两者的区别</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">实战：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E6%81%AF-TTL-%E8%BF%87%E6%9C%9F"><span class="nav-number">1.1.</span> <span class="nav-text">消息 TTL 过期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E8%BE%BE%E5%88%B0%E6%9C%80%E5%A4%A7%E9%95%BF%E5%BA%A6"><span class="nav-number">1.2.</span> <span class="nav-text">队列达到最大长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%92%E7%BB%9D%E7%AD%BE%E6%94%B6%E6%B6%88%E6%81%AF"><span class="nav-number">1.3.</span> <span class="nav-text">拒绝签收消息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97"><span class="nav-number"></span> <span class="nav-text">延迟队列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">延迟队列概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E9%98%9F%E5%88%97%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">延迟队列使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ-%E4%B8%AD%E7%9A%84-TTL"><span class="nav-number">2.1.</span> <span class="nav-text">RabbitMQ 中的 TTL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E8%AE%BE%E7%BD%AE%E5%92%8C%E6%B6%88%E6%81%AF%E8%AE%BE%E7%BD%AE%E4%B8%A4%E8%80%85%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.2.</span> <span class="nav-text">队列设置和消息设置两者的区别</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -710,7 +710,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">86.8k</span>
+    <span title="博客全站字数">91.6k</span>
   
 </div>
 
