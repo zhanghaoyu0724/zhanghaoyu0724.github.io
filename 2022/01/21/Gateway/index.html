@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121195428.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121212754.png">
 <meta property="article:published_time" content="2022-01-21T11:23:20.000Z">
-<meta property="article:modified_time" content="2022-01-21T13:29:12.337Z">
+<meta property="article:modified_time" content="2022-01-22T12:10:45.042Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Gateway">
 <meta name="twitter:card" content="summary">
@@ -346,8 +346,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-01-21T21:29:12+08:00">
-                2022-01-21
+              <time title="更新于" itemprop="dateModified" datetime="2022-01-22T20:10:45+08:00">
+                2022-01-22
               </time>
             
           </span>
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1.3k
                 </span>
               
 
@@ -459,6 +459,9 @@
 <p>利用Bean方式注入：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GateWayConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RouteLocator <span class="title">customRouteLocator</span><span class="params">(RouteLocatorBuilder routeLocatorBuilder)</span></span>&#123;</span><br><span class="line">        RouteLocatorBuilder.Builder routes = routeLocatorBuilder.routes();</span><br><span class="line">        routes.route(<span class="string">&quot;path_rout&quot;</span>, (r)-&gt;</span><br><span class="line">                &#123; <span class="keyword">return</span> r.path(<span class="string">&quot;/guonei&quot;</span>).uri(<span class="string">&quot;http://news.baidu.com&quot;</span>);&#125;</span><br><span class="line">        ).build();</span><br><span class="line">        <span class="keyword">return</span> routes.build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<p>过滤器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyLogGateWayFilter</span> <span class="keyword">implements</span> <span class="title">GlobalFilter</span>, <span class="title">Ordered</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Mono&lt;Void&gt; <span class="title">filter</span><span class="params">(ServerWebExchange exchange, GatewayFilterChain chain)</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;****************come int MyLogGateWayFilter: &quot;</span>+<span class="keyword">new</span> Date());</span><br><span class="line">        ServerHttpRequest request = exchange.getRequest();</span><br><span class="line">        String uname = request.getQueryParams().getFirst(<span class="string">&quot;uname&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (uname==<span class="keyword">null</span>)&#123;</span><br><span class="line">            log.info(<span class="string">&quot;**********用户名为null，非法用户&quot;</span>);</span><br><span class="line">            exchange.getResponse().setStatusCode(HttpStatus.NOT_ACCEPTABLE);</span><br><span class="line">            <span class="keyword">return</span> exchange.getResponse().setComplete();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> chain.filter(exchange);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getOrder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -507,6 +510,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/01/22/%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83/" rel="prev" title="配置中心">
+                配置中心 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -589,7 +596,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-count">98</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -695,7 +702,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">104.5k</span>
+    <span title="博客全站字数">106.3k</span>
   
 </div>
 
