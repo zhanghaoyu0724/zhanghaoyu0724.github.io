@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="zhy, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="二. Netty 入门1. 概述1.1 Netty 是什么？12Netty is an asynchronous event-driven network application frameworkfor rapid development of maintainable high performance protocol servers &amp; clients.  Netty 是一个异步的、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty入门">
+<meta property="og:url" content="https://blacke1111.github.io/2022/02/11/Netty%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="蓝天の博客">
+<meta property="og:description" content="二. Netty 入门1. 概述1.1 Netty 是什么？12Netty is an asynchronous event-driven network application frameworkfor rapid development of maintainable high performance protocol servers &amp; clients.  Netty 是一个异步的、">
+<meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0005.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0006.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0007.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0040.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0042.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0041.png">
+<meta property="article:published_time" content="2022-02-11T11:24:25.000Z">
+<meta property="article:modified_time" content="2022-02-11T13:36:53.106Z">
+<meta property="article:author" content="Zhang Hao Hu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0005.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":8,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://blacke1111.github.io/2022/02/11/Netty入门/"/>
+
+
+
+
+
+  <title>Netty入门 | 蓝天の博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蓝天の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2022/02/11/Netty%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张浩宇">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蓝天の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Netty入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-02-11T19:24:25+08:00">
+                2022-02-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-02-11T21:36:53+08:00">
+                2022-02-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/netty/" itemprop="url" rel="index">
+                    <span itemprop="name">netty</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="二-Netty-入门"><a href="#二-Netty-入门" class="headerlink" title="二. Netty 入门"></a>二. Netty 入门</h1><h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><h3 id="1-1-Netty-是什么？"><a href="#1-1-Netty-是什么？" class="headerlink" title="1.1 Netty 是什么？"></a>1.1 Netty 是什么？</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Netty <span class="keyword">is</span> an asynchronous event-driven network <span class="built_in">application</span> framework</span><br><span class="line"><span class="keyword">for</span> rapid development <span class="keyword">of</span> maintainable high performance protocol servers &amp; clients.</span><br></pre></td></tr></table></figure>
+
+<p>Netty 是一个异步的、基于事件驱动的网络应用框架，用于快速开发可维护、高性能的网络服务器和客户端</p>
+<h3 id="1-2-Netty-的作者"><a href="#1-2-Netty-的作者" class="headerlink" title="1.2 Netty 的作者"></a>1.2 Netty 的作者</h3><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0005.png"></p>
+<p>他还是另一个著名网络应用框架 Mina 的重要贡献者</p>
+<h3 id="1-3-Netty-的地位"><a href="#1-3-Netty-的地位" class="headerlink" title="1.3 Netty 的地位"></a>1.3 Netty 的地位</h3><p>Netty 在 Java 网络应用框架中的地位就好比：Spring 框架在 JavaEE 开发中的地位</p>
+<p>以下的框架都使用了 Netty，因为它们有网络通信需求！</p>
+<ul>
+<li>Cassandra - nosql 数据库</li>
+<li>Spark - 大数据分布式计算框架</li>
+<li>Hadoop - 大数据分布式存储框架</li>
+<li>RocketMQ - ali 开源的消息队列</li>
+<li>ElasticSearch - 搜索引擎</li>
+<li>gRPC - rpc 框架</li>
+<li>Dubbo - rpc 框架</li>
+<li>Spring 5.x - flux api 完全抛弃了 tomcat ，使用 netty 作为服务器端</li>
+<li>Zookeeper - 分布式协调框架</li>
+</ul>
+<h3 id="1-4-Netty-的优势"><a href="#1-4-Netty-的优势" class="headerlink" title="1.4 Netty 的优势"></a>1.4 Netty 的优势</h3><ul>
+<li>Netty vs NIO，工作量大，bug 多<ul>
+<li>需要自己构建协议</li>
+<li>解决 TCP 传输问题，如粘包、半包</li>
+<li>epoll 空轮询导致 CPU 100%</li>
+<li>对 API 进行增强，使之更易用，如 FastThreadLocal =&gt; ThreadLocal，ByteBuf =&gt; ByteBuffer</li>
+</ul>
+</li>
+<li>Netty vs 其它网络应用框架<ul>
+<li>Mina 由 apache 维护，将来 3.x 版本可能会有较大重构，破坏 API 向下兼容性，Netty 的开发迭代更迅速，API 更简洁、文档更优秀</li>
+<li>久经考验，16年，Netty 版本<ul>
+<li>2.x 2004</li>
+<li>3.x 2008</li>
+<li>4.x 2013</li>
+<li>5.x 已废弃（没有明显的性能提升，维护成本高）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Hello-World"><a href="#2-Hello-World" class="headerlink" title="2. Hello World"></a>2. Hello World</h2><h3 id="2-1-目标"><a href="#2-1-目标" class="headerlink" title="2.1 目标"></a>2.1 目标</h3><p>开发一个简单的服务器端和客户端</p>
+<ul>
+<li>客户端向服务器端发送 hello, world</li>
+<li>服务器仅接收，不返回</li>
+</ul>
+<p>加入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.netty<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>netty-all<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.1.39.Final<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="2-2-服务器端"><a href="#2-2-服务器端" class="headerlink" title="2.2 服务器端"></a>2.2 服务器端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ServerBootstrap()</span><br><span class="line">    .group(<span class="keyword">new</span> NioEventLoopGroup()) <span class="comment">// 1</span></span><br><span class="line">    .channel(NioServerSocketChannel.class) <span class="comment">// 2</span></span><br><span class="line">    .childHandler(<span class="keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123; <span class="comment">// 3</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(NioSocketChannel ch)</span> </span>&#123;</span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> StringDecoder()); <span class="comment">// 5</span></span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> SimpleChannelInboundHandler&lt;String&gt;() &#123; <span class="comment">// 6</span></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">channelRead0</span><span class="params">(ChannelHandlerContext ctx, String msg)</span> </span>&#123;</span><br><span class="line">                    System.out.println(msg);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .bind(<span class="number">8080</span>); <span class="comment">// 4</span></span><br></pre></td></tr></table></figure>
+
+<p>代码解读</p>
+<ul>
+<li><p>1 处，创建 NioEventLoopGroup，可以简单理解为 <code>线程池 + Selector</code> 后面会详细展开</p>
+</li>
+<li><p>2 处，选择服务 Scoket 实现类，其中 NioServerSocketChannel 表示基于 NIO 的服务器端实现，其它实现还有</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0006.png"></p>
+</li>
+<li><p>3 处，为啥方法叫 childHandler，是接下来添加的处理器都是给 SocketChannel 用的，而不是给 ServerSocketChannel。ChannelInitializer 处理器（仅执行一次），它的作用是待客户端 SocketChannel 建立连接后，执行 initChannel 以便添加更多的处理器</p>
+</li>
+<li><p>4 处，ServerSocketChannel 绑定的监听端口</p>
+</li>
+<li><p>5 处，SocketChannel 的处理器，解码 ByteBuf =&gt; String</p>
+</li>
+<li><p>6 处，SocketChannel 的业务处理器，使用上一个处理器的处理结果</p>
+</li>
+</ul>
+<h3 id="2-3-客户端"><a href="#2-3-客户端" class="headerlink" title="2.3 客户端"></a>2.3 客户端</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> Bootstrap()</span><br><span class="line">    .group(<span class="keyword">new</span> NioEventLoopGroup()) <span class="comment">// 1</span></span><br><span class="line">    .channel(NioSocketChannel.class) <span class="comment">// 2</span></span><br><span class="line">    .handler(<span class="keyword">new</span> ChannelInitializer&lt;Channel&gt;() &#123; <span class="comment">// 3</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(Channel ch)</span> </span>&#123;</span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> StringEncoder()); <span class="comment">// 8</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .connect(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8080</span>) <span class="comment">// 4</span></span><br><span class="line">    .sync() <span class="comment">// 5</span></span><br><span class="line">    .channel() <span class="comment">// 6</span></span><br><span class="line">    .writeAndFlush(<span class="keyword">new</span> Date() + <span class="string">&quot;: hello world!&quot;</span>); <span class="comment">// 7</span></span><br></pre></td></tr></table></figure>
+
+<p>代码解读</p>
+<ul>
+<li><p>1 处，创建 NioEventLoopGroup，同 Server</p>
+</li>
+<li><p>2 处，选择客户 Socket 实现类，NioSocketChannel 表示基于 NIO 的客户端实现，其它实现还有</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0007.png"></p>
+</li>
+<li><p>3 处，添加 SocketChannel 的处理器，ChannelInitializer 处理器（仅执行一次），它的作用是待客户端 SocketChannel 建立连接后，执行 initChannel 以便添加更多的处理器</p>
+</li>
+<li><p>4 处，指定要连接的服务器和端口</p>
+</li>
+<li><p>5 处，Netty 中很多方法都是异步的，如 connect，这时需要使用 sync 方法等待 connect 建立连接完毕</p>
+</li>
+<li><p>6 处，获取 channel 对象，它即为通道抽象，可以进行数据读写操作</p>
+</li>
+<li><p>7 处，写入消息并清空缓冲区</p>
+</li>
+<li><p>8 处，消息会经过通道 handler 处理，这里是将 String =&gt; ByteBuf 发出</p>
+</li>
+<li><p>数据经过网络传输，到达服务器端，服务器端 5 和 6 处的 handler 先后被触发，走完一个流程</p>
+</li>
+</ul>
+<h3 id="2-4-流程梳理"><a href="#2-4-流程梳理" class="headerlink" title="2.4 流程梳理"></a>2.4 流程梳理</h3><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0040.png"></p>
+<h4 id="💡-提示"><a href="#💡-提示" class="headerlink" title="💡 提示"></a>💡 提示</h4><blockquote>
+<p>一开始需要树立正确的观念</p>
+<ul>
+<li>把 channel 理解为数据的通道</li>
+<li>把 msg 理解为流动的数据，最开始输入是 ByteBuf，但经过 pipeline 的加工，会变成其它类型对象，最后输出又变成 ByteBuf</li>
+<li>把 handler 理解为数据的处理工序<ul>
+<li>工序有多道，合在一起就是 pipeline，pipeline 负责发布事件（读、读取完成…）传播给每个 handler， handler 对自己感兴趣的事件进行处理（重写了相应事件处理方法）</li>
+<li>handler 分 Inbound 和 Outbound 两类</li>
+</ul>
+</li>
+<li>把 eventLoop 理解为处理数据的工人<ul>
+<li>工人可以管理多个 channel 的 io 操作，并且一旦工人负责了某个 channel，就要负责到底（绑定）</li>
+<li>工人既可以执行 io 操作，也可以进行任务处理，每位工人有任务队列，队列里可以堆放多个 channel 的待处理任务，任务分为普通任务、定时任务</li>
+<li>工人按照 pipeline 顺序，依次按照 handler 的规划（代码）处理数据，可以为每道工序指定不同的工人</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="3-组件"><a href="#3-组件" class="headerlink" title="3. 组件"></a>3. 组件</h2><h3 id="3-1-EventLoop"><a href="#3-1-EventLoop" class="headerlink" title="3.1 EventLoop"></a>3.1 EventLoop</h3><p>事件循环对象</p>
+<p>EventLoop 本质是一个单线程执行器（同时维护了一个 Selector），里面有 run 方法处理 Channel 上源源不断的 io 事件。</p>
+<p>它的继承关系比较复杂</p>
+<ul>
+<li>一条线是继承自 j.u.c.ScheduledExecutorService 因此包含了线程池中所有的方法</li>
+<li>另一条线是继承自 netty 自己的 OrderedEventExecutor，<ul>
+<li>提供了 boolean inEventLoop(Thread thread) 方法判断一个线程是否属于此 EventLoop</li>
+<li>提供了 parent 方法来看看自己属于哪个 EventLoopGroup</li>
+</ul>
+</li>
+</ul>
+<p>事件循环组</p>
+<p>EventLoopGroup 是一组 EventLoop，Channel 一般会调用 EventLoopGroup 的 register 方法来绑定其中一个 EventLoop，后续这个 Channel 上的 io 事件都由此 EventLoop 来处理（保证了 io 事件处理时的线程安全）</p>
+<ul>
+<li>继承自 netty 自己的 EventExecutorGroup<ul>
+<li>实现了 Iterable 接口提供遍历 EventLoop 的能力</li>
+<li>另有 next 方法获取集合中下一个 EventLoop</li>
+</ul>
+</li>
+</ul>
+<p>以一个简单的实现为例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 内部创建了两个 EventLoop, 每个 EventLoop 维护一个线程</span></span><br><span class="line">DefaultEventLoopGroup group = <span class="keyword">new</span> DefaultEventLoopGroup(<span class="number">2</span>);</span><br><span class="line">System.out.println(group.next());</span><br><span class="line">System.out.println(group.next());</span><br><span class="line">System.out.println(group.next());</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">io</span>.netty.channel.DefaultEventLoop@<span class="number">60</span>f<span class="number">82</span>f<span class="number">98</span></span><br><span class="line"><span class="attribute">io</span>.netty.channel.DefaultEventLoop@<span class="number">35</span>f<span class="number">983</span>a<span class="number">6</span></span><br><span class="line"><span class="attribute">io</span>.netty.channel.DefaultEventLoop@<span class="number">60</span>f<span class="number">82</span>f<span class="number">98</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以使用 for 循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DefaultEventLoopGroup group = <span class="keyword">new</span> DefaultEventLoopGroup(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">for</span> (EventExecutor eventLoop : group) &#123;</span><br><span class="line">    System.out.println(eventLoop);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">io</span>.netty.channel.DefaultEventLoop@<span class="number">60</span>f<span class="number">82</span>f<span class="number">98</span></span><br><span class="line"><span class="attribute">io</span>.netty.channel.DefaultEventLoop@<span class="number">35</span>f<span class="number">983</span>a<span class="number">6</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="💡-优雅关闭"><a href="#💡-优雅关闭" class="headerlink" title="💡 优雅关闭"></a>💡 优雅关闭</h4><p>优雅关闭 <code>shutdownGracefully</code> 方法。该方法会首先切换 <code>EventLoopGroup</code> 到关闭状态从而拒绝新的任务的加入，然后在任务队列的任务都处理完成后，停止线程的运行。从而确保整体应用是在正常有序的状态下退出的</p>
+<h4 id="演示-NioEventLoop-处理-io-事件"><a href="#演示-NioEventLoop-处理-io-事件" class="headerlink" title="演示 NioEventLoop 处理 io 事件"></a>演示 NioEventLoop 处理 io 事件</h4><p>服务器端两个 nio worker 工人</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ServerBootstrap()</span><br><span class="line">    .group(<span class="keyword">new</span> NioEventLoopGroup(<span class="number">1</span>), <span class="keyword">new</span> NioEventLoopGroup(<span class="number">2</span>))</span><br><span class="line">    .channel(NioServerSocketChannel.class)</span><br><span class="line">    .childHandler(<span class="keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(NioSocketChannel ch)</span> </span>&#123;</span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> ChannelInboundHandlerAdapter() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">                    ByteBuf byteBuf = msg <span class="keyword">instanceof</span> ByteBuf ? ((ByteBuf) msg) : <span class="keyword">null</span>;</span><br><span class="line">                    <span class="keyword">if</span> (byteBuf != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">16</span>];</span><br><span class="line">                        ByteBuf len = byteBuf.readBytes(buf, <span class="number">0</span>, byteBuf.readableBytes());</span><br><span class="line">                        log.debug(<span class="keyword">new</span> String(buf));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).bind(<span class="number">8080</span>).sync();</span><br></pre></td></tr></table></figure>
+
+<p>客户端，启动三次，分别修改发送字符串为 zhangsan（第一次），lisi（第二次），wangwu（第三次）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    Channel channel = <span class="keyword">new</span> Bootstrap()</span><br><span class="line">            .group(<span class="keyword">new</span> NioEventLoopGroup(<span class="number">1</span>))</span><br><span class="line">            .handler(<span class="keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(NioSocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                    System.out.println(<span class="string">&quot;init...&quot;</span>);</span><br><span class="line">                    ch.pipeline().addLast(<span class="keyword">new</span> LoggingHandler(LogLevel.DEBUG));</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">            .channel(NioSocketChannel.class).connect(<span class="string">&quot;localhost&quot;</span>, <span class="number">8080</span>)</span><br><span class="line">            .sync()</span><br><span class="line">            .channel();</span><br><span class="line"></span><br><span class="line">    channel.writeAndFlush(ByteBufAllocator.DEFAULT.buffer().writeBytes(<span class="string">&quot;wangwu&quot;</span>.getBytes()));</span><br><span class="line">    Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">    channel.writeAndFlush(ByteBufAllocator.DEFAULT.buffer().writeBytes(<span class="string">&quot;wangwu&quot;</span>.getBytes()));</span><br></pre></td></tr></table></figure>
+
+<p>最后输出</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">22</span>:<span class="number">03</span>:<span class="number">34</span> <span class="selector-attr">[DEBUG]</span> <span class="selector-attr">[nioEventLoopGroup-3-1]</span> c<span class="selector-class">.i</span><span class="selector-class">.o</span><span class="selector-class">.EventLoopTest</span> - zhangsan       </span><br><span class="line"><span class="number">22</span>:<span class="number">03</span>:<span class="number">36</span> <span class="selector-attr">[DEBUG]</span> <span class="selector-attr">[nioEventLoopGroup-3-1]</span> c<span class="selector-class">.i</span><span class="selector-class">.o</span><span class="selector-class">.EventLoopTest</span> - zhangsan       </span><br><span class="line"><span class="number">22</span>:<span class="number">05</span>:<span class="number">36</span> <span class="selector-attr">[DEBUG]</span> <span class="selector-attr">[nioEventLoopGroup-3-2]</span> c<span class="selector-class">.i</span><span class="selector-class">.o</span><span class="selector-class">.EventLoopTest</span> - lisi           </span><br><span class="line"><span class="number">22</span>:<span class="number">05</span>:<span class="number">38</span> <span class="selector-attr">[DEBUG]</span> <span class="selector-attr">[nioEventLoopGroup-3-2]</span> c<span class="selector-class">.i</span><span class="selector-class">.o</span><span class="selector-class">.EventLoopTest</span> - lisi           </span><br><span class="line"><span class="number">22</span>:<span class="number">06</span>:<span class="number">09</span> <span class="selector-attr">[DEBUG]</span> <span class="selector-attr">[nioEventLoopGroup-3-1]</span> c<span class="selector-class">.i</span><span class="selector-class">.o</span><span class="selector-class">.EventLoopTest</span> - wangwu        </span><br><span class="line"><span class="number">22</span>:<span class="number">06</span>:<span class="number">11</span> <span class="selector-attr">[DEBUG]</span> <span class="selector-attr">[nioEventLoopGroup-3-1]</span> c<span class="selector-class">.i</span><span class="selector-class">.o</span><span class="selector-class">.EventLoopTest</span> - wangwu         </span><br></pre></td></tr></table></figure>
+
+<p>可以看到两个工人轮流处理 channel，但工人与 channel 之间进行了绑定</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0042.png"></p>
+<p>再增加两个非 nio 工人</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">DefaultEventLoopGroup normalWorkers = <span class="keyword">new</span> DefaultEventLoopGroup(<span class="number">2</span>);</span><br><span class="line"><span class="keyword">new</span> ServerBootstrap()</span><br><span class="line">    .group(<span class="keyword">new</span> NioEventLoopGroup(<span class="number">1</span>), <span class="keyword">new</span> NioEventLoopGroup(<span class="number">2</span>))</span><br><span class="line">    .channel(NioServerSocketChannel.class)</span><br><span class="line">    .childHandler(<span class="keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(NioSocketChannel ch)</span>  </span>&#123;</span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> LoggingHandler(LogLevel.DEBUG));</span><br><span class="line">            ch.pipeline().addLast(normalWorkers,<span class="string">&quot;myhandler&quot;</span>,</span><br><span class="line">              <span class="keyword">new</span> ChannelInboundHandlerAdapter() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">                    ByteBuf byteBuf = msg <span class="keyword">instanceof</span> ByteBuf ? ((ByteBuf) msg) : <span class="keyword">null</span>;</span><br><span class="line">                    <span class="keyword">if</span> (byteBuf != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">16</span>];</span><br><span class="line">                        ByteBuf len = byteBuf.readBytes(buf, <span class="number">0</span>, byteBuf.readableBytes());</span><br><span class="line">                        log.debug(<span class="keyword">new</span> String(buf));</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).bind(<span class="number">8080</span>).sync();</span><br></pre></td></tr></table></figure>
+
+<p>客户端代码不变，启动三次，分别修改发送字符串为 zhangsan（第一次），lisi（第二次），wangwu（第三次）</p>
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">22:19:48 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x251562d5, L:/127.0.0.1:8080 - R:/127.0.0.1:52588] REGISTERED</span><br><span class="line">22:19:48 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x251562d5, L:/127.0.0.1:8080 - R:/127.0.0.1:52588] ACTIVE</span><br><span class="line">22:19:48 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x251562d5, L:/127.0.0.1:8080 - R:/127.0.0.1:52588] READ: 8B</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 7a 68 61 6e 67 73 61 6e                         |zhangsan        |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line">22:19:48 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x251562d5, L:/127.0.0.1:8080 - R:/127.0.0.1:52588] READ COMPLETE</span><br><span class="line">22:19:48 [DEBUG] [defaultEventLoopGroup-2-1] c.i.o.EventLoopTest - zhangsan        </span><br><span class="line">22:19:50 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x251562d5, L:/127.0.0.1:8080 - R:/127.0.0.1:52588] READ: 8B</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 7a 68 61 6e 67 73 61 6e                         |zhangsan        |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line">22:19:50 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x251562d5, L:/127.0.0.1:8080 - R:/127.0.0.1:52588] READ COMPLETE</span><br><span class="line">22:19:50 [DEBUG] [defaultEventLoopGroup-2-1] c.i.o.EventLoopTest - zhangsan        </span><br><span class="line">22:20:24 [DEBUG] [nioEventLoopGroup-4-2] i.n.h.l.LoggingHandler - [id: 0x94b2a840, L:/127.0.0.1:8080 - R:/127.0.0.1:52612] REGISTERED</span><br><span class="line">22:20:24 [DEBUG] [nioEventLoopGroup-4-2] i.n.h.l.LoggingHandler - [id: 0x94b2a840, L:/127.0.0.1:8080 - R:/127.0.0.1:52612] ACTIVE</span><br><span class="line">22:20:25 [DEBUG] [nioEventLoopGroup-4-2] i.n.h.l.LoggingHandler - [id: 0x94b2a840, L:/127.0.0.1:8080 - R:/127.0.0.1:52612] READ: 4B</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 6c 69 73 69                                     |lisi            |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line">22:20:25 [DEBUG] [nioEventLoopGroup-4-2] i.n.h.l.LoggingHandler - [id: 0x94b2a840, L:/127.0.0.1:8080 - R:/127.0.0.1:52612] READ COMPLETE</span><br><span class="line">22:20:25 [DEBUG] [defaultEventLoopGroup-2-2] c.i.o.EventLoopTest - lisi            </span><br><span class="line">22:20:27 [DEBUG] [nioEventLoopGroup-4-2] i.n.h.l.LoggingHandler - [id: 0x94b2a840, L:/127.0.0.1:8080 - R:/127.0.0.1:52612] READ: 4B</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 6c 69 73 69                                     |lisi            |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line">22:20:27 [DEBUG] [nioEventLoopGroup-4-2] i.n.h.l.LoggingHandler - [id: 0x94b2a840, L:/127.0.0.1:8080 - R:/127.0.0.1:52612] READ COMPLETE</span><br><span class="line">22:20:27 [DEBUG] [defaultEventLoopGroup-2-2] c.i.o.EventLoopTest - lisi            </span><br><span class="line">22:20:38 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x79a26af9, L:/127.0.0.1:8080 - R:/127.0.0.1:52625] REGISTERED</span><br><span class="line">22:20:38 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x79a26af9, L:/127.0.0.1:8080 - R:/127.0.0.1:52625] ACTIVE</span><br><span class="line">22:20:38 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x79a26af9, L:/127.0.0.1:8080 - R:/127.0.0.1:52625] READ: 6B</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 77 61 6e 67 77 75                               |wangwu          |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line">22:20:38 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x79a26af9, L:/127.0.0.1:8080 - R:/127.0.0.1:52625] READ COMPLETE</span><br><span class="line">22:20:38 [DEBUG] [defaultEventLoopGroup-2-1] c.i.o.EventLoopTest - wangwu          </span><br><span class="line">22:20:40 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x79a26af9, L:/127.0.0.1:8080 - R:/127.0.0.1:52625] READ: 6B</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 77 61 6e 67 77 75                               |wangwu          |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line">22:20:40 [DEBUG] [nioEventLoopGroup-4-1] i.n.h.l.LoggingHandler - [id: 0x79a26af9, L:/127.0.0.1:8080 - R:/127.0.0.1:52625] READ COMPLETE</span><br><span class="line">22:20:40 [DEBUG] [defaultEventLoopGroup-2-1] c.i.o.EventLoopTest - wangwu          </span><br></pre></td></tr></table></figure>
+
+<p>可以看到，nio 工人和 非 nio 工人也分别绑定了 channel（LoggingHandler 由 nio 工人执行，而我们自己的 handler 由非 nio 工人执行）</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0041.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	
+	</div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/02/06/Nio/" rel="next" title="Nio">
+                <i class="fa fa-chevron-left"></i> Nio
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="张浩宇" />
+            
+              <p class="site-author-name" itemprop="name">张浩宇</p>
+              <p class="site-description motion-element" itemprop="description">日积月累,积少成多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/blacke1111" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C-Netty-%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">二. Netty 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1. 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Netty-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 Netty 是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Netty-%E7%9A%84%E4%BD%9C%E8%80%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Netty 的作者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-Netty-%E7%9A%84%E5%9C%B0%E4%BD%8D"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 Netty 的地位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Netty-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 Netty 的优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Hello-World"><span class="nav-number">1.2.</span> <span class="nav-text">2. Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 服务器端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 流程梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E6%8F%90%E7%A4%BA"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">💡 提示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">3. 组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-EventLoop"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 EventLoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">💡 优雅关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86-io-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">演示 NioEventLoop 处理 io 事件</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Hao Hu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数&#58;</span>
+    
+    <span title="博客全站字数">130.8k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
