@@ -97,8 +97,9 @@
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0047.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0008.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0009.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0010.png">
 <meta property="article:published_time" content="2022-02-11T11:24:25.000Z">
-<meta property="article:modified_time" content="2022-02-13T12:05:33.400Z">
+<meta property="article:modified_time" content="2022-02-13T12:28:28.740Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0005.png">
@@ -353,7 +354,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-02-13T20:05:33+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2022-02-13T20:28:28+08:00">
                 2022-02-13
               </time>
             
@@ -403,7 +404,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6.9k
+                  7.4k
                 </span>
               
 
@@ -419,7 +420,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  33
+                  35
                 </span>
               
             </div>
@@ -872,6 +873,45 @@
 </ul>
 <p>图1 - 服务端 pipeline 触发的原始流程，图中数字代表了处理步骤的先后次序</p>
 <p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0009.png"></p>
+<h3 id="3-5-ByteBuf"><a href="#3-5-ByteBuf" class="headerlink" title="3.5 ByteBuf"></a>3.5 ByteBuf</h3><p>是对字节数据的封装</p>
+<h4 id="1）创建"><a href="#1）创建" class="headerlink" title="1）创建"></a>1）创建</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(<span class="number">10</span>);</span><br><span class="line">log(buffer);</span><br></pre></td></tr></table></figure>
+
+<p>上面代码创建了一个默认的 ByteBuf（池化基于直接内存的 ByteBuf），初始容量是 10</p>
+<p>输出</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">read</span> <span class="keyword">index</span>:<span class="number">0</span> <span class="keyword">write</span> <span class="keyword">index</span>:<span class="number">0</span> capacity:<span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>其中 log 方法参考如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">(ByteBuf buffer)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> length = buffer.readableBytes();</span><br><span class="line">    <span class="keyword">int</span> rows = length / <span class="number">16</span> + (length % <span class="number">15</span> == <span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span>) + <span class="number">4</span>;</span><br><span class="line">    StringBuilder buf = <span class="keyword">new</span> StringBuilder(rows * <span class="number">80</span> * <span class="number">2</span>)</span><br><span class="line">        .append(<span class="string">&quot;read index:&quot;</span>).append(buffer.readerIndex())</span><br><span class="line">        .append(<span class="string">&quot; write index:&quot;</span>).append(buffer.writerIndex())</span><br><span class="line">        .append(<span class="string">&quot; capacity:&quot;</span>).append(buffer.capacity())</span><br><span class="line">        .append(NEWLINE);</span><br><span class="line">    appendPrettyHexDump(buf, buffer);</span><br><span class="line">    System.out.println(buf.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2）直接内存-vs-堆内存"><a href="#2）直接内存-vs-堆内存" class="headerlink" title="2）直接内存 vs 堆内存"></a>2）直接内存 vs 堆内存</h4><p>可以使用下面的代码来创建池化基于堆的 ByteBuf</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buffer = ByteBufAllocator.DEFAULT.heapBuffer(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用下面的代码来创建池化基于直接内存的 ByteBuf</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buffer = ByteBufAllocator.DEFAULT.directBuffer(<span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>直接内存创建和销毁的代价昂贵，但读写性能高（少一次内存复制），适合配合池化功能一起用</li>
+<li>直接内存对 GC 压力小，因为这部分内存不受 JVM 垃圾回收的管理，但也要注意及时主动释放</li>
+</ul>
+<h4 id="3）池化-vs-非池化"><a href="#3）池化-vs-非池化" class="headerlink" title="3）池化 vs 非池化"></a>3）池化 vs 非池化</h4><p>池化的最大意义在于可以重用 ByteBuf，优点有</p>
+<ul>
+<li>没有池化，则每次都得创建新的 ByteBuf 实例，这个操作对直接内存代价昂贵，就算是堆内存，也会增加 GC 压力</li>
+<li>有了池化，则可以重用池中 ByteBuf 实例，并且采用了与 jemalloc 类似的内存分配算法提升分配效率</li>
+<li>高并发时，池化功能更节约内存，减少内存溢出的可能</li>
+</ul>
+<p>池化功能是否开启，可以通过下面的系统环境变量来设置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-Dio.netty.allocator.type=&#123;unpooled|pooled&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>4.1 以后，非 Android 平台默认启用池化实现，Android 平台启用非池化实现</li>
+<li>4.1 之前，池化功能还不成熟，默认是非池化实现</li>
+</ul>
+<h4 id="4）组成"><a href="#4）组成" class="headerlink" title="4）组成"></a>4）组成</h4><p>ByteBuf 由四部分组成</p>
+<p>read index读指针  write index 读指针</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0010.png"></p>
+<p>最开始读写指针都在 0 位置</p>
 
       
     </div>
@@ -1061,7 +1101,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty-%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">Netty 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">Netty 是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%9A%84%E4%BD%9C%E8%80%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">Netty 的作者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%9A%84%E5%9C%B0%E4%BD%8D"><span class="nav-number">1.1.3.</span> <span class="nav-text">Netty 的地位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Netty-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 Netty 的优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">1.2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">服务器端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86"><span class="nav-number">1.2.4.</span> <span class="nav-text">流程梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E6%8F%90%E7%A4%BA"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">💡 提示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EventLoop"><span class="nav-number">1.3.1.</span> <span class="nav-text">EventLoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">💡 优雅关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86-io-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">演示 NioEventLoop 处理 io 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-handler-%E6%89%A7%E8%A1%8C%E4%B8%AD%E5%A6%82%E4%BD%95%E6%8D%A2%E4%BA%BA%EF%BC%9F"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">💡 handler 执行中如何换人？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86%E6%99%AE%E9%80%9A%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">演示 NioEventLoop 处理普通任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">演示 NioEventLoop 处理定时任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel"><span class="nav-number">1.3.2.</span> <span class="nav-text">Channel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ChannelFuture"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">ChannelFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CloseFuture"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">CloseFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E5%BC%82%E6%AD%A5%E6%8F%90%E5%8D%87%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">💡 异步提升的是什么</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-amp-Promise"><span class="nav-number">1.3.3.</span> <span class="nav-text">Future &amp; Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B1"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">例1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B2"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">例2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B3"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">例3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B4"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">例4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B5"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">例5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B6"><span class="nav-number">1.3.3.6.</span> <span class="nav-text">例6</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Handler-amp-Pipeline"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Handler &amp; Pipeline</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty-%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">Netty 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">Netty 是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%9A%84%E4%BD%9C%E8%80%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">Netty 的作者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%9A%84%E5%9C%B0%E4%BD%8D"><span class="nav-number">1.1.3.</span> <span class="nav-text">Netty 的地位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Netty-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 Netty 的优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">1.2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">服务器端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86"><span class="nav-number">1.2.4.</span> <span class="nav-text">流程梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E6%8F%90%E7%A4%BA"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">💡 提示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EventLoop"><span class="nav-number">1.3.1.</span> <span class="nav-text">EventLoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">💡 优雅关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86-io-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">演示 NioEventLoop 处理 io 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-handler-%E6%89%A7%E8%A1%8C%E4%B8%AD%E5%A6%82%E4%BD%95%E6%8D%A2%E4%BA%BA%EF%BC%9F"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">💡 handler 执行中如何换人？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86%E6%99%AE%E9%80%9A%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">演示 NioEventLoop 处理普通任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">演示 NioEventLoop 处理定时任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel"><span class="nav-number">1.3.2.</span> <span class="nav-text">Channel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ChannelFuture"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">ChannelFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CloseFuture"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">CloseFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E5%BC%82%E6%AD%A5%E6%8F%90%E5%8D%87%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">💡 异步提升的是什么</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-amp-Promise"><span class="nav-number">1.3.3.</span> <span class="nav-text">Future &amp; Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B1"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">例1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B2"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">例2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B3"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">例3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B4"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">例4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B5"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">例5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B6"><span class="nav-number">1.3.3.6.</span> <span class="nav-text">例6</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Handler-amp-Pipeline"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Handler &amp; Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-ByteBuf"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 ByteBuf</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%89%E5%88%9B%E5%BB%BA"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">1）创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98-vs-%E5%A0%86%E5%86%85%E5%AD%98"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">2）直接内存 vs 堆内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%89%E6%B1%A0%E5%8C%96-vs-%E9%9D%9E%E6%B1%A0%E5%8C%96"><span class="nav-number">1.3.5.3.</span> <span class="nav-text">3）池化 vs 非池化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%89%E7%BB%84%E6%88%90"><span class="nav-number">1.3.5.4.</span> <span class="nav-text">4）组成</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1102,7 +1142,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">134.8k</span>
+    <span title="博客全站字数">135.3k</span>
   
 </div>
 
