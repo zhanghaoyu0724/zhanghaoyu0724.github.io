@@ -98,8 +98,10 @@
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0008.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0009.png">
 <meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0010.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0011.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0012.png">
 <meta property="article:published_time" content="2022-02-11T11:24:25.000Z">
-<meta property="article:modified_time" content="2022-02-13T12:28:28.740Z">
+<meta property="article:modified_time" content="2022-02-14T12:00:06.966Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0005.png">
@@ -354,8 +356,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-02-13T20:28:28+08:00">
-                2022-02-13
+              <time title="更新于" itemprop="dateModified" datetime="2022-02-14T20:00:06+08:00">
+                2022-02-14
               </time>
             
           </span>
@@ -404,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  7.4k
+                  10.7k
                 </span>
               
 
@@ -420,7 +422,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  35
+                  50
                 </span>
               
             </div>
@@ -912,6 +914,296 @@
 <p>read index读指针  write index 读指针</p>
 <p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0010.png"></p>
 <p>最开始读写指针都在 0 位置</p>
+<h4 id="5）写入"><a href="#5）写入" class="headerlink" title="5）写入"></a>5）写入</h4><p>方法列表，省略一些不重要的方法</p>
+<table>
+<thead>
+<tr>
+<th>方法签名</th>
+<th>含义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>writeBoolean(boolean value)</td>
+<td>写入 boolean 值</td>
+<td>用一字节 01|00 代表 true|false</td>
+</tr>
+<tr>
+<td>writeByte(int value)</td>
+<td>写入 byte 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeShort(int value)</td>
+<td>写入 short 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeInt(int value)</td>
+<td>写入 int 值</td>
+<td>Big Endian，即 0x250，写入后 00 00 02 50</td>
+</tr>
+<tr>
+<td>writeIntLE(int value)</td>
+<td>写入 int 值</td>
+<td>Little Endian，即 0x250，写入后 50 02 00 00</td>
+</tr>
+<tr>
+<td>writeLong(long value)</td>
+<td>写入 long 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeChar(int value)</td>
+<td>写入 char 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeFloat(float value)</td>
+<td>写入 float 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeDouble(double value)</td>
+<td>写入 double 值</td>
+<td></td>
+</tr>
+<tr>
+<td>writeBytes(ByteBuf src)</td>
+<td>写入 netty 的 ByteBuf</td>
+<td></td>
+</tr>
+<tr>
+<td>writeBytes(byte[] src)</td>
+<td>写入 byte[]</td>
+<td></td>
+</tr>
+<tr>
+<td>writeBytes(ByteBuffer src)</td>
+<td>写入 nio 的 ByteBuffer</td>
+<td></td>
+</tr>
+<tr>
+<td>int writeCharSequence(CharSequence sequence, Charset charset)</td>
+<td>写入字符串</td>
+<td></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注意</p>
+<ul>
+<li>这些方法的未指明返回值的，其返回值都是 ByteBuf，意味着可以链式调用</li>
+<li>网络传输，默认习惯是 Big Endian</li>
+</ul>
+</blockquote>
+<p>先写入 4 个字节</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">buffer.writeBytes(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;);</span><br><span class="line">log(buffer);</span><br></pre></td></tr></table></figure>
+
+<p>结果是</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">read index:0 write index:4 capacity:10</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 01 02 03 04                                     |....            |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>再写入一个 int 整数，也是 4 个字节</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">buffer.writeInt(<span class="number">5</span>);</span><br><span class="line">log(buffer);</span><br></pre></td></tr></table></figure>
+
+<p>结果是</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">read index:0 write index:8 capacity:10</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 01 02 03 04 00 00 00 05                         |........        |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>还有一类方法是 set 开头的一系列方法，也可以写入数据，但不会改变写指针位置</p>
+<h4 id="6）扩容"><a href="#6）扩容" class="headerlink" title="6）扩容"></a>6）扩容</h4><p>再写入一个 int 整数时，容量不够了（初始容量是 10），这时会引发扩容</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">buffer.writeInt(<span class="number">6</span>);</span><br><span class="line">log(buffer);</span><br></pre></td></tr></table></figure>
+
+<p>扩容规则是</p>
+<ul>
+<li>如何写入后数据大小未超过 512，则选择下一个 16 的整数倍，例如写入后大小为 12 ，则扩容后 capacity 是 16</li>
+<li>如果写入后数据大小超过 512，则选择下一个 2^n，例如写入后大小为 513，则扩容后 capacity 是 2^10=1024（2^9=512 已经不够了）</li>
+<li>扩容不能超过 max capacity 会报错</li>
+</ul>
+<p>结果是</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">read index:0 write index:12 capacity:16</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 01 02 03 04 00 00 00 05 00 00 00 06             |............    |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="7）读取"><a href="#7）读取" class="headerlink" title="7）读取"></a>7）读取</h4><p>例如读了 4 次，每次一个字节</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(buffer.readByte());</span><br><span class="line">System.out.println(buffer.readByte());</span><br><span class="line">System.out.println(buffer.readByte());</span><br><span class="line">System.out.println(buffer.readByte());</span><br><span class="line">log(buffer);</span><br></pre></td></tr></table></figure>
+
+<p>读过的内容，就属于废弃部分了，再读只能读那些尚未读取的部分</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">read index:4 write index:12 capacity:16</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 00 00 00 05 00 00 00 06                         |........        |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>如果需要重复读取 int 整数 5，怎么办？</p>
+<p>可以在 read 前先做个标记 mark</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">buffer.markReaderIndex();</span><br><span class="line">System.out.println(buffer.readInt());</span><br><span class="line">log(buffer);</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">5</span><br><span class="line">read index:8 write index:12 capacity:16</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 00 00 00 06                                     |....            |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>这时要重复读取的话，重置到标记位置 reset</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">buffer.resetReaderIndex();</span><br><span class="line">log(buffer);</span><br></pre></td></tr></table></figure>
+
+<p>这时</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">read index:4 write index:12 capacity:16</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 00 00 00 05 00 00 00 06                         |........        |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>还有种办法是采用 get 开头的一系列方法，这些方法不会改变 read index</p>
+<h4 id="8）retain-amp-release"><a href="#8）retain-amp-release" class="headerlink" title="8）retain &amp; release"></a>8）retain &amp; release</h4><p>由于 Netty 中有堆外内存的 ByteBuf 实现，堆外内存最好是手动来释放，而不是等 GC 垃圾回收。</p>
+<ul>
+<li>UnpooledHeapByteBuf 使用的是 JVM 内存，只需等 GC 回收内存即可</li>
+<li>UnpooledDirectByteBuf 使用的就是直接内存了，需要特殊的方法来回收内存</li>
+<li>PooledByteBuf 和它的子类使用了池化机制，需要更复杂的规则来回收内存</li>
+</ul>
+<blockquote>
+<p>回收内存的源码实现，请关注下面方法的不同实现</p>
+<p><code>protected abstract void deallocate()</code></p>
+</blockquote>
+<p>Netty 这里采用了引用计数法来控制回收内存，每个 ByteBuf 都实现了 ReferenceCounted 接口</p>
+<ul>
+<li>每个 ByteBuf 对象的初始计数为 1</li>
+<li>调用 release 方法计数减 1，如果计数为 0，ByteBuf 内存被回收</li>
+<li>调用 retain 方法计数加 1，表示调用者没用完之前，其它 handler 即使调用了 release 也不会造成回收</li>
+<li>当计数为 0 时，底层内存会被回收，这时即使 ByteBuf 对象还在，其各个方法均无法正常使用</li>
+</ul>
+<p>谁来负责 release 呢？</p>
+<p>不是我们想象的（一般情况下）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buf = ...</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    buf.release();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请思考，因为 pipeline 的存在，一般需要将 ByteBuf 传递给下一个 ChannelHandler，如果在 finally 中 release 了，就失去了传递性（当然，如果在这个 ChannelHandler 内这个 ByteBuf 已完成了它的使命，那么便无须再传递）</p>
+<p>基本规则是，<strong>谁是最后使用者，谁负责 release</strong>，详细分析如下</p>
+<ul>
+<li>起点，对于 NIO 实现来讲，在 io.netty.channel.nio.AbstractNioByteChannel.NioByteUnsafe#read 方法中首次创建 ByteBuf 放入 pipeline（line 163 pipeline.fireChannelRead(byteBuf)）</li>
+<li>入站 ByteBuf 处理原则<ul>
+<li>对原始 ByteBuf 不做处理，调用 ctx.fireChannelRead(msg) 向后传递，这时无须 release</li>
+<li>将原始 ByteBuf 转换为其它类型的 Java 对象，这时 ByteBuf 就没用了，必须 release</li>
+<li>如果不调用 ctx.fireChannelRead(msg) 向后传递，那么也必须 release</li>
+<li>注意各种异常，如果 ByteBuf 没有成功传递到下一个 ChannelHandler，必须 release</li>
+<li>假设消息一直向后传，那么 TailContext 会负责释放未处理消息（原始的 ByteBuf）</li>
+</ul>
+</li>
+<li>出站 ByteBuf 处理原则<ul>
+<li>出站消息最终都会转为 ByteBuf 输出，一直向前传，由 HeadContext flush 后 release</li>
+</ul>
+</li>
+<li>异常处理原则<ul>
+<li>有时候不清楚 ByteBuf 被引用了多少次，但又必须彻底释放，可以循环调用 release 直到返回 true</li>
+</ul>
+</li>
+</ul>
+<p>TailContext 释放未处理消息逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// io.netty.channel.DefaultChannelPipeline#onUnhandledInboundMessage(java.lang.Object)</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onUnhandledInboundMessage</span><span class="params">(Object msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        logger.debug(</span><br><span class="line">            <span class="string">&quot;Discarded inbound message &#123;&#125; that reached at the tail of the pipeline. &quot;</span> +</span><br><span class="line">            <span class="string">&quot;Please check your pipeline configuration.&quot;</span>, msg);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        ReferenceCountUtil.release(msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具体代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// io.netty.util.ReferenceCountUtil#release(java.lang.Object)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">release</span><span class="params">(Object msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (msg <span class="keyword">instanceof</span> ReferenceCounted) &#123;</span><br><span class="line">        <span class="keyword">return</span> ((ReferenceCounted) msg).release();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="9）slice"><a href="#9）slice" class="headerlink" title="9）slice"></a>9）slice</h4><p>【零拷贝】的体现之一，对原始 ByteBuf 进行切片成多个 ByteBuf，切片后的 ByteBuf 并没有发生内存复制，还是使用原始 ByteBuf 的内存，切片后的 ByteBuf 维护独立的 read，write 指针</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0011.png"></p>
+<p>例，原始 ByteBuf 进行一些初始操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf origin = ByteBufAllocator.DEFAULT.buffer(<span class="number">10</span>);</span><br><span class="line">origin.writeBytes(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;);</span><br><span class="line">origin.readByte();</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(origin));</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 02 03 04                                        |...             |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>这时调用 slice 进行切片，无参 slice 是从原始 ByteBuf 的 read index 到 write index 之间的内容进行切片，切片后的 max capacity 被固定为这个区间的大小，因此不能追加 write</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf slice = origin.slice();</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(slice));</span><br><span class="line"><span class="comment">// slice.writeByte(5); 如果执行，会报 IndexOutOfBoundsException 异常</span></span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 02 03 04                                        |...             |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>如果原始 ByteBuf 再次读操作（又读了一个字节）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">origin.readByte();</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(origin));</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 03 04                                           |..              |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>这时的 slice 不受影响，因为它有独立的读写指针</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(ByteBufUtil.prettyHexDump(slice));</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 02 03 04                                        |...             |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>如果 slice 的内容发生了更改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">slice.setByte(<span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(slice));</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 02 03 05                                        |...             |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>这时，原始 ByteBuf 也会受影响，因为底层都是同一块内存</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="module-access"><span class="module"><span class="identifier">System</span>.</span></span>out.println(<span class="module-access"><span class="module"><span class="identifier">ByteBufUtil</span>.</span></span>pretty<span class="constructor">HexDump(<span class="params">origin</span>)</span>);</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 03 05                                           |..              |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="10）duplicate"><a href="#10）duplicate" class="headerlink" title="10）duplicate"></a>10）duplicate</h4><p>【零拷贝】的体现之一，就好比截取了原始 ByteBuf 所有内容，并且没有 max capacity 的限制，也是与原始 ByteBuf 使用同一块底层内存，只是读写指针是独立的</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0012.png"></p>
+<h4 id="11）copy"><a href="#11）copy" class="headerlink" title="11）copy"></a>11）copy</h4><p>会将底层内存数据进行深拷贝，因此无论读写，都与原始 ByteBuf 无关</p>
+<h4 id="12）CompositeByteBuf"><a href="#12）CompositeByteBuf" class="headerlink" title="12）CompositeByteBuf"></a>12）CompositeByteBuf</h4><p>【零拷贝】的体现之一，可以将多个 ByteBuf 合并为一个逻辑上的 ByteBuf，避免拷贝</p>
+<p>有两个 ByteBuf 如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buf1 = ByteBufAllocator.DEFAULT.buffer(<span class="number">5</span>);</span><br><span class="line">buf1.writeBytes(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;);</span><br><span class="line">ByteBuf buf2 = ByteBufAllocator.DEFAULT.buffer(<span class="number">5</span>);</span><br><span class="line">buf2.writeBytes(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;);</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(buf1));</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(buf2));</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 01 02 03 04 05                                  |.....           |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 06 07 08 09 0a                                  |.....           |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>现在需要一个新的 ByteBuf，内容来自于刚才的 buf1 和 buf2，如何实现？</p>
+<p>方法1：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buf3 = ByteBufAllocator.DEFAULT</span><br><span class="line">    .buffer(buf1.readableBytes()+buf2.readableBytes());</span><br><span class="line">buf3.writeBytes(buf1);</span><br><span class="line">buf3.writeBytes(buf2);</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(buf3));</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 01 02 03 04 05 06 07 08 09 0a                   |..........      |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>这种方法好不好？回答是不太好，因为进行了数据的内存复制操作</p>
+<p>方法2：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CompositeByteBuf buf3 = ByteBufAllocator.DEFAULT.compositeBuffer();</span><br><span class="line"><span class="comment">// true 表示增加新的 ByteBuf 自动递增 write index, 否则 write index 会始终为 0</span></span><br><span class="line">buf3.addComponents(<span class="keyword">true</span>, buf1, buf2);</span><br></pre></td></tr></table></figure>
+
+<p>结果是一样的</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 01 02 03 04 05 06 07 08 09 0a                   |..........      |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>CompositeByteBuf 是一个组合的 ByteBuf，它内部维护了一个 Component 数组，每个 Component 管理一个 ByteBuf，记录了这个 ByteBuf 相对于整体偏移量等信息，代表着整体中某一段的数据。</p>
+<ul>
+<li>优点，对外是一个虚拟视图，组合这些 ByteBuf 不会产生内存复制</li>
+<li>缺点，复杂了很多，多次操作会带来性能的损耗</li>
+</ul>
+<h4 id="13）Unpooled"><a href="#13）Unpooled" class="headerlink" title="13）Unpooled"></a>13）Unpooled</h4><p>Unpooled 是一个工具类，类如其名，提供了非池化的 ByteBuf 创建、组合、复制等操作</p>
+<p>这里仅介绍其跟【零拷贝】相关的 wrappedBuffer 方法，可以用来包装 ByteBuf</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buf1 = ByteBufAllocator.DEFAULT.buffer(<span class="number">5</span>);</span><br><span class="line">buf1.writeBytes(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;);</span><br><span class="line">ByteBuf buf2 = ByteBufAllocator.DEFAULT.buffer(<span class="number">5</span>);</span><br><span class="line">buf2.writeBytes(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 当包装 ByteBuf 个数超过一个时, 底层使用了 CompositeByteBuf</span></span><br><span class="line">ByteBuf buf3 = Unpooled.wrappedBuffer(buf1, buf2);</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(buf3));</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 01 02 03 04 05 06 07 08 09 0a                   |..........      |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以用来包装普通字节数组，底层也不会有拷贝操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ByteBuf buf4 = Unpooled.wrappedBuffer(<span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;, <span class="keyword">new</span> <span class="keyword">byte</span>[]&#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;);</span><br><span class="line">System.out.println(buf4.getClass());</span><br><span class="line">System.out.println(ByteBufUtil.prettyHexDump(buf4));</span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class io.netty.buffer.CompositeByteBuf</span><br><span class="line"><span class="code">         +-------------------------------------------------+</span></span><br><span class="line"><span class="section">         |  0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br><span class="line"><span class="section">|00000000| 01 02 03 04 05 06                               |......          |</span></span><br><span class="line"><span class="section">+--------+-------------------------------------------------+----------------+</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="💡-ByteBuf-优势"><a href="#💡-ByteBuf-优势" class="headerlink" title="💡 ByteBuf 优势"></a>💡 ByteBuf 优势</h4><ul>
+<li>池化 - 可以重用池中 ByteBuf 实例，更节约内存，减少内存溢出的可能</li>
+<li>读写指针分离，不需要像 ByteBuffer 一样切换读写模式</li>
+<li>可以自动扩容</li>
+<li>支持链式调用，使用更流畅</li>
+<li>很多地方体现零拷贝，例如 slice、duplicate、CompositeByteBuf</li>
+</ul>
+<h2 id="4-双向通信"><a href="#4-双向通信" class="headerlink" title="4. 双向通信"></a>4. 双向通信</h2><h3 id="4-1-练习"><a href="#4-1-练习" class="headerlink" title="4.1 练习"></a>4.1 练习</h3><p>实现一个 echo server</p>
+<p>编写 server</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> ServerBootstrap()</span><br><span class="line">    .group(<span class="keyword">new</span> NioEventLoopGroup())</span><br><span class="line">    .channel(NioServerSocketChannel.class)</span><br><span class="line">    .childHandler(<span class="keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(NioSocketChannel ch)</span> </span>&#123;</span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> ChannelInboundHandlerAdapter()&#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">                    ByteBuf buffer = (ByteBuf) msg;</span><br><span class="line">                    System.out.println(buffer.toString(Charset.defaultCharset()));</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 建议使用 ctx.alloc() 创建 ByteBuf</span></span><br><span class="line">                    ByteBuf response = ctx.alloc().buffer();</span><br><span class="line">                    response.writeBytes(buffer);</span><br><span class="line">                    ctx.writeAndFlush(response);</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 思考：需要释放 buffer 吗</span></span><br><span class="line">                    <span class="comment">// 思考：需要释放 response 吗</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).bind(<span class="number">8080</span>);</span><br></pre></td></tr></table></figure>
+
+<p>编写 client</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">NioEventLoopGroup group = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">Channel channel = <span class="keyword">new</span> Bootstrap()</span><br><span class="line">    .group(group)</span><br><span class="line">    .channel(NioSocketChannel.class)</span><br><span class="line">    .handler(<span class="keyword">new</span> ChannelInitializer&lt;NioSocketChannel&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(NioSocketChannel ch)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> StringEncoder());</span><br><span class="line">            ch.pipeline().addLast(<span class="keyword">new</span> ChannelInboundHandlerAdapter() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> </span>&#123;</span><br><span class="line">                    ByteBuf buffer = (ByteBuf) msg;</span><br><span class="line">                    System.out.println(buffer.toString(Charset.defaultCharset()));</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// 思考：需要释放 buffer 吗</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;).connect(<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">8080</span>).sync().channel();</span><br><span class="line"></span><br><span class="line">channel.closeFuture().addListener(future -&gt; &#123;</span><br><span class="line">    group.shutdownGracefully();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">    Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">        String line = scanner.nextLine();</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;q&quot;</span>.equals(line)) &#123;</span><br><span class="line">            channel.close();</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        channel.writeAndFlush(line);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).start();</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="💡-读和写的误解"><a href="#💡-读和写的误解" class="headerlink" title="💡 读和写的误解"></a>💡 读和写的误解</h3><p>我最初在认识上有这样的误区，认为只有在 netty，nio 这样的多路复用 IO 模型时，读写才不会相互阻塞，才可以实现高效的双向通信，但实际上，Java Socket 是全双工的：在任意时刻，线路上存在<code>A 到 B</code> 和 <code>B 到 A</code> 的双向信号传输。即使是阻塞 IO，读和写是可以同时进行的，只要分别采用读线程和写线程即可，读不会阻塞写、写也不会阻塞读</p>
+<p>例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">8888</span>);</span><br><span class="line">        Socket s = ss.accept();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(s.getInputStream()));</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                    System.out.println(reader.readLine());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                BufferedWriter writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> OutputStreamWriter(s.getOutputStream()));</span><br><span class="line">                <span class="comment">// 例如在这个位置加入 thread 级别断点，可以发现即使不写入数据，也不妨碍前面线程读取客户端数据</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">                    writer.write(String.valueOf(i));</span><br><span class="line">                    writer.newLine();</span><br><span class="line">                    writer.flush();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestClient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Socket s = <span class="keyword">new</span> Socket(<span class="string">&quot;localhost&quot;</span>, <span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(s.getInputStream()));</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                    System.out.println(reader.readLine());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                BufferedWriter writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> OutputStreamWriter(s.getOutputStream()));</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">                    writer.write(String.valueOf(i));</span><br><span class="line">                    writer.newLine();</span><br><span class="line">                    writer.flush();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
 
       
     </div>
@@ -954,6 +1246,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/02/14/Netty%E8%BF%9B%E9%98%B6/" rel="prev" title="Netty进阶">
+                Netty进阶 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -1036,7 +1332,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-count">106</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1101,7 +1397,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty-%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">Netty 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">Netty 是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%9A%84%E4%BD%9C%E8%80%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">Netty 的作者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%9A%84%E5%9C%B0%E4%BD%8D"><span class="nav-number">1.1.3.</span> <span class="nav-text">Netty 的地位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Netty-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 Netty 的优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">1.2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">服务器端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86"><span class="nav-number">1.2.4.</span> <span class="nav-text">流程梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E6%8F%90%E7%A4%BA"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">💡 提示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EventLoop"><span class="nav-number">1.3.1.</span> <span class="nav-text">EventLoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">💡 优雅关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86-io-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">演示 NioEventLoop 处理 io 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-handler-%E6%89%A7%E8%A1%8C%E4%B8%AD%E5%A6%82%E4%BD%95%E6%8D%A2%E4%BA%BA%EF%BC%9F"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">💡 handler 执行中如何换人？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86%E6%99%AE%E9%80%9A%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">演示 NioEventLoop 处理普通任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">演示 NioEventLoop 处理定时任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel"><span class="nav-number">1.3.2.</span> <span class="nav-text">Channel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ChannelFuture"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">ChannelFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CloseFuture"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">CloseFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E5%BC%82%E6%AD%A5%E6%8F%90%E5%8D%87%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">💡 异步提升的是什么</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-amp-Promise"><span class="nav-number">1.3.3.</span> <span class="nav-text">Future &amp; Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B1"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">例1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B2"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">例2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B3"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">例3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B4"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">例4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B5"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">例5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B6"><span class="nav-number">1.3.3.6.</span> <span class="nav-text">例6</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Handler-amp-Pipeline"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Handler &amp; Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-ByteBuf"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 ByteBuf</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%89%E5%88%9B%E5%BB%BA"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">1）创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98-vs-%E5%A0%86%E5%86%85%E5%AD%98"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">2）直接内存 vs 堆内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%89%E6%B1%A0%E5%8C%96-vs-%E9%9D%9E%E6%B1%A0%E5%8C%96"><span class="nav-number">1.3.5.3.</span> <span class="nav-text">3）池化 vs 非池化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%89%E7%BB%84%E6%88%90"><span class="nav-number">1.3.5.4.</span> <span class="nav-text">4）组成</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty-%E5%85%A5%E9%97%A8"><span class="nav-number">1.</span> <span class="nav-text">Netty 入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.1.</span> <span class="nav-text">Netty 是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%9A%84%E4%BD%9C%E8%80%85"><span class="nav-number">1.1.2.</span> <span class="nav-text">Netty 的作者</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty-%E7%9A%84%E5%9C%B0%E4%BD%8D"><span class="nav-number">1.1.3.</span> <span class="nav-text">Netty 的地位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Netty-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 Netty 的优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-World"><span class="nav-number">1.2.</span> <span class="nav-text">Hello World</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">服务器端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.2.3.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E6%A2%B3%E7%90%86"><span class="nav-number">1.2.4.</span> <span class="nav-text">流程梳理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E6%8F%90%E7%A4%BA"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">💡 提示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6"><span class="nav-number">1.3.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EventLoop"><span class="nav-number">1.3.1.</span> <span class="nav-text">EventLoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E4%BC%98%E9%9B%85%E5%85%B3%E9%97%AD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">💡 优雅关闭</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86-io-%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">演示 NioEventLoop 处理 io 事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-handler-%E6%89%A7%E8%A1%8C%E4%B8%AD%E5%A6%82%E4%BD%95%E6%8D%A2%E4%BA%BA%EF%BC%9F"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">💡 handler 执行中如何换人？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86%E6%99%AE%E9%80%9A%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">演示 NioEventLoop 处理普通任务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BC%94%E7%A4%BA-NioEventLoop-%E5%A4%84%E7%90%86%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.3.1.5.</span> <span class="nav-text">演示 NioEventLoop 处理定时任务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Channel"><span class="nav-number">1.3.2.</span> <span class="nav-text">Channel</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ChannelFuture"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">ChannelFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CloseFuture"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">CloseFuture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-%E5%BC%82%E6%AD%A5%E6%8F%90%E5%8D%87%E7%9A%84%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">💡 异步提升的是什么</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Future-amp-Promise"><span class="nav-number">1.3.3.</span> <span class="nav-text">Future &amp; Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B1"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">例1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B2"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">例2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B3"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">例3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B4"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">例4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B5"><span class="nav-number">1.3.3.5.</span> <span class="nav-text">例5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B6"><span class="nav-number">1.3.3.6.</span> <span class="nav-text">例6</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Handler-amp-Pipeline"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Handler &amp; Pipeline</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-ByteBuf"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 ByteBuf</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%EF%BC%89%E5%88%9B%E5%BB%BA"><span class="nav-number">1.3.5.1.</span> <span class="nav-text">1）创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%EF%BC%89%E7%9B%B4%E6%8E%A5%E5%86%85%E5%AD%98-vs-%E5%A0%86%E5%86%85%E5%AD%98"><span class="nav-number">1.3.5.2.</span> <span class="nav-text">2）直接内存 vs 堆内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%EF%BC%89%E6%B1%A0%E5%8C%96-vs-%E9%9D%9E%E6%B1%A0%E5%8C%96"><span class="nav-number">1.3.5.3.</span> <span class="nav-text">3）池化 vs 非池化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%EF%BC%89%E7%BB%84%E6%88%90"><span class="nav-number">1.3.5.4.</span> <span class="nav-text">4）组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%EF%BC%89%E5%86%99%E5%85%A5"><span class="nav-number">1.3.5.5.</span> <span class="nav-text">5）写入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%EF%BC%89%E6%89%A9%E5%AE%B9"><span class="nav-number">1.3.5.6.</span> <span class="nav-text">6）扩容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7%EF%BC%89%E8%AF%BB%E5%8F%96"><span class="nav-number">1.3.5.7.</span> <span class="nav-text">7）读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8%EF%BC%89retain-amp-release"><span class="nav-number">1.3.5.8.</span> <span class="nav-text">8）retain &amp; release</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9%EF%BC%89slice"><span class="nav-number">1.3.5.9.</span> <span class="nav-text">9）slice</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10%EF%BC%89duplicate"><span class="nav-number">1.3.5.10.</span> <span class="nav-text">10）duplicate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11%EF%BC%89copy"><span class="nav-number">1.3.5.11.</span> <span class="nav-text">11）copy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12%EF%BC%89CompositeByteBuf"><span class="nav-number">1.3.5.12.</span> <span class="nav-text">12）CompositeByteBuf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13%EF%BC%89Unpooled"><span class="nav-number">1.3.5.13.</span> <span class="nav-text">13）Unpooled</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%F0%9F%92%A1-ByteBuf-%E4%BC%98%E5%8A%BF"><span class="nav-number">1.3.5.14.</span> <span class="nav-text">💡 ByteBuf 优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8F%8C%E5%90%91%E9%80%9A%E4%BF%A1"><span class="nav-number">1.4.</span> <span class="nav-text">4. 双向通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E7%BB%83%E4%B9%A0"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 练习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1-%E8%AF%BB%E5%92%8C%E5%86%99%E7%9A%84%E8%AF%AF%E8%A7%A3"><span class="nav-number">1.4.2.</span> <span class="nav-text">💡 读和写的误解</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1142,7 +1438,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">135.3k</span>
+    <span title="博客全站字数">138.6k</span>
   
 </div>
 
