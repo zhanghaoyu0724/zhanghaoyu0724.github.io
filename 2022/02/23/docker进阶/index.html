@@ -79,17 +79,32 @@
 
 
 
-<meta name="description" content="日积月累,积少成多">
+<meta name="description" content="容器数据卷 什么是容器数据卷 docker的理念回顾 将应用和环境打包成一个镜像！ 容器的一个数据共享数据！Docker容器中产生的数据，同步到本地 这就是卷计数！目录的挂在，将我们容器内的目录，挂载到linux上面！  总结一句话，容器的持久化和同步操作！容器间也是可以数据共享的！  方式一：直接使用命令来挂载 -v  12#docker run -it -v 主机目录：容器内端口docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker进阶">
 <meta property="og:url" content="https://blacke1111.github.io/2022/02/23/docker%E8%BF%9B%E9%98%B6/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="日积月累,积少成多">
+<meta property="og:description" content="容器数据卷 什么是容器数据卷 docker的理念回顾 将应用和环境打包成一个镜像！ 容器的一个数据共享数据！Docker容器中产生的数据，同步到本地 这就是卷计数！目录的挂在，将我们容器内的目录，挂载到linux上面！  总结一句话，容器的持久化和同步操作！容器间也是可以数据共享的！  方式一：直接使用命令来挂载 -v  12#docker run -it -v 主机目录：容器内端口docker">
 <meta property="og:locale">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224182344.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224183715.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224184119.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224193504.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224210041.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224210214.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224210935.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224211732.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224212138.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224212949.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224213828.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224213843.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224214214.png">
+<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224214810.png">
 <meta property="article:published_time" content="2022-02-23T14:48:20.000Z">
-<meta property="article:modified_time" content="2022-02-23T14:48:44.638Z">
+<meta property="article:modified_time" content="2022-02-24T15:20:57.206Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224182344.png">
 
 
 
@@ -341,8 +356,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-02-23T22:48:44+08:00">
-                2022-02-23
+              <time title="更新于" itemprop="dateModified" datetime="2022-02-24T23:20:57+08:00">
+                2022-02-24
               </time>
             
           </span>
@@ -391,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  2.5k
                 </span>
               
 
@@ -407,7 +422,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  12
                 </span>
               
             </div>
@@ -428,7 +443,111 @@
       
 
       
-        
+        <h1 id="容器数据卷"><a href="#容器数据卷" class="headerlink" title="容器数据卷"></a>容器数据卷</h1><p> 什么是容器数据卷</p>
+<p>docker的理念回顾</p>
+<p>将应用和环境打包成一个镜像！</p>
+<p>容器的一个数据共享数据！Docker容器中产生的数据，同步到本地</p>
+<p>这就是卷计数！目录的挂在，将我们容器内的目录，挂载到linux上面！</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224182344.png"></p>
+<p><strong>总结一句话，容器的持久化和同步操作！容器间也是可以数据共享的！</strong></p>
+<blockquote>
+<p>方式一：直接使用命令来挂载 -v</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">docker run -it -v 主机目录：容器内端口</span></span><br><span class="line">docker run -it -v /home/ceshi:/home centos /bin/bash</span><br></pre></td></tr></table></figure>
+
+
+
+<p>docker inspect 容器id</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224183715.png"></p>
+<p><strong>source 主机内地址</strong></p>
+<p><strong>Destination docker容器内的地址</strong></p>
+<p>在主机上新建一个 test.java 自动同步到容器内</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224184119.png"></p>
+<p><strong>停止容器，再修改主机，容器启动后一样可以同步</strong></p>
+<h2 id="实战安装mysql"><a href="#实战安装mysql" class="headerlink" title="实战安装mysql"></a><strong>实战安装mysql</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">远程连接 mysql</span></span><br><span class="line">mysql -h 192.168.218.129 -uroot -p -P 3306</span><br><span class="line"><span class="meta">#</span><span class="bash">启动docker mysql</span></span><br><span class="line">docker run -d -p 3310:3306 -v /home/mysql/conf:/etc/mysql/conf.d -v /home/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 --name mysql01 mysql</span><br><span class="line"></span><br><span class="line">不知道为什么有bug，用本机的navicat连接不上docker的mysql  重启下虚拟机就解决了</span><br></pre></td></tr></table></figure>
+
+<p>假设我们将容器删除</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224193504.png"></p>
+<p>发现哦我们挂载到本地的数据卷依旧没有丢失，这就实现了容器数据持久化</p>
+<h2 id="具名和匿名挂载"><a href="#具名和匿名挂载" class="headerlink" title="具名和匿名挂载"></a>具名和匿名挂载</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">匿名挂载</span></span><br><span class="line">docker run -d -P --name nginx01 -v /etc/nginx nginx  #这里nginx01是指容器外的名字</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">查看所有卷情况</span></span><br><span class="line"><span class="meta">#</span><span class="bash">docker volume ls</span></span><br><span class="line">[root@hadoop01 data]# docker volume ls</span><br><span class="line">DRIVER    VOLUME NAME</span><br><span class="line">local     dd8860bc850ff056fbba682c113a8226bd2291b840d1deac21829845060f08c2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">具名挂载  -v 卷名：容器内路径</span></span><br><span class="line">[root@hadoop01 data]# docker run -d --name nginx02 -v juming-nginx:/etc/nginx nginx</span><br><span class="line">ee3232b4b1beb004c8275a59fe2af4e11aadbe8f0737e502ca7a5519d068223e</span><br><span class="line">[root@hadoop01 data]# docker volume ls</span><br><span class="line">DRIVER    VOLUME NAME</span><br><span class="line">local     dd8860bc850ff056fbba682c113a8226bd2291b840d1deac21829845060f08c2</span><br><span class="line">local     juming-nginx</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">查看一下卷</span></span><br><span class="line">[root@hadoop01 home]# docker volume inspect juming-nginx</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;CreatedAt&quot;: &quot;2022-02-24T19:45:05+08:00&quot;,</span><br><span class="line">        &quot;Driver&quot;: &quot;local&quot;,</span><br><span class="line">        &quot;Labels&quot;: null,</span><br><span class="line">        &quot;Mountpoint&quot;: &quot;/var/lib/docker/volumes/juming-nginx/_data&quot;,</span><br><span class="line">        &quot;Name&quot;: &quot;juming-nginx&quot;,</span><br><span class="line">        &quot;Options&quot;: null,</span><br><span class="line">        &quot;Scope&quot;: &quot;local&quot;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>所有的docker容器内的卷，没有指定目录的情况下都是在 <strong>“/var/lib/docker/volumes/xxxxxx/_data”</strong></p>
+<p>小结：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">如何确定是具名挂载还是匿名挂载，还是指定路径挂载</span></span><br><span class="line">-v 容器内路径 #匿名挂载</span><br><span class="line">-v 卷名:容器内路径</span><br><span class="line">-v /宿主机路径:容器内路径 #指定路径挂载</span><br></pre></td></tr></table></figure>
+
+
+
+<p>拓展：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">通过 -v 容器内路径:ro rw改变读写权限</span></span><br><span class="line">ro readonly #只读</span><br><span class="line">rw readwrite #可读可写</span><br><span class="line"></span><br><span class="line"> docker run -d --name nginx02 -v juming-nginx:/etc/nginx:ro nginx</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta"> #</span><span class="bash">ro 只要看到ro就说明这个路径只能能通过宿主机来操作，容器内是无法操作的</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="初识DockerFile"><a href="#初识DockerFile" class="headerlink" title="初识DockerFile"></a>初识DockerFile</h2><p>Dockerfile就是用来构建镜像的构造文件！命令脚本！先体验下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">编写脚本文件</span></span><br><span class="line">[root@hadoop01 docker-test-volume]# pwd</span><br><span class="line">/home/docker-test-volume</span><br><span class="line">[root@hadoop01 docker-test-volume]# vim dockerfile1</span><br><span class="line">[root@hadoop01 docker-test-volume]# cat dockerfile1 </span><br><span class="line">[root@hadoop01 docker-test-volume]# cat dockerfile1 </span><br><span class="line">FROM centos</span><br><span class="line"></span><br><span class="line">VOLUME [&quot;volume01&quot;,&quot;volume02&quot;]</span><br><span class="line"></span><br><span class="line">CMD echo &quot;-----end-----&quot;</span><br><span class="line"></span><br><span class="line">CMD /bin/bash</span><br><span class="line"><span class="meta">#</span><span class="bash">注意最后有一个点</span></span><br><span class="line">[root@hadoop01 docker-test-volume]# docker build -f dockerfile1  -t zhangcentos:1.0 .</span><br><span class="line">Sending build context to Docker daemon  2.048kB</span><br><span class="line">Step 1/4 : FROM centos</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 5d0da3dc9764</span></span><br><span class="line">Step 2/4 : VOLUME [&quot;volume01&quot;,&quot;volume02&quot;]</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> a03689345bdd</span></span><br><span class="line">Removing intermediate container a03689345bdd</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 094ba8d8ac47</span></span><br><span class="line">Step 3/4 : CMD echo &quot;-----end-----&quot;</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> 3923319b0cc7</span></span><br><span class="line">Removing intermediate container 3923319b0cc7</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 9873922bfc87</span></span><br><span class="line">Step 4/4 : CMD /bin/bash</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> 30857643ba82</span></span><br><span class="line">Removing intermediate container 30857643ba82</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 3c1c95637190</span></span><br><span class="line">Successfully built 3c1c95637190</span><br><span class="line">Successfully tagged zhangcentos:1.0</span><br><span class="line">[root@hadoop01 docker-test-volume]# docker images</span><br><span class="line">REPOSITORY            TAG       IMAGE ID       CREATED              SIZE</span><br><span class="line">zhangcentos           1.0       3c1c95637190   About a minute ago   231MB</span><br><span class="line">tomcat02              1.0       4e4fd43e89dd   22 hours ago         684MB</span><br><span class="line">mysql                 latest    17b062d639f4   6 days ago           519MB</span><br><span class="line">tomcat                9.0       1fd0bf15d6bd   12 days ago          680MB</span><br><span class="line">nginx                 latest    c316d5a335a5   4 weeks ago          142MB</span><br><span class="line">centos                latest    5d0da3dc9764   5 months ago         231MB</span><br><span class="line">portainer/portainer   latest    580c0e4e98b0   11 months ago        79.1MB</span><br><span class="line">[root@hadoop01 docker-test-volume]# docker run -it zhangcentos /bin/bash</span><br><span class="line">Unable to find image &#x27;zhangcentos:latest&#x27; locally</span><br><span class="line"><span class="meta">#</span><span class="bash">这里通过IMAGE ID 启动镜像</span></span><br><span class="line">[root@hadoop01 docker-test-volume]# docker run -it 3c1c95637190 /bin/bash</span><br><span class="line">[root@9c2631a9266a /]# ls -l</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx.   1 root root   7 Nov  3  2020 bin -&gt; usr/bin</span><br><span class="line">drwxr-xr-x.   5 root root 360 Feb 24 12:58 dev</span><br><span class="line">drwxr-xr-x.   1 root root  66 Feb 24 12:58 etc</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 home</span><br><span class="line">lrwxrwxrwx.   1 root root   7 Nov  3  2020 lib -&gt; usr/lib</span><br><span class="line">lrwxrwxrwx.   1 root root   9 Nov  3  2020 lib64 -&gt; usr/lib64</span><br><span class="line">drwx------.   2 root root   6 Sep 15 14:17 lost+found</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 media</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 mnt</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 opt</span><br><span class="line">dr-xr-xr-x. 240 root root   0 Feb 24 12:58 proc</span><br><span class="line">dr-xr-x---.   2 root root 162 Sep 15 14:17 root</span><br><span class="line">drwxr-xr-x.  11 root root 163 Sep 15 14:17 run</span><br><span class="line">lrwxrwxrwx.   1 root root   8 Nov  3  2020 sbin -&gt; usr/sbin</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 srv</span><br><span class="line">dr-xr-xr-x.  13 root root   0 Feb 24 11:27 sys</span><br><span class="line">drwxrwxrwt.   7 root root 171 Sep 15 14:17 tmp</span><br><span class="line">drwxr-xr-x.  12 root root 144 Sep 15 14:17 usr</span><br><span class="line">drwxr-xr-x.  20 root root 262 Sep 15 14:17 var</span><br><span class="line">drwxr-xr-x.   2 root root   6 Feb 24 12:58 volume01</span><br><span class="line">drwxr-xr-x.   2 root root   6 Feb 24 12:58 volume02</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查看我们创建的镜像 的卷挂载的路径 docker inspect 容器id</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224210041.png"></p>
+<p>测试以下刚才的文件是否同步出去了</p>
+<p>假设构建镜像的时候没有挂载，要手动镜像挂载 -v 卷名：容器内路径</p>
+<h1 id="数据卷挂载"><a href="#数据卷挂载" class="headerlink" title="数据卷挂载"></a>数据卷挂载</h1><p>多个mysql同步数据</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224210214.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">启动三个容器 使用我们之气自己镜像的 zhangcentos</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>docker01：</strong></p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224210935.png"></p>
+<p><strong>docker02：</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">以docker01为父容器启动</span></span><br><span class="line">docker run -d -it  --name docker02 --volumes-from docker01  zhangcentos:1.0  /bin/bash</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>docker01在colume中创建了docker01，可以看到在docker02（截图右边）中也可以看到</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224211732.png"></p>
+<p><strong>docker03</strong></p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224212138.png"></p>
+<p>我通过查看docker inspect 信息看到docker01 docker02 docker03 的数据卷使用了相同的目录</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224212949.png"></p>
+<p>所以这样就实现了数据的共享</p>
+<h1 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h1><p> 是用来构建docker镜像的文件！ 命令参数脚本！</p>
+<p><strong>构建步骤：</strong></p>
+<p>1.编写一个dockerfile文件</p>
+<p>2.docker build 构建成文一个镜像</p>
+<p>3.docker run 运行镜像</p>
+<p>4.docker push 发布镜像（dockerhub,阿里云镜像仓库！）</p>
+<p>查看一下官方怎么做的！</p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224213828.png"></p>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224213843.png"></p>
+<p>基础知识点：</p>
+<p>1.每个保留关键字（指令）都必须是大写字母</p>
+<p>2。执行从上到下顺序执行</p>
+<p>3.# 表示注释</p>
+<ol start="4">
+<li>每一个指令都会创建提交一个新的镜像层，并提交！</li>
+</ol>
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224214214.png"></p>
+<p>dockerfile是面向开发的。</p>
+<p>DockerFile：构建文件，定义了一切的步骤，源代码</p>
+<p>Dockerimages: 通过DockerFile构建生成的镜像，最终发布和运行的产品</p>
+<h2 id="DockerFile的指令："><a href="#DockerFile的指令：" class="headerlink" title="DockerFile的指令："></a>DockerFile的指令：</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">FROM      #基础镜像，一切从这里开始构建</span><br><span class="line">MAINTAINER #镜像是谁写的，姓名+邮箱</span><br><span class="line">RUN 	#镜像构建的时候需要运行的命令</span><br><span class="line">ADD		#步骤： tomcat镜像，添加内容，就好比添加一个压缩包</span><br><span class="line">WORKIR	#镜像的工作目录</span><br><span class="line">VOLIUME #挂载的目录位置</span><br><span class="line">EXPOSE	#暴露端口</span><br><span class="line">CMD		#指定这个容器启动的时候要运行的命令，只有最后一个生效，可被替代 我们自己docker run 时加命令替代</span><br><span class="line">ENTRYPOINT #指定这个容器启动的时候要运行的命令，可以追加命令</span><br><span class="line">ONBUILD 	#当构建一个被继承DockerFIle这个时候就会运行ONBUILD 的指令。触发命令</span><br><span class="line">COPY		#类似ADD，将文件拷贝到镜像</span><br><span class="line">ENV			#构建的时候设置环境变量</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220224214810.png"></p>
+<h2 id="实战测试"><a href="#实战测试" class="headerlink" title="实战测试"></a>实战测试</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">编写一个自己的centos</span></span><br><span class="line">[root@hadoop01 dockerfile]# vim mydockerfile-centos</span><br><span class="line">[root@hadoop01 dockerfile]# cat mydockerfile-centos </span><br><span class="line">FROM centos:7</span><br><span class="line">MAINTAINER zhang&lt;13954307478@qq.com&gt;</span><br><span class="line">ENV MYPATH /usr/local</span><br><span class="line">WORKDIR $MYPATH</span><br><span class="line">RUN yum -y install vim</span><br><span class="line">RUN yum -y install net-tools</span><br><span class="line"></span><br><span class="line">EXPOSE 80</span><br><span class="line">CMD echo $MYPATH</span><br><span class="line">CMD echo &quot;-----end----&quot;</span><br><span class="line">CMD /bin/bash</span><br><span class="line">[root@hadoop01 dockerfile]# pwd</span><br><span class="line">/home/dockerfile</span><br><span class="line">[root@hadoop01 dockerfile]# </span><br><span class="line"><span class="meta">#</span><span class="bash"> 2构建文件的镜像</span></span><br><span class="line">docker build -f mydockerfile-centos -t mycentos:0.1 .</span><br></pre></td></tr></table></figure>
+
+<p>如果报错 ：Error: Failed to download metadata for repo ‘AppStream’</p>
+<p>Centos8不再维护，在2022年1月31日，CentOS团队从官方镜像中移除CentOS 8的所有包。<br>解决方式：dockerfile第一行FROM centos:7</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker history 可以查看镜像的历史</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CMD和ENTRYPONIT区别</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CMD #指定这个容器启动的时候要运行的命令，只有最后一个会生效，可被替代</span><br><span class="line">ENTRYPOINT #指定这个容器启动的时候要运行的命令，可以追加命令</span><br></pre></td></tr></table></figure>
+
+<p>测试CMD</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 dockerfile]# vim dockerfile-cmd-test</span><br><span class="line">[root@hadoop01 dockerfile]# cat dockerfile-cmd-test </span><br><span class="line">FROM centos</span><br><span class="line">CMD [&quot;ls&quot;,&quot;-a&quot;]</span><br><span class="line">[root@hadoop01 dockerfile]# docker build -f dockerfile-cmd-test -t cmdtest:1.0 .</span><br><span class="line">Sending build context to Docker daemon  3.072kB</span><br><span class="line">Step 1/2 : FROM centos</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 5d0da3dc9764</span></span><br><span class="line">Step 2/2 : CMD [&quot;ls&quot;,&quot;-a&quot;]</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> 878e2dc278be</span></span><br><span class="line">Removing intermediate container 878e2dc278be</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 6aeaf1361fbe</span></span><br><span class="line">Successfully built 6aeaf1361fbe</span><br><span class="line">Successfully tagged cmdtest:1.0</span><br><span class="line">[root@hadoop01 dockerfile]# docker run cmdtest:1.0</span><br><span class="line">.</span><br><span class="line">..</span><br><span class="line">.dockerenv</span><br><span class="line">bin</span><br><span class="line">dev</span><br><span class="line">etc</span><br><span class="line">home</span><br><span class="line">lib</span><br><span class="line">lib64</span><br><span class="line">lost+found</span><br><span class="line">media</span><br><span class="line">mnt</span><br><span class="line">opt</span><br><span class="line">proc</span><br><span class="line">root</span><br><span class="line">run</span><br><span class="line">sbin</span><br><span class="line">srv</span><br><span class="line">sys</span><br><span class="line">tmp</span><br><span class="line">usr</span><br><span class="line">var</span><br><span class="line"><span class="meta">#</span><span class="bash">想追加一个命令 -l</span></span><br><span class="line">[root@hadoop01 dockerfile]# docker run cmdtest:1.0 -l</span><br><span class="line">docker: Error response from daemon: OCI runtime create failed: container_linux.go:380: starting container process caused: exec: &quot;-l&quot;: executable file not found in $PATH: unknown.</span><br><span class="line">ERRO[0004] error waiting for container: context canceled </span><br><span class="line"><span class="meta">#</span><span class="bash">出错 cmd的清理下 -l 替换了CMd[<span class="string">&quot;ls&quot;</span>,<span class="string">&quot;-a&quot;</span>]命令，-l不是命令所以报错</span></span><br></pre></td></tr></table></figure>
+
+<p>测试 ENTRYPOINT</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop01 dockerfile]# cat dockerfile-cmd-test </span><br><span class="line">FROM centos</span><br><span class="line">ENTRYPOINT [&quot;ls&quot;,&quot;-a&quot;]</span><br><span class="line">[root@hadoop01 dockerfile]# docker build -f dockerfile-cmd-test -t entorypoint-test .</span><br><span class="line">Sending build context to Docker daemon  3.072kB</span><br><span class="line">Step 1/2 : FROM centos</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> 5d0da3dc9764</span></span><br><span class="line">Step 2/2 : ENTRYPOINT [&quot;ls&quot;,&quot;-a&quot;]</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> Running <span class="keyword">in</span> 495b83c71774</span></span><br><span class="line">Removing intermediate container 495b83c71774</span><br><span class="line"><span class="meta"> ---&gt;</span><span class="bash"> b5c203ad0353</span></span><br><span class="line">Successfully built b5c203ad0353</span><br><span class="line">Successfully tagged entorypoint-test:latest</span><br><span class="line">[root@hadoop01 dockerfile]# docker images</span><br><span class="line">REPOSITORY            TAG       IMAGE ID       CREATED          SIZE</span><br><span class="line">entorypoint-test      latest    b5c203ad0353   23 seconds ago   231MB</span><br><span class="line">cmdtest               1.0       6aeaf1361fbe   13 minutes ago   231MB</span><br><span class="line">&lt;none&gt;                &lt;none&gt;    e3e3abd1182b   19 minutes ago   231MB</span><br><span class="line">zhangcentos           1.0       65fe23d38a98   2 hours ago      231MB</span><br><span class="line">tomcat02              1.0       4e4fd43e89dd   24 hours ago     684MB</span><br><span class="line">mysql                 latest    17b062d639f4   6 days ago       519MB</span><br><span class="line">tomcat                9.0       1fd0bf15d6bd   12 days ago      680MB</span><br><span class="line">nginx                 latest    c316d5a335a5   4 weeks ago      142MB</span><br><span class="line">centos                latest    5d0da3dc9764   5 months ago     231MB</span><br><span class="line">portainer/portainer   latest    580c0e4e98b0   11 months ago    79.1MB</span><br><span class="line">[root@hadoop01 dockerfile]# docker run  entorypoint-test</span><br><span class="line">.</span><br><span class="line">..</span><br><span class="line">.dockerenv</span><br><span class="line">bin</span><br><span class="line">dev</span><br><span class="line">etc</span><br><span class="line">home</span><br><span class="line">lib</span><br><span class="line">lib64</span><br><span class="line">lost+found</span><br><span class="line">media</span><br><span class="line">mnt</span><br><span class="line">opt</span><br><span class="line">proc</span><br><span class="line">root</span><br><span class="line">run</span><br><span class="line">sbin</span><br><span class="line">srv</span><br><span class="line">sys</span><br><span class="line">tmp</span><br><span class="line">usr</span><br><span class="line">var</span><br><span class="line">[root@hadoop01 dockerfile]# docker run  entorypoint-test -l</span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x.   1 root root   6 Feb 24 14:55 .</span><br><span class="line">drwxr-xr-x.   1 root root   6 Feb 24 14:55 ..</span><br><span class="line">-rwxr-xr-x.   1 root root   0 Feb 24 14:55 .dockerenv</span><br><span class="line">lrwxrwxrwx.   1 root root   7 Nov  3  2020 bin -&gt; usr/bin</span><br><span class="line">drwxr-xr-x.   5 root root 340 Feb 24 14:55 dev</span><br><span class="line">drwxr-xr-x.   1 root root  66 Feb 24 14:55 etc</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 home</span><br><span class="line">lrwxrwxrwx.   1 root root   7 Nov  3  2020 lib -&gt; usr/lib</span><br><span class="line">lrwxrwxrwx.   1 root root   9 Nov  3  2020 lib64 -&gt; usr/lib64</span><br><span class="line">drwx------.   2 root root   6 Sep 15 14:17 lost+found</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 media</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 mnt</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 opt</span><br><span class="line">dr-xr-xr-x. 258 root root   0 Feb 24 14:55 proc</span><br><span class="line">dr-xr-x---.   2 root root 162 Sep 15 14:17 root</span><br><span class="line">drwxr-xr-x.  11 root root 163 Sep 15 14:17 run</span><br><span class="line">lrwxrwxrwx.   1 root root   8 Nov  3  2020 sbin -&gt; usr/sbin</span><br><span class="line">drwxr-xr-x.   2 root root   6 Nov  3  2020 srv</span><br><span class="line">dr-xr-xr-x.  13 root root   0 Feb 24 11:27 sys</span><br><span class="line">drwxrwxrwt.   7 root root 171 Sep 15 14:17 tmp</span><br><span class="line">drwxr-xr-x.  12 root root 144 Sep 15 14:17 usr</span><br><span class="line">drwxr-xr-x.  20 root root 262 Sep 15 14:17 var</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     
@@ -523,8 +642,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -599,6 +727,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="nav-number">1.</span> <span class="nav-text">容器数据卷</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E5%AE%89%E8%A3%85mysql"><span class="nav-number">1.1.</span> <span class="nav-text">实战安装mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E5%90%8D%E5%92%8C%E5%8C%BF%E5%90%8D%E6%8C%82%E8%BD%BD"><span class="nav-number">1.2.</span> <span class="nav-text">具名和匿名挂载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E8%AF%86DockerFile"><span class="nav-number">1.3.</span> <span class="nav-text">初识DockerFile</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7%E6%8C%82%E8%BD%BD"><span class="nav-number">2.</span> <span class="nav-text">数据卷挂载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DockerFile"><span class="nav-number">3.</span> <span class="nav-text">DockerFile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DockerFile%E7%9A%84%E6%8C%87%E4%BB%A4%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">DockerFile的指令：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E6%B5%8B%E8%AF%95"><span class="nav-number">3.2.</span> <span class="nav-text">实战测试</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -633,7 +777,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">160.4k</span>
+    <span title="博客全站字数">163.3k</span>
   
 </div>
 
