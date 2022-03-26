@@ -86,23 +86,23 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="LinkedBlockingQueue1.基本的入队出队1234567891011121314public class LinkedBlockingQueue&lt;E&gt; extends AbstractQueue&lt;E&gt; implements BlockingQueue&lt;E&gt;, java.io.Serializable &amp;#123; static class Node">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213830.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213854.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213954.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214029.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214050.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214108.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214125.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214212.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214542.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202215411.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202215426.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202213830.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202213854.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202213954.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214029.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214050.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214108.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214125.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214212.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214542.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202215411.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202215426.png">
 <meta property="article:published_time" content="2021-12-02T13:36:19.000Z">
-<meta property="article:modified_time" content="2021-12-02T13:55:03.497Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:03.638Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Java并发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213830.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202213830.png">
 
 
 
@@ -354,8 +354,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-12-02T21:55:03+08:00">
-                2021-12-02
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:03+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -444,24 +444,24 @@
         <h1 id="LinkedBlockingQueue"><a href="#LinkedBlockingQueue" class="headerlink" title="LinkedBlockingQueue"></a>LinkedBlockingQueue</h1><h2 id="1-基本的入队出队"><a href="#1-基本的入队出队" class="headerlink" title="1.基本的入队出队"></a>1.基本的入队出队</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedBlockingQueue</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractQueue</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class"> <span class="keyword">implements</span> <span class="title">BlockingQueue</span>&lt;<span class="title">E</span>&gt;, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line"> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">     E item;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 下列三种情况之一</span></span><br><span class="line"><span class="comment"> * - 真正的后继节点</span></span><br><span class="line"><span class="comment"> * - 自己, 发生在出队时</span></span><br><span class="line"><span class="comment"> * - null, 表示是没有后继节点, 是最后了</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> Node&lt;E&gt; next;</span><br><span class="line"> Node(E x) &#123; item = x; &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>初始化链表 last = head = new Node<E>(null); Dummy 节点用来占位，item 为 null</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213830.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202213830.png"></p>
 <p>当一个节点入队 last = last.next = node;</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213854.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202213854.png"></p>
 <p>再来一个节点入队 last = last.next = node;</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202213954.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202213954.png"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Node&lt;E&gt; h = head;</span><br><span class="line">Node&lt;E&gt; first = h.next; h.next = h; <span class="comment">// help GC</span></span><br><span class="line">head = first; E x = first.item;</span><br><span class="line">first.item = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">return</span> x;</span><br></pre></td></tr></table></figure>
 
 <p><strong>h = head</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214029.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214029.png"></p>
 <p><strong>first = h.next</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214050.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214050.png"></p>
 <p><strong>h.next = h</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214108.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214108.png"></p>
 <p><strong>head = first</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214125.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214125.png"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E x = first.item;</span><br><span class="line">first.item = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">return</span> x;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214212.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214212.png"></p>
 <h2 id="2-加锁分析"><a href="#2-加锁分析" class="headerlink" title="2. 加锁分析"></a><strong>2.</strong> <strong>加锁分析</strong></h2><p>==高明之处==在于用了两把锁和 dummy 节点</p>
 <ul>
 <li>用一把锁，同一时刻，最多只允许有一个线程（生产者或消费者，二选一）执行</li>
@@ -503,7 +503,7 @@
 </ul>
 <p>事实上，ConcurrentLinkedQueue 应用还是非常广泛的<br>例如之前讲的 Tomcat 的 Connector 结构时，Acceptor 作为生产者向 Poller 消费者传递事件信息时，正是采用了<br>ConcurrentLinkedQueue 将 SocketChannel 给 Poller 使用</p>
 <p>tomcat:</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202214542.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214542.png"></p>
 <h1 id="CopyOnWriteArraySet"><a href="#CopyOnWriteArraySet" class="headerlink" title="CopyOnWriteArraySet"></a>CopyOnWriteArraySet</h1><p>是它的马甲 底层实现采用了 写入时拷贝 的思想，增删改操作会将底层数组拷贝一份，更</p>
 <p>改操作在新数组上执行，这时不影响其它线程的<strong>并发读</strong>，<strong>读写分离</strong>。 以新增为例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line"> <span class="comment">// 获取旧的数组</span></span><br><span class="line"> Object[] es = getArray();</span><br><span class="line"> <span class="keyword">int</span> len = es.length;</span><br><span class="line"> <span class="comment">// 拷贝新的数组（这里是比较耗时的操作，但不影响其它读线程）</span></span><br><span class="line"> es = Arrays.copyOf(es, len + <span class="number">1</span>);</span><br><span class="line"> <span class="comment">// 添加新元素</span></span><br><span class="line"> es[len] = e;</span><br><span class="line"> <span class="comment">// 替换旧的数组</span></span><br><span class="line"> setArray(es);</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -516,8 +516,8 @@
 
 <p>适合『读多写少』的应用场景</p>
 <p><strong>get</strong> <strong>弱一致性</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202215411.png"></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211202215426.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202215411.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202215426.png"></p>
 <blockquote>
 <p>不容易测试，但问题确实存在</p>
 </blockquote>
@@ -665,7 +665,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

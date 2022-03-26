@@ -86,15 +86,15 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="Netty 进阶粘包与半包粘包现象服务端代码 12345678910111213141516171819202122232425262728293031323334353637383940414243444546public class HelloWorldServer &amp;#123;    static final Logger log &#x3D; LoggerFactory.getLogger(Hell">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0049.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0051.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0031.jpg">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0013.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0049.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0051.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0031.jpg">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0013.png">
 <meta property="article:published_time" content="2022-02-14T12:16:31.000Z">
-<meta property="article:modified_time" content="2022-02-17T13:07:30.114Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:03.356Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0049.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0049.png">
 
 
 
@@ -346,8 +346,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-02-17T21:07:30+08:00">
-                2022-02-17
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:03+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -482,12 +482,12 @@
 <p>滑动窗口</p>
 <ul>
 <li><p>TCP 以一个段（segment）为单位，每发送一个段就需要进行一次确认应答（ack）处理，但如果这么做，缺点是包的往返时间越长性能就越差</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0049.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0049.png"></p>
 </li>
 </ul>
 <ul>
 <li><p>为了解决此问题，引入了窗口概念，窗口大小即决定了无需等待应答而可以继续发送的数据最大值</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0051.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0051.png"></p>
 </li>
 <li><p>窗口实际就起到一个缓冲区的作用，同时也能起到流量控制的作用</p>
 <ul>
@@ -519,7 +519,7 @@
 <li><p>MSS 的值在三次握手时通知对方自己 MSS 的值，然后在两者之间选择一个小值作为 MSS</p>
 </li>
 </ul>
-<p>  <img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0031.jpg"></p>
+<p>  <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0031.jpg"></p>
 </blockquote>
 <blockquote>
 <p>Nagle 算法</p>
@@ -655,7 +655,7 @@
 
 
 <p>解读</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/0013.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/0013.png"></p>
 <h4 id="💡-什么时候可以加-Sharable"><a href="#💡-什么时候可以加-Sharable" class="headerlink" title="💡 什么时候可以加 @Sharable"></a>💡 什么时候可以加 @Sharable</h4><ul>
 <li>当 handler 不保存状态时，就可以安全地在多线程下被共享</li>
 <li>但要注意对于编解码器类，不能继承 ByteToMessageCodec 或 CombinedChannelDuplexHandler 父类，他们的构造方法对 @Sharable 有限制</li>
@@ -863,7 +863,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

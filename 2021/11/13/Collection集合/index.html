@@ -86,18 +86,18 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="集合与数组存储数据概述:集合、数组都是对多个数据进行存储操作的结构，简称ava容器。说明:此时的存储，主要指的是内存层面的存储，不涉及到持久化的存储（.txt,.jpg,.avi，数据库中） 数组存储的特点:一旦初始化以后，其长度就确定了。数组一旦定义好，其元素的类型也就确定了。我们也就只能操作指定类型的数据了。*&amp;emsp;&amp;emsp;比如: Strina[]arr;int[]arr1;obie">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113171108.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113193854.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113200814.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113171108.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113193854.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113200814.png">
 <meta property="og:image" content="https://i.loli.net/2021/11/14/gmUEWPaV5v3RuKH.png">
 <meta property="og:image" content="https://i.loli.net/2021/11/14/Mba1OKrq7Zcdes4.png">
 <meta property="og:image" content="https://i.loli.net/2021/11/15/w8ZQP9aBh5nHvs6.png">
 <meta property="article:published_time" content="2021-11-13T08:53:33.000Z">
-<meta property="article:modified_time" content="2021-11-24T16:25:48.776Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:03.157Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Java集合">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113171108.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113171108.png">
 
 
 
@@ -349,8 +349,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-25T00:25:48+08:00">
-                2021-11-25
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:03+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -444,7 +444,7 @@
 <li> 获取数组中实际元素的个数的需求,数组没有现成的属性或方法可用</li>
 <li> 数组存储数据的特点:序、可重复。对于无序、不可重复的需求，不能满足。</li>
 </ul>
-<h1 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h1><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113171108.png"></p>
+<h1 id="集合框架"><a href="#集合框架" class="headerlink" title="集合框架"></a>集合框架</h1><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113171108.png"></p>
 <p><strong>Collection接口</strong>：单列集合，用来存储一个一个的对象<br>&emsp;&emsp;<strong>List接口</strong> ：存储有序的，可重复的数据<br>&emsp;&emsp;&emsp;ArrayList，LinkedList，Vector<br>&emsp;&emsp;<strong>Set接口</strong>：存储无序，不可重复的数据<br>&emsp;&emsp;&emsp;HashSet，LinkedHashSet，TreeSet<br><strong>Map接口</strong>：双列集合，用来存储一堆（key，value）一对的数据<br>&emsp;&emsp;&emsp;HashMap，LinkedHashMap，TreeMap、Hashtable、Properties</p>
 <h2 id="Iterator迭代器接口"><a href="#Iterator迭代器接口" class="headerlink" title="Iterator迭代器接口"></a>Iterator迭代器接口</h2><ul>
 <li>lterator对象称为迭代器(设计模式的一种)，主要用于遍历Collection集合中的元素。</li>
@@ -473,10 +473,10 @@
 <p><strong>ArrayList</strong>: 作为List接口的主要实现类，线程不安全的，效率高;底层使用0bject[]eLementData存储<br><strong>LinkedList</strong>: 对于频繁的插入、删除操作，使用此类效率比ArrayList高;底层使用双向链表存储<br><strong>Vector</strong>:作为List接口的古老实现类；线程安全的，效率低。底层使用0bject[]eLementData存储  </p>
 </blockquote>
 </blockquote>
-<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><p>ArrayList的源码分析:<br><strong>jdk 7</strong>情况下<br>ArrayList list = new ArrayList();//底层创建了长度是10的object[]数组   eLementDatalist.add(123); //eLementData[size+1] = new Integer(123);<br>…<br>list.add(11);//如果此次的添加导致底层elementData数组容量不够，则扩容。<br>默认情况下，扩容为原来的容量的1.5倍，同时需要将原有数组中的数据复制到新的数组中。|<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113193854.png"></p>
+<h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><p>ArrayList的源码分析:<br><strong>jdk 7</strong>情况下<br>ArrayList list = new ArrayList();//底层创建了长度是10的object[]数组   eLementDatalist.add(123); //eLementData[size+1] = new Integer(123);<br>…<br>list.add(11);//如果此次的添加导致底层elementData数组容量不够，则扩容。<br>默认情况下，扩容为原来的容量的1.5倍，同时需要将原有数组中的数据复制到新的数组中。|<br><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113193854.png"></p>
 <p><strong>jdk 8</strong>中ArrayList的变化:<br>ArrayList list = new ArrayList();//底层object[] elementData初始化为{}.并没有创建数组长度为10的数组<br>list.add(123);//第一次调用add()时，底层才创建了长度10的数组，并将数据123添加到eLement数组中。<br>…<br>后续的添加和扩容操作与jdk 7无异。 </p>
 <p>小结: jdk7中的ArrayList的对象创建类似于单例的饿汉式，而jdk8中的ArrayList的对象<br>创建类似于懒汉式。  </p>
-<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><p>jdk8：<br>LinkedList list = new LinkedList();内部声明了Node类型的first和Last属性，默认值为null<br>List.add ( 123);//将123封装到Node中，创建了Node对象。<br>其中，Node定义为:<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211113200814.png"></p>
+<h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><p>jdk8：<br>LinkedList list = new LinkedList();内部声明了Node类型的first和Last属性，默认值为null<br>List.add ( 123);//将123封装到Node中，创建了Node对象。<br>其中，Node定义为:<br><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113200814.png"></p>
 <h2 id="Set接口"><a href="#Set接口" class="headerlink" title="Set接口"></a>Set接口</h2><ul>
 <li>Set接口中没有额外定义新的方法，使用的都是Ccollection中声明过的方法。</li>
 <li>Set接口是Collection的子接口，set接口没有提供额外的方法  </li>
@@ -647,7 +647,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

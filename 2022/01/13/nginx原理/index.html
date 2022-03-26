@@ -86,13 +86,13 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="2worker如何进行工作的  3、一个 master 和多个 woker 有好处（1）可以使用 nginx –s reload 热部署，利用 nginx 进行热部署操作（2）每个 woker 是独立的进程，如果有其中的一个 woker 出现问题，其他 woker 独立的，继续进行争抢，实现请求过程，不会造成服务中断4、设置多少个 woker 合适 ​    worker 数和服务器的 cpu">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220113224412.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220113224439.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224412.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224439.png">
 <meta property="article:published_time" content="2022-01-13T14:42:55.000Z">
-<meta property="article:modified_time" content="2022-01-13T14:46:06.780Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:03.596Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220113224412.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224412.png">
 
 
 
@@ -344,8 +344,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-01-13T22:46:06+08:00">
-                2022-01-13
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:03+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -431,9 +431,9 @@
       
 
       
-        <p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220113224412.png"></p>
+        <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224412.png"></p>
 <p><strong>2worker如何进行工作的</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220113224439.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224439.png"></p>
 <p>3、一个 master 和多个 woker 有好处<br><strong>（1）可以使用 nginx –s reload 热部署，利用 nginx 进行热部署操作</strong><br><strong>（2）每个 woker 是独立的进程，如果有其中的一个 woker 出现问题，其他 woker 独立的，</strong><br>继续进行争抢，实现请求过程，不会造成服务中断<br>4、设置多少个 woker 合适</p>
 <p>​    <strong>worker</strong> <strong>数和服务器的</strong> <strong>cpu</strong> <strong>数相等是最为适宜的</strong></p>
 <p>5、连接数 worker_connection<br>    第一个：发送请求，占用了 woker 的几个连接数？<br>        <strong>2 或者 4 个</strong><br>    第二个：nginx 有一个 master，有四个 woker，每个 woker 支持最大的连接数 1024，支持的最大并发数是多少？<br>        <strong>普通的静态访问最大并发数是： worker_connections * worker_processes /2，  而如果是 HTTP 作 为反向代理来说，最大并发数量应该是 worker_connections * worker_processes/4。</strong></p>
@@ -556,7 +556,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

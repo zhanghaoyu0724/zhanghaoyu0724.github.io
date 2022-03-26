@@ -86,20 +86,20 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="JMMJMM 即 Java Memory Model，它定义了主存、工作内存抽象概念，底层对应着 CPU 寄存器、缓存、硬件内存、CPU 指令优化等。JMM 体现在以下几个方面    * 原子性 - 保证指令不会受到线程上下文切换的影响    * 可见性 - 保证指令不会受 cpu 缓存的影响    * 有序性 - 保证指令不会受 cpu 指令并行优化的影响可见性:先来看一个现象，main 线程对">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123214705.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123214734.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123214802.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124212123.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124220838.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124220838.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124220931.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124221432.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211123214705.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211123214734.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211123214802.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124212123.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124220838.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124220838.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124220931.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124221432.png">
 <meta property="article:published_time" content="2021-11-23T13:27:50.000Z">
-<meta property="article:modified_time" content="2021-11-25T11:38:39.853Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:03.221Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Java并发">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123214705.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211123214705.png">
 
 
 
@@ -351,8 +351,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-25T19:38:39+08:00">
-                2021-11-25
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:03+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -443,9 +443,9 @@
 
 <p>为什么呢？分析一下：</p>
 <ol>
-<li>初始状态， t 线程刚开始从主内存读取了 run 的值到工作内存。<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123214705.png"></li>
-<li>因为 t 线程要频繁从主内存中读取 run 的值，JIT 编译器会将 run 的值缓存至自己工作内存中的高速缓存中，<br>减少对主存中 run 的访问，提高效率<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123214734.png"></li>
-<li>1 秒之后，main 线程修改了 run 的值，并同步至主存，而 t 是从自己工作内存中的高速缓存中读取这个变量<br>的值，结果永远是旧值<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211123214802.png"></li>
+<li>初始状态， t 线程刚开始从主内存读取了 run 的值到工作内存。<br><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211123214705.png"></li>
+<li>因为 t 线程要频繁从主内存中读取 run 的值，JIT 编译器会将 run 的值缓存至自己工作内存中的高速缓存中，<br>减少对主存中 run 的访问，提高效率<br><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211123214734.png"></li>
+<li>1 秒之后，main 线程修改了 run 的值，并同步至主存，而 t 是从自己工作内存中的高速缓存中读取这个变量<br>的值，结果永远是旧值<br><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211123214802.png"></li>
 </ol>
 <p><strong>解决方法</strong><br><strong>volatile</strong>（易变关键字，只能让线程看到最新值）<br>它可以用来修饰成员变量和静态成员变量，他可以避免线程从自己的工作缓存中查找变量的值，必须到主存中获取<br>它的值，线程操作 volatile 变量都是直接操作主存</p>
 <h1 id="可见性-vs-原子性"><a href="#可见性-vs-原子性" class="headerlink" title="可见性 vs 原子性"></a>可见性 vs 原子性</h1><p>前面例子体现的实际就是可见性，它保证的是在多个线程之间，一个线程对 volatile 变量的修改对另一个线程可<br>见， 不能保证原子性，仅用在一个写线程，多个读线程的情况： 上例从字节码理解是这样的：</p>
@@ -476,7 +476,7 @@
 <ul>
 <li><h2 id="指令重排序优化"><a href="#指令重排序优化" class="headerlink" title="指令重排序优化"></a>指令重排序优化</h2></li>
 </ul>
-<p>事实上，现代处理器会设计为一个时钟周期完成一条执行时间最长的 CPU 指令。为什么这么做呢？可以想到指令<br>还可以再划分成一个个更小的阶段，例如，每条指令都可以分为： 取指令 - 指令译码 - 执行指令 - 内存访问 - 数据写回 这 5 个阶段<br><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124212123.png"></p>
+<p>事实上，现代处理器会设计为一个时钟周期完成一条执行时间最长的 CPU 指令。为什么这么做呢？可以想到指令<br>还可以再划分成一个个更小的阶段，例如，每条指令都可以分为： 取指令 - 指令译码 - 执行指令 - 内存访问 - 数据写回 这 5 个阶段<br><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124212123.png"></p>
 <p>在不改变程序结果的前提下，这些指令的各个阶段可以通过<strong>重排序</strong>和<strong>组合</strong>来实现指令级并行，这一技术在 80’s 中叶到 90’s 中叶占据了计算架构的重要地位。</p>
 <blockquote>
 <p>分阶段，分工是提升效率的关键！<br>指令重排的前提是，重排指令不能影响结果，例如</p>
@@ -519,19 +519,19 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actor2</span><span class="params">(I_Result r)</span> </span>&#123;</span><br><span class="line"> num = <span class="number">2</span>;</span><br><span class="line"> ready = <span class="keyword">true</span>; <span class="comment">// ready 是 volatile 赋值带写屏障</span></span><br><span class="line"> <span class="comment">// 写屏障</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>而读屏障（lfence）保证在该屏障之后，对共享变量的读取，加载的是主存中最新数据</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actor1</span><span class="params">(I_Result r)</span> </span>&#123;</span><br><span class="line"> <span class="comment">// 读屏障</span></span><br><span class="line"> <span class="comment">// ready 是 volatile 读取值带读屏障</span></span><br><span class="line"> <span class="keyword">if</span>(ready) &#123;</span><br><span class="line"> r.r1 = num + num;</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> r.r1 = <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124220838.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124220838.png"></p>
 <pre><code>## 2.如何保证有序性
 </code></pre>
 <p>写屏障会确保指令重排序时，不会将写屏障之前的代码排在写屏障之后</p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actor2</span><span class="params">(I_Result r)</span> </span>&#123;</span><br><span class="line"> num = <span class="number">2</span>;</span><br><span class="line"> ready = <span class="literal">true</span>; <span class="comment">// ready 是 volatile 赋值带写屏障</span></span><br><span class="line"> <span class="comment">// 写屏障</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>读屏障会确保指令重排序时，不会将读屏障之后的代码排在读屏障之前</p>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">actor1</span><span class="params">(I_Result r)</span> </span>&#123;</span><br><span class="line"> <span class="comment">// 读屏障</span></span><br><span class="line"> <span class="comment">// ready 是 volatile 读取值带读屏障</span></span><br><span class="line"> <span class="keyword">if</span>(ready) &#123;</span><br><span class="line"> r.r1 = num + num;</span><br><span class="line"> &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"> r.r1 = <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124220838.png"><br>还是那句话，不能解决指令交错：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124220838.png"><br>还是那句话，不能解决指令交错：</p>
 <ul>
 <li>写屏障仅仅是保证之后的读能够读到最新的结果，但不能保证读跑到它前面去</li>
 <li>而有序性的保证也只是保证了本线程内相关代码不被重排序</li>
 </ul>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124220931.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124220931.png"></p>
 <pre><code>## 3.double-checked locking 问题
 </code></pre>
 <p>以著名的 double-checked locking 单例模式为例</p>
@@ -550,7 +550,7 @@
 <li>21 表示利用一个对象引用，调用构造方法</li>
 <li>24 表示利用一个对象引用，赋值给 static INSTANCE<br>也许 jvm 会优化为：先执行 24，再执行 21。如果两个线程 t1，t2 按如下时间序列执行：</li>
 </ul>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20211124221432.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211124221432.png"></p>
 <p>关键在于 0: getstatic 这行代码在 monitor 控制之外，它就像之前举例中不守规则的人，可以越过 monitor 读取INSTANCE 变量的值<br>这时 t1 还未完全将构造方法执行完毕，如果在构造方法中要执行很多初始化操作，那么 t2 拿到的是将是一个未初始化完毕的单例<br>对 INSTANCE 使用 volatile 修饰即可，可以禁用指令重排，但要注意在 JDK 5 以上的版本的 volatile 才会真正有效</p>
 <p>synchronized指令里面的代码还是排序的，但只要把对象完全交给synchronized来管理还是可以保证原子性，和可见性的。</p>
 <pre><code>## 4. double-checked locking 解决
@@ -721,7 +721,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

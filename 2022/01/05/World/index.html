@@ -86,12 +86,12 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="在本教程的这一部分中，我们将用 Java 编写两个程序。发送单个消息的生产者和接收消息并打印出来的消费者。我们将介绍 Java API 中的一些细节。 在下图中，“ P”是我们的生产者，“ C”是我们的消费者。中间的框是一个队列-RabbitMQ 代表使用者保留的消息缓冲区  使用IDEA创建一个Maven项目 1.导入依赖1234567891011121314151617181920212223">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105224634.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105224634.png">
 <meta property="article:published_time" content="2022-01-05T14:44:51.000Z">
-<meta property="article:modified_time" content="2022-01-10T14:04:30.576Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:02.810Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105224634.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105224634.png">
 
 
 
@@ -343,8 +343,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-01-10T22:04:30+08:00">
-                2022-01-10
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:02+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -432,7 +432,7 @@
       
         <p>在本教程的这一部分中，我们将用 Java 编写两个程序。发送单个消息的生产者和接收消息并打印<br>出来的消费者。我们将介绍 Java API 中的一些细节。</p>
 <p>在下图中，“ P”是我们的生产者，“ C”是我们的消费者。中间的框是一个队列-RabbitMQ 代表使用者保留的消息缓冲区</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105224634.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105224634.png"></p>
 <p>使用IDEA创建一个Maven项目</p>
 <h2 id="1-导入依赖"><a href="#1-导入依赖" class="headerlink" title="1.导入依赖"></a>1.导入依赖</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">       &lt;plugins&gt;</span><br><span class="line">           &lt;plugin&gt;</span><br><span class="line">               &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">               &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">               &lt;configuration&gt;</span><br><span class="line">                   &lt;source&gt;<span class="number">8</span>&lt;/source&gt;</span><br><span class="line">                   &lt;target&gt;<span class="number">8</span>&lt;/target&gt;</span><br><span class="line">               &lt;/configuration&gt;</span><br><span class="line">           &lt;/plugin&gt;</span><br><span class="line">       &lt;/plugins&gt;</span><br><span class="line">   &lt;/build&gt;</span><br><span class="line">   &lt;dependencies&gt;</span><br><span class="line">       &lt;!--rabbitmq 依赖客户端--&gt;</span><br><span class="line">       &lt;dependency&gt;</span><br><span class="line">           &lt;groupId&gt;com.rabbitmq&lt;/groupId&gt;</span><br><span class="line">           &lt;artifactId&gt;amqp-client&lt;/artifactId&gt;</span><br><span class="line">           &lt;version&gt;<span class="number">5.8</span><span class="number">.0</span>&lt;/version&gt;</span><br><span class="line">       &lt;/dependency&gt;</span><br><span class="line">       &lt;!--操作文件流的一个依赖--&gt;</span><br><span class="line">       &lt;dependency&gt;</span><br><span class="line">           &lt;groupId&gt;commons-io&lt;/groupId&gt;</span><br><span class="line">           &lt;artifactId&gt;commons-io&lt;/artifactId&gt;</span><br><span class="line">           &lt;version&gt;<span class="number">2.6</span>&lt;/version&gt;</span><br><span class="line">       &lt;/dependency&gt;</span><br><span class="line">   &lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
 
@@ -570,7 +570,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

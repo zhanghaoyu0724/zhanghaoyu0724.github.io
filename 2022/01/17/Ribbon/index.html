@@ -86,18 +86,18 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="什么是Ribbon：Spring Cloud Ribbon是基于Netflix Ribbon实现的一套客户端       负载均衡的工具。 简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供客户端的软件负载均衡算法和服务调用。Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。简单的说，就是在配置文件中列出Load Balancer（简称LB）后面所有的机器，Ribb">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117200616.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117220909.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117200616.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117220909.png">
 <meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20220117213341739.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117222317.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117220909.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117213338.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117222317.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117220909.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117213338.png">
 <meta property="article:published_time" content="2022-01-17T11:54:49.000Z">
-<meta property="article:modified_time" content="2022-01-18T13:20:00.506Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:03.458Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="ribbon">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117200616.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117200616.png">
 
 
 
@@ -349,8 +349,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-01-18T21:20:00+08:00">
-                2022-01-18
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:03+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -445,7 +445,7 @@
 <h3 id="进程内LB"><a href="#进程内LB" class="headerlink" title="进程内LB"></a>进程内LB</h3><p>将LB逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器。</p>
 <p>Ribbon就属于进程内LB，它只是一个类库，集成于消费方进程，消费方通过它来获取到服务提供方的地址。</p>
 <p>总结：Ribbon其实就是一个软负载均衡的客户端组件，它可以和其他所需请求的客户端结合使用，和Eureka的结合只是其中的一个实例</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117200616.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117200616.png"></p>
 <p>Ribbon在工作时分成两步<br>第一步先选择 EurekaServer ,它优先选择在同一个区域内负载较少的server.<br>第二步再根据用户指定的策略，在从server取到的服务注册列表中选择一个地址。<br>其中Ribbon提供了多种策略：比如轮询、随机和根据响应时间加权。</p>
 <h2 id="getForEntity和getForObject区别"><a href="#getForEntity和getForObject区别" class="headerlink" title="getForEntity和getForObject区别"></a>getForEntity和getForObject区别</h2><p>getForObject：返回对象为响应题的对象转化城的一个对象，就是一个json串</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(value = &quot;/consumer/payment/get/&#123;id&#125;&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> CommonResult <span class="title">getPaymentById</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span></span>&#123;</span><br><span class="line">       <span class="keyword">return</span>  restTemplate.getForObject(PAYMENT_URL+<span class="string">&quot;/payment/get/&quot;</span>+id,CommonResult.class);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
@@ -462,7 +462,7 @@
 <p><strong>spring-cloud-starter-netflix-eureka-client：2.2.1.RELEASE</strong></p>
 <p>官方文档明确给出了警告：<br>这个自定义配置类不能放在@ComponentScan所扫描的当前包下以及子包下，<br>否则我们自定义的这个配置类就会被所有的Ribbon客户端所共享，达不到特殊化定制的目的了。</p>
 <p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#switching-between-the-load-balancing-algorithms">https://docs.spring.io/spring-cloud-commons/docs/current/reference/html/#switching-between-the-load-balancing-algorithms</a></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117220909.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117220909.png"></p>
 <p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20220117213341739.png" alt="image-20220117213341739"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.myrule;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.IRule;</span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.RandomRule;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyselfRule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> IRule <span class="title">newRule</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span>  <span class="keyword">new</span> RandomRule();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -477,11 +477,11 @@
 <p><strong>spring-cloud-starter-netflix-eureka-client: 3.1.0</strong></p>
 <p>不再使用ribbon作为客户端负载均衡器：</p>
 <p>使用：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117222317.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117222317.png"></p>
 <p>同样遵守：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117220909.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117220909.png"></p>
 <p>步骤一：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220117213338.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220117213338.png"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyselfRule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function">ReactorLoadBalancer&lt;ServiceInstance&gt; <span class="title">randomLoadBalancer</span><span class="params">(Environment environment,</span></span></span><br><span class="line"><span class="params"><span class="function">                                                            LoadBalancerClientFactory loadBalancerClientFactory)</span> </span>&#123;</span><br><span class="line">        String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RandomLoadBalancer(loadBalancerClientFactory</span><br><span class="line">                .getLazyProvider(name, ServiceInstanceListSupplier.class),</span><br><span class="line">                name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>步骤一：</p>
@@ -623,7 +623,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

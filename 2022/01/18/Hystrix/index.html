@@ -86,23 +86,23 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="服务雪崩多个微服务之间调用的时候，假设微服务A调用微服务B和微服务C，微服务B和微服务C又调用其它的微服务，这就是所谓的“扇出”。如果扇出的链路上某个微服务的调用响应时间过长或者不可用，对微服务A的调用就会占用越来越多的系统资源，进而引起系统崩溃，所谓的“雪崩效应”. 对于高流量的应用来说，单一的后端依赖可能会导致所有服务器上的所有资源都在几秒钟内饱和。比失败更糟糕的是，这些应用程序还可能导致服务">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119193626.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119194143.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119194236.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119194412.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119194504.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119195054.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119195343.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121182356.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121182416.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121183827.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121191818.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119193626.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119194143.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119194236.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119194412.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119194504.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119195054.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119195343.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220121182356.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220121182416.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220121183827.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220121191818.png">
 <meta property="article:published_time" content="2022-01-18T12:40:11.000Z">
-<meta property="article:modified_time" content="2022-01-21T11:23:06.343Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:03.629Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="Hystrix">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119193626.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119193626.png">
 
 
 
@@ -354,8 +354,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-01-21T19:23:06+08:00">
-                2022-01-21
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:03+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -466,23 +466,23 @@
 
 <p>启动主启动类：</p>
 <p>开启Jmeter，来20000个并发压死8001,20000个请求都去访问paymentlnfo TimeOut服务</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119193626.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119193626.png"></p>
 <p>我们本来不需要耗时的服务变得卡顿原因：</p>
 <p>tomcat的默认的工作线程数被打满 了，没有多余的线程来分解压力和处理。</p>
 <p>结论：上面还是服务提供者8001自己测试，假如此时夕部的消费者80也来访问，那消费者只能干等，最终导致消费端80不满意，服务端8001直接被拖死</p>
 <p>再构建一个消费者服务<strong>cloud-consumer-feign-hystrix-order80</strong>使用feign实现上的的两个服务接口。</p>
 <p>正因为有上述故障或不佳表现才有我们的降级/容错/限流等技术诞生</p>
 <h2 id="服务降级配置："><a href="#服务降级配置：" class="headerlink" title="服务降级配置："></a>服务降级配置：</h2><h3 id="8001fallback："><a href="#8001fallback：" class="headerlink" title="8001fallback："></a>8001fallback：</h3><p>业务类启用：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119194143.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119194143.png"></p>
 <p>主启动激活：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119194236.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119194236.png"></p>
 <h3 id="80fallback："><a href="#80fallback：" class="headerlink" title="80fallback："></a>80fallback：</h3><p>业务类启用：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119194412.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119194412.png"></p>
 <p>主启动激活：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119194504.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119194504.png"></p>
 <h3 id="目前问题："><a href="#目前问题：" class="headerlink" title="目前问题："></a>目前问题：</h3><h4 id="每个业务方法对应一个兜底的方法，代码膨胀"><a href="#每个业务方法对应一个兜底的方法，代码膨胀" class="headerlink" title="每个业务方法对应一个兜底的方法，代码膨胀"></a>每个业务方法对应一个兜底的方法，代码膨胀</h4><p><strong>解决办法：</strong>增加一个默认的兜底方法</p>
 <p>修改业务类：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119195054.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119195054.png"></p>
 <h4 id="统一和定义的分开解耦"><a href="#统一和定义的分开解耦" class="headerlink" title="统一和定义的分开解耦"></a>统一和定义的分开解耦</h4><p>解决办法：</p>
 <p>修改yml：</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">feign:</span></span><br><span class="line">  <span class="attr">hystrix:</span></span><br><span class="line">    <span class="attr">enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
@@ -492,7 +492,7 @@
 
 
 
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220119195343.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220119195343.png"></p>
 <h2 id="服务熔断：-1"><a href="#服务熔断：-1" class="headerlink" title="服务熔断："></a>服务熔断：</h2><p>一句话就是家里的保险丝</p>
 <h3 id="熔断机制概述"><a href="#熔断机制概述" class="headerlink" title="熔断机制概述"></a>熔断机制概述</h3><p>熔断机制是应对雪崩效应的一种微服务链路保护机制。当扇出链路的某个微服务出错不可用或者响应时间太长时，会进行服务的降级，进而熔断该节点微服务的调用，快速返回错误的响应信息。<br>当检测到该节点微服务调用响应正常后，<strong>恢复调用链路。</strong></p>
 <p>在Spring Cloud框架里，熔断机制通过Hystrix实现。Hystrix会监控微服务间调用的状况，当失败的调用到一定阈值，缺省是5秒内20次调用失败，就会启动熔断机制。熔断机制的注解是@HystrixCommand。</p>
@@ -514,8 +514,8 @@
 <p>1：再有请求调用的时候，将不会调用主逻辑，而是直接调用降级fallback。通过断路器，实现了自动地发现错误并将降级逻辑切换为主逻辑，减少响应延迟的效果。</p>
 <p>2：原来的主逻辑要如何恢复呢？<br>对于这一问题，hystrix也为我们实现了自动恢复功能。<br>当断路器打开，对主逻辑进行熔断之后，hystrix会启动一个休眠时间窗，在这个时间窗内，降级逻辑是临时的成为主逻辑，<br>当休眠时间窗到期，断路器将进入半开状态，释放一次请求到原来的主逻辑上，如果此次请求正常返回，那么断路器将继续闭合，<br>主逻辑恢复，如果这次请求依然有问题，断路器继续进入打开状态，休眠时间窗重新计时</p>
 <p><strong>限流以后看Sentinel</strong></p>
-<h2 id="Hystrix步骤："><a href="#Hystrix步骤：" class="headerlink" title="Hystrix步骤："></a>Hystrix步骤：</h2><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121182356.png"></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121182416.png"></p>
+<h2 id="Hystrix步骤："><a href="#Hystrix步骤：" class="headerlink" title="Hystrix步骤："></a>Hystrix步骤：</h2><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220121182356.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220121182416.png"></p>
 <h2 id="图形化界面："><a href="#图形化界面：" class="headerlink" title="图形化界面："></a>图形化界面：</h2><p>除了隔离依赖服务的调用以外，Hystrix还提供了准实时的调用监控（Hystrix Dashboard），Hystrix会持续地记录所有通过Hystrix发起的请求的执行信息，并以统计报表和图形的形式展示给用户，包括每秒执行多少请求多少成功，多少失败等。Netflix通过hystrix-metrics-event-stream项目实现了对以上指标的监控。Spring Cloud也提供了Hystrix Dashboard的整合，对监控内容转化成可视化界面。</p>
 <h3 id="创建新模块："><a href="#创建新模块：" class="headerlink" title="创建新模块："></a>创建新模块：</h3><h4 id="第一步创建模块"><a href="#第一步创建模块" class="headerlink" title="第一步创建模块"></a>第一步创建模块</h4><p>​    cloud-consumer-hystrix-dashboard9001</p>
 <h4 id="pom导入："><a href="#pom导入：" class="headerlink" title="pom导入："></a>pom导入：</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix-dashboard<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">optional</span>&gt;</span>true<span class="tag">&lt;/<span class="name">optional</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -525,13 +525,13 @@
 <h4 id="主启动类："><a href="#主启动类：" class="headerlink" title="主启动类："></a>主启动类：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableHystrixDashboard</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HystrixDashboardMain9001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(HystrixDashboardMain9001.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><strong>启动服务</strong></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121183827.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220121183827.png"></p>
 <p>断路器演示：</p>
 <p>新版要再8001服务中在著启动类中配置如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableDiscoveryClient</span></span><br><span class="line"><span class="meta">@EnableCircuitBreaker</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentHystrixMain8001</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        SpringApplication.run(PaymentHystrixMain8001.class,args);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *此配置是为了服务监控而配置，与服务容错本身无关，springcloud升级后的坑</span></span><br><span class="line"><span class="comment">     *ServletRegistrationBean因为springboot的默认路径不是&quot;/hystrix.stream&quot;，</span></span><br><span class="line"><span class="comment">     *只要在自己的项目里配置上下面的servlet就可以了</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServletRegistrationBean <span class="title">getServlet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        HystrixMetricsStreamServlet streamServlet = <span class="keyword">new</span> HystrixMetricsStreamServlet();</span><br><span class="line">        ServletRegistrationBean registrationBean = <span class="keyword">new</span> ServletRegistrationBean(streamServlet);</span><br><span class="line">        registrationBean.setLoadOnStartup(<span class="number">1</span>);</span><br><span class="line">        registrationBean.addUrlMappings(<span class="string">&quot;/hystrix.stream&quot;</span>);</span><br><span class="line">        registrationBean.setName(<span class="string">&quot;HystrixMetricsStreamServlet&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> registrationBean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>效果：</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220121191818.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220121191818.png"></p>
 
       
     </div>
@@ -666,7 +666,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

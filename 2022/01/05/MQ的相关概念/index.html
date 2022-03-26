@@ -86,17 +86,17 @@
 <meta property="og:site_name" content="蓝天の博客">
 <meta property="og:description" content="什么是MQMQ(message queue)，从字面意思上看，本质是个队列，FIFO 先入先出，只不过队列中存放的内容是message 而已，还是一种跨进程的通信机制，用于上下游传递消息。在互联网架构中，MQ 是一种非常常见的上下游“逻辑解耦+物理解耦”的消息通信服务。使用了 MQ 之后，消息发送上游只需要依赖 MQ，不用依赖其他服务 为什么要用 MQ1 流量高峰 主要为了防止超多的请求访问服务器">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105220852.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105220559.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105223800.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105223850.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105223912.png">
-<meta property="og:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105223942.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105220852.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105220559.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105223800.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105223850.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105223912.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105223942.png">
 <meta property="article:published_time" content="2022-01-05T13:25:10.000Z">
-<meta property="article:modified_time" content="2022-01-27T05:53:56.170Z">
+<meta property="article:modified_time" content="2022-03-26T08:11:02.855Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105220852.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105220852.png">
 
 
 
@@ -348,8 +348,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-01-27T13:53:56+08:00">
-                2022-01-27
+              <time title="更新于" itemprop="dateModified" datetime="2022-03-26T16:11:02+08:00">
+                2022-03-26
               </time>
             
           </span>
@@ -453,8 +453,8 @@
 <p><strong>交换机</strong><br>交换机是 RabbitMQ 非常重要的一个部件，一方面它接收来自生产者的消息，另一方面它将消息推送到队列中。交换机必须确切知道如何处理它接收到的消息，是将这些消息推送到特定队列还是推送到多个队列，亦或者是把消息丢弃，这个得有交换机类型决定</p>
 <p><strong>队列</strong><br>队列是 RabbitMQ 内部使用的一种数据结构，尽管消息流经 RabbitMQ 和应用程序，但它们只能存储在队列中。队列仅受主机的内存和磁盘限制的约束，本质上是一个大的消息缓冲区。许多生产者可以将消息发送到一个队列，许多消费者可以尝试从一个队列接收数据。这就是我们使用队列的方式</p>
 <p><strong>消费者</strong><br>消费与接收具有相似的含义。消费者大多时候是一个等待接收消息的程序。请注意生产者，消费者和消息中间件很多时候并不在同一机器上。同一个应用程序既可以是生产者又是可以是消费者。</p>
-<h2 id="RabbitMQ-核心部分"><a href="#RabbitMQ-核心部分" class="headerlink" title="RabbitMQ 核心部分"></a><strong>RabbitMQ 核心部分</strong></h2><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105220852.png"></p>
-<h2 id="各个名词介绍"><a href="#各个名词介绍" class="headerlink" title="各个名词介绍"></a><strong>各个名词介绍</strong></h2><p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105220559.png"></p>
+<h2 id="RabbitMQ-核心部分"><a href="#RabbitMQ-核心部分" class="headerlink" title="RabbitMQ 核心部分"></a><strong>RabbitMQ 核心部分</strong></h2><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105220852.png"></p>
+<h2 id="各个名词介绍"><a href="#各个名词介绍" class="headerlink" title="各个名词介绍"></a><strong>各个名词介绍</strong></h2><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105220559.png"></p>
 <p><strong>Broker</strong>：接收和分发消息的应用，RabbitMQ Server 就是 Message Broker</p>
 <p><strong>Virtual host</strong>：出于多租户和安全因素设计的，把 AMQP 的基本组件划分到一个虚拟的分组中，类似</p>
 <p>于网络中的 namespace 概念。当多个不同的用户使用同一个 RabbitMQ server 提供的服务时，可以划分出多个 vhost，每个用户在自己的 vhost 创建 exchange／queue 等</p>
@@ -469,7 +469,7 @@
 <p>2.文件上传</p>
 <pre><code>上传到/usr/local/software 目录下(如果没有 software 需要自己创建)
 </code></pre>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105223800.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105223800.png"></p>
 <p>3.安装文件(分别按照以下顺序安装)</p>
 <pre><code>rpm -ivh erlang-21.3-1.el7.x86_64.rpm
 
@@ -487,7 +487,7 @@ rpm -ivh rabbitmq-server-3.8.8-1.el7.noarch.rpm
 <p>查看服务状态</p>
 <pre><code>/sbin/service rabbitmq-server status
 </code></pre>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105223850.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105223850.png"></p>
 <p>停止服务(选择执行)</p>
 <pre><code>/sbin/service rabbitmq-server stop 
 </code></pre>
@@ -496,7 +496,7 @@ rpm -ivh rabbitmq-server-3.8.8-1.el7.noarch.rpm
 </code></pre>
 <p>这里访问不到的另一个原因可能是linux的防火墙没有关闭</p>
 <p>用默认账号密码(guest)访问地址 <a target="_blank" rel="noopener" href="http://47.115.185.244:15672/%E5%87%BA%E7%8E%B0%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98">http://47.115.185.244:15672/出现权限问题</a></p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105223912.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105223912.png"></p>
 <p>4.添加一个新的用户</p>
 <p>创建账号</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">rabbitmqctl</span> add_user admin <span class="number">123456</span></span><br></pre></td></tr></table></figure>
@@ -513,7 +513,7 @@ rabbitmqctl set_permissions -p &quot;/&quot; admin &quot;.*&quot; &quot;.*&quot;
 <pre><code>rabbitmqctl list_users
 </code></pre>
 <p>5.再次利用 admin 用户登录</p>
-<p><img src="https://gitee.com/haoyumaster/imageBed/raw/master/imgs/20220105223942.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220105223942.png"></p>
 <ol start="6">
 <li>重置命令</li>
 </ol>
@@ -654,7 +654,7 @@ rabbitmqctl set_permissions -p &quot;/&quot; admin &quot;.*&quot; &quot;.*&quot;
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-count">111</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
