@@ -79,15 +79,32 @@
 
 
 
-<meta name="description" content="日积月累,积少成多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="蓝天の博客">
-<meta property="og:url" content="https://blacke1111.github.io/archives/2021/12/index.html">
+<meta name="description" content="MySQL8的主要目录结构这是我自己指定的mysql 数据的存储的地方  可以看到我指定的存放位置对应的就上面的位置  数据库运行起来对应的文件：  配置文件目录linux下： 配置文件目录：&#x2F;usr&#x2F;share&#x2F;mysql-8.0（命令及配置文件），&#x2F;etc&#x2F;mysql（如my.cnf）  my.cnf就相当于windows 下的my。ini  数据库和文件系统的关系查看默认数据库查看一下在我的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql的数据目录">
+<meta property="og:url" content="https://blacke1111.github.io/2022/04/04/mysql-p2/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="日积月累,积少成多">
+<meta property="og:description" content="MySQL8的主要目录结构这是我自己指定的mysql 数据的存储的地方  可以看到我指定的存放位置对应的就上面的位置  数据库运行起来对应的文件：  配置文件目录linux下： 配置文件目录：&#x2F;usr&#x2F;share&#x2F;mysql-8.0（命令及配置文件），&#x2F;etc&#x2F;mysql（如my.cnf）  my.cnf就相当于windows 下的my。ini  数据库和文件系统的关系查看默认数据库查看一下在我的">
 <meta property="og:locale">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404203836567.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204358589.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204010084.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204833928.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204929562.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404205651334.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404210128560.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404210646933.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404210849579.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404212212984.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404211857538.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404212707712.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404213409091.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404213557250.png">
+<meta property="article:published_time" content="2022-04-04T12:34:15.000Z">
+<meta property="article:modified_time" content="2022-04-04T13:36:03.622Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404203836567.png">
 
 
 
@@ -117,13 +134,13 @@
 
 
 
-  <link rel="canonical" href="https://blacke1111.github.io/archives/2021/12/"/>
+  <link rel="canonical" href="https://blacke1111.github.io/2022/04/04/mysql-p2/"/>
 
 
 
 
 
-  <title>归档 | 蓝天の博客</title>
+  <title>mysql的数据目录 | 蓝天の博客</title>
   
 
 
@@ -142,7 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -280,1109 +297,287 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2022/04/04/mysql-p2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张浩宇">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蓝天の博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h1 class="post-title" itemprop="name headline">mysql的数据目录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-04T20:34:15+08:00">
+                2022-04-04
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-04T21:36:03+08:00">
+                2022-04-04
+              </time>
+            
+          </span>
+
           
-        很好! 目前共计 116 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2021">2021</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/30/%E9%A2%A0%E5%80%92%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">颠倒二进制位</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-30T16:21:15+08:00"
-              content="2021-12-30" >
-          12-30
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/29/%E8%A7%84%E5%88%92%E5%85%BC%E8%81%8C%E5%B7%A5%E4%BD%9C/" itemprop="url">
-              
-                <span itemprop="name">规划兼职工作</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-29T18:36:27+08:00"
-              content="2021-12-29" >
-          12-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <h1 id="MySQL8的主要目录结构"><a href="#MySQL8的主要目录结构" class="headerlink" title="MySQL8的主要目录结构"></a>MySQL8的主要目录结构</h1><p>这是我自己指定的mysql 数据的存储的地方</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404203836567.png" alt="image-20220404203836567"></p>
+<p>可以看到我指定的存放位置对应的就上面的位置</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204358589.png" alt="image-20220404204358589"></p>
+<p>数据库运行起来对应的文件：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204010084.png" alt="image-20220404204010084"></p>
+<h2 id="配置文件目录"><a href="#配置文件目录" class="headerlink" title="配置文件目录"></a>配置文件目录</h2><p><strong>linux下：</strong></p>
+<p>配置文件目录：/usr/share/mysql-8.0（命令及配置文件），/etc/mysql（如my.cnf）</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204833928.png" alt="image-20220404204833928"></p>
+<p>my.cnf就相当于windows 下的my。ini</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204929562.png" alt="image-20220404204929562"></p>
+<h1 id="数据库和文件系统的关系"><a href="#数据库和文件系统的关系" class="headerlink" title="数据库和文件系统的关系"></a>数据库和文件系统的关系</h1><h2 id="查看默认数据库"><a href="#查看默认数据库" class="headerlink" title="查看默认数据库"></a>查看默认数据库</h2><p>查看一下在我的计算机上当前有哪些数据库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW DATABASES;</span><br></pre></td></tr></table></figure>
 
-        
-        
+<ul>
+<li>mysql</li>
+</ul>
+<p>MySQL 系统自带的核心数据库，它存储了MySQL的用户账户和权限信息，一些存储过程、事件的定义信息，一些运行过程中产生的日志信息，一些帮助信息以及时区信息等。</p>
+<ul>
+<li>information_schema</li>
+</ul>
+<p>MySQL 系统自带的数据库，这个数据库保存着MySQL服务器维护的所有其他数据库的信息，比如有哪些表、哪些视图、哪些触发器、哪些列、哪些索引。这些信息并不是真实的用户数据，而是一些描述性信息，有时候也称之为元数据。在系统数据库information_schema 中提供了一些以innodb_sys 开头的表，用于表示内部系统表。</p>
+<ul>
+<li>performance_schema</li>
+</ul>
+<p>MySQL 系统自带的数据库，这个数据库里主要保存MySQL服务器运行过程中的一些状态信息，可以<br>用来监控 MySQL 服务的各类性能指标。包括统计最近执行了哪些语句，在执行过程的每个阶段都<br>花费了多长时间，内存的使用情况等信息。</p>
+<ul>
+<li>sys</li>
+</ul>
+<p>MySQL 系统自带的数据库，这个数据库主要是通过视图的形式把information_schema 和<br>performance_schema 结合起来，帮助系统管理员和开发人员监控 MySQL 的技术性能。</p>
+<h2 id="数据库在文件系统中的表示"><a href="#数据库在文件系统中的表示" class="headerlink" title="数据库在文件系统中的表示"></a>数据库在文件系统中的表示</h2><h3 id="InnoDB存储引擎模式"><a href="#InnoDB存储引擎模式" class="headerlink" title="InnoDB存储引擎模式"></a>InnoDB存储引擎模式</h3><h4 id="mysql5-7下："><a href="#mysql5-7下：" class="headerlink" title="mysql5.7下："></a><strong>mysql5.7下：</strong></h4><p>进入存储目录:</p>
+<p>cd /var/lib/mysql</p>
+<p>再进入对应的数据库下:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404205651334.png" alt="image-20220404205651334"></p>
+<p><strong>db.opt</strong> 存储的我们数据库对应的比较规则和字符集等</p>
+<p><strong>epm1.frm</strong> 存储的是表结构 数据可以存放在<strong>emp1.ibd</strong>（独立表空间）下 页可以存放在系统表表空间下，他是独立于每个数据库的，emp1.ibd也可以称为独立表空间，</p>
+<p>ibdate1 别名系统表空间 ，大小12MB，这个文件就是对应的系统表空间在文件系统上的表示。怎么才12M？注意这个文件是自扩展文件，当不够用的时候它会自己增加文件大小。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404210128560.png" alt="image-20220404210128560"></p>
+<p><strong>独立表空间(file-per-table tablespace)</strong></p>
+<p>在MySQL5.6.6以及之后的版本中，InnoDB并不会默认的把各个表的数据存储到系统表空间中，而是为每一个表建立一个独立表空间，也就是说我们创建了多少个表，就有多少个独立表空间。使用独立表空间来存储表数据的话，会在该表所属数据库对应的子目录下创建一个表示该独立表空间的文件，文件名和表名相同，只不过添加了一个.ibd 的扩展名而已，所以完整的文件名称长这样</p>
+<p><strong>系统表空间与独立表空间的设置</strong></p>
+<p>我们可以自己指定使用系统表空间还是独立表空间来存储数据，这个功能由启动参数innodb_file_per_table 控制，比如说我们想刻意将表数据都存储到系统表空间时，可以在启动MySQL服务器的时候这样配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[server]</span></span><br><span class="line"><span class="attr">innodb_file_per_table</span>=<span class="number">0</span> <span class="comment"># 0：代表使用系统表空间； 1：代表使用独立表空间</span></span><br></pre></td></tr></table></figure>
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/27/%E7%9B%B4%E7%BA%BF%E4%B8%8A%E6%9C%80%E5%A4%9A%E7%9A%84%E7%82%B9%E6%95%B0/" itemprop="url">
-              
-                <span itemprop="name">直线上最多的点数</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-27T15:02:08+08:00"
-              content="2021-12-27" >
-          12-27
-        </time>
-      </div>
-
-    </header>
-  </article>
+<p>默认情况： 表示使用独立表空间</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404210646933.png" alt="image-20220404210646933"></p>
+<h4 id="mysql8-0下"><a href="#mysql8-0下" class="headerlink" title="mysql8.0下:"></a><strong>mysql8.0下:</strong></h4><p>如下看到他也有自己的系统表空间</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404210849579.png" alt="image-20220404210849579"></p>
+<p>进入数据库中，看到<strong>8.0</strong>没有.opt后缀名的文件，这不能说他没有保存每个数据库的字符集和比较规则，他把这些都存放到每个表的结构中去了。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404212212984.png" alt="image-20220404212212984"></p>
+<p><strong>疑问：</strong></p>
+<p>.frm的文件也没有了。 这是他把.frm和.ibd文件都存放到.ibd文件中了</p>
+<p>这就需要解析ibd文件。oracle官方将frm文件的信息及更多信息移动到叫做序列化字典信息，SDI，SDI被写在ibd文件内部，Mysql8.0属于oracle旗下，oracle提供了一个应用程序ibd2sdi。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404211857538.png" alt="image-20220404211857538"></p>
+<h3 id="MyISAM存储引擎模式"><a href="#MyISAM存储引擎模式" class="headerlink" title="MyISAM存储引擎模式"></a>MyISAM存储引擎模式</h3><h4 id="mysql5-7下"><a href="#mysql5-7下" class="headerlink" title="mysql5.7下:"></a><strong>mysql5.7下:</strong></h4><p>先创建MyISAM存储引擎的数据表:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `student_myisam` (</span><br><span class="line">`id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">`name` varchar(64) DEFAULT NULL,</span><br><span class="line">`age` int DEFAULT NULL,</span><br><span class="line">`sex` varchar(2) DEFAULT NULL,</span><br><span class="line">PRIMARY KEY (`id`)</span><br><span class="line">)ENGINE=MYISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;</span><br></pre></td></tr></table></figure>
 
 
+
+<p>看到student_myisam表的文件有三个。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404212707712.png" alt="image-20220404212707712"></p>
+<p>表结构：</p>
+<p>在存储表结构方面， MyISAM 和InnoDB 一样，也是在数据目录下对应的数据库子目录下创建了一个专门用于描述表结构的文件：</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表名<span class="string">.frm</span></span><br></pre></td></tr></table></figure>
+
+<p>表中数据和索引:</p>
+<p>在MyISAM中的索引全部都是二级索引，该存储引擎的数据和索引是分开存放的。所以在文件系统中也是使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。假如test表使用MyISAM存储引擎的话，那么在它所在数据库对应的atguigu 目录下会为test 表创建这三个文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.frm 存储表结构</span><br><span class="line">#MYD和MYI 对应着InnoDB的ibd文件 可以看到索引和数据分开存储</span><br><span class="line">test.MYD和 存储数据 (MYData)</span><br><span class="line">test.MYI 存储索引 (MYIndex)</span><br></pre></td></tr></table></figure>
+
+<h4 id="mysql8-0下："><a href="#mysql8-0下：" class="headerlink" title="mysql8.0下："></a>mysql8.0下：</h4><p>sdi相当于5.7下的frm文件</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404213409091.png" alt="image-20220404213409091"></p>
+<p>小结：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404213557250.png" alt="image-20220404213557250"></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/26/%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97/" itemprop="url">
-              
-                <span itemprop="name">只出现一次的数字</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-26T20:46:57+08:00"
-              content="2021-12-26" >
-          12-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/24/%E8%AF%BE%E7%A8%8B%E8%A1%A8/" itemprop="url">
-              
-                <span itemprop="name">课程表</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-24T21:51:15+08:00"
-              content="2021-12-24" >
-          12-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/23/%E5%8D%95%E8%AF%8D%E6%8E%A5%E9%BE%99/" itemprop="url">
-              
-                <span itemprop="name">单词接龙</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-23T20:41:54+08:00"
-              content="2021-12-23" >
-          12-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/22/%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%BE%84/" itemprop="url">
-              
-                <span itemprop="name">最短路径</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-22T18:43:50+08:00"
-              content="2021-12-22" >
-          12-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/21/%E6%9C%80%E5%B0%8F%E7%A0%9D%E7%A0%81/" itemprop="url">
-              
-                <span itemprop="name">最小砝码</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-21T20:56:16+08:00"
-              content="2021-12-21" >
-          12-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/20/%E8%87%B3%E5%B0%91%E6%9C%89K%E4%B8%AA%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/" itemprop="url">
-              
-                <span itemprop="name">至少有K个重复字符的最长子串</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-20T21:09:58+08:00"
-              content="2021-12-20" >
-          12-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/19/%E6%9C%80%E9%95%BF%E4%B8%8D%E5%90%AB%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/" itemprop="url">
-              
-                <span itemprop="name">最长不含重复字符的子字符串</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-19T22:13:45+08:00"
-              content="2021-12-19" >
-          12-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/18/%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/" itemprop="url">
-              
-                <span itemprop="name">相交链表</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-18T19:22:53+08:00"
-              content="2021-12-18" >
-          12-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/17/%E9%93%BE%E8%A1%A8%E6%8E%92%E5%BA%8F/" itemprop="url">
-              
-                <span itemprop="name">链表排序</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-17T21:14:22+08:00"
-              content="2021-12-17" >
-          12-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/16/%E5%A4%8D%E5%88%B6%E5%B8%A6%E9%9A%8F%E6%9C%BA%E6%8C%87%E9%92%88%E7%9A%84%E9%93%BE%E8%A1%A8/" itemprop="url">
-              
-                <span itemprop="name">复制带随机指针的链表</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-16T18:20:42+08:00"
-              content="2021-12-16" >
-          12-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/15/%E6%9C%80%E5%A4%A7%E7%9F%A9%E5%BD%A2/" itemprop="url">
-              
-                <span itemprop="name">最大矩形</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-15T22:25:35+08:00"
-              content="2021-12-15" >
-          12-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/14/%E6%89%81%E5%B9%B3%E5%8C%96%E5%B5%8C%E5%A5%97%E5%88%97%E8%A1%A8%E8%BF%AD%E4%BB%A3%E5%99%A8/" itemprop="url">
-              
-                <span itemprop="name">扁平化嵌套列表迭代器</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-14T21:23:35+08:00"
-              content="2021-12-14" >
-          12-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/13/%E5%9F%BA%E6%9C%AC%E8%AE%A1%E7%AE%97%E5%99%A8II/" itemprop="url">
-              
-                <span itemprop="name">基本计算器II</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-13T18:11:22+08:00"
-              content="2021-12-13" >
-          12-13
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/12/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BC%E2%80%94%E2%80%94%E5%BB%B6%E8%BF%9F%E5%88%A0%E9%99%A4%E6%80%9D%E6%83%B3/" itemprop="url">
-              
-                <span itemprop="name">滑动窗口最大值(延迟删除思想)</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-12T19:58:43+08:00"
-              content="2021-12-12" >
-          12-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/11/%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/" itemprop="url">
-              
-                <span itemprop="name">数据流中的中位数</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-11T17:02:23+08:00"
-              content="2021-12-11" >
-          12-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/11/%E9%A1%BA%E6%97%B6%E9%92%88%E8%BE%93%E5%87%BA%E7%9F%A9%E9%98%B5/" itemprop="url">
-              
-                <span itemprop="name">顺时针输出矩阵</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-11T17:01:37+08:00"
-              content="2021-12-11" >
-          12-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/10/%E6%9C%80%E5%B0%8F%E6%A0%88/" itemprop="url">
-              
-                <span itemprop="name">最小栈</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-10T22:05:39+08:00"
-              content="2021-12-10" >
-          12-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/09/%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF/" itemprop="url">
-              
-                <span itemprop="name">除自身以外数组的乘积</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-09T19:44:46+08:00"
-              content="2021-12-09" >
-          12-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/08/%E9%80%92%E5%A2%9E%E7%9A%84%E4%B8%89%E5%85%83%E5%AD%90%E5%BA%8F%E5%88%97/" itemprop="url">
-              
-                <span itemprop="name">递增的三元子序列</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-08T20:18:09+08:00"
-              content="2021-12-08" >
-          12-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/08/%E6%89%93%E4%B9%B1%E6%95%B0%E7%BB%84/" itemprop="url">
-              
-                <span itemprop="name">打乱数组</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-08T11:05:40+08:00"
-              content="2021-12-08" >
-          12-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/07/%E7%AC%AC%E4%BA%8C%E7%AB%A0%E7%89%A9%E7%90%86%E5%B1%82/" itemprop="url">
-              
-                <span itemprop="name">第二章物理层</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-07T21:34:50+08:00"
-              content="2021-12-07" >
-          12-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/07/%E6%95%B0%E7%BB%84%E6%8E%92%E5%BA%8F/" itemprop="url">
-              
-                <span itemprop="name">数组排序</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-07T19:09:12+08:00"
-              content="2021-12-07" >
-          12-07
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/06/%E8%BD%AE%E8%BD%AC%E6%95%B0%E7%BB%84/" itemprop="url">
-              
-                <span itemprop="name">轮转数组</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-06T20:31:17+08:00"
-              content="2021-12-06" >
-          12-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%A6%82%E8%BF%B0/" itemprop="url">
-              
-                <span itemprop="name">计算机网络的概述</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-05T14:50:23+08:00"
-              content="2021-12-05" >
-          12-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/04/%E5%A4%A9%E9%99%85%E7%BA%BF%E9%97%AE%E9%A2%98/" itemprop="url">
-              
-                <span itemprop="name">天际线问题</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-04T19:52:11+08:00"
-              content="2021-12-04" >
-          12-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2021/12/02/LinkedBlockingQueue%E5%92%8CConcurrentLinkedQueue/" itemprop="url">
-              
-                <span itemprop="name">LinkedBlockingQueue和ConcurrentLinkedQueue</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2021-12-02T21:36:19+08:00"
-              content="2021-12-02" >
-          12-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	
+	</div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/04/mysql-p1/" rel="next" title="mysql_p1">
+                <i class="fa fa-chevron-left"></i> mysql_p1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -1390,6 +585,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1412,8 +611,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1487,6 +695,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL8%E7%9A%84%E4%B8%BB%E8%A6%81%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">MySQL8的主要目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="nav-number">1.1.</span> <span class="nav-text">配置文件目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%92%8C%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">2.</span> <span class="nav-text">数据库和文件系统的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%BB%98%E8%AE%A4%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">查看默认数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9C%A8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%A4%BA"><span class="nav-number">2.2.</span> <span class="nav-text">数据库在文件系统中的表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">InnoDB存储引擎模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql5-7%E4%B8%8B%EF%BC%9A"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">mysql5.7下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql8-0%E4%B8%8B"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">mysql8.0下:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MyISAM%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.2.</span> <span class="nav-text">MyISAM存储引擎模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql5-7%E4%B8%8B"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">mysql5.7下:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mysql8-0%E4%B8%8B%EF%BC%9A"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">mysql8.0下：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1632,6 +856,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
