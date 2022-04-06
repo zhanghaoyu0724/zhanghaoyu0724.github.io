@@ -90,8 +90,28 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405205540465.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405205751978.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405210021335.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406191943228.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406193405169.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406193615804.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406194618283.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406194658849.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195205298.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195224929.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195547859.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195750130.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195759282.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195856994.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406200736066.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406200930466.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406200958570.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406201438748.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406202221976.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406202835304.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406203134540.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406203315554.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406203414041.png">
 <meta property="article:published_time" content="2022-04-05T12:42:15.000Z">
-<meta property="article:modified_time" content="2022-04-05T13:07:31.308Z">
+<meta property="article:modified_time" content="2022-04-06T14:02:12.879Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405204329788.png">
@@ -346,8 +366,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-04-05T21:07:31+08:00">
-                2022-04-05
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-06T22:02:12+08:00">
+                2022-04-06
               </time>
             
           </span>
@@ -396,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  5.1k
                 </span>
               
 
@@ -412,7 +432,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  18
                 </span>
               
             </div>
@@ -490,6 +510,129 @@
 <li>存储引擎层：与数据库文件打交道，负责数据的存储和读取。</li>
 </ol>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405210021335.png" alt="image-20220405210021335"></p>
+<h1 id="sql执行流程"><a href="#sql执行流程" class="headerlink" title="sql执行流程"></a>sql执行流程</h1><h2 id="MySQL-中的-SQL执行流程"><a href="#MySQL-中的-SQL执行流程" class="headerlink" title="MySQL 中的 SQL执行流程"></a>MySQL 中的 SQL执行流程</h2><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406191943228.png" alt="image-20220406191943228"></p>
+<p><strong>MySQL的查询流程：</strong></p>
+<ol>
+<li>查询缓存：Server 如果在查询缓存中发现了这条 SQL 语句，就会直接将结果返回给客户端；如果没有，就进入到解析器阶段。需要说明的是，因为查询缓存往往效率不高，所以在 MySQL8.0 之后就抛弃了这个功能。</li>
+</ol>
+<p><strong>大多数情况查询缓存就是个鸡肋，为什么呢？</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT employee_id,last_name FROM employees WHERE employee_id = 101;</span><br></pre></td></tr></table></figure>
+
+<p>查询缓存是提前把查询结果缓存起来，这样下次不需要执行就可以直接拿到结果。需要说明的是，在MySQL 中的查询缓存，不是缓存查询计划，而是查询对应的结果。这就意味着查询匹配的鲁棒性大大降低，只有相同的查询操作才会命中查询缓存。<strong>两个查询请求在任何字符上的不同（例如：空格、注释、大小写）</strong>，<strong>都会导致缓存不会命中</strong>。因此 MySQL 的查询缓存命中率不高。</p>
+<p>同时，如果查询请求中包含某些系统函数、用户自定义变量和函数、一些系统表，如 mysql 、information_schema、 performance_schema 数据库中的表，那这个请求就不会被缓存。以某些系统函数举例，可能同样的函数的两次调用会产生不一样的结果，比如函数<strong>NOW</strong> ，每次调用都会产生最新的当前时间，如果在一个查询请求中调用了这个函数，那即使查询请求的文本信息都一样，那不同时间的两次查询也应该得到不同的结果，如果在第一次查询时就缓存了，那第二次查询的时候直接使用第一次查询的结果就是错误的！</p>
+<p>此外，既然是缓存，那就有它<strong>缓存失效的时候</strong>。MySQL的缓存系统会监测涉及到的每张表，只要该表的结构或者数据被修改，如对该表使用了INSERT 、 UPDATE 、DELETE 、TRUNCATE TABLE 、ALTERTABLE 、DROP TABLE 或 DROP DATABASE 语句，那使用该表的所有高速缓存查询都将变为无效并从高速缓存中删除！对于更新压力大的数据库来说，查询缓存的命中率会非常低。</p>
+<p><strong>总之，因为擦汗寻缓存往往弊大于利，查询缓存的失效非常频繁。</strong></p>
+<p>一般建议在静态表李使用拆线呢缓存，静态表就是我们极少更新的表。比如，一个系统配置表，字典表，适合使用查询缓存，mysql也提供了这种‘按需使用’的方式。</p>
+<p><strong>2. 解析器：在解析器中对 SQL 语句进行语法分析、语义分析。</strong></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406193405169.png" alt="image-20220406193405169"></p>
+<p>分析器先做“ 词法分析”。你输入的是由多个字符串和空格组成的一条 SQL 语句，MySQL 需要识别出里面的字符串分别是什么，代表什么。 MySQL 从你输入的”select”这个关键字识别出来，这是一个查询语句。它也要把字符串“T”识别成“表名 T”，把字符串“ID”识别成“列 ID”。</p>
+<p>接着，要做“ 语法分析”。根据词法分析的结果，语法分析器（比如：Bison）会根据语法规则，判断你输入的这个 SQL 语句是否满足 MySQL 语法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select department_id,job_id,avg(salary) from employees group by department_id;</span><br></pre></td></tr></table></figure>
+
+<p>如果SQL语句正确，则会生成一个这样的语法树：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406193615804.png" alt="image-20220406193615804"></p>
+<ol start="3">
+<li><strong>优化器：在优化器中会确定 SQL 语句的执行路径，比如是根据全表检索，还是根据索引检索等。</strong></li>
+</ol>
+<p>  经过解析器，mysql就知道你要做什么。在开始执行之前，还要先经过优化器的处理。一条查询可以有很多种执行方式，最后返回相同的结果。优化器的作用就是找到这其中最好的执行计划</p>
+<p>  举例：如下语句是执行两个表的 join：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select * from test1 join test2 using(ID)</span><br><span class="line">where test1.name=&#x27;zhangwei&#x27; and test2.name=&#x27;mysql高级课程&#x27;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">方案1：可以先从表 test1 里面取出 name=&#x27;zhangwei&#x27;的记录的 ID 值，再根据 ID 值关联到表 test2，再判断 test2 里面 name的值是否等于 &#x27;mysql高级课程&#x27;。</span><br><span class="line">方案2：可以先从表 test2 里面取出 name=&#x27;mysql高级课程&#x27; 的记录的 ID 值，再根据 ID 值关联到 test1，再判断 test1 里面 name的值是否等于 zhangwei。</span><br><span class="line">这两种执行方法的逻辑结果是一样的，但是执行的效率会有不同，而优化器的作用就是决定选择使用哪一个方案。优化器阶段完成后，这个语句的执行方案就确定下来了，然后进入执行器阶段。如果你还有一些疑问，比如优化器是怎么选择索引的，有没有可能选择错等。后面讲到索引我们再谈。</span><br></pre></td></tr></table></figure>
+
+<p>在查询优化器中，可以分为<strong>逻辑查询</strong>优化阶段和<strong>物理查询</strong>优化阶段。 </p>
+<p><strong>4. 执行器：</strong></p>
+<p>截止到现在，还没有真正去读写真实的表，仅仅只是产出了一个执行计划。于是就进入了执行器阶段。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406194618283.png" alt="image-20220406194618283"></p>
+<p>在执行之前需要判断该用户是否具备权限。如果没有，就会返回权限错误。如果具备权限，就执行 SQL<br>查询并返回结果。在 MySQL8.0 以下的版本，如果设置了查询缓存，这时会将查询结果进行缓存。</p>
+<p>至此，这个语句就执行完成了。对于有索引的表，执行的逻辑也差不多。<br>SQL 语句在 MySQL 中的流程是： SQL语句→查询缓存→解析器→优化器→执行器。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406194658849.png" alt="image-20220406194658849"></p>
+<h2 id="MySQL8中SQL执行原理"><a href="#MySQL8中SQL执行原理" class="headerlink" title="MySQL8中SQL执行原理"></a>MySQL8中SQL执行原理</h2><h3 id="确认profiling-是否开启"><a href="#确认profiling-是否开启" class="headerlink" title="确认profiling 是否开启"></a>确认profiling 是否开启</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select @@profiling;</span><br><span class="line">mysql&gt; show variables like &#x27;profiling&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195205298.png" alt="image-20220406195205298"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195224929.png" alt="image-20220406195224929"></p>
+<p>profiling=0 代表关闭，我们需要把 profiling 打开，即设置为 1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set profiling=1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多次执行相同SQL查询"><a href="#多次执行相同SQL查询" class="headerlink" title="多次执行相同SQL查询"></a>多次执行相同SQL查询</h3><p>然后我们执行一个 SQL 查询（你可以执行任何一个 SQL 查询）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from employees;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看profiles"><a href="#查看profiles" class="headerlink" title="查看profiles"></a>查看profiles</h3><p>查看当前会话所产生的所有 profiles：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show profiles; # 显示最近的几次查询</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195547859.png" alt="image-20220406195547859"></p>
+<h3 id="查看profile"><a href="#查看profile" class="headerlink" title="查看profile"></a>查看profile</h3><p>显示执行计划，查看程序的执行步骤：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show profile for query Query_Id;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195750130.png" alt="image-20220406195750130"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195759282.png" alt="image-20220406195759282"></p>
+<p>从上图可以看到8.0对应是没有拆线呢缓存的。</p>
+<p>解释：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195856994.png" alt="image-20220406195856994"></p>
+<h2 id="MySQL5-7中SQL执行原理"><a href="#MySQL5-7中SQL执行原理" class="headerlink" title="MySQL5.7中SQL执行原理"></a>MySQL5.7中SQL执行原理</h2><h3 id="配置文件中开启查询缓存"><a href="#配置文件中开启查询缓存" class="headerlink" title="配置文件中开启查询缓存"></a>配置文件中开启查询缓存</h3><h3 id="在-etc-my-cnf-中新增一行："><a href="#在-etc-my-cnf-中新增一行：" class="headerlink" title="在 /etc/my.cnf 中新增一行："></a>在 /etc/my.cnf 中新增一行：</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">query_cache_type</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="重启mysql服务"><a href="#重启mysql服务" class="headerlink" title="重启mysql服务"></a>重启mysql服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
+
+<h3 id="开启查询执行计划"><a href="#开启查询执行计划" class="headerlink" title="开启查询执行计划"></a>开启查询执行计划</h3><p>由于重启过服务，需要重新执行如下指令，开启profiling。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; set profiling=1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="执行语句两次："><a href="#执行语句两次：" class="headerlink" title="执行语句两次："></a>执行语句两次：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from departments;</span><br><span class="line">mysql&gt; select * from departments;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="查看profiles-1"><a href="#查看profiles-1" class="headerlink" title="查看profiles"></a>查看profiles</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show profiles;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406200736066.png" alt="image-20220406200736066"></p>
+<h3 id="查看profile-1"><a href="#查看profile-1" class="headerlink" title="查看profile"></a>查看profile</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show profile for query 6;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406200930466.png" alt="image-20220406200930466"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show profile for query 7;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406200958570.png" alt="image-20220406200958570"></p>
+<h1 id="SQL语法顺序"><a href="#SQL语法顺序" class="headerlink" title="SQL语法顺序"></a>SQL语法顺序</h1><p>随着Mysql版本的更新换代，其优化器也在不断的升级，优化器会分析不同执行顺序产生的性能消耗不同而动态调整执行顺序。<br>需求：查询每个部门年龄高于20岁的人数且高于20岁人数不能少于2人，显示人数最多的第一名部门信息下面是经常出现的查询顺序：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406201438748.png" alt="image-20220406201438748"></p>
+<h1 id="数据库缓冲池-buffer-pool"><a href="#数据库缓冲池-buffer-pool" class="headerlink" title="数据库缓冲池(buffer pool)"></a>数据库缓冲池(buffer pool)</h1><p>InnoDB 存储引擎是以页为单位来管理存储空间的，我们进行的增删改查操作其实本质上都是在访问页面（包括读页面、写页面、创建新页面等操作）。而磁盘 I/O 需要消耗的时间很多，而在内存中进行操作，效率则会高很多，为了能让数据表或者索引中的数据随时被我们所用，DBMS 会申请占用内存来作为数据缓冲池，在真正访问页面之前，需要把在磁盘上的页缓存到内存中的Buffer Pool 之后才可以访问。<br>这样做的好处是可以让磁盘活动最小化，从而减少与磁盘直接进行 I/O 的时间。要知道，这种策略对提升 SQL 语句的查询性能来说至关重要。如果索引的数据在缓冲池里，那么访问的成本就会降低很多。</p>
+<h2 id="缓冲池-vs-查询缓存"><a href="#缓冲池-vs-查询缓存" class="headerlink" title="缓冲池 vs 查询缓存"></a>缓冲池 vs 查询缓存</h2><p>缓冲池和查询缓存是一个东西吗？不是。</p>
+<h4 id="缓冲池（Buffer-Pool）"><a href="#缓冲池（Buffer-Pool）" class="headerlink" title="缓冲池（Buffer Pool）"></a>缓冲池（Buffer Pool）</h4><p>首先我们需要了解在 InnoDB 存储引擎中，缓冲池都包括了哪些。<br>在 InnoDB 存储引擎中有一部分数据会放到内存中，缓冲池则占了这部分内存的大部分，它用来存储各种<br>数据的缓存，如下图所示：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406202221976.png" alt="image-20220406202221976"></p>
+<p>从图中，你能看到 InnoDB 缓冲池包括了数据页、索引页、插入缓冲、锁信息、自适应 Hash 和数据字典信息等。</p>
+<p><strong>缓存池的重要性：</strong></p>
+<p>对于使用InnoDB作为存储引擎的表来说，不管是用于存储用户数据的索引(包括聚簇索引和二级索引)，还是各种系统数据，都是以页的形式存放在表空间中的，而所谓的表空间只不过是InnoDB对文件系统上一个或几个实际文件的抽象，也就是说我们的数据说到底还是存储在磁盘上的。但是各位也都知道，磁盘的速度慢的跟乌龟一样，怎么能配得上“快如风，疾如电”的CPU呢?这里，缓冲池可以帮助我们消除cPL和磁盘之间的鸿沟。所以InnoDB存储引擎在处理客户端的请求时，当需要访问某个页的数据时，就会把完整的页的数据全部加载到内存中，也就是说即使我们只需要访问一个页的一条记录，那也需要先把整个页的数据加载到内存中。将整个页加载到内存中后就可以进行读写访问了，在进行完读写访问之后并不着急把该页对应的内存空间释放掉，而是将其缓存起来，这样将来有请求再次访问该页面时，就可以省去磁盘IO的开销了。</p>
+<p><strong>缓存原则：</strong></p>
+<p>“ 位置 * 频次”这个原则，可以帮我们对 I/O 访问效率进行优化。<br>首先，位置决定效率，提供缓冲池就是为了在内存中可以直接访问数据。<br>其次，频次决定优先级顺序。因为缓冲池的大小是有限的，比如磁盘有 200G，但是内存只有 16G，缓冲池大小只有 1G，就无法将所有数据都加载到缓冲池里，这时就涉及到优先级顺序，会优先对使用频次高的热数据进行加载。</p>
+<p><strong>缓冲池的预读特性：</strong></p>
+<p>了解了缓冲池的作用之后，我们还需要了解缓冲池的另一个特性**:预读**。<br>缓冲池的作用就是提升V/o效率，而我们进行读取数据的时候存在一个“局部性原理”，也就是说我们使用了一些数据，大概率还会使用它周围的一些数据，因此采用“预读”的机制提前加载，可以减少未来可能的磁盘Ⅳ/o操作。</p>
+<h4 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h4><p>那么什么是查询缓存呢？<br>查询缓存是提前把查询结果缓存起来，这样下次不需要执行就可以直接拿到结果。需要说明的是，在MySQL 中的查询缓存，不是缓存查询计划，而是查询对应的结果。因为命中条件苛刻，而且只要数据表发生变化，查询缓存就会失效，因此命中率低。</p>
+<h2 id="缓冲池如何读取数据"><a href="#缓冲池如何读取数据" class="headerlink" title="缓冲池如何读取数据"></a>缓冲池如何读取数据</h2><p>缓冲池管理器会尽量将经常使用的数据保存起来，在数据库进行页面读操作的时候，首先会判断该页面<br>是否在缓冲池中，如果存在就直接读取，如果不存在，就会通过内存或磁盘将页面存放到缓冲池中再进<br>行读取。<br>缓存在数据库中的结构和作用如下图所示：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406202835304.png" alt="image-20220406202835304"></p>
+<p>如果我们执行 SQL 语句的时候更新了缓存池中的数据，那么这些数据会马上同步到磁盘上吗？</p>
+<p>实际上，当我们对数据库中的记录进行修改的时候，首先会修改缓冲池中页里面的记录信息，然后数据库会以<strong>一定的频率</strong>刷新到磁盘上。注意并不是每次发生更新操作，都会立刻进行磁盘回写。缓冲池会采用一种叫做<strong>checkpoint 的机制</strong>将数据回写到磁盘上，这样做的好处就是提升了数据库的整体性能。<br>比如，当缓冲池不够用时，需要释放掉一些不常用的页，此时就可以强行采用checkpoint的方式，将不常用的脏页回写到磁盘上，然后再从缓冲池中将这些页释放掉。这里脏页(dirty page)指的是缓冲池中被修改过的页，与磁盘上的数据页不一致。</p>
+<h2 id="查看-设置缓冲池的大小"><a href="#查看-设置缓冲池的大小" class="headerlink" title="查看/设置缓冲池的大小"></a>查看/设置缓冲池的大小</h2><p>如果你使用的是MySQL MylSAM存储引擎，它只缓存索引，不缓存数据，对应的键缓存参数为key_buffer_size，你可以用它进行查看。</p>
+<p>如果你使用的是 InnoDB 存储引擎，可以通过查看 innodb_buffer_pool_size 变量来查看缓冲池的大小。命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;innodb_buffer_pool_size&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406203134540.png" alt="image-20220406203134540"></p>
+<p>你能看到此时 InnoDB 的缓冲池大小只有 134217728/1024/1024=128MB。我们可以修改缓冲池大小，比如<br>改为256MB，方法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set global innodb_buffer_pool_size = 268435456;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406203315554.png" alt="image-20220406203315554"></p>
+<p>或者：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">innodb_buffer_pool_size = 268435456</span><br></pre></td></tr></table></figure>
+
+<h2 id="多个Buffer-Pool实例"><a href="#多个Buffer-Pool实例" class="headerlink" title="多个Buffer Pool实例"></a>多个Buffer Pool实例</h2><p>Buffer Pool本质是InnoDB向操作系统申请的一块连续的内存空间，在多线程环境下，访问Buffer Pool中的数据都需要加锁处理。在Buffer Pool特别大而且多线程并发访问特别高的情况下，单一的Buffer Pool可能会影响请求的处理速度。所以在Buffer Pool特别大的时候，我们可以把它们拆分成若干个小的Buffer Pool，每个Buffer Pool都称为一个实例，它们都是独立的，独立的去申请内存空间，独立的管理各种链表。所以在多线程并发访问时并不会相互影响，从而提高并发处理能力。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[server]</span><br><span class="line">innodb_buffer_pool_instances = 2</span><br></pre></td></tr></table></figure>
+
+<p>这样就表明我们要创建2个Buffer Pool 实例。<br>我们看下如何查看缓冲池的个数，使用命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;innodb_buffer_pool_instances&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406203414041.png" alt="image-20220406203414041"></p>
+<p>那每个Buffer Pool 实例实际占多少内存空间呢？其实使用这个公式算出来的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">innodb_buffer_pool_size/innodb_buffer_pool_instances</span><br></pre></td></tr></table></figure>
+
+<p>也就是总共的大小除以实例的个数，结果就是每个Buffer Pool 实例占用的大小。</p>
+<p>不过也不是说Buffer Pool实例创建的越多越好，分别管理各个Buffer Pool也是需要性能开销的，InnoDB规定:当innodb_buffer_pool_size的值小于1G的时候设置多个实例是无效的,InnoDB会默认把innodb_buffer_pool_instances的值修改为1。而我们鼓励在Buffer Pool大于或等于1G的时候设置多个Buffer Pool实例。</p>
 
       
     </div>
@@ -532,6 +675,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/04/06/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/" rel="prev" title="存储引擎">
+                存储引擎 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -614,7 +761,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">119</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -679,7 +826,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%A4%84%E7%90%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text">服务器处理客户端请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E5%B1%82%EF%BC%9A%E8%BF%9E%E6%8E%A5%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">第1层：连接层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E5%B1%82%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">第2层：服务层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC3%E5%B1%82%EF%BC%9A%E5%BC%95%E6%93%8E%E5%B1%82"><span class="nav-number">4.</span> <span class="nav-text">第3层：引擎层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%B1%82"><span class="nav-number">5.</span> <span class="nav-text">存储层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%A4%84%E7%90%86%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AF%B7%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text">服务器处理客户端请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E5%B1%82%EF%BC%9A%E8%BF%9E%E6%8E%A5%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">第1层：连接层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E5%B1%82%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%B1%82"><span class="nav-number">3.</span> <span class="nav-text">第2层：服务层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC3%E5%B1%82%EF%BC%9A%E5%BC%95%E6%93%8E%E5%B1%82"><span class="nav-number">4.</span> <span class="nav-text">第3层：引擎层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%B1%82"><span class="nav-number">5.</span> <span class="nav-text">存储层</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sql%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">7.</span> <span class="nav-text">sql执行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-%E4%B8%AD%E7%9A%84-SQL%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="nav-number">7.1.</span> <span class="nav-text">MySQL 中的 SQL执行流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL8%E4%B8%ADSQL%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">7.2.</span> <span class="nav-text">MySQL8中SQL执行原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AE%E8%AE%A4profiling-%E6%98%AF%E5%90%A6%E5%BC%80%E5%90%AF"><span class="nav-number">7.2.1.</span> <span class="nav-text">确认profiling 是否开启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%AC%A1%E6%89%A7%E8%A1%8C%E7%9B%B8%E5%90%8CSQL%E6%9F%A5%E8%AF%A2"><span class="nav-number">7.2.2.</span> <span class="nav-text">多次执行相同SQL查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bprofiles"><span class="nav-number">7.2.3.</span> <span class="nav-text">查看profiles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bprofile"><span class="nav-number">7.2.4.</span> <span class="nav-text">查看profile</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL5-7%E4%B8%ADSQL%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86"><span class="nav-number">7.3.</span> <span class="nav-text">MySQL5.7中SQL执行原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%BC%80%E5%90%AF%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98"><span class="nav-number">7.3.1.</span> <span class="nav-text">配置文件中开启查询缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-etc-my-cnf-%E4%B8%AD%E6%96%B0%E5%A2%9E%E4%B8%80%E8%A1%8C%EF%BC%9A"><span class="nav-number">7.3.2.</span> <span class="nav-text">在 &#x2F;etc&#x2F;my.cnf 中新增一行：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%90%AFmysql%E6%9C%8D%E5%8A%A1"><span class="nav-number">7.3.3.</span> <span class="nav-text">重启mysql服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E6%9F%A5%E8%AF%A2%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92"><span class="nav-number">7.3.4.</span> <span class="nav-text">开启查询执行计划</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E8%AF%AD%E5%8F%A5%E4%B8%A4%E6%AC%A1%EF%BC%9A"><span class="nav-number">7.3.5.</span> <span class="nav-text">执行语句两次：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bprofiles-1"><span class="nav-number">7.3.6.</span> <span class="nav-text">查看profiles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bprofile-1"><span class="nav-number">7.3.7.</span> <span class="nav-text">查看profile</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL%E8%AF%AD%E6%B3%95%E9%A1%BA%E5%BA%8F"><span class="nav-number">8.</span> <span class="nav-text">SQL语法顺序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%93%E5%86%B2%E6%B1%A0-buffer-pool"><span class="nav-number">9.</span> <span class="nav-text">数据库缓冲池(buffer pool)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E6%B1%A0-vs-%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98"><span class="nav-number">9.1.</span> <span class="nav-text">缓冲池 vs 查询缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E6%B1%A0%EF%BC%88Buffer-Pool%EF%BC%89"><span class="nav-number">9.1.0.1.</span> <span class="nav-text">缓冲池（Buffer Pool）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98"><span class="nav-number">9.1.0.2.</span> <span class="nav-text">查询缓存</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E6%B1%A0%E5%A6%82%E4%BD%95%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">9.2.</span> <span class="nav-text">缓冲池如何读取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-%E8%AE%BE%E7%BD%AE%E7%BC%93%E5%86%B2%E6%B1%A0%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">9.3.</span> <span class="nav-text">查看&#x2F;设置缓冲池的大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AABuffer-Pool%E5%AE%9E%E4%BE%8B"><span class="nav-number">9.4.</span> <span class="nav-text">多个Buffer Pool实例</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -720,7 +867,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">181.8k</span>
+    <span title="博客全站字数">188.1k</span>
   
 </div>
 

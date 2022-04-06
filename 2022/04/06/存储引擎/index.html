@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="动态规划," />
+  <meta name="keywords" content="zhy, NexT" />
 
 
 
@@ -79,18 +79,23 @@
 
 
 
-<meta name="description" content="LC:零钱兑换这个题和完全平方数解题思路真的是太像了，做挺顺手的。 动态规划： 123456789101112131415public int coinChange(int[] coins, int amount) &amp;#123;        int []dp&#x3D;new int[amount+1];        List&lt;int[]&gt; ints &#x3D; Arrays.asList(coin">
+<meta name="description" content="为了管理方便，人们把连接管理、查询缓存、语法解析、查询优化这些并不涉及真实数据存储的功能划分为MysQL server的功能，把真实存取数据的功能划分为存储引擎的功能。所以在MySQL server完成了查询优化后，只需按照生成的执行计划调用底层存储引擎提供API，获取到数据后返回给客户端就好了。MySQL中提到了存储引擎的概念。简而言之，存储引擎就是指表的类型。其实存储引擎以前叫做表处理器，后来">
 <meta property="og:type" content="article">
-<meta property="og:title" content="零钱兑换">
-<meta property="og:url" content="https://blacke1111.github.io/2021/11/20/%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/index.html">
+<meta property="og:title" content="存储引擎">
+<meta property="og:url" content="https://blacke1111.github.io/2022/04/06/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="LC:零钱兑换这个题和完全平方数解题思路真的是太像了，做挺顺手的。 动态规划： 123456789101112131415public int coinChange(int[] coins, int amount) &amp;#123;        int []dp&#x3D;new int[amount+1];        List&lt;int[]&gt; ints &#x3D; Arrays.asList(coin">
+<meta property="og:description" content="为了管理方便，人们把连接管理、查询缓存、语法解析、查询优化这些并不涉及真实数据存储的功能划分为MysQL server的功能，把真实存取数据的功能划分为存储引擎的功能。所以在MySQL server完成了查询优化后，只需按照生成的执行计划调用底层存储引擎提供API，获取到数据后返回给客户端就好了。MySQL中提到了存储引擎的概念。简而言之，存储引擎就是指表的类型。其实存储引擎以前叫做表处理器，后来">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-11-20T07:24:35.000Z">
-<meta property="article:modified_time" content="2021-11-20T07:30:12.273Z">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406210547959.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406211008266.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406213343465.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406214110843.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406213756925.png">
+<meta property="article:published_time" content="2022-04-06T12:41:54.000Z">
+<meta property="article:modified_time" content="2022-04-06T14:01:00.634Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406210547959.png">
 
 
 
@@ -120,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="https://blacke1111.github.io/2021/11/20/零钱兑换/"/>
+  <link rel="canonical" href="https://blacke1111.github.io/2022/04/06/存储引擎/"/>
 
 
 
 
 
-  <title>零钱兑换 | 蓝天の博客</title>
+  <title>存储引擎 | 蓝天の博客</title>
   
 
 
@@ -297,7 +302,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2021/11/20/%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2022/04/06/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张浩宇">
@@ -314,7 +319,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">零钱兑换</h1>
+          <h1 class="post-title" itemprop="name headline">存储引擎</h1>
         
 
         <div class="post-meta">
@@ -326,8 +331,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-11-20T15:24:35+08:00">
-                2021-11-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-06T20:41:54+08:00">
+                2022-04-06
               </time>
             
 
@@ -342,8 +347,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2021-11-20T15:30:12+08:00">
-                2021-11-20
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-06T22:01:00+08:00">
+                2022-04-06
               </time>
             
           </span>
@@ -361,8 +366,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
                   </a>
                 </span>
 
@@ -392,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  113
+                  2.5k
                 </span>
               
 
@@ -408,7 +413,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  8
                 </span>
               
             </div>
@@ -429,9 +434,118 @@
       
 
       
-        <h2 id="LC-零钱兑换"><a href="#LC-零钱兑换" class="headerlink" title="LC:零钱兑换"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/x2osfr/">LC:零钱兑换</a></h2><p>这个题和<a href="https://blacke1111.github.io/2021/11/19/%E5%AE%8C%E5%85%A8%E5%B9%B3%E6%96%B9%E6%95%B0/#more"><strong>完全平方数</strong></a>解题思路真的是太像了，做挺顺手的。</p>
-<p>动态规划：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span><span class="params">(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> []dp=<span class="keyword">new</span> <span class="keyword">int</span>[amount+<span class="number">1</span>];</span><br><span class="line">        List&lt;<span class="keyword">int</span>[]&gt; ints = Arrays.asList(coins);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= amount; i++) &#123;</span><br><span class="line">            dp[i]=Integer.MAX_VALUE-<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; coins.length; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i - coins[j]&gt;=<span class="number">0</span>) &#123;</span><br><span class="line">                    dp[i] = Math.min(dp[i - coins[j]]+<span class="number">1</span>, dp[i]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> max=Integer.MAX_VALUE-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> dp[amount]==max?-<span class="number">1</span>:dp[amount];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+        <p>为了管理方便，人们把<strong>连接管理</strong>、<strong>查询缓存</strong>、<strong>语法解析</strong>、<strong>查询优化</strong>这些并不涉及真实数据存储的功能划分为MysQL server的功能，把真实存取数据的功能划分为存储引擎的功能。所以在MySQL server完成了查询优化后，只需按照生成的执行计划调用底层存储引擎提供API，获取到数据后返回给客户端就好了。<br>MySQL中提到了存储引擎的概念。简而言之，<strong>存储引擎就是指表的类型</strong>。<strong>其实存储引擎以前叫做表处理器</strong>，后来改名为存储引擎，它的功能就是接收上层传下来的指令，然后对表中的数据进行提取或写入操作。[</p>
+<h1 id="查看存储引擎"><a href="#查看存储引擎" class="headerlink" title="查看存储引擎"></a>查看存储引擎</h1><ul>
+<li><p>查看mysql提供的存储引擎：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show engines;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406210547959.png" alt="image-20220406210547959"></p>
+</li>
+</ul>
+<p>Transactions:事务</p>
+<p>XA：分步式事务</p>
+<p>Savepoints： 支持部分事务的回滚</p>
+<h1 id="设置系统默认的存储引擎"><a href="#设置系统默认的存储引擎" class="headerlink" title="设置系统默认的存储引擎"></a>设置系统默认的存储引擎</h1><ul>
+<li><p><strong>查看默认的存储引擎：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;%storage_engine%&#x27;;</span><br><span class="line">#或</span><br><span class="line">SELECT @@default_storage_engine;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406211008266.png" alt="image-20220406211008266"></p>
+</li>
+</ul>
+<ul>
+<li><strong>修改默认的存储引擎</strong></li>
+</ul>
+<p>如果在创建表的语句中没有显式指定表的存储引擎的话，那就会默认使用<strong>InnoDB</strong> 作为表的存储引擎。<br>如果我们想改变表的默认存储引擎的话，可以这样写启动服务器的命令行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET DEFAULT_STORAGE_ENGINE=MyISAM;</span><br></pre></td></tr></table></figure>
+
+<p>或者修改my.cnf 文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default-storage-engine=MyISAM</span><br><span class="line"># 重启服务</span><br><span class="line">systemctl restart mysqld.service</span><br></pre></td></tr></table></figure>
+
+<h1 id="设置表的存储引擎"><a href="#设置表的存储引擎" class="headerlink" title="设置表的存储引擎"></a>设置表的存储引擎</h1><p>存储引擎是负责对表中的数据进行提取和写入工作的，我们可以为不同的表设置不同的存储引擎，也就是<br>说不同的表可以有不同的物理存储结构，不同的提取和写入方式。</p>
+<h2 id="创建表时指定存储引擎"><a href="#创建表时指定存储引擎" class="headerlink" title="创建表时指定存储引擎"></a>创建表时指定存储引擎</h2><p>我们之前创建表的语句都没有指定表的存储引擎，那就会使用默认的存储引擎InnoDB 。如果我们想显<br>式的指定一下表的存储引擎，那可以这么写：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE 表名(</span><br><span class="line">建表语句;</span><br><span class="line">) ENGINE = 存储引擎名称;</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改表的存储引擎"><a href="#修改表的存储引擎" class="headerlink" title="修改表的存储引擎"></a>修改表的存储引擎</h2><p>如果表已经建好了，我们也可以使用下边这个语句来修改表的存储引擎：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE 表名 ENGINE = 存储引擎名称;</span><br></pre></td></tr></table></figure>
+
+<h1 id="引擎介绍"><a href="#引擎介绍" class="headerlink" title="引擎介绍"></a>引擎介绍</h1><h2 id="InnoDB-引擎：具备外键支持功能的事务存储引擎"><a href="#InnoDB-引擎：具备外键支持功能的事务存储引擎" class="headerlink" title="InnoDB 引擎：具备外键支持功能的事务存储引擎"></a><strong>InnoDB 引擎</strong>：具备外键支持功能的事务存储引擎</h2><ul>
+<li>MySQL从3.23.34a开始就包含InnoDB存储引擎。<strong>大于等于5.5之后，默认采用InnoDB引擎</strong>。</li>
+<li>InnoDB是MySQL的<strong>默认事务型引擎</strong>，它被设计用来处理大量的短期(short-lived)事务。可以确保事务<br>的完整提交(Commit)和回滚(Rollback)。</li>
+<li>除了增加和查询外，还需要更新、删除操作，那么，应优先选择InnoDB存储引擎。</li>
+<li><strong>除非有非常特别的原因需要使用其他的存储引擎，否则应该优先考虑InnoDB引擎。</strong><ul>
+<li>数据文件结构：（在《第02章_MySQL数据目录》章节已讲）</li>
+<li>表名.frm 存储表结构（MySQL8.0时，合并在表名.ibd中）表名.ibd 存储数据和索引</li>
+</ul>
+</li>
+<li>InnoDB是为处理巨大数据量的<strong>最大性能设计</strong>。<ul>
+<li>在以前的版本中，字典数据以元数据文件、非事务表等来存储。现在这些元数据文件被删除了。比如： .frm ， .par ， .trn ， .isl ， .db.opt 等都在MySQL8.0中不存在了。</li>
+</ul>
+</li>
+<li>对比MyISAM的存储引擎， <strong>InnoDB写的处理效率差一些</strong>，并且会占用更多的磁盘空间以保存数据和索引。</li>
+<li>MyISAM只缓存索引，不缓存真实数据；InnoDB不仅缓存索引还要缓存真实数据， <strong>对内存要求较高</strong>，而且内存大小对性能有决定性的影响。</li>
+</ul>
+<h2 id="MyISAM-引擎：主要的非事务处理存储引擎"><a href="#MyISAM-引擎：主要的非事务处理存储引擎" class="headerlink" title="MyISAM 引擎：主要的非事务处理存储引擎"></a><strong>MyISAM 引擎</strong>：主要的非事务处理存储引擎</h2><ul>
+<li>MyISAM提供了大量的特性，包括全文索引、压缩、空间函数(GIS)等，但MyISAM 不支持事务、行级锁、外键，<strong>有一个毫无疑问的缺陷就是崩溃后无法安全恢复。</strong></li>
+<li><strong>5.5之前默认的存储引擎</strong></li>
+<li><strong>优势是访问的速度快</strong>，对事务完整性没有要求或者以SELECT、INSERT为主的应用</li>
+<li>针对数据统计有额外的常数存储。故而 count(*) 的查询效率很高</li>
+<li>数据文件结构：（在《第02章_MySQL数据目录》章节已讲）<ul>
+<li>表名.frm 存储表结构</li>
+<li>表名.MYD 存储数据 (MYData)</li>
+<li>表名.MYI 存储索引 (MYIndex)</li>
+</ul>
+</li>
+<li>应用场景：只读应用或者以读为主的业务</li>
+</ul>
+<h2 id="MyISAM和InnoDB"><a href="#MyISAM和InnoDB" class="headerlink" title="MyISAM和InnoDB"></a>MyISAM和InnoDB</h2><p>很多人对 InnoDB 和 MyISAM 的取舍存在疑问，到底选择哪个比较好呢？<br>MySQL5.5之前的默认存储引擎是MyISAM，5.5之后改为了InnoDB。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406213343465.png" alt="image-20220406213343465"></p>
+<h2 id="Archive-引擎：用于数据存档"><a href="#Archive-引擎：用于数据存档" class="headerlink" title="Archive 引擎：用于数据存档"></a>Archive 引擎：用于数据存档</h2><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406214110843.png" alt="image-20220406214110843"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406213756925.png" alt="image-20220406213756925"></p>
+<h2 id="Blackhole-引擎：丢弃写操作，读操作会返回空内容"><a href="#Blackhole-引擎：丢弃写操作，读操作会返回空内容" class="headerlink" title="Blackhole 引擎：丢弃写操作，读操作会返回空内容"></a>Blackhole 引擎：丢弃写操作，读操作会返回空内容</h2><ul>
+<li>Blackhole引擎没有实现任何存储机制，它会丢弃所有插入的数据，不做任何保存。</li>
+<li>但服务器会记录Blackhole表的日志，所以可以用于复制数据到备库，或者简单地记录到日志。但这种应用方式会碰到很多问题，因此并不推荐。</li>
+</ul>
+<h2 id="CSV-引擎：存储数据时，以逗号分隔各个数据项"><a href="#CSV-引擎：存储数据时，以逗号分隔各个数据项" class="headerlink" title="CSV 引擎：存储数据时，以逗号分隔各个数据项"></a>CSV 引擎：存储数据时，以逗号分隔各个数据项</h2><ul>
+<li>CSV引擎可以将普通的CSV文件作为MySQL的表来处理，但不支持索引。</li>
+<li>CSV引擎可以作为一种数据交换的机制，非常有用。</li>
+<li>CSV存储的数据直接可以在操作系统(自己电脑)里，用文本编辑器，或者excel读取。</li>
+<li>对于数据的快速导入、导出是有明显优势的。</li>
+</ul>
+<h2 id="Memory-引擎：置于内存中数据的表"><a href="#Memory-引擎：置于内存中数据的表" class="headerlink" title="Memory 引擎：置于内存中数据的表"></a>Memory 引擎：置于内存中数据的表</h2><p>概述：<br>Memory采用的逻辑介质是内存， <strong>响应速度很快</strong>，但是当mysqld守护进程崩溃的时候数据会丢失。另<br>外，要求存储的数据是数据长度不变的格式，比如，Blob和Text类型的数据不可用(长度不固定的)。</p>
+<p>主要特征：</p>
+<ul>
+<li><p>Memory同时支持哈希（HASH）索引和B+树索引。</p>
+<ul>
+<li>哈希索引相等的比较快，但是对于范围的比较慢很多。</li>
+<li><strong>默认使用哈希（HASH）索引</strong>，其速度要比使用B型树（BTREE)索引快。。</li>
+<li>如果希望使用B树索引，可以在创建索引时选择使用。</li>
+</ul>
+</li>
+<li><p>Memory表至少比MyISAM表要快一个数量级。</p>
+</li>
+<li><p>MEMORY 表的<strong>大小是受到限制的</strong>。表的大小主要取决于两个参数，分别是max_rows 和max_heap_table_size 。其中，max_rows可以在创建表时指定；max_heap_table_size的大小默认为16MB，可以按需要进行扩大。</p>
+</li>
+<li><p>数据文件与索引文件分开存储。</p>
+</li>
+<li><p>缺点：其数据易丢失，生命周期短。基于这个缺陷，选择MEMORY存储引擎时需要特别小心。</p>
+</li>
+</ul>
+<p><strong>使用Memory存储引擎的场景：</strong></p>
+<ol>
+<li><p>目标数据比较小，而且非常频繁的进行访问，在内存中存放数据，如果太大的数据会造成内存溢出。可以通过参数max_heap_table_size 控制Memory表的大小，限制Memory表的最大的大小。</p>
+</li>
+<li><p>如果数据是临时的，而且必须立即可用得到，那么就可以放在内存中。</p>
+</li>
+<li><p>存储在Memory表中的数据如果突然间丢失的话也没有太大的关系。</p>
+</li>
+</ol>
+<h2 id="Federated-引擎：访问远程表"><a href="#Federated-引擎：访问远程表" class="headerlink" title="Federated 引擎：访问远程表"></a>Federated 引擎：访问远程表</h2><ul>
+<li>Federated引擎是访问其他MySQL服务器的一个代理，尽管该引擎看起来提供了一种很好的<strong>跨服务器的灵活性</strong>，但也经常带来问题，因此默认是禁用的。</li>
+</ul>
+<h2 id="Merge引擎：管理多个MyISAM表构成的表集合"><a href="#Merge引擎：管理多个MyISAM表构成的表集合" class="headerlink" title="Merge引擎：管理多个MyISAM表构成的表集合"></a>Merge引擎：管理多个MyISAM表构成的表集合</h2><h2 id="NDB引擎：MySQL集群专用存储引擎"><a href="#NDB引擎：MySQL集群专用存储引擎" class="headerlink" title="NDB引擎：MySQL集群专用存储引擎"></a>NDB引擎：MySQL集群专用存储引擎</h2><p>也叫做 NDB Cluster 存储引擎，主要用于 <strong>MySQL Cluster</strong> 分布式集群环境，类似于 Oracle 的 <strong>RAC 集</strong><br><strong>群。</strong></p>
+<h1 id="InnoDB表的优势"><a href="#InnoDB表的优势" class="headerlink" title="InnoDB表的优势"></a>InnoDB表的优势</h1><p>InnoDB存储引擎在实际应用中拥有诸多优势，比如操作便利、提高了数据库的性能、维护成本低等。如果由于硬件或软件的原因导致服务器崩溃，那么在重启服务器之后不需要进行额外的操作。InnoDB崩溃恢复功能自动将之前提交的内容定型，然后撤销没有提交的进程，重启之后继续从崩溃点开始执行。InnoDB存储引擎在主内存中维护缓冲池，高频率使用的数据将在内存中直接被处理。这种缓存方式应用于多种信息，加速了处理进程。</p>
+<p>在专用服务器上，物理内存中高达80%的部分被应用于缓冲池。如果需要将数据插入不同的表中，可以设置外键加强数据的完整性。更新或者删除数据，关联数据将会被自动更新或删除。如果试图将数据插入从表，但在主表中没有对应的数据，插入的数据将被自动移除。如果磁盘或内存中的数据出现崩溃，在使用脏数据之前，校验和机制会发出警告。当每个表的主键都设置合理时，与这些列有关的操作会被<br>自动优化。插入、更新和删除操作通过做改变缓冲自动机制进行优化。<strong>InnoDB不仅支持当前读写，也会缓冲改变的数据到数据流磁盘。</strong></p>
+<p>InnoDB的性能优势不只存在于长时运行查询的大型表。在同一列多次被查询时，自适应哈希索引会提高查询的速度。使用InnoDB可以压缩表和相关的索引，可以在<strong>不影响性能和可用性的情况下创建或删除索引</strong>。对于大型文本和BLOB数据，使用动态行形式，这种存储布局更高效。通过查询INFORMATION_SCHEMA库中的表可以监控存储引擎的内部工作。在同一个语句中，InnoDB表可以与其他存储引擎表混用。即使有些操作系统限制文件大小为2GB，InnoDB仍然可以处理。<strong>当处理大数据量时，InnoDB兼顾CPU，以达到最大性能</strong>。</p>
 
       
     </div>
@@ -456,12 +570,6 @@
 	</div>
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
-          
-        </div>
-      
 
       
       
@@ -471,8 +579,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/11/20/%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97/" rel="next" title="最长上升子序列">
-                <i class="fa fa-chevron-left"></i> 最长上升子序列
+              <a href="/2022/04/05/%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/" rel="next" title="逻辑架构">
+                <i class="fa fa-chevron-left"></i> 逻辑架构
               </a>
             
           </div>
@@ -480,10 +588,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/11/20/pageMonitor/" rel="prev" title="Monitor和join原理和wait/notifty原理和park等">
-                Monitor和join原理和wait/notifty原理和park等 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -631,7 +735,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LC-%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2"><span class="nav-number">1.</span> <span class="nav-text">LC:零钱兑换</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">1.</span> <span class="nav-text">查看存储引擎</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%B3%BB%E7%BB%9F%E9%BB%98%E8%AE%A4%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">2.</span> <span class="nav-text">设置系统默认的存储引擎</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">3.</span> <span class="nav-text">设置表的存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8%E6%97%B6%E6%8C%87%E5%AE%9A%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">3.1.</span> <span class="nav-text">创建表时指定存储引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%A1%A8%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">3.2.</span> <span class="nav-text">修改表的存储引擎</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E6%93%8E%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.</span> <span class="nav-text">引擎介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB-%E5%BC%95%E6%93%8E%EF%BC%9A%E5%85%B7%E5%A4%87%E5%A4%96%E9%94%AE%E6%94%AF%E6%8C%81%E5%8A%9F%E8%83%BD%E7%9A%84%E4%BA%8B%E5%8A%A1%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">4.1.</span> <span class="nav-text">InnoDB 引擎：具备外键支持功能的事务存储引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyISAM-%E5%BC%95%E6%93%8E%EF%BC%9A%E4%B8%BB%E8%A6%81%E7%9A%84%E9%9D%9E%E4%BA%8B%E5%8A%A1%E5%A4%84%E7%90%86%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">4.2.</span> <span class="nav-text">MyISAM 引擎：主要的非事务处理存储引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyISAM%E5%92%8CInnoDB"><span class="nav-number">4.3.</span> <span class="nav-text">MyISAM和InnoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Archive-%E5%BC%95%E6%93%8E%EF%BC%9A%E7%94%A8%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%AD%98%E6%A1%A3"><span class="nav-number">4.4.</span> <span class="nav-text">Archive 引擎：用于数据存档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blackhole-%E5%BC%95%E6%93%8E%EF%BC%9A%E4%B8%A2%E5%BC%83%E5%86%99%E6%93%8D%E4%BD%9C%EF%BC%8C%E8%AF%BB%E6%93%8D%E4%BD%9C%E4%BC%9A%E8%BF%94%E5%9B%9E%E7%A9%BA%E5%86%85%E5%AE%B9"><span class="nav-number">4.5.</span> <span class="nav-text">Blackhole 引擎：丢弃写操作，读操作会返回空内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV-%E5%BC%95%E6%93%8E%EF%BC%9A%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E6%97%B6%EF%BC%8C%E4%BB%A5%E9%80%97%E5%8F%B7%E5%88%86%E9%9A%94%E5%90%84%E4%B8%AA%E6%95%B0%E6%8D%AE%E9%A1%B9"><span class="nav-number">4.6.</span> <span class="nav-text">CSV 引擎：存储数据时，以逗号分隔各个数据项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-%E5%BC%95%E6%93%8E%EF%BC%9A%E7%BD%AE%E4%BA%8E%E5%86%85%E5%AD%98%E4%B8%AD%E6%95%B0%E6%8D%AE%E7%9A%84%E8%A1%A8"><span class="nav-number">4.7.</span> <span class="nav-text">Memory 引擎：置于内存中数据的表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Federated-%E5%BC%95%E6%93%8E%EF%BC%9A%E8%AE%BF%E9%97%AE%E8%BF%9C%E7%A8%8B%E8%A1%A8"><span class="nav-number">4.8.</span> <span class="nav-text">Federated 引擎：访问远程表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Merge%E5%BC%95%E6%93%8E%EF%BC%9A%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AAMyISAM%E8%A1%A8%E6%9E%84%E6%88%90%E7%9A%84%E8%A1%A8%E9%9B%86%E5%90%88"><span class="nav-number">4.9.</span> <span class="nav-text">Merge引擎：管理多个MyISAM表构成的表集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NDB%E5%BC%95%E6%93%8E%EF%BC%9AMySQL%E9%9B%86%E7%BE%A4%E4%B8%93%E7%94%A8%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-number">4.10.</span> <span class="nav-text">NDB引擎：MySQL集群专用存储引擎</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB%E8%A1%A8%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">5.</span> <span class="nav-text">InnoDB表的优势</span></a></li></ol></div>
             
 
           </div>
