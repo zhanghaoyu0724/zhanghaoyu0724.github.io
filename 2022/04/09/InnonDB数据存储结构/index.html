@@ -100,8 +100,26 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409220856126.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409220914527.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409222010929.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410185350441.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410185822410.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410185857561.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190242569.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190249768.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190126969.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190141585.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190459564.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190521355.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190537280.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190606297.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190903864.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410191019160.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410201234701.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410203125854.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410203221545.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410203723353.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410212909464.png">
 <meta property="article:published_time" content="2022-04-09T12:40:19.000Z">
-<meta property="article:modified_time" content="2022-04-09T14:25:16.735Z">
+<meta property="article:modified_time" content="2022-04-10T13:35:36.464Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409204413757.png">
@@ -356,8 +374,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-04-09T22:25:16+08:00">
-                2022-04-09
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-10T21:35:36+08:00">
+                2022-04-10
               </time>
             
           </span>
@@ -406,7 +424,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.9k
+                  9.6k
                 </span>
               
 
@@ -422,7 +440,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  13
+                  34
                 </span>
               
             </div>
@@ -494,8 +512,7 @@
 <p>是的，记录可以比大小，对于一条完整的记录来说，比较记录的大小就是比较主键的大小。比方说我们插入的4行记录的主键值分别是：1、2、3、4，这也就意味着这4条记录是从小到大依次递增。</p>
 <p>InnoDB规定的最小记录与最大记录这两条记录的构造十分简单，都是由5字节大小的记录头信息和8字节大小的一个固定的部分组成的，如图所示：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409214847030.png" alt="image-20220409214847030"></p>
-<h2 id="第3部分："><a href="#第3部分：" class="headerlink" title="第3部分："></a>第3部分：</h2><p><strong>Page Directory(页目录):</strong></p>
-<p><strong>为什么需要页目录？</strong><br>在页中，记录是以<strong>单向链表</strong>的形式进行存储的。单向链表的特点就是插入、删除非常方便，但是检索效率不高，最差的情况下需要遍历链表上的所有节点才能完成检索。因此在页结构中专门设计了页目录这个模块，专门给记录做一个目录，通过二分查找法的方式进行检索，提升效率。</p>
+<h2 id="第3部分："><a href="#第3部分：" class="headerlink" title="第3部分："></a>第3部分：</h2><h4 id="Page-Directory-页目录"><a href="#Page-Directory-页目录" class="headerlink" title="Page Directory(页目录):"></a><strong>Page Directory(页目录):</strong></h4><p><strong>为什么需要页目录？</strong><br>在页中，记录是以<strong>单向链表</strong>的形式进行存储的。单向链表的特点就是插入、删除非常方便，但是检索效率不高，最差的情况下需要遍历链表上的所有节点才能完成检索。因此在页结构中专门设计了页目录这个模块，专门给记录做一个目录，通过二分查找法的方式进行检索，提升效率。</p>
 <p>需求：根据主键值查找页中的某条记录，如何实现快速查找呢？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM page_demo WHERE c1 = 3;</span><br></pre></td></tr></table></figure>
 
@@ -536,11 +553,143 @@
 </ul>
 <p><strong>页目录下如何夸苏查找记录：</strong></p>
 <p>利用二分法查找查找目录页的槽位。</p>
-<p><strong>Page Header(页面头部):</strong></p>
-<p>为了能得到一个数据页中存储的记录的状态信息，比如本页中已经存储了多少条记录，第一条记录的地址是什么，页目录中存储了多少个槽等等，特意在页中定义了一个叫Page Header的部分，这个部分占用固定的56个字节，专门存储各种状态信息。</p>
+<h4 id="Page-Header-页面头部"><a href="#Page-Header-页面头部" class="headerlink" title="Page Header(页面头部):"></a><strong>Page Header(页面头部):</strong></h4><p>为了能得到一个数据页中存储的记录的状态信息，比如本页中已经存储了多少条记录，第一条记录的地址是什么，页目录中存储了多少个槽等等，特意在页中定义了一个叫Page Header的部分，这个部分占用固定的56个字节，专门存储各种状态信息。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409222010929.png" alt="image-20220409222010929"></p>
 <p>为了能得到一个数据页中存储的记录的状态信息，比如本页中已经存储了多少条记录，第一条记录的地址是什么，页目录中存储了多少个槽等等，特意在页中定义了一个叫Page Header的部分，这个部分占用固定的56个字节，专门存储各种状态信息。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+<h1 id="InnoDB行格式（或记录格式）"><a href="#InnoDB行格式（或记录格式）" class="headerlink" title="InnoDB行格式（或记录格式）"></a>InnoDB行格式（或记录格式）</h1><p>我们平时的数据以行为单位来向表中插入数据，这些记录在磁盘上的存放方式也被称为行格式或者记录格式。InnoDB存储引擎设计了4种不同类型的行格式，分别是Compact 、Redundant 、Dynamic 和Compressed 行格式。查看MySQL8的默认行格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT @@innodb_default_row_format;</span><br><span class="line">+-----------------------------+</span><br><span class="line">| @@innodb_default_row_format |</span><br><span class="line">+-----------------------------+</span><br><span class="line">| dynamic                     |</span><br><span class="line">+-----------------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>也可以使用如下语法查看具体表使用的行格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLE STATUS like &#x27;表名&#x27;\G</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="compact行格式："><a href="#compact行格式：" class="headerlink" title="compact行格式："></a>compact行格式：</h2><p>在MySQL 5.1版本中，默认设置为Compact行格式。一条完整的记录其实可以被分为记录的额外信息和记录的真实数据两大部分。<img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410185350441.png" alt="image-20220410185350441"></p>
+<p>边长字段长度列表：</p>
+<p>MySQL支持一些变长的数据类型，比如VARCHAR(M)、VARBINARY(M)、TEXT类型，BLOB类型，这些数据类型修饰列称为<strong>变长字段</strong>，变长字段中存储多少字节的数据不是固定的，所以我们在存储真实数据的时候需要顺便把这些数据占用的字节数也存起来<strong>。在Compact行格式中，把所有变长字段的真实数据占用的字节长度都存放在记录的开头部位，从而形成一个变长字段长度列表。</strong></p>
+<p>注意：这里面存储的变长长度和字段顺序是反过来的。比如两个varchar字段在表结构的顺序是a(10)，b(15)。那么在变长字段长度列表中存储的长度顺序就是15，10，是反过来的。</p>
+<p>以record_test_table表中的第一条记录举例：因为record_test_table表的col1、col2、col4列都是VARCHAR(8)类型的，所以这三个列的值的长度都需要保存在记录开头处，注意record_test_table表中的各个列都使用的是ascii字符集（每个字符只需要1个字节来进行编码）。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410185822410.png" alt="image-20220410185822410"></p>
+<p>又因为这些长度值需要按照列的逆序存放，所以最后变长字段长度列表的字节串用十六进制表示的效果就是（各个字节之间实际上没有空格，用空格隔开只是方便理解）：</p>
+<p>06 04 08</p>
+<p>把这个字节串组成的变长字段长度列表填入上边的示意图中的效果就是：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410185857561.png" alt="image-20220410185857561"></p>
+<h3 id="NULL值列表："><a href="#NULL值列表：" class="headerlink" title="NULL值列表："></a>NULL值列表：</h3><p>Compact行格式会把可以为NULL的列统一管理起来，存在一个标记为NULL值列表中。如果表中没有允许存储 NULL 的列，则 NULL值列表也不存在了。<br>为什么定义NULL值列表？<br>之所以要存储NULL是因为数据都是需要对齐的，如果没有标注出来NULL值的位置，就有可能在查询数据的时候出现混乱。如果使用一个特定的符号放到相应的数据位表示空置的话，虽然能达到效果，但是这样很浪费空间，所以直接就在行数据得头部开辟出一块空间专门用来记录该行数据哪些是非空数据，哪些是空数据，格式如下：</p>
+<ol>
+<li>二进制位的值为1时，代表该列的值为NULL。</li>
+<li>二进制位的值为0时，代表该列的值不为NULL。</li>
+</ol>
+<p>例如：字段 a、b、c，其中a是主键，在某一行中存储的数依次是 a=1、b=null、c=2。那么Compact行格式中的NULL值列表中存储：01。第一个0表示c不为null，第二个1表示b是null。这里之所以没有a是因为数据库会自动跳过主键，因为主键肯定是非NULL且唯一的，在NULL值列表的数据中就会自动跳过主键。</p>
+<p>record_test_table的两条记录的NULL值列表就如下：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190242569.png" alt="image-20220410190242569"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190249768.png" alt="image-20220410190249768"></p>
+<p>第一条记录：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190126969.png" alt="image-20220410190126969"></p>
+<p>第二条记录：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190141585.png" alt="image-20220410190141585"></p>
+<h3 id="记录头信息："><a href="#记录头信息：" class="headerlink" title="记录头信息："></a>记录头信息：</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE page_demo(</span><br><span class="line">    -&gt;     c1 INT,</span><br><span class="line">    -&gt;     c2 INT,</span><br><span class="line">    -&gt;     c3 VARCHAR(10000),</span><br><span class="line">    -&gt;     PRIMARY KEY (c1)</span><br><span class="line">    -&gt; ) CHARSET=ascii ROW_FORMAT=Compact;</span><br><span class="line">Query OK, 0 rows affected (0.03 sec)</span><br></pre></td></tr></table></figure>
+
+<p>这个表中记录的行格式示意图：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190459564.png" alt="image-20220410190459564"></p>
+<p>这个表中记录的行格式示意图：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190521355.png" alt="image-20220410190521355"></p>
+<p>简化后的行格式示意图：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190537280.png" alt="image-20220410190537280"></p>
+<p>插入数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO page_demo </span><br><span class="line">VALUES</span><br><span class="line">(1, 100, &#x27;song&#x27;), </span><br><span class="line">(2, 200, &#x27;tong&#x27;), </span><br><span class="line">(3, 300, &#x27;zhan&#x27;), </span><br><span class="line">(4, 400, &#x27;lisi&#x27;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190606297.png" alt="image-20220410190606297"></p>
+<h4 id="delete-mask"><a href="#delete-mask" class="headerlink" title="delete_mask:"></a>delete_mask:</h4><p>这个属性标记着当前记录是否被删除，占用1个二进制位。<br>值为0：代表记录并没有被删除<br>值为1：代表记录被删除掉了</p>
+<p><strong>被删除的记录为什么还在页中存储呢？</strong><br>你以为它删除了，可它还在真实的磁盘上。这些被删除的记录之所以不立即从磁盘上移除，是因为移除它们之后其他的记录在磁盘上需要重新排列，导致性能消耗。所以只是打一个删除标记而已，所有被删除掉的记录都会组成一个所谓的垃圾链表，在这个链表中的记录占用的空间称之为可重用空间，之后如果有新记录插入到表中的话，可能把这些被删除的记录占用的存储空间覆盖掉。</p>
+<h4 id="min-rec-mask"><a href="#min-rec-mask" class="headerlink" title="min_rec_mask:"></a>min_rec_mask:</h4><p>B+树的每层非叶子节点中的最小记录都会添加该标记，min_rec_mask值为1。<br>我们自己插入的四条记录的min_rec_mask值都是0，意味着它们都不是B+树的非叶子节点中的最小记录。</p>
+<h4 id="record-type"><a href="#record-type" class="headerlink" title="record_type:"></a>record_type:</h4><p>这个属性表示当前记录的类型，一共有4种类型的记录：<br>   0：表示普通记录<br>   1：表示B+树非叶节点记录<br>   2：表示最小记录<br>   3：表示最大记录</p>
+<h4 id="heap-no"><a href="#heap-no" class="headerlink" title="heap_no:"></a>heap_no:</h4><p>这个属性表示当前记录在本页中的位置。</p>
+<p>从上图中可以看出来，我们插入的4条记录在本页中的位置分别是：2、3、4、5。</p>
+<p><strong>怎么不见heap_no值为0和1的记录呢？</strong><br>MySQL会自动给每个页里加了两个记录，由于这两个记录并不是我们自己插入的，所以有时候也称为伪记录或者虚拟记录。这两个伪记录一个代表最小记录，一个代表最大记录。最小记录和最大记录的heap_no值分别是0和1，也就是说它们的位置最靠前。</p>
+<h4 id="n-owned"><a href="#n-owned" class="headerlink" title="n_owned:"></a>n_owned:</h4><p>页目录中每个组中最后一条记录的头信息中会存储该组一共有多少条记录，作为 n_owned 字段。</p>
+<h4 id="next-record"><a href="#next-record" class="headerlink" title="next_record:"></a>next_record:</h4><p>记录头信息里该属性非常重要，它表示从当前记录的真实数据到下一条记录的真实数据的地址偏移量。<br>比如：第一条记录的next_record值为32，意味着从第一条记录的真实数据的地址处向后找32个字节便是下一条记录的真实数据。<br>注意，下一条记录指得并不是按照我们插入顺序的下一条记录，而是按照主键值由小到大的顺序的下一条记录。而且规定Infimum记录（也就是最小记录）的下一条记录就是本页中主键值最小的用户记录，而本页中主键值最大的用户记录的下一条记录就是 Supremum记录（也就是最大记录）。下图用箭头代替偏移量表示next_record。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410190903864.png" alt="image-20220410190903864"></p>
+<h3 id="记录真实信息："><a href="#记录真实信息：" class="headerlink" title="记录真实信息："></a>记录真实信息：</h3><p>记录的真实数据除了我们自己定义的列的数据以外，还会有三个隐藏列：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410191019160.png" alt="image-20220410191019160"></p>
+<p>实际上这几个列的真正名称其实是：DB_ROW_ID、DB_TRX_ID、DB_ROLL_PTR。<br>一个表没有手动定义主键，则会选取一个Unique键作为主键，如果连Unique键都没有定义的话，则会为表默认添加一个名为row_id的隐藏列作为主键。所以row_id是在没有自定义主键以及Unique键的情况下才会存在的。<br>事务ID和回滚指针在后面的《MySQL事务日志》中讲解。</p>
+<p>举例：分析Compact行记录的内部结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE mytest(</span><br><span class="line">col1 VARCHAR(10),</span><br><span class="line">col2 VARCHAR(10),</span><br><span class="line">col3 CHAR(10),</span><br><span class="line">col4 VARCHAR(10)</span><br><span class="line">)ENGINE=INNODB CHARSET=LATIN1 ROW_FORMAT=COMPACT;</span><br><span class="line"></span><br><span class="line">INSERT INTO mytest</span><br><span class="line">VALUES(&#x27;a&#x27;,&#x27;bb&#x27;,&#x27;bb&#x27;,&#x27;ccc&#x27;);</span><br><span class="line"></span><br><span class="line">INSERT INTO mytest</span><br><span class="line">VALUES(&#x27;d&#x27;,&#x27;ee&#x27;,&#x27;ee&#x27;,&#x27;fff&#x27;);</span><br><span class="line"></span><br><span class="line">INSERT INTO mytest</span><br><span class="line">VALUES(&#x27;d&#x27;,NULL,NULL,&#x27;fff&#x27;); </span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410201234701.png" alt="image-20220410201234701"></p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">03 </span><span class="number">02</span> <span class="number">01</span>                     /*变长字段长度列表，逆序*/</span><br><span class="line"><span class="symbol">00 </span>                             /*NULL标志位，第一行没有NULL值*/</span><br><span class="line"><span class="symbol">00 </span><span class="number">00</span> <span class="number">10</span> <span class="number">00</span> <span class="number">2</span>c            /*Record Header，固定<span class="number">5</span>字节长度*/</span><br><span class="line"><span class="symbol">00 </span><span class="number">00</span> <span class="number">00</span> <span class="number">2</span>b <span class="number">68</span> <span class="number">00</span>       /*RowID InnoDB自动创建，<span class="number">6</span>字节*/</span><br><span class="line"><span class="symbol">00 </span><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">06</span> <span class="number">05</span>       /*TransactionID*/</span><br><span class="line"><span class="symbol">80 </span><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">32</span> <span class="number">01</span> <span class="number">10</span>   /*Roll Pointer*/</span><br><span class="line"><span class="symbol">61 </span>                              /*列<span class="number">1</span>数据<span class="comment">&#x27;a&#x27;*/</span></span><br><span class="line"><span class="symbol">62 </span><span class="number">62</span>                          /*列<span class="number">2</span>数据<span class="comment">&#x27;bb&#x27;*/</span></span><br><span class="line"><span class="symbol">62 </span><span class="number">62</span> <span class="number">20</span> <span class="number">20</span> <span class="number">20</span> <span class="number">20</span> <span class="number">20</span> <span class="number">20</span> <span class="number">20</span> <span class="number">20</span> /*列<span class="number">3</span>数据<span class="comment">&#x27;bb&#x27;*/</span></span><br><span class="line"></span><br><span class="line"><span class="symbol">63 </span><span class="number">63</span> <span class="number">63</span>                     /*列<span class="number">4</span>数据<span class="comment">&#x27;ccc&#x27;*/</span></span><br></pre></td></tr></table></figure>
+
+<p>注意1：InnoDB每行有隐藏列TransactionID和Roll Pointer。:<br>注意2：固定长度CHAR字段在未能完全占用其长度空间时，会用0x20来进行填充。 0x20表示在 ASCII吗中就是空格。</p>
+<p>接着再来分析下Record Header的最后两个字节，这两个字节代表next_recorder，0x2c代表下一个记录的偏移量，即当前记录的位置加上偏移量0x2c就是下条记录的起始位置。</p>
+<p>第二行将不做整理，除了RowID不同外，它和第一行大同小异，现在来分析有NULL值的第三行：</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">03 </span><span class="number">01</span>                               /*变长字段长度列表，逆序*/</span><br><span class="line"><span class="symbol">06 </span>                                  /*NULL标志位，第三行有NULL值*/</span><br><span class="line"><span class="symbol">00 </span><span class="number">00</span> <span class="number">20</span> ff <span class="number">98</span>                  /*Record Header*/</span><br><span class="line"><span class="symbol">00 </span><span class="number">00</span> <span class="number">00</span> <span class="number">2</span>b <span class="number">68</span> <span class="number">02</span>           /*RowID*/</span><br><span class="line"><span class="symbol">00 </span><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">06</span> <span class="number">07</span>           /*TransactionID*/</span><br><span class="line"><span class="symbol">80 </span><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">32</span> <span class="number">01</span> <span class="number">10</span>       /*Roll Pointer*/</span><br><span class="line"><span class="symbol">64 </span>                                  /*列<span class="number">1</span>数据<span class="comment">&#x27;d&#x27;*/</span></span><br><span class="line"><span class="symbol">66 </span><span class="number">66</span> <span class="number">66</span>                         /*列<span class="number">4</span>数据<span class="comment">&#x27;fff&#x27;*/</span></span><br></pre></td></tr></table></figure>
+
+<p>第三行有NULL值，因此NULL标志位不再是00而是06，转换成二进制为00000110，为1的值代表第2列和第3列的数据为NULL。在其后存储列数据的部分，用户会发现没有存储NULL列，而只存储了第1列和第4列非NULL的值。</p>
+<p>因此这个例子很好地说明了：不管是CHAR类型还是VARCHAR类型，在compact格式下NULL值都不占用任何存储空间。</p>
+<h2 id="Dynamic和Compressed行格式"><a href="#Dynamic和Compressed行格式" class="headerlink" title="Dynamic和Compressed行格式"></a>Dynamic和Compressed行格式</h2><h3 id="行益出"><a href="#行益出" class="headerlink" title="行益出"></a>行益出</h3><p>InnoDB存储引擎可以将一条记录中的某些数据存储在真正的数据页面之外。</p>
+<p>很多DBA喜欢MySQL数据库提供的VARCHAR(M)类型，认为可以存放65535字节。这是真的吗？如果我们使用 ascii字符集的话，一个字符就代表一个字节，我们看看VARCHAR(65535)是否可用。<br>CREATE  TABLE  varchar_size_demo(<br> c  VARCHAR(65535)<br> )  CHARSET=ascii  ROW_FORMAT=Compact;<br>结果如下：<br>ERROR 1118 (42000): Row size too large. The maximum row size for the used table type, not counting BLOBs, is 65535. This includes storage overhead, check the manual. You have  to  change  some  columns  to  TEXT or  BLOBs</p>
+<p>报错信息表达的意思是：MySQL对一条记录占用的最大存储空间是有限制的，除BLOB或者TEXT类型的列之外， 其他所有的列（不包括隐藏列和记录头信息）占用的字节长度加起来不能超过65535个字节。</p>
+<p>如果该VARCHAR类型的列没有NOT NULL属性，那最多只能存储65532个字节的数据，因为变长字段的长度占用 2个字节，NULL值标识需要占用1个字节。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE  TABLE  varchar_size_demo(</span><br><span class="line">    c  VARCHAR(65532)</span><br><span class="line">)  CHARSET=ascii  ROW_FORMAT=Compact;</span><br></pre></td></tr></table></figure>
+
+<p>#如果有not null属性，那么就不需要NULL值标识，也就可以多存储一个字节，即65533个字节</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE  TABLE  varchar_size_demo( </span><br><span class="line">  c  VARCHAR(65533)  not  null</span><br><span class="line">)  CHARSET=ascii  ROW_FORMAT=Compact; </span><br></pre></td></tr></table></figure>
+
+
+
+<p>通过上面的案例，我们可以知道一个页的大小一般是16KB，也就是16384字节，而一个VARCHAR(M)类型的列就最多可以存储65533个字节，这样就可能出现一个页存放不了一条记录，这种现象称为<strong>行溢出</strong>。 </p>
+<p>在Compact和Reduntant行格式中，对于占用存储空间非常大的列，在记录的真实数据处只会存储该列的一部分数据，把剩余的数据分散存储在几个其他的页中进行<strong>分页存储</strong>，然后记录的真实数据处用20个字节存储指向这些页的地址（当然这20个字节中还包括这些分散在其他页面中的数据的占用的字节数），从而可以找到剩余数据所在的页。<br>这称为页的扩展，举例如下：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410203125854.png" alt="image-20220410203125854"></p>
+<h3 id="Dynamic、Compressed行格式"><a href="#Dynamic、Compressed行格式" class="headerlink" title="Dynamic、Compressed行格式"></a>Dynamic、Compressed行格式</h3><p>在MySQL 8.0中，默认行格式就是Dynamic。 Dynamic、Compressed行格式和Compact行格式挺像，只不过在处理行溢出数据时有分歧：</p>
+<ul>
+<li>Compressed和Dynamic两种记录格式对于存放在BLOB中的数据采用了完全的行溢出的方式。如图，在数据页中只存放20个字节的指针（溢出页的地址），实际的数据都存放在Off Page（溢出页）中。</li>
+<li>Compact和Redundant两种格式会在记录的真实数据处存储一部分数据（存放768个前缀字节）。</li>
+</ul>
+<p>Compressed行记录格式的另一个功能就是，存储在其中的行数据会以zlib的算法进行压缩，因此对于BLOB、TEXT、VARCHAR这类大长度类型的数据能够进行非常有效的存储。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410203221545.png" alt="image-20220410203221545"></p>
+<h2 id="Redundant行格式"><a href="#Redundant行格式" class="headerlink" title="Redundant行格式"></a>Redundant行格式</h2><p>注意Compact行格式的开头是变长字段长度列表，而Redundant行格式的开头是字段长度偏移列表，与变长字段长度列表有两处不同：</p>
+<ul>
+<li>少了“变长”两个字：Redundant行格式会把该条记录中所有列（包括隐藏列）的长度信息都按照逆序存储到字段长度偏移列表。</li>
+<li>多了“偏移”两个字：这意味着计算列值长度的方式不像Compact行格式那么直观，它是采用两个相邻数值的差值来计算各个列值的长度。</li>
+</ul>
+<p>举例：比如第一条记录的字段长度偏移列表就是：<br>2B 25 1F 1B 13 0C 06</p>
+<p>因为它是逆序排放的，所以按照列的顺序排列就是：<br>06 0C 13 17 1A 24 25<br>按照两个相邻数值的差值来计算各个列值的长度的意思就是：</p>
+<p>第一列(row_id)的长度就是 0x06个字节，也就是6个字节。<br>第二列(transaction_id)的长度就是 (0x0C - 0x06)个字节，也就是6个字节。<br>第三列(roll_pointer)的长度就是 (0x13 - 0x0C)个字节，也就是7个字节。<br>第四列(col1)的长度就是 (0x1B - 0x13)个字节，也就是8个字节。<br>第五列(col2)的长度就是 (0x1F - 0x1B)个字节，也就是4个字节。<br>第六列(col3)的长度就是 (0x25 - 0x1F)个字节，也就是6个字节。<br>第七列(col4)的长度就是 (0x2B - 0x25)个字节，也就是6个字节。</p>
+<p>不同于Compact行格式，Redundant行格式中的记录头信息固定占用6个字节（48位），每位的含义见下表。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410203723353.png" alt="image-20220410203723353"></p>
+<h1 id="区，段与碎片区"><a href="#区，段与碎片区" class="headerlink" title="区，段与碎片区"></a>区，段与碎片区</h1><h2 id="为什么要有区？"><a href="#为什么要有区？" class="headerlink" title="为什么要有区？"></a>为什么要有区？</h2><p><strong>B+ 树</strong>的每一层中的页都会形成一个双向链表，如果是以<strong>页为单位</strong>来分配存储空间的话，双向链表相邻的两个页之间的<strong>物理位置可能离得非常远</strong>。我们介绍B+树索引的适用场景的时候特别提到范围查询只需要定位到最左边的记录和最右边的记录，然后沿着双向链表一直扫描就可以了，<strong>而如果链表中相邻的两个页物理位置离得非常远，就是所谓的随机I/O</strong> 。再一次强调，磁盘的速度和内存的速度差了好几个数量级， <strong>随机I/O是非常慢的</strong>，所以我们应该尽量让链表中相邻的页的物理位置也相邻，这样进行范围查询的时候才可以使用所谓的<strong>顺序I/O</strong> 。</p>
+<p>引入区的概念，一个区就是在物理位置上连续的<strong>64个页</strong>。因为 InnoDB 中的页大小默认是 16KB，所以一个区的大小是 64*16KB= 1MB 。在表中<strong>数据量大</strong>的时候，为某个索引分配空间的时候就不再按照页为单位分配了，而是按照<strong>区为单位分配</strong>，甚至在表中的数据特别多的时候，可以一次性分配多个连续的区。虽然可<strong>能造成一点点空间的浪费</strong>（数据不足以填充满整个区），但是从性能角度看，可以消除很多的随机I/O， <strong>功大于过！</strong></p>
+<h2 id="为什么要有段？"><a href="#为什么要有段？" class="headerlink" title="为什么要有段？"></a>为什么要有段？</h2><p>对于范围查询，其实是对B+树叶子节点中的记录进行顺序扫描，而如果不区分叶子节点和非叶子节点，统统把节点代表的页面放到申请到的区中的话，进行范围扫描的效果就大打折扣了。所以 InnoDB 对 B+树的<strong>叶子节点</strong>和<strong>非叶子节点</strong>进行了区别对待，也就是说叶子节点有自己独有的区，非叶子节点也有自己独有的区。存放叶子节点的区的集合就算是一个<strong>段（ segment ）</strong>，存放非叶子节点的区的集合也算是一个段。也就是说一个索引会生成2个段，一个叶子节点段，一个非叶子节点段。除了索引的叶子节点段和非叶子节点段之外，InnoDB中还有为存储一些特殊的数据而定义的段，比如回滚段。所以，常见的段有<strong>数据段、索引段、回滚段。</strong>数据段即为B+树的叶子节点，索引段即为B+树的非叶子节点。<br>在InnoDB存储引擎中，对段的管理都是由引擎自身所完成，DBA不能也没有必要对其进行控制。这从一定程度上简化了DBA对于段的管理。<br>段其实不对应表空间中某一个连续的物理区域，而是一个逻辑上的概念，由若干个零散的页面以及一些完整的区组成。</p>
+<h2 id="为什么要有碎片区？"><a href="#为什么要有碎片区？" class="headerlink" title="为什么要有碎片区？"></a>为什么要有碎片区？</h2><p>默认情况下，一个使用InnoDB存储引擎的表只有一个聚簇索引，一个索引会生成2个段，而段是以区为单位申请存储空间的，一个区默认占用1M（64 * 16Kb = 1024Kb）存储空间，所以<strong>默认情况下一个只存了几条记录的小表也需要2M的存储空间么</strong>？以后每次添加一个索引都要多申请2M的存储空间么？这对于存储记录比较少的表简直是天大的浪费。这个问题的症结在于到现在为止我们介绍的区都是非常纯粹的，也就是一个区被整个分配给某一个段，或者说区中的所有页面都是为了存储同一个段的数据而存在的，即使段的数据填不满区中所有的页面，那余下的页面也不能挪作他用。</p>
+<p>为了考虑以完整的区为单位分配给某个段对于<strong>数据量较小</strong>的表太浪费存储空间的这种情况，InnoDB提出了一个<strong>碎片（fragment）区</strong>的概念。在一个碎片区中，并不是所有的页都是为了存储同一个段的数据而存在的，而是碎片区中的页可以用于不同的目的，比如有些页用于段A，有些页用于段B，有些页甚至哪个段都不属于。<strong>碎片区直属于表空间</strong>，并不属于任何一个段。</p>
+<h2 id="区的分类"><a href="#区的分类" class="headerlink" title="区的分类"></a>区的分类</h2><p>区大体上可以分为4种类型：</p>
+<ul>
+<li><p><strong>空闲的区(FREE)</strong> ：现在还没有用到这个区中的任何页面。</p>
+</li>
+<li><p><strong>有剩余空间的碎片区(FREE_FRAG)</strong> ：表示碎片区中还有可用的页面。</p>
+</li>
+<li><p><strong>没有剩余空间的碎片区(FULL_FRAG)</strong> ：表示碎片区中的所有页面都被使用，没有空闲页面。</p>
+</li>
+<li><p><strong>附属于某个段的区(FSEG)</strong> ：每一个索引都可以分为叶子节点段和非叶子节点段。</p>
+</li>
+</ul>
+<p>处于FREE 、FREE_FRAG 以及FULL_FRAG 这三种状态的区都是独立的，直属于表空间。而处于FSEG状态的区是附属于某个段的。</p>
+<blockquote>
+<p>如果把表空间比作是一个集团军，段就相当于师，区就相当于团。一般的团都是隶属于某个师的，就像是处于FSEG 的区全都隶属于某个段，而处于FREE 、FREE_FRAG 以及FULL_FRAG 这三种状态的区却直接隶属于表空间，就像独立团直接听命于军部一样。</p>
+</blockquote>
+<h1 id="表空间"><a href="#表空间" class="headerlink" title="表空间"></a>表空间</h1><p>表空间可以看做是InnoDB存储引擎逻辑结构的最高层，所有的数据都存放在表空间中。<br>表空间是一个<strong>逻辑容器</strong>，表空间存储的对象是段，在一个表空间中可以有一个或多个段，但是一个段只能属于一个表空间。表空间数据库由一个或多个表空间组成，表空间从管理上可以划分为系统表空间（System tablespace）、<strong>独立表空间</strong>（File-per-table tablespace）、<strong>撤销表空间</strong>（Undo Tablespace）和<strong>临时表空间</strong>（Temporary Tablespace）等。</p>
+<h2 id="独立表空间"><a href="#独立表空间" class="headerlink" title="独立表空间"></a>独立表空间</h2><p>独立表空间，即每张表有一个独立的表空间，也就是数据和索引信息都会保存在自己的表空间中。独立的表空间（即：单表）可以在不同的数据库之间进行<strong>迁移。</strong><br>空间可以回收（DROP TABLE 操作可自动回收表空间；其他情况，表空间不能自己回收）。如果对于统计分析或是日志表，删除大量数据后可以通过： alter table TableName engine=innodb; 回收不用的空间。对于使用独立表空间的表，不管怎么删除，表空间的碎片不会太严重的影响性能，而且还有机会处理。</p>
+<p><strong>独立表空间结构</strong></p>
+<p>独立表空间由段、区、页组成。前面已经讲解过了。</p>
+<p><strong>真实表空间对应的文件大小</strong><br>我们到数据目录里看，会发现一个新建的表对应的.ibd 文件只占用了96K ，才6个页面大小（MySQL5.7中），而在MySQL8.0以上表结构和表数据索引都在.ibd文件中。为什么才6个页这是因为一开始表空间占用的空间很小，因为表里边都没有数据。不过别忘了这些.ibd文件是自扩展的，随着表中数据的增多，表空间对应的文件也逐渐增大。</p>
+<p>查看 InnoDB 的表空间类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; show variables like &#x27;innodb_file_per_table&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220410212909464.png" alt="image-20220410212909464"></p>
+<p>你能看到 innodb_file_per_table=ON，这就意味着每张表都会单独保存为一个.ibd 文件。</p>
+<h2 id="系统表空间"><a href="#系统表空间" class="headerlink" title="系统表空间"></a>系统表空间</h2><p>系统表空间的结构和独立表空间基本类似，只不过由于整个MySQL进程只有一个系统表空间，在系统表空间中会额外记录一些有关整个系统信息的页面，这部分是独立表空间中没有的。</p>
+
       
     </div>
     
@@ -582,6 +731,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/04/10/%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" rel="prev" title="索引的创建与设计原则">
+                索引的创建与设计原则 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -664,7 +817,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-count">122</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -729,7 +882,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%EF%BC%9A%E9%A1%B5"><span class="nav-number">1.</span> <span class="nav-text">数据库的存储结构：页</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E4%B8%8E%E5%86%85%E5%AD%98%E4%BA%A4%E4%BA%92%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D%EF%BC%9A%E9%A1%B5"><span class="nav-number">1.1.</span> <span class="nav-text">磁盘与内存交互基本单位：页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">页结构概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.3.</span> <span class="nav-text">页的大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E7%9A%84%E4%B8%8A%E5%B1%82%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.</span> <span class="nav-text">页的上层结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">页的内部结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC1%E9%83%A8%E5%88%86-File-Header-%E6%96%87%E4%BB%B6%E5%A4%B4%E9%83%A8-%E5%92%8CFile-Trailer-%E6%96%87%E4%BB%B6%E5%B0%BE%E9%83%A8"><span class="nav-number">2.1.</span> <span class="nav-text">第1部分:File Header(文件头部)和File Trailer(文件尾部)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Header%EF%BC%88%E6%96%87%E4%BB%B6%E5%A4%B4%E9%83%A8%EF%BC%89%EF%BC%8C-38%E5%AD%97%E8%8A%82"><span class="nav-number">2.1.1.</span> <span class="nav-text">File Header（文件头部），(38字节)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Trailer-%E6%96%87%E4%BB%B6%E5%B0%BE%E9%83%A8-8%E5%AD%97%E8%8A%82-%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">File Trailer(文件尾部)(8字节)：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC2%E9%83%A8%E5%88%86%E6%98%AF%E8%AE%B0%E5%BD%95%E9%83%A8%E5%88%86%EF%BC%8C"><span class="nav-number">2.2.</span> <span class="nav-text">第2部分是记录部分，</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC3%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">第3部分：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.4.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84%EF%BC%9A%E9%A1%B5"><span class="nav-number">1.</span> <span class="nav-text">数据库的存储结构：页</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E4%B8%8E%E5%86%85%E5%AD%98%E4%BA%A4%E4%BA%92%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D%EF%BC%9A%E9%A1%B5"><span class="nav-number">1.1.</span> <span class="nav-text">磁盘与内存交互基本单位：页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0"><span class="nav-number">1.2.</span> <span class="nav-text">页结构概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F"><span class="nav-number">1.3.</span> <span class="nav-text">页的大小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E7%9A%84%E4%B8%8A%E5%B1%82%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.</span> <span class="nav-text">页的上层结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">页的内部结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC1%E9%83%A8%E5%88%86-File-Header-%E6%96%87%E4%BB%B6%E5%A4%B4%E9%83%A8-%E5%92%8CFile-Trailer-%E6%96%87%E4%BB%B6%E5%B0%BE%E9%83%A8"><span class="nav-number">2.1.</span> <span class="nav-text">第1部分:File Header(文件头部)和File Trailer(文件尾部)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Header%EF%BC%88%E6%96%87%E4%BB%B6%E5%A4%B4%E9%83%A8%EF%BC%89%EF%BC%8C-38%E5%AD%97%E8%8A%82"><span class="nav-number">2.1.1.</span> <span class="nav-text">File Header（文件头部），(38字节)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Trailer-%E6%96%87%E4%BB%B6%E5%B0%BE%E9%83%A8-8%E5%AD%97%E8%8A%82-%EF%BC%9A"><span class="nav-number">2.1.2.</span> <span class="nav-text">File Trailer(文件尾部)(8字节)：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC2%E9%83%A8%E5%88%86%E6%98%AF%E8%AE%B0%E5%BD%95%E9%83%A8%E5%88%86%EF%BC%8C"><span class="nav-number">2.2.</span> <span class="nav-text">第2部分是记录部分，</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC3%E9%83%A8%E5%88%86%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">第3部分：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Page-Directory-%E9%A1%B5%E7%9B%AE%E5%BD%95"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">Page Directory(页目录):</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Page-Header-%E9%A1%B5%E9%9D%A2%E5%A4%B4%E9%83%A8"><span class="nav-number">2.3.0.2.</span> <span class="nav-text">Page Header(页面头部):</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InnoDB%E8%A1%8C%E6%A0%BC%E5%BC%8F%EF%BC%88%E6%88%96%E8%AE%B0%E5%BD%95%E6%A0%BC%E5%BC%8F%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">InnoDB行格式（或记录格式）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#compact%E8%A1%8C%E6%A0%BC%E5%BC%8F%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">compact行格式：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NULL%E5%80%BC%E5%88%97%E8%A1%A8%EF%BC%9A"><span class="nav-number">3.1.1.</span> <span class="nav-text">NULL值列表：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E5%A4%B4%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-number">3.1.2.</span> <span class="nav-text">记录头信息：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#delete-mask"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">delete_mask:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#min-rec-mask"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">min_rec_mask:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#record-type"><span class="nav-number">3.1.2.3.</span> <span class="nav-text">record_type:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#heap-no"><span class="nav-number">3.1.2.4.</span> <span class="nav-text">heap_no:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#n-owned"><span class="nav-number">3.1.2.5.</span> <span class="nav-text">n_owned:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#next-record"><span class="nav-number">3.1.2.6.</span> <span class="nav-text">next_record:</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E7%9C%9F%E5%AE%9E%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-number">3.1.3.</span> <span class="nav-text">记录真实信息：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dynamic%E5%92%8CCompressed%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.2.</span> <span class="nav-text">Dynamic和Compressed行格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%8C%E7%9B%8A%E5%87%BA"><span class="nav-number">3.2.1.</span> <span class="nav-text">行益出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamic%E3%80%81Compressed%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.2.2.</span> <span class="nav-text">Dynamic、Compressed行格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redundant%E8%A1%8C%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">Redundant行格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%BA%EF%BC%8C%E6%AE%B5%E4%B8%8E%E7%A2%8E%E7%89%87%E5%8C%BA"><span class="nav-number">4.</span> <span class="nav-text">区，段与碎片区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E5%8C%BA%EF%BC%9F"><span class="nav-number">4.1.</span> <span class="nav-text">为什么要有区？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E6%AE%B5%EF%BC%9F"><span class="nav-number">4.2.</span> <span class="nav-text">为什么要有段？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89%E7%A2%8E%E7%89%87%E5%8C%BA%EF%BC%9F"><span class="nav-number">4.3.</span> <span class="nav-text">为什么要有碎片区？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">4.4.</span> <span class="nav-text">区的分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">5.</span> <span class="nav-text">表空间</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8B%AC%E7%AB%8B%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">5.1.</span> <span class="nav-text">独立表空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">5.2.</span> <span class="nav-text">系统表空间</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -770,7 +923,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">202.7k</span>
+    <span title="博客全站字数">209.7k</span>
   
 </div>
 
