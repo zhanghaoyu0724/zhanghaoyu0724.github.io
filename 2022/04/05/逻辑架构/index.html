@@ -111,7 +111,7 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406203315554.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406203414041.png">
 <meta property="article:published_time" content="2022-04-05T12:42:15.000Z">
-<meta property="article:modified_time" content="2022-04-06T14:02:12.879Z">
+<meta property="article:modified_time" content="2022-04-15T08:48:08.992Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405204329788.png">
@@ -366,8 +366,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-04-06T22:02:12+08:00">
-                2022-04-06
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-15T16:48:08+08:00">
+                2022-04-15
               </time>
             
           </span>
@@ -521,8 +521,8 @@
 <p>查询缓存是提前把查询结果缓存起来，这样下次不需要执行就可以直接拿到结果。需要说明的是，在MySQL 中的查询缓存，不是缓存查询计划，而是查询对应的结果。这就意味着查询匹配的鲁棒性大大降低，只有相同的查询操作才会命中查询缓存。<strong>两个查询请求在任何字符上的不同（例如：空格、注释、大小写）</strong>，<strong>都会导致缓存不会命中</strong>。因此 MySQL 的查询缓存命中率不高。</p>
 <p>同时，如果查询请求中包含某些系统函数、用户自定义变量和函数、一些系统表，如 mysql 、information_schema、 performance_schema 数据库中的表，那这个请求就不会被缓存。以某些系统函数举例，可能同样的函数的两次调用会产生不一样的结果，比如函数<strong>NOW</strong> ，每次调用都会产生最新的当前时间，如果在一个查询请求中调用了这个函数，那即使查询请求的文本信息都一样，那不同时间的两次查询也应该得到不同的结果，如果在第一次查询时就缓存了，那第二次查询的时候直接使用第一次查询的结果就是错误的！</p>
 <p>此外，既然是缓存，那就有它<strong>缓存失效的时候</strong>。MySQL的缓存系统会监测涉及到的每张表，只要该表的结构或者数据被修改，如对该表使用了INSERT 、 UPDATE 、DELETE 、TRUNCATE TABLE 、ALTERTABLE 、DROP TABLE 或 DROP DATABASE 语句，那使用该表的所有高速缓存查询都将变为无效并从高速缓存中删除！对于更新压力大的数据库来说，查询缓存的命中率会非常低。</p>
-<p><strong>总之，因为擦汗寻缓存往往弊大于利，查询缓存的失效非常频繁。</strong></p>
-<p>一般建议在静态表李使用拆线呢缓存，静态表就是我们极少更新的表。比如，一个系统配置表，字典表，适合使用查询缓存，mysql也提供了这种‘按需使用’的方式。</p>
+<p><strong>总之，因为查询缓存往往弊大于利，查询缓存的失效非常频繁。</strong></p>
+<p>一般建议在静态表李使用查询缓存，静态表就是我们极少更新的表。比如，一个系统配置表，字典表，适合使用查询缓存，mysql也提供了这种‘按需使用’的方式。</p>
 <p><strong>2. 解析器：在解析器中对 SQL 语句进行语法分析、语义分析。</strong></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406193405169.png" alt="image-20220406193405169"></p>
 <p>分析器先做“ 词法分析”。你输入的是由多个字符串和空格组成的一条 SQL 语句，MySQL 需要识别出里面的字符串分别是什么，代表什么。 MySQL 从你输入的”select”这个关键字识别出来，这是一个查询语句。它也要把字符串“T”识别成“表名 T”，把字符串“ID”识别成“列 ID”。</p>
@@ -544,7 +544,7 @@
 <p><strong>4. 执行器：</strong></p>
 <p>截止到现在，还没有真正去读写真实的表，仅仅只是产出了一个执行计划。于是就进入了执行器阶段。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406194618283.png" alt="image-20220406194618283"></p>
-<p>在执行之前需要判断该用户是否具备权限。如果没有，就会返回权限错误。如果具备权限，就执行 SQL<br>查询并返回结果。在 MySQL8.0 以下的版本，如果设置了查询缓存，这时会将查询结果进行缓存。</p>
+<p>在执行之前需要判断该用户是否具备权限。如果没有，就会返回权限错误。如果具备权限，就执行 SQL查询并返回结果。在 MySQL8.0 以下的版本，如果设置了查询缓存，这时会将查询结果进行缓存。</p>
 <p>至此，这个语句就执行完成了。对于有索引的表，执行的逻辑也差不多。<br>SQL 语句在 MySQL 中的流程是： SQL语句→查询缓存→解析器→优化器→执行器。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406194658849.png" alt="image-20220406194658849"></p>
 <h2 id="MySQL8中SQL执行原理"><a href="#MySQL8中SQL执行原理" class="headerlink" title="MySQL8中SQL执行原理"></a>MySQL8中SQL执行原理</h2><h3 id="确认profiling-是否开启"><a href="#确认profiling-是否开启" class="headerlink" title="确认profiling 是否开启"></a>确认profiling 是否开启</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select @@profiling;</span><br><span class="line">mysql&gt; show variables like &#x27;profiling&#x27;;</span><br></pre></td></tr></table></figure>
@@ -566,7 +566,7 @@
 
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195750130.png" alt="image-20220406195750130"></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195759282.png" alt="image-20220406195759282"></p>
-<p>从上图可以看到8.0对应是没有拆线呢缓存的。</p>
+<p>从上图可以看到8.0对应是没有查询缓存的。</p>
 <p>解释：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220406195856994.png" alt="image-20220406195856994"></p>
 <h2 id="MySQL5-7中SQL执行原理"><a href="#MySQL5-7中SQL执行原理" class="headerlink" title="MySQL5.7中SQL执行原理"></a>MySQL5.7中SQL执行原理</h2><h3 id="配置文件中开启查询缓存"><a href="#配置文件中开启查询缓存" class="headerlink" title="配置文件中开启查询缓存"></a>配置文件中开启查询缓存</h3><h3 id="在-etc-my-cnf-中新增一行："><a href="#在-etc-my-cnf-中新增一行：" class="headerlink" title="在 /etc/my.cnf 中新增一行："></a>在 /etc/my.cnf 中新增一行：</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">query_cache_type</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
@@ -761,7 +761,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">124</span>
+                  <span class="site-state-item-count">125</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -867,7 +867,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">236.6k</span>
+    <span title="博客全站字数">246k</span>
   
 </div>
 
