@@ -90,8 +90,14 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220417151551087.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220417151558435.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220417151602176.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418135734200.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418135820192.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418135956726.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418140007485.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418140048012.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418140131467.png">
 <meta property="article:published_time" content="2022-04-17T07:02:19.000Z">
-<meta property="article:modified_time" content="2022-04-17T07:42:14.915Z">
+<meta property="article:modified_time" content="2022-04-18T06:05:46.658Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220417151544601.png">
@@ -346,8 +352,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-04-17T15:42:14+08:00">
-                2022-04-17
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-18T14:05:46+08:00">
+                2022-04-18
               </time>
             
           </span>
@@ -396,7 +402,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5.2k
+                  9.1k
                 </span>
               
 
@@ -412,7 +418,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  18
+                  32
                 </span>
               
             </div>
@@ -475,9 +481,9 @@
 <blockquote>
 <p>但需要注意的是，分拆在提升数据库性能的同时，也会增加维护和使用成本。</p>
 </blockquote>
-<h2 id="优化MySQL服务器"><a href="#优化MySQL服务器" class="headerlink" title="优化MySQL服务器"></a>优化MySQL服务器</h2><h3 id="优化服务器硬件"><a href="#优化服务器硬件" class="headerlink" title="优化服务器硬件"></a>优化服务器硬件</h3><p>服务器的硬件性能直接决定着MySQL数据库的性能。硬件的性能瓶颈直接决定MySQL数据库的运行速度<br>和效率。针对性能瓶颈提高硬件配置，可以提高MySQL数据库查询、更新的速度。 </p>
+<h1 id="优化MySQL服务器"><a href="#优化MySQL服务器" class="headerlink" title="优化MySQL服务器"></a>优化MySQL服务器</h1><h2 id="优化服务器硬件"><a href="#优化服务器硬件" class="headerlink" title="优化服务器硬件"></a>优化服务器硬件</h2><p>服务器的硬件性能直接决定着MySQL数据库的性能。硬件的性能瓶颈直接决定MySQL数据库的运行速度<br>和效率。针对性能瓶颈提高硬件配置，可以提高MySQL数据库查询、更新的速度。 </p>
 <p>（1） 配置较大的内存 （2） 配置高速磁盘系统 （3） 合理分布磁盘I/O （4） 配置多处理器</p>
-<h3 id="优化MySQL的参数"><a href="#优化MySQL的参数" class="headerlink" title="优化MySQL的参数"></a>优化MySQL的参数</h3><ul>
+<h2 id="优化MySQL的参数"><a href="#优化MySQL的参数" class="headerlink" title="优化MySQL的参数"></a>优化MySQL的参数</h2><ul>
 <li><p><strong>innodb_buffer_pool_size</strong> ：这个参数是Mysql数据库最重要的参数之一，表示InnoDB类型的<strong>表和索引的最大缓存</strong>。它不仅仅缓存索引数据，还会缓存表的数据。这个值越大，查询的速度就会越快。<strong>但是这个值太大会影响操作系统的性能</strong>。</p>
 </li>
 <li><p><strong>key_buffer_size</strong> ：表示<strong>索引缓冲区的大小</strong>。<strong>索引缓冲区是所有的线程共享</strong>。增加索引缓冲区可以得到更好处理的索引（对所有读和多重写）。当然，这个值不是越大越好，它的大小取决于内存的大小。如果这个值太大，就会导致操作系统频繁换页，也会降低系统性能。对于内存在<strong>4GB 左右</strong>的服务器该参数可设置为<strong>256M 或384M</strong> 。</p>
@@ -525,7 +531,7 @@
 <blockquote>
 <p>[mysqld]<br>port = 3306 serverid = 1 socket = /tmp/mysql.sock skip-locking #避免MySQL的外部锁定，减少出错几率增强稳定性。 skip-name-resolve #禁止MySQL对外部连接进行DNS解析，使用这一选项可以消除MySQL进行DNS解析的时间。但需要注意，如果开启该选项，则所有远程主机连接授权都要使用IP地址方式，否则MySQL将无法正常处理连接请求！ back_log = 384<br>key_buffer_size = 256M<br>max_allowed_packet = 4M<br>thread_stack = 256K<br>table_cache = 128K<br>sort_buffer_size = 6M<br>read_buffer_size = 4M<br>read_rnd_buffer_size=16M<br>join_buffer_size = 8M<br>myisam_sort_buffer_size =64M<br>table_cache = 512<br>thread_cache_size = 64<br>query_cache_size = 64M<br>tmp_table_size = 256M<br>max_connections = 768<br>max_connect_errors = 10000000<br>wait_timeout = 10<br>thread_concurrency = 8<br>#该参数取值为服务器逻辑CPU数量<em>2，在本例中，服务器有2颗物理CPU，而每颗物理CPU又支持H.T超线程，所以实际取值为4</em>2=8<br>skip-networking<br>#开启该选项可以彻底关闭MySQL的TCP/IP连接方式，如果WEB服务器是以远程连接的方式访问MySQL数据库服务器则不要开启该选项！否则将无法正常连接！<br>table_cache=1024<br>innodb_additional_mem_pool_size=4M<br>#默认为2M<br>innodb_flush_log_at_trx_commit=1<br>innodb_log_buffer_size=2M<br>#默认为1M<br>innodb_thread_concurrency=8<br>#你的服务器CPU有几个就设置为几。建议用默认一般为8<br>tmp_table_size=64M<br>#默认为16M，调到64-256最挂<br>thread_cache_size=120 query_cache_size=32M</p>
 </blockquote>
-<h3 id="举例"><a href="#举例" class="headerlink" title="举例:"></a>举例:</h3><p>下面是一个电商平台，类似京东或天猫这样的平台。商家购买服务，入住平台，开通之后，商家可以在系统中上架各种商品，客户通过手机App、微信小程序等渠道购买商品，商家接到订单以后安排快递送货。<br><strong>刚刚上线</strong>的时候，系统运行状态良好。但是，随着入住的商家不断增多，使用系统的用户量越来越多，每天的订单数据达到了5万条以上。这个时候，系统开始出现问题，CPU使用率不断飙升。终于，双十一或者618活动高峰的时候，CPU使用率达到99%，这实际上就意味着，系统的计算资源已经耗尽，再也无法处理任何新的订单了。换句话说，系统已经崩溃了。<br>这个时候，我们想到了对系统参数进行调整，因为参数的值决定了资源配置的方式和投放的程度。为了解决这个问题，一共调整3个系统参数，分别是</p>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例:"></a>举例:</h2><p>下面是一个电商平台，类似京东或天猫这样的平台。商家购买服务，入住平台，开通之后，商家可以在系统中上架各种商品，客户通过手机App、微信小程序等渠道购买商品，商家接到订单以后安排快递送货。<br><strong>刚刚上线</strong>的时候，系统运行状态良好。但是，随着入住的商家不断增多，使用系统的用户量越来越多，每天的订单数据达到了5万条以上。这个时候，系统开始出现问题，CPU使用率不断飙升。终于，双十一或者618活动高峰的时候，CPU使用率达到99%，这实际上就意味着，系统的计算资源已经耗尽，再也无法处理任何新的订单了。换句话说，系统已经崩溃了。<br>这个时候，我们想到了对系统参数进行调整，因为参数的值决定了资源配置的方式和投放的程度。为了解决这个问题，一共调整3个系统参数，分别是</p>
 <ul>
 <li>innodb_flush_log_at_trx_commit</li>
 <li>innodb_buffer_pool_size</li>
@@ -544,6 +550,123 @@
 <li>开拓新的通道，增加并行处理能力。</li>
 </ul>
 </blockquote>
+<h1 id="优化数据库结构"><a href="#优化数据库结构" class="headerlink" title="优化数据库结构"></a>优化数据库结构</h1><h2 id="拆分表：冷热数据分离"><a href="#拆分表：冷热数据分离" class="headerlink" title="拆分表：冷热数据分离"></a>拆分表：冷热数据分离</h2><p>举例1： 会员members表存储会员登录认证信息，该表中有很多字段，如id、姓名、密码、地址、电话、个人描述字段。其中地址、电话、个人描述等字段并不常用，可以将这些不常用的字段分解出另一个表。将这个表取名叫members_detail，表中有member_id、address、telephone、description等字段。这样就把会员表分成了两个表，分别为members表和members_detail表。</p>
+<p>创建这两个表的SQL语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE members (</span><br><span class="line">id int(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">username varchar(50) DEFAULT NULL,</span><br><span class="line">password varchar(50) DEFAULT NULL,</span><br><span class="line">last_login_time datetime DEFAULT NULL,</span><br><span class="line">last_login_ip varchar(100) DEFAULT NULL,</span><br><span class="line">PRIMARY KEY(Id)</span><br><span class="line">);</span><br><span class="line">CREATE TABLE members_detail (</span><br><span class="line">Member_id int(11) NOT NULL DEFAULT 0,</span><br><span class="line">address varchar(255) DEFAULT NULL,</span><br><span class="line">telephone varchar(255) DEFAULT NULL,</span><br><span class="line">description text</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>如果需要查询会员的基本信息或详细信息，那么可以用会员的id来查询。如果需要将会员的基本信息和详细信息同时显示，那么可以将members表和members_detail表进行联合查询，查询语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM members LEFT JOIN members_detail on members.id = members_detail.member_id;</span><br></pre></td></tr></table></figure>
+
+<p>通过这种分解可以提高表的查询效率。对于字段很多且有些字段使用不频繁的表，可以通过这种分解的<br>方式来优化数据库的性能。</p>
+<h2 id="增加中间表"><a href="#增加中间表" class="headerlink" title="增加中间表"></a>增加中间表</h2><p>举例1： 学生信息表和班级表的SQL语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `class` (</span><br><span class="line">`id` INT(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">`className` VARCHAR(30) DEFAULT NULL,</span><br><span class="line">`address` VARCHAR(40) DEFAULT NULL,</span><br><span class="line">`monitor` INT NULL ,</span><br><span class="line">PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;</span><br><span class="line">CREATE TABLE `student` (</span><br><span class="line">`id` INT(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">`stuno` INT NOT NULL ,</span><br><span class="line">    `name` VARCHAR(20) DEFAULT NULL,</span><br><span class="line">`age` INT(3) DEFAULT NULL,</span><br><span class="line">`classId` INT(11) DEFAULT NULL,</span><br><span class="line">PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure>
+
+<p>现在有一个模块需要经常查询带有学生名称（name）、学生所在班级名称（className）、学生班级班长（monitor）的学生信息。根据这种情况可以创建一个temp_student 表。temp_student表中存储学生名称（stu_name）、学生所在班级名称（className）和学生班级班长（monitor）信息。创建表的语句如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `temp_student` (</span><br><span class="line">`id` INT(11) NOT NULL AUTO_INCREMENT,</span><br><span class="line">`stu_name` INT NOT NULL ,</span><br><span class="line">`className` VARCHAR(20) DEFAULT NULL,</span><br><span class="line">`monitor` INT(3) DEFAULT NULL,</span><br><span class="line">PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;</span><br></pre></td></tr></table></figure>
+
+<p>接下来，从学生信息表和班级表中查询相关信息存储到临时表中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">insert into temp_student(stu_name,className,monitor)</span><br><span class="line">select s.name,c.className,c.monitor</span><br><span class="line">from student as s,class as c</span><br><span class="line">where s.classId = c.id</span><br></pre></td></tr></table></figure>
+
+<p>以后，可以直接从temp_student表中查询学生名称、班级名称和班级班长，而不用每次都进行联合查询。这样可以提高数据库的查询速度。</p>
+<h2 id="增加冗余字段"><a href="#增加冗余字段" class="headerlink" title="增加冗余字段"></a>增加冗余字段</h2><p>设计数据库表时应尽量遵循范式理论的规约，尽可能减少冗余字段，让数据库设计看起来精致、优雅。但是，合理地加入冗余字段可以提高查询速度。<br>表的规范化程度越高，表与表之间的关系就越多，需要连接查询的情况也就越多。尤其在数据量大，而且需要频繁进行连接的时候，为了提升效率，我们也可以考虑增加冗余字段来减少连接。</p>
+<h2 id="优化数据类型"><a href="#优化数据类型" class="headerlink" title="优化数据类型"></a>优化数据类型</h2><p><strong>情况1：对整数类型数据进行优化.</strong><br>遇到整数类型的字段可以用 INT 型。这样做的理由是，INT 型数据有足够大的取值范围，不用担心数据超出取值范围的问题。刚开始做项目的时候，首先要保证系统的稳定性，这样设计字段类型是可以的。但在数据量很大的时候，数据类型的定义，在很大程度上会影响到系统整体的执行效率。对于非负型的数据（如自增ID、整型IP）来说，要优先使用无符号整型UNSIGNED 来存储。因为无符号相对于有符号，同样的字节数，存储的数值范围更大。如tinyint有符号为-128-127，无符号为0-255，多出一倍的存储空间。<br><strong>情况2：既可以使用文本类型也可以使用整数类型的字段，要选择使用整数类型。</strong><br>跟文本类型数据相比，大整数往往占用更少的存储空间，因此，在存取和比对的时候，可以占用更少的<br>内存空间。所以，在二者皆可用的情况下，尽量使用整数类型，这样可以提高查询的效率。如：将IP地<br>址转换成整型数据。</p>
+<p><strong>情况3：避免使用TEXT、BLOB数据类型</strong><br><strong>情况4：避免使用ENUM类型</strong><br><strong>情况5：使用TIMESTAMP存储时间</strong><br><strong>情况6：用DECIMAL代替FLOAT和DOUBLE存储精确浮点数</strong><br>总之，遇到数据量大的项目时，一定要在充分了解业务需求的前提下，合理优化数据类型，这样才能充分发挥资源的效率，使系统达到最优。</p>
+<h2 id="优化插入记录的速度"><a href="#优化插入记录的速度" class="headerlink" title="优化插入记录的速度"></a>优化插入记录的速度</h2><p><strong>1. MyISAM引擎的表：</strong></p>
+<p><strong>①禁用索引</strong></p>
+<p>对于非空表，插入记录时，MysQL会根据表的索引对插入的记录建立索引。如果插入大量数据，建立索引就会降低插入记录的速度。为了解决这种情况，可以在插入记录之前禁用索引，数据插入完毕后再开启索引。禁用索引的语句如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name DISABLE KEYS;</span><br></pre></td></tr></table></figure>
+
+<p>重新开启索引的语句如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE table_name ENABLE KEYS;</span><br></pre></td></tr></table></figure>
+
+<p>若对于空表批量导入数据，则不需要进行此操作，因为MyISAM引擎的表是在导入数据之后才建立索引的。</p>
+<p><strong>② 禁用唯一性检查</strong></p>
+<p><strong>③ 使用批量插入</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">insert into student values(1,&#x27;zhangsan&#x27;,18,1);</span><br><span class="line">insert into student values(2,&#x27;lisi&#x27;,17,1);</span><br><span class="line">insert into student values(3,&#x27;wangwu&#x27;,17,1);</span><br><span class="line">insert into student values(4,&#x27;zhaoliu&#x27;,19,1);</span><br></pre></td></tr></table></figure>
+
+<p>使用一条INSERT语句插入多条记录的情形如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">insert into student values</span><br><span class="line">(1,&#x27;zhangsan&#x27;,18,1),</span><br><span class="line">(2,&#x27;lisi&#x27;,17,1),</span><br><span class="line">(3,&#x27;wangwu&#x27;,17,1),</span><br><span class="line">(4,&#x27;zhaoliu&#x27;,19,1);</span><br></pre></td></tr></table></figure>
+
+<p>第2种情形的插入速度要比第1种情形快。</p>
+<p><strong>④ 使用LOAD DATA INFILE 批量导入</strong></p>
+<p>2.<strong>InnoDB引擎的表：</strong> </p>
+<p><strong>① 禁用唯一性检查</strong><br><strong>② 禁用外键检查</strong><br><strong>③ 禁止自动提交</strong></p>
+<h2 id="使用非空约束"><a href="#使用非空约束" class="headerlink" title="使用非空约束"></a>使用非空约束</h2><p>在设计字段的时候，如果业务允许，建议尽量使用非空约束。这样做的好处是:①进行比较和计算时，省去要对NULL值的字段判断是否为空的开销，提高存储效率。<br>②非空字段也容易创建索引。因为索引NULL列需要额外的空间来保存，所以要占用更多的空间。使用非空约束，就可以节省存储空间(每个字段1个bit)。</p>
+<h2 id="分析表、检查表与优化表"><a href="#分析表、检查表与优化表" class="headerlink" title="分析表、检查表与优化表"></a>分析表、检查表与优化表</h2><h3 id="分析表"><a href="#分析表" class="headerlink" title="分析表"></a>分析表</h3><p>MySQL中提供了ANALYZE TABLE语句分析表，ANALYZE TABLE语句的基本语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ANALYZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name[,tbl_name]…</span><br></pre></td></tr></table></figure>
+
+<p>默认的，MySQL服务会将 ANALYZE TABLE语句写到binlog中，以便在主从架构中，从服务能够同步数据。可以添加参数LOCAL 或者 NO_WRITE_TO_BINLOG取消将语句写到binlog中。<br>使用ANALYZE TABLE 分析表的过程中，数据库系统会自动对表加一个只读锁。在分析期间，只能读取表中的记录，不能更新和插入记录。ANALYZE TABLE语句能够分析InnoDB和MyISAM类型的表，但是不能作用于视图。</p>
+<p>ANALYZE TABLE分析后的统计结果会反应到cardinality 的值，该值统计了表中某一键所在的列不重复的值的个数。该值越接近表中的总行数，则在表连接查询或者索引查询时，就越优先被优化器选择使用。也就是索引列的cardinality的值与表中数据的总条数差距越大，即使查询的时候使用了该索引作为查询条件，存储引擎实际查询的时候使用的概率就越小。下面通过例子来验证下。cardinality可以通过<br>SHOW INDEX FROM 表名查看。</p>
+<h3 id="检查表"><a href="#检查表" class="headerlink" title="检查表"></a>检查表</h3><p>MySQL中可以使用CHECK TABLE 语句来检查表。CHECK TABLE语句能够检查InnoDB和MyISAM类型的表是否存在错误。CHECK TABLE语句在执行过程中也会给表加上<strong>只读锁</strong>。<br>对于MyISAM类型的表，CHECK TABLE语句还会更新关键字统计数据。而且，CHECK TABLE也可以检查视图是否有错误，比如在视图定义中被引用的表已不存在。该语句的基本语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CHECK TABLE tbl_name [, tbl_name] ... [option] ...</span><br><span class="line">option = &#123;QUICK | FAST | MEDIUM | EXTENDED | CHANGED&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中，tbl_name是表名；option参数有5个取值，分别是QUICK、FAST、MEDIUM、EXTENDED和CHANGED。各个选项的意义分别是：</p>
+<ul>
+<li>QUICK ：不扫描行，不检查错误的连接。</li>
+<li>FAST ：只检查没有被正确关闭的表。</li>
+<li>CHANGED ：只检查上次检查后被更改的表和没有被正确关闭的表。</li>
+<li>MEDIUM ：扫描行，以验证被删除的连接是有效的。也可以计算各行的关键字校验和，并使用计算出的校验和验证这一点。</li>
+<li>EXTENDED ：对每行的所有关键字进行一个全面的关键字查找。这可以确保表是100%一致的，但是花的时间较长。</li>
+</ul>
+<p>option只对MyISAM类型的表有效，对InnoDB类型的表无效。比如：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418135734200.png" alt="image-20220418135734200"></p>
+<p>该语句对于检查的表可能会产生多行信息。最后一行有一个状态的 Msg_type 值，Msg_text 通常为 OK。如果得到的不是 OK，通常要对其进行修复；是 OK 说明表已经是最新的了。表已经是最新的，意味着存储引擎对这张表不必进行检查</p>
+<h3 id="优化表"><a href="#优化表" class="headerlink" title="优化表"></a>优化表</h3><p>方式1：OPTIMIZE TABLE</p>
+<p>MySQL中使用OPTIMIZE TABLE 语句来优化表。但是，OPTILMIZE TABLE语句只能优化表中的VARCHAR 、BLOB 或TEXT 类型的字段。一个表使用了这些字段的数据类型，若已经删除了表的一大部分数据，或者已经对含有可变长度行的表（含有VARCHAR、BLOB或TEXT列的表）进行了很多更新，则应使用OPTIMIZE TABLE来重新利用未使用的空间，并整理数据文件的碎片。<br>OPTIMIZE TABLE 语句对InnoDB和MyISAM类型的表都有效。该语句在执行过程中也会给表加上只读锁。<br>OPTILMIZE TABLE语句的基本语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPTIMIZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name [, tbl_name] ...</span><br></pre></td></tr></table></figure>
+
+<p>LOCAL | NO_WRITE_TO_BINLOG关键字的意义和分析表相同，都是指定不写入二进制日志。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418135820192.png" alt="image-20220418135820192"></p>
+<p>执行完毕，Msg_text显示</p>
+<blockquote>
+<p>‘numysql.SYS_APP_USER’, ‘optimize’, ‘note’, ‘Table does not support optimize, doing recreate +<br>analyze instead’</p>
+</blockquote>
+<p>原因是我服务器上的MySQL是InnoDB存储引擎。<br>到底优化了没有呢？看官网！</p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/optimize-table.html">https://dev.mysql.com/doc/refman/8.0/en/optimize-table.html</a></p>
+<p>在MyISAM中，是先分析这张表，然后会整理相关的MySQL datafile，之后回收未使用的空间；在InnoDB中，回收空间是简单通过Alter table进行整理空间。在优化期间，MySQL会创建一个临时表，优化完成之后会删除原始表，然后会将临时表rename成为原始表。</p>
+<blockquote>
+<p>说明： 在多数的设置中，根本不需要运行OPTIMIZE TABLE。即使对可变长度的行进行了大量的更新，也不需要经常运行， 每周一次或每月一次即可，并且只需要对特定的表运行。</p>
+</blockquote>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>上述这些方法都是有利有弊的。比如：</p>
+<ul>
+<li><p>修改数据类型，节省存储空间的同时，你要考虑到数据不能超过取值范围；</p>
+</li>
+<li><p>增加冗余字段的时候，不要忘了确保数据一致性；</p>
+</li>
+<li><p>把大表拆分，也意味着你的查询会增加新的连接，从而增加额外的开销和运维的成本。</p>
+</li>
+</ul>
+<p>因此，你一定要结合实际的业务需求进行权衡。</p>
+<h1 id="大表优化"><a href="#大表优化" class="headerlink" title="大表优化"></a>大表优化</h1><h2 id="限定查询的范围"><a href="#限定查询的范围" class="headerlink" title="限定查询的范围"></a>限定查询的范围</h2><p>禁止不带任何限制数据范围条件的查询语句。比如：我们当用户在查询订单历史的时候，我们可以控制<br>在一个月的范围内；</p>
+<h2 id="读-写分离"><a href="#读-写分离" class="headerlink" title="读/写分离"></a>读/写分离</h2><p>经典的数据库拆分方案，主库负责写，从库负责读。</p>
+<ul>
+<li>一主一从模式：</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418135956726.png" alt="image-20220418135956726"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418140007485.png" alt="image-20220418140007485"></p>
+<h2 id="垂直拆分"><a href="#垂直拆分" class="headerlink" title="垂直拆分"></a>垂直拆分</h2><p>当数据量级达到千万级以上时，有时候我们需要把一个数据库切成多份，放到不同的数据库服务器上，减少对单一数据库服务器的访问压力。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418140048012.png" alt="image-20220418140048012"></p>
+<p>垂直拆分的优点： 可以使得列数据变小，在查询时减少读取的Block数，减少I/O次数。此外，垂直分区可以简化表的结构，易于维护。<br>垂直拆分的缺点： 主键会出现冗余，需要管理冗余列，并会引起 JOIN 操作。此外，垂直拆分会让事务变得更加复杂。</p>
+<h2 id="水平拆分"><a href="#水平拆分" class="headerlink" title="水平拆分"></a>水平拆分</h2><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418140131467.png" alt="image-20220418140131467"></p>
+<p>下面补充一下数据库分片的两种常见方案：</p>
+<ul>
+<li>客户端代理： 分片逻辑在应用端，封装在jar包中，通过修改或者封装JDBC层来实现。 当当网的Sharding-JDBC 、阿里的TDDL是两种比较常用的实现。</li>
+<li>中间件代理： 在应用和数据中间加了一个代理层。分片逻辑统一维护在中间件服务中。我们现在谈的 Mycat 、360的Atlas、网易的DDB等等都是这种架构的实现。</li>
+</ul>
+<h1 id="其它调优策略"><a href="#其它调优策略" class="headerlink" title="其它调优策略"></a>其它调优策略</h1><h2 id="服务器语句超时处理"><a href="#服务器语句超时处理" class="headerlink" title="服务器语句超时处理"></a>服务器语句超时处理</h2><p>在MySQL 8.0中可以设置服务器语句超时的限制，单位可以达到毫秒级别。当中断的执行语句超过设置的毫秒数后，服务器将终止查询影响不大的事务或连接，然后将错误报给客户端。<br>设置服务器语句超时的限制，可以通过设置系统变量MAX_EXECUTION_TIME 来实现。默认情况下，MAX_EXECUTION_TIME的值为0，代表没有时间限制。 例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL MAX_EXECUTION_TIME=2000;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET SESSION MAX_EXECUTION_TIME=2000; #指定该会话中SELECT语句的超时时间</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建全局通用表空间"><a href="#创建全局通用表空间" class="headerlink" title="创建全局通用表空间"></a>创建全局通用表空间</h2><p>MysQL 8.0使用CREATE TABLESPACE语句来创建一个全局通用表空间。全局表空间可以被所有的数据库的表共享，而且相比于独享表空间，<strong>使用手动创建共享表空间可以节约元数据方面的内存</strong>。可以在创建表的时候，指定属于哪个表空间，也可以对已有表进行表空间修改等。<br>下面创建名为atguigu1的共享表空间，SQL语句如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create tablespace databsename ADD datafile &#x27;name.ibd&#x27; file_block_size=16k;</span><br></pre></td></tr></table></figure>
+
+<p>指定表空间</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table test(test int . name varchar(10))engine=innodb default charset utf8mb4 tablespace databsename</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="MySQL-8-0新特性：隐藏索引对调优的帮助"><a href="#MySQL-8-0新特性：隐藏索引对调优的帮助" class="headerlink" title="MySQL 8.0新特性：隐藏索引对调优的帮助"></a>MySQL 8.0新特性：隐藏索引对调优的帮助</h2><p>不可见索引的特性对于性能调试非常有用。在MySQL 8.0中，索引可以被*隐藏”和“显示”。当一个索引被隐藏时，它不会被查询优化器所使用。也就是说，管理员可以隐藏一个索引，然后观察对数据库的影响。如果数据库性能有所下降，就说明这个索引是有用的，于是将其”恢复显示”即可;如果数据库性能看不出变化，就说明这个索引是多余的，可以删掉了。<br>需要注意的是当索引被隐藏时，它的内容仍然是和正常索引一样实时更新的。如果一个索引需要长期被隐藏，那么可以将其删除，因为索引的存在会影响插入、更新和删除的性能。<br><strong>数据表中的主键不能被设置为invisible。</strong></p>
 
       
     </div>
@@ -586,6 +709,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/04/18/%E4%BA%8B%E5%8A%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="prev" title="事务基础知识">
+                事务基础知识 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -668,7 +795,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">126</span>
+                  <span class="site-state-item-count">127</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -733,7 +860,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%B0%83%E4%BC%98%E7%9A%84%E6%8E%AA%E6%96%BD"><span class="nav-number">1.</span> <span class="nav-text">数据库调优的措施</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E4%BC%98%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">调优的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E4%BC%98%E7%9A%84%E7%BB%B4%E5%BA%A6%E5%92%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.2.</span> <span class="nav-text">调优的维度和步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E6%AD%A5%EF%BC%9A%E9%80%89%E6%8B%A9%E9%80%82%E5%90%88%E7%9A%84-DBMS"><span class="nav-number">1.2.1.</span> <span class="nav-text">第1步：选择适合的 DBMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E6%AD%A5%EF%BC%9A%E4%BC%98%E5%8C%96%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.2.</span> <span class="nav-text">第2步：优化表设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E6%AD%A5%EF%BC%9A%E4%BC%98%E5%8C%96%E9%80%BB%E8%BE%91%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.3.</span> <span class="nav-text">第3步：优化逻辑查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC4%E6%AD%A5%EF%BC%9A%E4%BC%98%E5%8C%96%E7%89%A9%E7%90%86%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.4.</span> <span class="nav-text">第4步：优化物理查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC5%E6%AD%A5%EF%BC%9A%E4%BD%BF%E7%94%A8-Redis-%E6%88%96-Memcached-%E4%BD%9C%E4%B8%BA%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.5.</span> <span class="nav-text">第5步：使用 Redis 或 Memcached 作为缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC6%E6%AD%A5%EF%BC%9A%E5%BA%93%E7%BA%A7%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.6.</span> <span class="nav-text">第6步：库级优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">优化MySQL服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E4%BB%B6"><span class="nav-number">1.3.1.</span> <span class="nav-text">优化服务器硬件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96MySQL%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.</span> <span class="nav-text">优化MySQL的参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BE%E4%BE%8B"><span class="nav-number">1.3.3.</span> <span class="nav-text">举例:</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%B0%83%E4%BC%98%E7%9A%84%E6%8E%AA%E6%96%BD"><span class="nav-number">1.</span> <span class="nav-text">数据库调优的措施</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E4%BC%98%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="nav-number">1.1.</span> <span class="nav-text">调优的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E4%BC%98%E7%9A%84%E7%BB%B4%E5%BA%A6%E5%92%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.2.</span> <span class="nav-text">调优的维度和步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E6%AD%A5%EF%BC%9A%E9%80%89%E6%8B%A9%E9%80%82%E5%90%88%E7%9A%84-DBMS"><span class="nav-number">1.2.1.</span> <span class="nav-text">第1步：选择适合的 DBMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E6%AD%A5%EF%BC%9A%E4%BC%98%E5%8C%96%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.2.2.</span> <span class="nav-text">第2步：优化表设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC3%E6%AD%A5%EF%BC%9A%E4%BC%98%E5%8C%96%E9%80%BB%E8%BE%91%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.3.</span> <span class="nav-text">第3步：优化逻辑查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC4%E6%AD%A5%EF%BC%9A%E4%BC%98%E5%8C%96%E7%89%A9%E7%90%86%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.4.</span> <span class="nav-text">第4步：优化物理查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC5%E6%AD%A5%EF%BC%9A%E4%BD%BF%E7%94%A8-Redis-%E6%88%96-Memcached-%E4%BD%9C%E4%B8%BA%E7%BC%93%E5%AD%98"><span class="nav-number">1.2.5.</span> <span class="nav-text">第5步：使用 Redis 或 Memcached 作为缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC6%E6%AD%A5%EF%BC%9A%E5%BA%93%E7%BA%A7%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.6.</span> <span class="nav-text">第6步：库级优化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96MySQL%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">优化MySQL服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A1%AC%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">优化服务器硬件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96MySQL%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.</span> <span class="nav-text">优化MySQL的参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BE%E4%BE%8B"><span class="nav-number">2.3.</span> <span class="nav-text">举例:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">优化数据库结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%86%E5%88%86%E8%A1%A8%EF%BC%9A%E5%86%B7%E7%83%AD%E6%95%B0%E6%8D%AE%E5%88%86%E7%A6%BB"><span class="nav-number">3.1.</span> <span class="nav-text">拆分表：冷热数据分离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E4%B8%AD%E9%97%B4%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">增加中间表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E5%86%97%E4%BD%99%E5%AD%97%E6%AE%B5"><span class="nav-number">3.3.</span> <span class="nav-text">增加冗余字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.4.</span> <span class="nav-text">优化数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%8F%92%E5%85%A5%E8%AE%B0%E5%BD%95%E7%9A%84%E9%80%9F%E5%BA%A6"><span class="nav-number">3.5.</span> <span class="nav-text">优化插入记录的速度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%9D%9E%E7%A9%BA%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.6.</span> <span class="nav-text">使用非空约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E8%A1%A8%E3%80%81%E6%A3%80%E6%9F%A5%E8%A1%A8%E4%B8%8E%E4%BC%98%E5%8C%96%E8%A1%A8"><span class="nav-number">3.7.</span> <span class="nav-text">分析表、检查表与优化表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E8%A1%A8"><span class="nav-number">3.7.1.</span> <span class="nav-text">分析表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E8%A1%A8"><span class="nav-number">3.7.2.</span> <span class="nav-text">检查表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E8%A1%A8"><span class="nav-number">3.7.3.</span> <span class="nav-text">优化表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">3.8.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%A7%E8%A1%A8%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">大表优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%90%E5%AE%9A%E6%9F%A5%E8%AF%A2%E7%9A%84%E8%8C%83%E5%9B%B4"><span class="nav-number">4.1.</span> <span class="nav-text">限定查询的范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB-%E5%86%99%E5%88%86%E7%A6%BB"><span class="nav-number">4.2.</span> <span class="nav-text">读&#x2F;写分离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%82%E7%9B%B4%E6%8B%86%E5%88%86"><span class="nav-number">4.3.</span> <span class="nav-text">垂直拆分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B0%B4%E5%B9%B3%E6%8B%86%E5%88%86"><span class="nav-number">4.4.</span> <span class="nav-text">水平拆分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E8%B0%83%E4%BC%98%E7%AD%96%E7%95%A5"><span class="nav-number">5.</span> <span class="nav-text">其它调优策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%AD%E5%8F%A5%E8%B6%85%E6%97%B6%E5%A4%84%E7%90%86"><span class="nav-number">5.1.</span> <span class="nav-text">服务器语句超时处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%85%A8%E5%B1%80%E9%80%9A%E7%94%A8%E8%A1%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">5.2.</span> <span class="nav-text">创建全局通用表空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-8-0%E6%96%B0%E7%89%B9%E6%80%A7%EF%BC%9A%E9%9A%90%E8%97%8F%E7%B4%A2%E5%BC%95%E5%AF%B9%E8%B0%83%E4%BC%98%E7%9A%84%E5%B8%AE%E5%8A%A9"><span class="nav-number">5.3.</span> <span class="nav-text">MySQL 8.0新特性：隐藏索引对调优的帮助</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -774,7 +901,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">256.2k</span>
+    <span title="博客全站字数">267.1k</span>
   
 </div>
 

@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="zhy, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据库事务概述事务是数据库区别于文件系统的重要特性之一，当我们有了事务就会让数据库始终保持一致性，同时我们还能通过事务的机制恢复到某个时间点，这样可以保证已提交到数据库的修改不会因为系统崩溃而丢失。 存储引擎支持情况SHOW ENGINES 命令来查看当前 MySQL 支持的存储引擎都有哪些，以及这些存储引擎是否支持事务。  能看出在 MySQL 中，只有InnoDB 是支持事务的。 基本概念事务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事务基础知识">
+<meta property="og:url" content="https://blacke1111.github.io/2022/04/18/%E4%BA%8B%E5%8A%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="蓝天の博客">
+<meta property="og:description" content="数据库事务概述事务是数据库区别于文件系统的重要特性之一，当我们有了事务就会让数据库始终保持一致性，同时我们还能通过事务的机制恢复到某个时间点，这样可以保证已提交到数据库的修改不会因为系统崩溃而丢失。 存储引擎支持情况SHOW ENGINES 命令来查看当前 MySQL 支持的存储引擎都有哪些，以及这些存储引擎是否支持事务。  能看出在 MySQL 中，只有InnoDB 是支持事务的。 基本概念事务">
+<meta property="og:locale">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418141109452.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418141336369.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418142905245.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418155511580.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418155759143.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418155941958.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418160227416.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418161139080.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418161147295.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418152840584.png">
+<meta property="article:published_time" content="2022-04-18T06:07:33.000Z">
+<meta property="article:modified_time" content="2022-04-18T08:14:53.808Z">
+<meta property="article:author" content="Zhang Hao Hu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418141109452.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":8,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://blacke1111.github.io/2022/04/18/事务基础知识/"/>
+
+
+
+
+
+  <title>事务基础知识 | 蓝天の博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蓝天の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2022/04/18/%E4%BA%8B%E5%8A%A1%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张浩宇">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蓝天の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">事务基础知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-18T14:07:33+08:00">
+                2022-04-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-18T16:14:53+08:00">
+                2022-04-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  26
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="数据库事务概述"><a href="#数据库事务概述" class="headerlink" title="数据库事务概述"></a>数据库事务概述</h1><p>事务是数据库区别于文件系统的重要特性之一，当我们有了事务就会让数据库始终保持一致性，同时我们还能通过事务的机制恢复到某个时间点，这样可以保证已提交到数据库的修改不会因为系统崩溃而丢失。</p>
+<h2 id="存储引擎支持情况"><a href="#存储引擎支持情况" class="headerlink" title="存储引擎支持情况"></a>存储引擎支持情况</h2><p>SHOW ENGINES 命令来查看当前 MySQL 支持的存储引擎都有哪些，以及这些存储引擎是否支持事务。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418141109452.png" alt="image-20220418141109452"></p>
+<p>能看出在 MySQL 中，只有InnoDB 是支持事务的。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>事务</strong>：一组逻辑操作单元，使数据从一种状态变换到另一种状态。<br><strong>事务处理的原则</strong>：保证所有事务都作为一个工作单元来执行，即使出现了故障，都不能改变这种执行方式。当在一个事务中执行多个操作时，要么所有的事务都被提交( commit )，那么这些修改就永久地保存下来；要么数据库管理系统将放弃所作的所有修改，整个事务回滚( rollback )到最初状态。</p>
+<h2 id="事务的ACID特性"><a href="#事务的ACID特性" class="headerlink" title="事务的ACID特性"></a>事务的ACID特性</h2><ul>
+<li><p>原子性（atomicity）：<br>原子性是指事务是一个不可分割的工作单位，要么全部提交，要么全部失败回滚。</p>
+</li>
+<li><p>一致性（consistency）：<br>（国内很多网站上对一致性的阐述有误，具体你可以参考 Wikipedia 对Consistency 的阐述）</p>
+<p>根据定义，一致性是指事务执行前后，<strong>数据从一个合法性状态变换到另外一个合法性状态</strong>。这种状态是语义上的而不是语法上的，跟具体的业务有关。那什么是合法的数据状态呢？满足预定的约束的状态就叫做合法的状态。通俗一点，这状态是由你自己来定义的（比如满足现实世界中的约束）。满足这个状态，数据就是一致的，不满足这个状态，数据就是不一致的！如果事务中的某个操作失败了，系统就会自动撤销当前正在执行的事务，返回到事务操作之前的状态。</p>
+<p><strong>举例1</strong>:A账户有200元，转账300元出去，此时A账户余额为-100元。你自然就发现了此时数据是不一致的，为什么呢?因为你定义了一个状态，余额这列必须&gt;=0。<br>**举例2:**A账户200元，转账50元给B账户，A账户的钱扣了，但是B账户因为各种意外，余额并没有增加。你也知道此时数据是不一致的，为什么呢?因为你定义了一个状态，要求A+B的总余额必须不变。<br>**举例3:**在数据表中我们将姓名字段设置为唯一性约束，这时当事务进行提交或者事务发生回滚的时候，如果数据表中的姓名不唯一，就破坏了事务的一致性要求。</p>
+</li>
+<li><p>隔离型（isolation）：</p>
+<p>事务的隔离性是指一个事务的执行<strong>不能被其他事务干扰</strong>，即一个事务内部的操作及使用的数据对并发的<br>其他事务是隔离的，并发执行的各个事务之间不能互相干扰。<br>如果无法保证隔离性会怎么样？假设A账户有200元，B账户0元。A账户往B账户转账两次，每次金额为50元，分别在两个事务中执行。如果无法保证隔离性，会出现下面的情形：</p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UPDATE accounts SET money = money - 50 WHERE NAME = &#x27;AA&#x27;;</span><br><span class="line">UPDATE accounts SET money = money + 50 WHERE NAME = &#x27;BB&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418141336369.png" alt="image-20220418141336369"></p>
+<ul>
+<li>持久性（durability）：</li>
+</ul>
+<p>持久性是指一个事务一旦被提交，它对数据库中数据的改变就是<strong>永久性的</strong>，接下来的其他操作和数据库<br>故障不应该对其有任何影响。<br>持久性是通过事务日志来保证的。日志包括了<strong>重做日志</strong>和<strong>回滚日志</strong>。当我们通过事务对数据进行修改的时候，首先会将数据库的变化信息记录到重做日志中，然后再对数据库中对应的行进行修改。这样做的好处是，即使数据库系统崩溃，数据库重启后也能找到没有更新到数据库系统中的重做日志，重新执行，从而使事务具有持久性。</p>
+<blockquote>
+<p>总结<br>ACID是事务的四大特性，在这四个特性中，原子性是基础，隔离性是手段，一致性是约束条件，而持久性是我们的目的。<br>数据库事务，其实就是数据库设计者为了方便起见，把需要保证原子性、隔离性、一致性和持久性的一个或多个数据库操作称为一个事务。</p>
+</blockquote>
+<h2 id="事务的状态"><a href="#事务的状态" class="headerlink" title="事务的状态"></a>事务的状态</h2><p>我们现在知道<strong>事务</strong>是一个抽象的概念，它其实对应着一个或多个数据库操作，MySQL根据这些操作所执行的不同阶段把<strong>事务</strong>大致划分成几个状态：</p>
+<ul>
+<li><p>活动的（active）<br>事务对应的数据库操作正在执行过程中时，我们就说该事务处在活动的状态。</p>
+</li>
+<li><p>部分提交的（partially committed）<br>当事务中的最后一个操作执行完成，但由于操作都在<strong>内存中执行</strong>，所造成的影响并<strong>没有刷新到磁盘</strong>时，我们就说该事务处在部分提交的状态。</p>
+</li>
+<li><p>失败的（failed）<br>当事务处在活动的或者部分提交的状态时，可能遇到了某些错误（数据库自身的错误、操作系统错误或者直接断电等）而无法继续执行，或者人为的停止当前事务的执行，我们就说该事务处在失败的状态。</p>
+</li>
+<li><p>中止的（aborted）<br>如果事务执行了一部分而<strong>变为失败</strong>的状态，那么就需要把已经修改的事务中的操作还原到事务执行前的状态。换句话说，就是要撤销失败事务对当前数据库造成的影响。我们把这个撤销的过程称之为回滚。当回滚操作执行完毕时，也就是数据库恢复到了执行事务之前的状态，我们就说该事务处在了中止的状态。<br>举例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UPDATE accounts SET money = money - 50 WHERE NAME = &#x27;AA&#x27;;</span><br><span class="line">UPDATE accounts SET money = money + 50 WHERE NAME = &#x27;BB&#x27;;</span><br></pre></td></tr></table></figure></li>
+<li><p>提交的（committed）<br>当一个处在部分提交的状态的事务将修改过的数据都同步到磁盘上之后，我们就可以说该事务处在了提交的状态。</p>
+</li>
+</ul>
+<p>一个基本的状态转换图如下所示：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418142905245.png" alt="image-20220418142905245"></p>
+<h1 id="如何使用事务"><a href="#如何使用事务" class="headerlink" title="如何使用事务"></a>如何使用事务</h1><p>使用事务有两种方式，分别为<strong>显式事务</strong>和<strong>隐式事务</strong>。</p>
+<h2 id="显式事务"><a href="#显式事务" class="headerlink" title="显式事务"></a>显式事务</h2><p>如何开启 使用关键字Lstart transaction 或 begin</p>
+<p>start transction 后面可以跟 : <strong>read only/ read write (默认) / with consistent snapshot(一致性读)</strong></p>
+<p>步骤1： START TRANSACTION 或者 BEGIN ，作用是显式开启一个事务。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; BEGIN;</span><br><span class="line">#或者</span><br><span class="line">mysql&gt; START TRANSACTION;</span><br></pre></td></tr></table></figure>
+
+<p>START TRANSACTION 语句相较于BEGIN 特别之处在于，后边能跟随几个修饰符：</p>
+<p>① <strong>READ ONLY</strong> ：标识当前事务是一个<strong>只读事务</strong>，也就是属于该事务的数据库操作只能读取数据，而不能修改数据。对于临时表是可以进行增删改操作的，因为其他事务不能操作这个临时表</p>
+<blockquote>
+<p>补充:只读事务中只是不允许修改那些其他事务也能访问到的表中的数据，对于临时表来说（我们使用CREATE TMEPORARYTABLE创建的表)，由于它们只能在当前会话中可见，所以只读事务其实也是可以对临时表进行增、删、改操作的。</p>
+</blockquote>
+<p>② <strong>READ WRITE</strong> ：标识当前事务是一个<strong>读写事务</strong>，也就是属于该事务的数据库操作既可以读取数据，也可以修改数据。<br>③ <strong>WITH CONSISTENT SNAPSHOT</strong> ：启动一致性读。</p>
+<p>步骤2：一系列事务中的操作（主要是DML，不含DDL）<br>步骤3：提交事务 或 中止事务（即回滚事务）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 提交事务。当提交事务后，对数据库的修改是永久性的。</span><br><span class="line">mysql&gt; COMMIT;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 回滚事务。即撤销正在进行的所有没有提交的修改</span><br><span class="line">mysql&gt; ROLLBACK;</span><br><span class="line"># 将事务回滚到某个保存点。</span><br><span class="line">mysql&gt; ROLLBACK TO [SAVEPOINT]</span><br></pre></td></tr></table></figure>
+
+<p>其中关于savepoint相关操作有:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#在事务中创建保存点，方便后续针对对保存点进行回滚。一个事务中可以存在多个保存点</span><br><span class="line">savepoint 保存点名称</span><br><span class="line">#删除某个保存点</span><br><span class="line">release savepoint 保存点名称</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="隐式事务"><a href="#隐式事务" class="headerlink" title="隐式事务"></a>隐式事务</h2><p>MySQL中有一个系统变量autocommit ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;autocommit&#x27;;</span><br><span class="line">+---------------+-------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------+-------+</span><br><span class="line">| autocommit | ON |</span><br><span class="line">+---------------+-------+</span><br><span class="line">1 row in set (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>当然，如果我们想关闭这种自动提交的功能，可以使用下边两种方法之一：</p>
+<ul>
+<li>显式的的使用START TRANSACTION 或者BEGIN 语句开启一个事务。这样在本次事务提交或者回滚前会暂时关闭掉自动提交的功能。</li>
+<li>把系统变量autocommit 的值设置为OFF ，就像这样：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET autocommit = OFF;</span><br><span class="line">#或</span><br><span class="line">SET autocommit = 0;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#关键字:autocommit</span><br><span class="line">#set autocommit = false;</span><br><span class="line"></span><br><span class="line">SHOW VAR工ABLES LIKE &#x27; autocommit&#x27;;#默认是oN</span><br><span class="line">UPDATE account SET balance = balance - 10 WHERE id = 1;#此时这条DM操作是一个独立的事务</span><br><span class="line">UPDATE account SET balance = balance + 10 WHERE id = 2;#此时这条DMz操作是一个独立的事务</span><br><span class="line">#3.2如果关闭自动提交?</span><br><span class="line">#方式1:</span><br><span class="line">SET autocommit = FALSE;#针对于DML操作是有效的，对DDL操作是无效的。</span><br><span class="line">UPDATE account SET balance = balance - 10 WHERE id = 1;</span><br><span class="line">UPDATE account SET balance = balance + 10 WHERE id = 2;</span><br><span class="line">COMMIT;#或rollback;</span><br><span class="line">#方式2:我们在autocommit为true的情况下，使用start transaction或begin开启事务，那么DML操作就不会自动提交数据</span><br><span class="line">START TRANSACTION</span><br><span class="line">UPDATE account SET balance = balance - 10 WHERE id = 1;</span><br><span class="line">UPDATE account SET balance = balance + 10 WHERE id = 2;</span><br><span class="line">COMMIT;#或rollback;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>oracle默认不自动提交，需要手写commint命令，而mysql默认自动提交</p>
+</blockquote>
+<h2 id="隐式提交数据的情况"><a href="#隐式提交数据的情况" class="headerlink" title="隐式提交数据的情况"></a>隐式提交数据的情况</h2><ul>
+<li><strong>数据定义语言（Data definition language，缩写为：DDL）</strong></li>
+</ul>
+<p>数据库对象，指的就是数据库、表、视图、存储过程等结构。当我们使用CREATE、ALTER、DROP等语句去修改数据库对象时，就会隐式的提交前边语句所属于的事务。即:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BEGIN;</span><br><span class="line">select ... #事务中的一条语句</span><br><span class="line">select ... #事务中的一条语句</span><br><span class="line"></span><br><span class="line">CREATE TABLE .. #此语句会隐式的提交前边语句所属于的事务</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p><strong>隐式使用或修改mysql数据库中的表</strong></p>
+<p>当我们使用ALTER USER、 CREATE USER、DROP USER、GRANT、RENAME USER、REVOKE、SETPASSWORD等语句时也会隐式的提交前边语句所属于的事务。</p>
+</li>
+<li><p><strong>事务控制或关于锁定的语句</strong><br>① 当我们在一个事务还没提交或者回滚时就又使用START TRANSACTION 或者BEGIN 语句开启了另一个事务时，会隐式的提交上一个事务。即：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BEGIN ;</span><br><span class="line">select ... #事务中的一条语句</span><br><span class="line">select ... #事务中的一条语句</span><br><span class="line"></span><br><span class="line">BEGIN; #此语句会隐式的提交前边语句所属于的事务</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>​    ② 当前的autocommit 系统变量的值为OFF ，我们手动把它调为ON 时，也会<strong>隐式的提交前边</strong>语句所属的事务。<br>​    ③ 使用LOCK TABLES 、UNLOCK TABLES 等关于锁定的语句也会隐式的提交前边语句所属的事务</p>
+<ul>
+<li><p>加载数据的语句</p>
+<p>使用LOAD DATA语句来批量往数据库中导入数据时，也会隐式的提交前边语句所属的事务。</p>
+</li>
+<li><p>关于MySQL复制的一些语句</p>
+<p>使用START SLAVE、STOP SLAVE、RESET SLAVE、CHANGE MASTER TO等语句时会隐式的提交前边语句所属的事务。</p>
+</li>
+<li><p>其它的一些语句</p>
+<p>使用ANALYZE TABLE、CACHE INDEX、CHECK TABLE、FLUSH、LOAD INDEX INTO CACHEOPTIMIZE TABLE、REPAIR TABLE、 RESET等语句也会隐式的提交前边语句所属的事务。</p>
+</li>
+</ul>
+<h2 id="使用举例1：提交与回滚"><a href="#使用举例1：提交与回滚" class="headerlink" title="使用举例1：提交与回滚"></a>使用举例1：提交与回滚</h2><p>情况1:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE USER(NAME VARCHAR(20), PRIMARY KEY (NAME)) ENGINE=INNODB;</span><br><span class="line"></span><br><span class="line">BEGIN;</span><br><span class="line">INSERT INTO USER VALUES(&#x27;张三&#x27;); #此时不会自动提交数据</span><br><span class="line">COMMIT;</span><br><span class="line"></span><br><span class="line">BEGIN;</span><br><span class="line">INSERT INTO USER VALUES(&#x27;李四&#x27;); #此时不会自动提交数据</span><br><span class="line">INSERT INTO USER VALUES(&#x27;李四&#x27;); </span><br><span class="line">ROLLBACK #回滚到上一次commit</span><br><span class="line"></span><br><span class="line">SELECT * FROM USER;</span><br></pre></td></tr></table></figure>
+
+<p>情况2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">TRUNCATE TABLE user ; #DDL操作会自动提交数据,不受autocommit变量的影响</span><br><span class="line">BEGIN;</span><br><span class="line">INSERT INTO USER VALUES(&#x27;张三&#x27;); </span><br><span class="line">COMMIT;</span><br><span class="line"></span><br><span class="line">INSERT INTO USER VALUES(&#x27;李四&#x27;);# 默认情况下DML 操作也会自动提交数据</span><br><span class="line">INSERT INTO USER VALUES(&#x27;李四&#x27;); #事务失败 不能重复插入相同的主键</span><br><span class="line">ROLLBACK;</span><br><span class="line"></span><br><span class="line">#结果：有两条数据</span><br></pre></td></tr></table></figure>
+
+<p>情况3：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#案例1：</span><br><span class="line">SELECT @@completion_type;</span><br><span class="line"></span><br><span class="line">SET @@completion_type=1;</span><br><span class="line"></span><br><span class="line">BEGIN;</span><br><span class="line">INSERT INTO user1 VALUES(&#x27;张三&#x27;); </span><br><span class="line">COMMIT;</span><br><span class="line"></span><br><span class="line">INSERT INTO user1 VALUES(&#x27;李四&#x27;);</span><br><span class="line">INSERT INTO user1 VALUES(&#x27;李四&#x27;);</span><br><span class="line">ROLLBACK</span><br><span class="line"></span><br><span class="line">SELECT * FROM user1;</span><br><span class="line">#结果只有一条数据 原因是当我们执行commit之后又开启了一个事务 所以执行后面的insert语句都没有自动提交，rollback回滚到张三之后的commit</span><br><span class="line"></span><br><span class="line">#举例2 体会innodb 和myISAM的区别</span><br><span class="line"></span><br><span class="line">CREATE TABLE test1(i INT )ENGINE= INNODB;</span><br><span class="line"></span><br><span class="line">CREATE TABLE test2(i INT )ENGINE= MYISAM;</span><br><span class="line"></span><br><span class="line">#针对于innodb</span><br><span class="line">BEGIN;</span><br><span class="line">INSERT INTO test1 VALUES(1);</span><br><span class="line">ROLLBACK;</span><br><span class="line"></span><br><span class="line">SELECT * FROM test1;</span><br><span class="line">#针对于myisam</span><br><span class="line">BEGIN;</span><br><span class="line">INSERT INTO test2 VALUES(1);</span><br><span class="line">ROLLBACK;</span><br><span class="line"></span><br><span class="line">SELECT * FROM test2; #回滚操作失败 myisam不支持事务</span><br><span class="line"></span><br><span class="line">#举例3： 体会savepoint</span><br><span class="line">CREATE TABLE user3(NAME VARCHAR(15), balance DECIMAL(10,2))ENGINE=INNODB;</span><br><span class="line"></span><br><span class="line">BEGIN;</span><br><span class="line">INSERT INTO user3(NAME,balance) VALUES(&#x27;张三&#x27;,1000);</span><br><span class="line">COMMIT;</span><br><span class="line"></span><br><span class="line">SELECT * FROM user3;</span><br><span class="line"></span><br><span class="line">BEGIN;</span><br><span class="line">UPDATE user3 SET balance= balance -100 WHERE NAME=&#x27;张三&#x27;;</span><br><span class="line"></span><br><span class="line">UPDATE user3 SET balance= balance -100 WHERE NAME=&#x27;张三&#x27;;</span><br><span class="line"></span><br><span class="line">SAVEPOINT s1; #设置保存点</span><br><span class="line"></span><br><span class="line">UPDATE user3 SET balance= balance -100 WHERE NAME=&#x27;张三&#x27;;</span><br><span class="line"></span><br><span class="line">ROLLBACK TO s1; #不是终止状态 </span><br><span class="line"></span><br><span class="line">ROLLBACK; #回滚操作</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>你能看到相同的SQL代码，只是在事务开始之前设置了SET @@completion_type = 1;，结果就和我们第一次处理的—样，只有一个“张三”。这是为什么呢?<br>这里我讲解下MySQL中completion_type参数的作用，实际上这个参数有3种可能:</p>
+<ol>
+<li>completion=0，这是默认情况。当我们执行COMMIT的时候会提交事务，在执行下一个事务时，还需要使用START TRANSACTION 或者 BEGIN来开启。</li>
+<li>completion=1，这种情况下，当我们提交事务后，相当于执行了COMMIT AND CHAIN，也就是开启一个链式事务，即当我们提交事务之后会开启一个相同隔离级别的事务。</li>
+<li>completion=2，这种情况下 CONMIT=COMMIT AND RELEASE，也就是当我们提交后，会自动与服务器断开连接。</li>
+</ol>
+<blockquote>
+<p>当我们设置autocommit=1时，不论是否采用 START TRANSACTION或者BEGIN 的方式来开启事务，都需要用COMMIT 进行提交，让事务生效，使用ROLLBACK对事务进行回滚。<br>当我们设置autocommit=1时，每条SQL语句都会自动进行提交。<br>不过这时，如果你采用START TRANSACTION或者BEGIN的方式来显式地开启事务，那么这个事务只有在COMMIT时才会生效，在ROLLBACK时才会回滚。</p>
+</blockquote>
+<h1 id="事务的隔离级别"><a href="#事务的隔离级别" class="headerlink" title="事务的隔离级别"></a>事务的隔离级别</h1><p>MySQL是一个<strong>客户端／服务器</strong>架构的软件，对于同一个服务器来说，可以有若干个客户端与之连接，每个客户端与服务器连接上之后，就可以称为一个会话（ <strong>Session</strong> ）。每个客户端都可以在自己的会话中向服务器发出请求语句，一个请求语句可能是某个事务的一部分，也就是对于服务器来说可能同时处理多个事务。事务有<strong>隔离性</strong>的特性，理论上在<strong>某个事务对某个数据</strong>进行访问时，其他事务应该进行排队，当该事务提交之后，其他事务才可以继续访问这个数据。但是这样对性能影响太大，我们既想保持事务的隔离性，又想让服务器在处理访问同一数据的多个事务时性能尽量高些，那就看二者如何权衡取舍了。</p>
+<h2 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE student (</span><br><span class="line">studentno INT,</span><br><span class="line">name VARCHAR(20),</span><br><span class="line">class varchar(20),</span><br><span class="line">PRIMARY KEY (studentno)</span><br><span class="line">) Engine=InnoDB CHARSET=utf8;</span><br></pre></td></tr></table></figure>
+
+<p>插入数据:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO student VALUES(1, &#x27;小谷&#x27;, &#x27;1班&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>现在表里的数据就是这样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from student;</span><br><span class="line">+-----------+--------+-------+</span><br><span class="line">| studentno | name | class |</span><br><span class="line">+-----------+--------+-------+</span><br><span class="line">| 1 | 小谷 | 1班 |</span><br><span class="line">+-----------+--------+-------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据并发问题"><a href="#数据并发问题" class="headerlink" title="数据并发问题"></a>数据并发问题</h2><p>针对事务的隔离性和并发性，我们怎么做取舍呢？<strong>先看一下访问相同数据的事务在不保证串行执行</strong>（也就是执行完一个再执行另一个）的情况下可能会出现哪些问题：</p>
+<ol>
+<li><strong>脏写（ Dirty Write ）</strong><br> 对于两个事务 Session A、Session B，如果事务Session A 修改了另一个未提交事务Session B 修改过的数据，那就意味着发生了脏写</li>
+</ol>
+<p>  <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418155511580.png" alt="image-20220418155511580"></p>
+<ol start="2">
+<li><strong>脏读（ Dirty Read ）</strong><br> 对于两个事务 Session A、Session B，Session A 读取了已经被 Session B 更新但还没有被提交的字段。之后若 Session B 回滚，Session A 读取的内容就是<strong>临时且无效</strong>的。</li>
+</ol>
+<p>  <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418155759143.png" alt="image-20220418155759143"></p>
+<p>  Session A和Session B各开启了一个事务，Session B中的事务先将studentno列为1的记录的name列更新为’张三’，然后Session A中的事务再去查询这条studentno为1的记录，如果读到列name的值为’张三’，而Session B中的事务稍后进行了回滚，那么Session A中的事务相当于读到了一个不存在的数据，这种现象就称之为脏读。</p>
+<ol start="3">
+<li><strong>不可重复读（ Non-Repeatable Read ）</strong><br> 对于两个事务Session A、Session B，<strong>Session A 读取了一个字段</strong>，然后 <strong>Session B 更新了该字段</strong>。 之后<strong>Session A 再次读取同一个字段</strong>， 值就不同了。那就意味着发生了不可重复读。</li>
+</ol>
+<p>  <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418155941958.png" alt="image-20220418155941958"></p>
+<p>  我们在Session B中提交了几个隐式事务（注意是隐式事务，意味着语句结束事务就提交了），这些事务都修改了studentno列为1的记录的列name的值，每次事务提交之后，如果Session A中的事务都可以查看到最新的值，这种现象也被称之为不可重复读。</p>
+<ol start="4">
+<li><strong>幻读（ Phantom ）</strong><br> 对于两个事务Session A、Session B, Session A 从一个表中读取了一个字段, 然后 Session B 在该表中插入了一些新的行。 之后, 如果 Session A 再次读取同一个表, 就会多出几行。那就意味着发生了幻读。</li>
+</ol>
+<p>  <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418160227416.png" alt="image-20220418160227416"></p>
+<p>  Session A中的事务先根据条件 studentno &gt; 0这个条件查询表student，得到了name列值为’张三’的记录；之后Session B中提交了一个隐式事务，该事务向表student中插入了一条新记录；之后Session A中的事务再根据相同的条件 studentno &gt; 0查询表student，得到的结果集中包含Session B中的事务新插入的那条记录，这种现象也被称之为幻读。我们把新插入的那些记录称之为<strong>幻影记录</strong>。</p>
+<p>注意1:<br>有的同学会有疑问，那如果Session B中<strong>删除</strong>了一些符合studentno &gt; 0的记录而不是插入新记录，那Session A之后再根据studentno &gt; 0的条件读取的记录变少了，这种现象算不算幻读呢?这种现象不属于幻读，幻读强调的是一个事务按照某个<strong>相同条件多次读取记录时</strong>，后读取时读到了之前没有读到的记录。</p>
+<p>注意2:<br>那对于先前已经读到的记录，之后又读取不到这种情况，算啥呢?这相当于对每一条记录都发生了不可重复读的现象。幻读只是重点强调了读取到了之前读取没有获取到的记录。</p>
+<p><strong>脏读和脏写都是在一个事务中读写到另外一个事务未提交的数据 ，而不可重复读和幻读是在一次事务中读取到另外一个事务提交的数据。</strong></p>
+<h2 id="SQL中的四种隔离级别"><a href="#SQL中的四种隔离级别" class="headerlink" title="SQL中的四种隔离级别"></a>SQL中的四种隔离级别</h2><p>上面介绍了几种并发事务执行过程中可能遇到的一些问题，这些问题有轻重缓急之分，我们给这些问题<br>按照严重性来排一下序：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">脏写 &gt; 脏读 &gt; 不可重复读 &gt; 幻读</span><br></pre></td></tr></table></figure>
+
+<p>我们愿意舍弃一部分隔离性来换取一部分性能在这里就体现在：设立一些隔离级别，隔离级别越低，并发问题发生的就越多。SQL标准中设立了4个隔离级别：</p>
+<ul>
+<li><p>READ UNCOMMITTED ：读未提交，在该隔离级别，所有事务都可以看到其他未提交事务的执行结果。不能避免脏读、不可重复读、幻读。</p>
+</li>
+<li><p>READ COMMITTED ：读已提交，它满足了隔离的简单定义：一个事务只能看见已经提交事务所做的改变。这是大多数数据库系统的默认隔离级别（但不是MySQL默认的）。可以避免脏读，但不可重复读、幻读问题仍然存在。</p>
+</li>
+<li><p>REPEATABLE READ ：可重复读，事务A在读到一条数据之后，此时事务B对该数据进行了修改并提交，那么事务A再读该数据，读到的还是原来的内容。可以避免脏读、不可重复读，但幻读问题仍然存在。这是MySQL的默认隔离级别。</p>
+</li>
+<li><p>SERIALIZABLE ：可串行化，确保事务可以从一个表中读取相同的行。在这个事务持续期间，禁止其他事务对该表执行插入、更新和删除操作。所有的并发问题都可以避免，但性能十分低下。能避免脏读、不可重复读和幻读。</p>
+<p>SQL标准中规定，针对不同的隔离级别，并发事务可以发生不同严重程度的问题，具体情况如下:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418161139080.png" alt="image-20220418161139080"></p>
+</li>
+</ul>
+<p><strong>脏写</strong>怎么没涉及到?因为脏写这个问题太严重了，不论是哪种隔离级别，都不允许脏写的情况发生<br>不同的隔离级别有不同的现象，并有不同的锁和并发机制，隔离级别越高，数据库的并发性能就越差，4种事务隔离级别与并发性能的关系如下:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418161147295.png" alt="image-20220418161147295"></p>
+<h2 id="MySQL支持的四种隔离级别"><a href="#MySQL支持的四种隔离级别" class="headerlink" title="MySQL支持的四种隔离级别"></a>MySQL支持的四种隔离级别</h2><p>MySQL的默认隔离级别为REPEATABLE READ，我们可以手动修改一下事务的隔离级别。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 查看隔离级别，MySQL 5.7.20的版本之前：</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;tx_isolation&#x27;;</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">| tx_isolation | REPEATABLE-READ |</span><br><span class="line">+---------------+-----------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"># MySQL 5.7.20版本之后，引入transaction_isolation来替换tx_isolation</span><br><span class="line"># 查看隔离级别，MySQL 5.7.20的版本及之后：</span><br><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;transaction_isolation&#x27;;</span><br><span class="line">+-----------------------+-----------------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+-----------------------+-----------------+</span><br><span class="line">| transaction_isolation | REPEATABLE-READ |</span><br><span class="line">+-----------------------+-----------------+</span><br><span class="line">1 row in set (0.02 sec)</span><br><span class="line">#或者不同MySQL版本中都可以使用的：</span><br><span class="line">SELECT @@transaction_isolation;</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何设置事务的隔离级别"><a href="#如何设置事务的隔离级别" class="headerlink" title="如何设置事务的隔离级别"></a>如何设置事务的隔离级别</h2><p>通过下面的语句修改事务的隔离级别：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SET [GLOBAL|SESSION] TRANSACTION ISOLATION LEVEL 隔离级别;</span><br><span class="line">#其中，隔离级别格式：</span><br><span class="line">&gt; READ UNCOMMITTED</span><br><span class="line">&gt; READ COMMITTED</span><br><span class="line">&gt; REPEATABLE READ</span><br><span class="line">&gt; SERIALIZABLE</span><br></pre></td></tr></table></figure>
+
+<p>或者：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SET [GLOBAL|SESSION] TRANSACTION_ISOLATION = &#x27;隔离级别&#x27;</span><br><span class="line">#其中，隔离级别格式：</span><br><span class="line">&gt; READ-UNCOMMITTED</span><br><span class="line">&gt; READ-COMMITTED</span><br><span class="line">&gt; REPEATABLE-READ</span><br><span class="line">&gt; SERIALIZABLE</span><br></pre></td></tr></table></figure>
+
+<p>关于设置时使用GLOBAL或SESSION的影响：</p>
+<ul>
+<li><p>使用GLOBAL 关键字（在全局范围影响）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL TRANSACTION ISOLATION LEVEL SERIALIZABLE;</span><br><span class="line">#或</span><br><span class="line">SET GLOBAL TRANSACTION_ISOLATION = &#x27;SERIALIZABLE&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>则：</p>
+<ul>
+<li>当前已经存在的会话无效</li>
+<li>只对执行完该语句之后产生的会话起作用</li>
+</ul>
+</li>
+<li><p>使用SESSION 关键字（在会话范围影响）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;</span><br><span class="line">#或</span><br><span class="line">SET SESSION TRANSACTION_ISOLATION = &#x27;SERIALIZABLE&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>则：</p>
+<ul>
+<li>对当前会话的所有后续的事务有效</li>
+<li>如果在事务之间执行，则对后续的事务有效</li>
+<li>该语句可以在已经开启的事务中间执行，但不会影响当前正在执行的事务</li>
+</ul>
+<blockquote>
+<p>小结：<br>数据库规定了多种事务隔离级别，不同隔离级别对应不同的干扰程度，隔离级别越高，数据一致性就越好，但并发性越弱。</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="事务的常见分类"><a href="#事务的常见分类" class="headerlink" title="事务的常见分类:"></a>事务的常见分类:</h1><p>下面分别介绍这几种类型:<br><strong>1)扁平事务</strong>是事务类型中最简单的一种，但是在实际生产环境中，这可能是使用最频繁的事务，在扁平事务中，所有操作都处于同一层次，其由BEGIN WORK开始，由COMMIT WORK或ROLLBACK WORK结束其间的操作是原子的，要么都执行，要么都回滚，因此，扁平事务是应用程序成为原子操作的基本组成模块。扁平事务虽然简单，但是在实际环境中使用最为频繁，也正因为其简单，使用频繁，故每个数据库系统都实现了对扁平事务的支持。扁平事务的主要限制是不能提交或者回滚事务的某一部分，或分几个步骤提交。<br>扁平事务一般有三种不同的结果:①事务成功完成。在平常应用中约占所有事务的96%。②应用程序要求停止事务。比如应用程序在捕获到异常时会回滚事务，约占事务的3%。③外界因素强制终止事务。如连接超时或连接断开，约占所有事务的1%。<br>2）带有保存点的扁平事务除了支持扁平事务支持的操作外，还允许在事务执行过程中回滚到同一事务中较早的一个状态。这是因为某些事务可能在执行过程中出现的错误并不会导致所有的操作都无效，放弃整个事务不合乎要求，开销太大。</p>
+<p><strong>保存点(Savepoint）</strong>用来通知事务系统应该记住事务当前的状态，以便当之后发生错误时，事务能回到保存点当时的状态。对于扁平的事务来说，隐式的设置了一个保存点，然而在整个事务中，只有这一个保存点，因此，回滚只能会滚到事务开始时的状态。</p>
+<p><strong>3)链式事务</strong>是指一个事务由多个子事务链式组成，它可以被视为保存点模式的一个变种。带有保存点的扁平事务，当发生系统崩溃时，所有的保存点都将消失，这意味着当进行恢复时，事务需要从开始处重新执行，而不能从最近的一个保存点继续执行。链事务的思想是:在提交一个事务时，释放不需要的数据对象，将必要的处理上下文隐式地传给下一个要开始的事务，前一个子事务的提交操作和下一个子事务的开始操作合并成一个原子操作，这意味着下一个事务将看到上一个事务的结果，就好像在一个事务中进行一样。这样，<strong>在提交子事务时就可以释放不需要的数据对象</strong>，而不必等到整个事务完成后才释放。其工作方式如下:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220418152840584.png" alt="image-20220418152840584"></p>
+<p>链事务与带有保存点的扁平事务的不同之处体现在:<br>①带有保存点的扁平事务能回滚到任意正确的保存点，而链事务中的回滚仅限于当前事务，即只能恢复到最近的一个保存点。<br>对于锁的处理，两者也不相同，链事务在执行COMMIT后即释放了当前所持有的锁，而带有保存点的扁平事务不影响迄今为止所持有的锁。<br><strong>4)嵌套事务</strong>是一个层次结构框架，由一个顶层事务（Top-Level Transaction）控制着各个层次的事务，顶层事务之下嵌套的事务被称为子事务(Subtransaction)，其控制着每一个局部的变换，子事务本身也可以是嵌套事务。因此，嵌套事务的层次结构可以看成是一棵树。<br><strong>5)分布式事务</strong>通常是在一个分布式环境下运行的扁平事务，因此，需要根据数据所在位置访问网络中不同节点的数据库资源。例如，一个银行用户从招商银行的账户向工商银行的账户转账1000元，这里需要用到分布式事务，因为不能仅调用某一家银行的数据库就完成任务。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	
+	</div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/17/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%85%B6%E4%BB%96%E8%B0%83%E4%BC%98%E7%AD%96%E7%95%A5/" rel="next" title="数据库其他调优策略">
+                <i class="fa fa-chevron-left"></i> 数据库其他调优策略
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="张浩宇" />
+            
+              <p class="site-author-name" itemprop="name">张浩宇</p>
+              <p class="site-description motion-element" itemprop="description">日积月累,积少成多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">127</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/blacke1111" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">数据库事务概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%94%AF%E6%8C%81%E6%83%85%E5%86%B5"><span class="nav-number">1.1.</span> <span class="nav-text">存储引擎支持情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84ACID%E7%89%B9%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">事务的ACID特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E7%8A%B6%E6%80%81"><span class="nav-number">1.4.</span> <span class="nav-text">事务的状态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.</span> <span class="nav-text">如何使用事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">显式事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="nav-number">2.2.</span> <span class="nav-text">隐式事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E6%8F%90%E4%BA%A4%E6%95%B0%E6%8D%AE%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">2.3.</span> <span class="nav-text">隐式提交数据的情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%BE%E4%BE%8B1%EF%BC%9A%E6%8F%90%E4%BA%A4%E4%B8%8E%E5%9B%9E%E6%BB%9A"><span class="nav-number">2.4.</span> <span class="nav-text">使用举例1：提交与回滚</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">事务的隔离级别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="nav-number">3.1.</span> <span class="nav-text">数据准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98"><span class="nav-number">3.2.</span> <span class="nav-text">数据并发问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL%E4%B8%AD%E7%9A%84%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.3.</span> <span class="nav-text">SQL中的四种隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E6%94%AF%E6%8C%81%E7%9A%84%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.4.</span> <span class="nav-text">MySQL支持的四种隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-number">3.5.</span> <span class="nav-text">如何设置事务的隔离级别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%B8%B8%E8%A7%81%E5%88%86%E7%B1%BB"><span class="nav-number">4.</span> <span class="nav-text">事务的常见分类:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Hao Hu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数&#58;</span>
+    
+    <span title="博客全站字数">267.1k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
