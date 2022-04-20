@@ -383,6 +383,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -439,31 +444,31 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/nginx/sbin/</span><br></pre></td></tr></table></figure>
-<h1><strong>nginx</strong> <strong>常用的命令：</strong></h1>
-<h2 id="在-usr-local-nginx-sbin-目录下执行">在/usr/local/nginx/sbin 目录下执行</h2>
-<h2 id="（1）查看版本号">（1）查看版本号</h2>
+<h1 id="strong-nginx-strong-strong-chang-yong-de-ming-ling-strong"><strong>nginx</strong> <strong>常用的命令：</strong></h1>
+<h2 id="zai-usr-local-nginx-sbin-mu-lu-xia-zhi-xing" id="在-usr-local-nginx-sbin-目录下执行">在/usr/local/nginx/sbin 目录下执行</h2>
+<h2 id="1-cha-kan-ban-ben-hao" id="（1）查看版本号">（1）查看版本号</h2>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./nginx</span> -v</span><br></pre></td></tr></table></figure>
-<h2 id="（2）关闭命令">（2）关闭命令</h2>
+<h2 id="2-guan-bi-ming-ling" id="（2）关闭命令">（2）关闭命令</h2>
 <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx -s stop</span><br></pre></td></tr></table></figure>
-<h2 id="（3）重新加载命令">（3）重新加载命令</h2>
+<h2 id="3-zhong-xin-jia-zai-ming-ling" id="（3）重新加载命令">（3）重新加载命令</h2>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./nginx</span> -s <span class="keyword">reload</span></span><br></pre></td></tr></table></figure>
-<h2 id="（4）启动命令">（4）启动命令</h2>
+<h2 id="4-qi-dong-ming-ling" id="（4）启动命令">（4）启动命令</h2>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">./nginx</span></span><br></pre></td></tr></table></figure>
-<h1><strong>nginx.conf</strong> <strong>配置文件</strong></h1>
+<h1 id="strong-nginx-conf-strong-strong-pei-zhi-wen-jian-strong"><strong>nginx.conf</strong> <strong>配置文件</strong></h1>
 <p>nginx 安装目录下，其默认的配置文件都放在这个目录的 conf 目录下，而主配置文件,nginx.conf 也在其中，后续对 nginx 的使用基本上都是对此配置文件进行相应的修改</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112195352.png" alt=""></p>
 <p>配置文件中有很多#， 开头的表示注释内容，我们去掉所有以 # 开头的段落，精简之后的</p>
-<h2 id="内容如下：">内容如下：</h2>
-<h2 id="第一部分：全局块"><strong>第一部分：全局块</strong></h2>
+<h2 id="nei-rong-ru-xia" id="内容如下：">内容如下：</h2>
+<h2 id="strong-di-yi-bu-fen-quan-ju-kuai-strong" id="第一部分：全局块"><strong>第一部分：全局块</strong></h2>
 <p>从配置文件开始到 events 块之间的内容，主要会设置一些影响 nginx 服务器整体运行的配置指令，主要包括配置运行 Nginx 服务器的用户（组）、允许生成的 worker process 数，进程 PID 存放路径、日志存放路径和类型以及配置文件的引入等。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112195735.png" alt=""></p>
 <p>比如上面第一行配置的：</p>
 <p>这是 Nginx 服务器并发处理服务的关键配置，worker_processes 值越大，可以支持的并发处理量也越多，但是会受到硬件、软件等设备的制约</p>
-<h2 id="第二部分：events-块"><strong>第二部分：events 块</strong></h2>
+<h2 id="strong-di-er-bu-fen-events-kuai-strong" id="第二部分：events-块"><strong>第二部分：events 块</strong></h2>
 <p><img src="C:%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220112195838915.png" alt="image-20220112195838915"></p>
 <p>events 块涉及的指令主要影响 Nginx 服务器与用户的网络连接，常用的设置包括是否开启对多 work process 下的网络连接进行序列化，是否允许同时接收多个网络连接，选取哪种事件驱动模型来处理连接请求，每个 word process 可以同时支持的最大连接数等。 上述例子就表示每个 work process 支持的最大连接数为 1024.<br>
 这部分的配置对 Nginx 的性能影响较大，在实际中应该灵活配置。</p>
-<h2 id="第三部分：http-块"><strong>第三部分：http 块</strong></h2>
+<h2 id="strong-di-san-bu-fen-http-kuai-strong" id="第三部分：http-块"><strong>第三部分：http 块</strong></h2>
 <p>这算是 Nginx 服务器配置中最频繁的部分，代理、缓存和日志定义等绝大多数功能和第三方模块的配置都在这里。需要注意的是：http 块也可以包括 http 全局块、server 块。</p>
 <p><strong>①、http 全局块</strong><br>
 http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自定义、连接超时时间、单链接请求数上限等</p>
@@ -669,7 +674,7 @@ http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">nginx 常用的命令：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8-usr-local-nginx-sbin-%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%89%A7%E8%A1%8C"><span class="nav-number">1.1.</span> <span class="nav-text">在&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin 目录下执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%9F%A5%E7%9C%8B%E7%89%88%E6%9C%AC%E5%8F%B7"><span class="nav-number">1.2.</span> <span class="nav-text">（1）查看版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%85%B3%E9%97%AD%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">（2）关闭命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%883%EF%BC%89%E9%87%8D%E6%96%B0%E5%8A%A0%E8%BD%BD%E5%91%BD%E4%BB%A4"><span class="nav-number">1.4.</span> <span class="nav-text">（3）重新加载命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">1.5.</span> <span class="nav-text">（4）启动命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">nginx.conf 配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">内容如下：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%9A%E5%85%A8%E5%B1%80%E5%9D%97"><span class="nav-number">2.2.</span> <span class="nav-text">第一部分：全局块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9Aevents-%E5%9D%97"><span class="nav-number">2.3.</span> <span class="nav-text">第二部分：events 块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%83%A8%E5%88%86%EF%BC%9Ahttp-%E5%9D%97"><span class="nav-number">2.4.</span> <span class="nav-text">第三部分：http 块</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#strong-nginx-strong-strong-chang-yong-de-ming-ling-strong"><span class="nav-number">1.</span> <span class="nav-text">nginx 常用的命令：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zai-usr-local-nginx-sbin-mu-lu-xia-zhi-xing"><span class="nav-number">1.1.</span> <span class="nav-text">在&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin 目录下执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-cha-kan-ban-ben-hao"><span class="nav-number">1.2.</span> <span class="nav-text">（1）查看版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-guan-bi-ming-ling"><span class="nav-number">1.3.</span> <span class="nav-text">（2）关闭命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-zhong-xin-jia-zai-ming-ling"><span class="nav-number">1.4.</span> <span class="nav-text">（3）重新加载命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-qi-dong-ming-ling"><span class="nav-number">1.5.</span> <span class="nav-text">（4）启动命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#strong-nginx-conf-strong-strong-pei-zhi-wen-jian-strong"><span class="nav-number">2.</span> <span class="nav-text">nginx.conf 配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nei-rong-ru-xia"><span class="nav-number">2.1.</span> <span class="nav-text">内容如下：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-di-yi-bu-fen-quan-ju-kuai-strong"><span class="nav-number">2.2.</span> <span class="nav-text">第一部分：全局块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-di-er-bu-fen-events-kuai-strong"><span class="nav-number">2.3.</span> <span class="nav-text">第二部分：events 块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-di-san-bu-fen-http-kuai-strong"><span class="nav-number">2.4.</span> <span class="nav-text">第三部分：http 块</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -722,7 +727,29 @@ http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自�
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1189,7 +1216,6 @@ http 全局块配置的指令包括文件引入、MIME-TYPE 定义、日志自�
 
 
   
-
   
 
   

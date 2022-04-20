@@ -387,6 +387,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -436,21 +441,21 @@
       
 
       
-        <h2 id="集合与数组存储数据概述">集合与数组存储数据概述:</h2>
+        <h2 id="ji-he-yu-shu-zu-cun-chu-shu-ju-gai-shu" id="集合与数组存储数据概述">集合与数组存储数据概述:</h2>
 <p>集合、数组都是对多个数据进行存储操作的结构，简称ava容器。<br>
 说明:此时的存储，主要指的是内存层面的存储，不涉及到持久化的存储（.txt,.jpg,.avi，数据库中）</p>
-<h2 id="数组存储的特点">数组存储的特点:</h2>
+<h2 id="shu-zu-cun-chu-de-te-dian" id="数组存储的特点">数组存储的特点:</h2>
 <p>一旦初始化以后，其长度就确定了。<br>
 数组一旦定义好，其元素的类型也就确定了。我们也就只能操作指定类型的数据了。<br>
 *  比如: Strina[]arr;int[]arr1;obiect[]arr2;</p>
-<h2 id="数组存储的弊端">数组存储的弊端:</h2>
+<h2 id="shu-zu-cun-chu-de-bi-duan" id="数组存储的弊端">数组存储的弊端:</h2>
 <ul>
 <li>—旦初始化以后，其长度就不可修改。</li>
 <li>数组中提供的方法非常限，对于添加、删除、插入数据等操作，非常不便，同时效率不高。</li>
 <li>获取数组中实际元素的个数的需求,数组没有现成的属性或方法可用</li>
 <li>数组存储数据的特点:序、可重复。对于无序、不可重复的需求，不能满足。</li>
 </ul>
-<h1>集合框架</h1>
+<h1 id="ji-he-kuang-jia">集合框架</h1>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113171108.png" alt=""></p>
 <p><strong>Collection接口</strong>：单列集合，用来存储一个一个的对象<br>
   <strong>List接口</strong> ：存储有序的，可重复的数据<br>
@@ -459,7 +464,7 @@
    HashSet，LinkedHashSet，TreeSet<br>
 <strong>Map接口</strong>：双列集合，用来存储一堆（key，value）一对的数据<br>
    HashMap，LinkedHashMap，TreeMap、Hashtable、Properties</p>
-<h2 id="Iterator迭代器接口">Iterator迭代器接口</h2>
+<h2 id="iterator-die-dai-qi-jie-kou" id="Iterator迭代器接口">Iterator迭代器接口</h2>
 <ul>
 <li>lterator对象称为迭代器(设计模式的一种)，主要用于遍历Collection集合中的元素。</li>
 <li><strong>GOF给迭代器模式的定义为:提供一种方法访问一个容器(container)对象中各个元素，而又不需暴露该对象的内部细节</strong>。迭代器模式，就是为容器而生。类似于“公交车上的售票员”、“火车上的乘务员”、“空姐”。</li>
@@ -470,7 +475,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">       Collection&lt;Object&gt; collection = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">       collection.add(<span class="number">13</span>);</span><br><span class="line">       collection.add(<span class="keyword">false</span>);</span><br><span class="line">       collection.add(<span class="keyword">new</span> Person(<span class="string">&quot;zhang&quot;</span>));</span><br><span class="line">       collection.add(<span class="keyword">new</span> Person(<span class="string">&quot;hao&quot;</span>));</span><br><span class="line">       Iterator&lt;Object&gt; iterator = collection.iterator();</span><br><span class="line">       <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">		<span class="comment">//next 1。指针下移 2.将下移以后集合位置上的元素返回</span></span><br><span class="line">           System.out.println(iterator.next());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 <p>remove方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       Collection&lt;Object&gt; collection = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">       collection.add(<span class="number">13</span>);</span><br><span class="line">       collection.add(<span class="keyword">false</span>);</span><br><span class="line">       collection.add(<span class="keyword">new</span> Person(<span class="string">&quot;zhang&quot;</span>));</span><br><span class="line">       collection.add(<span class="keyword">new</span> String(<span class="string">&quot;hao&quot;</span>));</span><br><span class="line">       Iterator&lt;Object&gt; iterator = collection.iterator();</span><br><span class="line">       <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">           Object next = iterator.next();</span><br><span class="line">           <span class="keyword">if</span> (next.equals(<span class="string">&quot;hao&quot;</span>))&#123;</span><br><span class="line">		<span class="comment">//移除当前迭代器指针指向元素</span></span><br><span class="line">               iterator.remove();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       Iterator&lt;Object&gt; iterator1 = collection.iterator();</span><br><span class="line">       <span class="keyword">while</span> (iterator1.hasNext()) &#123;</span><br><span class="line">           System.out.println(iterator1.next());</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="List接口">List接口</h2>
+<h2 id="list-jie-kou" id="List接口">List接口</h2>
 <ul>
 <li>鉴于Java中数组用来存储数据的局限性，我们通常使用List替代数组</li>
 <li>List集合类中元素有序、且可重复，集合中的每个元素都有其对应的顺序索引。</li>
@@ -488,7 +493,7 @@
 <strong>Vector</strong>:作为List接口的古老实现类；线程安全的，效率低。底层使用0bject[]eLementData存储</p>
 </blockquote>
 </blockquote>
-<h3 id="ArrayList">ArrayList</h3>
+<h3 id="array-list" id="ArrayList">ArrayList</h3>
 <p>ArrayList的源码分析:<br>
 <strong>jdk 7</strong>情况下<br>
 ArrayList list = new ArrayList();//底层创建了长度是10的object[]数组   eLementDatalist.add(123); //eLementData[size+1] = new Integer(123);<br>
@@ -503,13 +508,13 @@ list.add(123);//第一次调用add()时，底层才创建了长度10的数组，
 后续的添加和扩容操作与jdk 7无异。</p>
 <p>小结: jdk7中的ArrayList的对象创建类似于单例的饿汉式，而jdk8中的ArrayList的对象<br>
 创建类似于懒汉式。</p>
-<h3 id="LinkedList">LinkedList</h3>
+<h3 id="linked-list" id="LinkedList">LinkedList</h3>
 <p>jdk8：<br>
 LinkedList list = new LinkedList();内部声明了Node类型的first和Last属性，默认值为null<br>
 List.add ( 123);//将123封装到Node中，创建了Node对象。<br>
 其中，Node定义为:<br>
 <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211113200814.png" alt=""></p>
-<h2 id="Set接口">Set接口</h2>
+<h2 id="set-jie-kou" id="Set接口">Set接口</h2>
 <ul>
 <li>Set接口中没有额外定义新的方法，使用的都是Ccollection中声明过的方法。</li>
 <li>Set接口是Collection的子接口，set接口没有提供额外的方法</li>
@@ -524,7 +529,7 @@ LinkedHashSet：继承于HashSet,遍历内部结构时，可以按照添加的�
 TreeSet：添加的数据来自同一个类的实例，<strong>红黑树</strong>，可以按照指定添加对象的属性进行排序。</p>
 </blockquote>
 </blockquote>
-<h3 id="HashSet">HashSet</h3>
+<h3 id="hash-set" id="HashSet">HashSet</h3>
 <p>1：无序 ： 不等于随机性，存储的数据在底层数组中并非按照数组索引的顺序添加，而是根据数据的哈希值决定的。</p>
 <p>2：不可重复性：保证添加的元素按照equals()判断时，不能返回true.即:相同的元素只能添加一个</p>
 <p>二、添加元素的过程:以<strong>HashSet</strong>为例:底层实现数组加链表<br>
@@ -540,18 +545,18 @@ TreeSet：添加的数据来自同一个类的实例，<strong>红黑树</strong
 <p><strong>要求1</strong>:向Set中添加的数据，其所在的类一定要重写hashcode( )和equals()<br>
 <strong>要求2</strong>:重写的hashCode()和equals()尽可能保持一致性:相等的对象必须具有相等的散列码<br>
 <strong>重写两个方法的小技巧</strong>:对象中用作equals()方法比较的Field，都应该用来计算hashCode值。</p>
-<h3 id="LinkedHashSet">LinkedHashSet</h3>
+<h3 id="linked-hash-set" id="LinkedHashSet">LinkedHashSet</h3>
 <p>继承于HashSet<br>
 <strong>为什么输出时可以按照添加的顺序输出：</strong><br>
 <img src="https://i.loli.net/2021/11/14/gmUEWPaV5v3RuKH.png" alt=""></p>
 <p>对于频繁的遍历操作，LinkedHashset效率高于HashSet.</p>
-<h3 id="TreeSet（红黑树）">TreeSet（红黑树）</h3>
+<h3 id="tree-set-hong-hei-shu" id="TreeSet（红黑树）">TreeSet（红黑树）</h3>
 <p>1.向Treeset中添加的数据，要求是相同类的对象</p>
 <p>2.两种排序方式:自然排序（实现Comparable接口）和定制排序</p>
 <p>3.自然排序中，比较两个对象是否相同的标准为: compareTo()返回0.不再是equals().</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自然排序</span></span><br><span class="line"><span class="comment">//User实现Comparable接口 重写</span></span><br><span class="line"> <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (o <span class="keyword">instanceof</span>  User) &#123;</span><br><span class="line">            User o1 = (User) o;</span><br><span class="line">            <span class="keyword">int</span> i = <span class="keyword">this</span>.name.compareTo(o1.getName());</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> i != <span class="number">0</span> ? i : Integer.compare(<span class="keyword">this</span>.age, o1.age);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Test： 比较两个对象是否相同的标准为: compareTo()返回0.不再是equals().</span></span><br><span class="line">	TreeSet&lt;Object&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;&gt;();</span><br><span class="line">	treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Tom&quot;</span>,<span class="number">45</span>));</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Jack&quot;</span>,<span class="number">45</span>));</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Tom&quot;</span>,<span class="number">65</span>));</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Rose&quot;</span>,<span class="number">12</span>));</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Zhang&quot;</span>,<span class="number">2</span>));</span><br><span class="line">        <span class="keyword">for</span> (Object o : treeSet) &#123;</span><br><span class="line">            User o1=(User)o;</span><br><span class="line">            System.out.println(o1);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//定制排序 </span></span><br><span class="line"><span class="comment">//4.定制排序中，比较两个对象是否相同的标准为: compare()返回0.不再是equals().</span></span><br><span class="line"> <span class="meta">@Test</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        Comparator&lt;Object&gt; objectComparator = <span class="keyword">new</span> Comparator&lt;Object&gt;()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Object o1, Object o2)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (o1 <span class="keyword">instanceof</span> User&amp;&amp; o2 <span class="keyword">instanceof</span> User)&#123;</span><br><span class="line">                    User u1=(User)o1;</span><br><span class="line">                    User u2=(User)o2;</span><br><span class="line">                    <span class="keyword">return</span>  Integer.compare(u1.getAge(), u2.getAge());</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    <span class="keyword">throw</span>  <span class="keyword">new</span> RuntimeException(<span class="string">&quot;输入的苏剧类型不匹配&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        TreeSet&lt;Object&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;&gt;(objectComparator);</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Tom&quot;</span>,<span class="number">45</span>));</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Jack&quot;</span>,<span class="number">45</span>));</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Tom&quot;</span>,<span class="number">65</span>));</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Rose&quot;</span>,<span class="number">12</span>));</span><br><span class="line">        treeSet.add(<span class="keyword">new</span> User(<span class="string">&quot;Zhang&quot;</span>,<span class="number">2</span>));</span><br><span class="line">        <span class="keyword">for</span> (Object o : treeSet) &#123;</span><br><span class="line">            User o1=(User)o;</span><br><span class="line">            System.out.println(o1);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Map接口">Map接口</h2>
+<h2 id="map-jie-kou" id="Map接口">Map接口</h2>
 <p><img src="https://i.loli.net/2021/11/14/Mba1OKrq7Zcdes4.png" alt=""></p>
 <p><strong>Map</strong>:双列数据，存储key-value对的数据—类似于高中的函数: y = f(x)<br>
 <strong>HashMap</strong>:作为Map的主要实现类;线程不安全的，效率高;存储null的key 和vaLue<br>
@@ -565,10 +570,10 @@ Map中的key:无序的、不可重复的，使用set存储所有的key<br>
 Map 中的value:无序的、可重复的，使用Collection存储所有的value<br>
 一个键值对: key-value构成了一个Entry对象。<br>
 Map中的entry:无序的、不可重复的，使用set存储所有的entry</p>
-<h3 id="HashMap（具体细节建议直接看源码）：">HashMap（具体细节建议直接看源码）：</h3>
+<h3 id="hash-map-ju-ti-xi-jie-jian-yi-zhi-jie-kan-yuan-ma" id="HashMap（具体细节建议直接看源码）：">HashMap（具体细节建议直接看源码）：</h3>
 <p>jdk7底层结构只有:数组+链表。jdk8中底层结构:数组+链表+红黑树。<br>
 当数组的某一个索引位置上的元素以链表形式存在的数据个数&gt;8且当前数组的长度&gt;64时，此时此索引位置上的所有数据改为使用红黑树存储。|</p>
-<h3 id="LinkedHashMap">LinkedHashMap</h3>
+<h3 id="linked-hash-map" id="LinkedHashMap">LinkedHashMap</h3>
 <p>主要改变是：<br>
 <img src="https://i.loli.net/2021/11/15/w8ZQP9aBh5nHvs6.png" alt=""></p>
 <p>可以按照添加的顺序输出。</p>
@@ -771,7 +776,7 @@ Map中的entry:无序的、不可重复的，使用set存储所有的entry</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E4%B8%8E%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">集合与数组存储数据概述:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">数组存储的特点:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%AD%98%E5%82%A8%E7%9A%84%E5%BC%8A%E7%AB%AF"><span class="nav-number">3.</span> <span class="nav-text">数组存储的弊端:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">集合框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterator%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">Iterator迭代器接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">List接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ArrayList"><span class="nav-number">2.1.</span> <span class="nav-text">ArrayList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedList"><span class="nav-number">2.2.</span> <span class="nav-text">LinkedList</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">Set接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashSet"><span class="nav-number">3.1.</span> <span class="nav-text">HashSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedHashSet"><span class="nav-number">3.2.</span> <span class="nav-text">LinkedHashSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TreeSet%EF%BC%88%E7%BA%A2%E9%BB%91%E6%A0%91%EF%BC%89"><span class="nav-number">3.3.</span> <span class="nav-text">TreeSet（红黑树）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.</span> <span class="nav-text">Map接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HashMap%EF%BC%88%E5%85%B7%E4%BD%93%E7%BB%86%E8%8A%82%E5%BB%BA%E8%AE%AE%E7%9B%B4%E6%8E%A5%E7%9C%8B%E6%BA%90%E7%A0%81%EF%BC%89%EF%BC%9A"><span class="nav-number">4.1.</span> <span class="nav-text">HashMap（具体细节建议直接看源码）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LinkedHashMap"><span class="nav-number">4.2.</span> <span class="nav-text">LinkedHashMap</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-he-yu-shu-zu-cun-chu-shu-ju-gai-shu"><span class="nav-number">1.</span> <span class="nav-text">集合与数组存储数据概述:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zu-cun-chu-de-te-dian"><span class="nav-number">2.</span> <span class="nav-text">数组存储的特点:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shu-zu-cun-chu-de-bi-duan"><span class="nav-number">3.</span> <span class="nav-text">数组存储的弊端:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ji-he-kuang-jia"><span class="nav-number"></span> <span class="nav-text">集合框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#iterator-die-dai-qi-jie-kou"><span class="nav-number">1.</span> <span class="nav-text">Iterator迭代器接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list-jie-kou"><span class="nav-number">2.</span> <span class="nav-text">List接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#array-list"><span class="nav-number">2.1.</span> <span class="nav-text">ArrayList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linked-list"><span class="nav-number">2.2.</span> <span class="nav-text">LinkedList</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-jie-kou"><span class="nav-number">3.</span> <span class="nav-text">Set接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-set"><span class="nav-number">3.1.</span> <span class="nav-text">HashSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linked-hash-set"><span class="nav-number">3.2.</span> <span class="nav-text">LinkedHashSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tree-set-hong-hei-shu"><span class="nav-number">3.3.</span> <span class="nav-text">TreeSet（红黑树）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map-jie-kou"><span class="nav-number">4.</span> <span class="nav-text">Map接口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-map-ju-ti-xi-jie-jian-yi-zhi-jie-kan-yuan-ma"><span class="nav-number">4.1.</span> <span class="nav-text">HashMap（具体细节建议直接看源码）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linked-hash-map"><span class="nav-number">4.2.</span> <span class="nav-text">LinkedHashMap</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -824,7 +829,29 @@ Map中的entry:无序的、不可重复的，使用set存储所有的entry</p>
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1291,7 +1318,6 @@ Map中的entry:无序的、不可重复的，使用set存储所有的entry</p>
 
 
   
-
   
 
   

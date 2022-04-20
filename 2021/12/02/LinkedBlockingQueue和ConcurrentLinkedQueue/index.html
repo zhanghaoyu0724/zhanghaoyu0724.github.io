@@ -392,6 +392,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -441,8 +446,8 @@
       
 
       
-        <h1>LinkedBlockingQueue</h1>
-<h2 id="1-基本的入队出队">1.基本的入队出队</h2>
+        <h1 id="linked-blocking-queue">LinkedBlockingQueue</h1>
+<h2 id="1-ji-ben-de-ru-dui-chu-dui" id="1-基本的入队出队">1.基本的入队出队</h2>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedBlockingQueue</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">AbstractQueue</span>&lt;<span class="title">E</span>&gt;</span></span><br><span class="line"><span class="class"> <span class="keyword">implements</span> <span class="title">BlockingQueue</span>&lt;<span class="title">E</span>&gt;, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line"> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt; </span>&#123;</span><br><span class="line">     E item;</span><br><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 下列三种情况之一</span></span><br><span class="line"><span class="comment"> * - 真正的后继节点</span></span><br><span class="line"><span class="comment"> * - 自己, 发生在出队时</span></span><br><span class="line"><span class="comment"> * - null, 表示是没有后继节点, 是最后了</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> Node&lt;E&gt; next;</span><br><span class="line"> Node(E x) &#123; item = x; &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>初始化链表 last = head = new Node<E>(null); Dummy 节点用来占位，item 为 null</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202213830.png" alt=""></p>
@@ -461,7 +466,7 @@
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214125.png" alt=""></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">E x = first.item;</span><br><span class="line">first.item = <span class="keyword">null</span>;</span><br><span class="line"><span class="keyword">return</span> x;</span><br></pre></td></tr></table></figure>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214212.png" alt=""></p>
-<h2 id="2-加锁分析"><strong>2.</strong> <strong>加锁分析</strong></h2>
+<h2 id="strong-2-strong-strong-jia-suo-fen-xi-strong" id="2-加锁分析"><strong>2.</strong> <strong>加锁分析</strong></h2>
 <p>==高明之处==在于用了两把锁和 dummy 节点</p>
 <ul>
 <li>用一把锁，同一时刻，最多只允许有一个线程（生产者或消费者，二选一）执行</li>
@@ -483,7 +488,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">put</span><span class="params">(E e)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line"> <span class="keyword">int</span> c = -<span class="number">1</span>;</span><br><span class="line"> Node&lt;E&gt; node = <span class="keyword">new</span> Node&lt;E&gt;(e);</span><br><span class="line"> <span class="keyword">final</span> ReentrantLock putLock = <span class="keyword">this</span>.putLock;</span><br><span class="line"> <span class="comment">// count 用来维护元素计数</span></span><br><span class="line"> <span class="keyword">final</span> AtomicInteger count = <span class="keyword">this</span>.count;</span><br><span class="line"> putLock.lockInterruptibly();</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> <span class="comment">// 满了等待</span></span><br><span class="line"> <span class="keyword">while</span> (count.get() == capacity) &#123;</span><br><span class="line"> <span class="comment">// 倒过来读就好: 等待 notFull</span></span><br><span class="line"> notFull.await();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 有空位, 入队且计数加一</span></span><br><span class="line"> enqueue(node);</span><br><span class="line"> c = count.getAndIncrement(); </span><br><span class="line"> <span class="comment">// 除了自己 put 以外, 队列还有空位, 由自己叫醒其他 put 线程</span></span><br><span class="line"> <span class="keyword">if</span> (c + <span class="number">1</span> &lt; capacity)</span><br><span class="line"> notFull.signal();</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> putLock.unlock();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 如果队列中有一个元素, 叫醒 take 线程</span></span><br><span class="line"> <span class="keyword">if</span> (c == <span class="number">0</span>)</span><br><span class="line"> <span class="comment">// 这里调用的是 notEmpty.signal() 而不是 notEmpty.signalAll() 是为了减少竞争</span></span><br><span class="line"> signalNotEmpty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>take 操作</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> E <span class="title">take</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"> E x;</span><br><span class="line"> <span class="keyword">int</span> c = -<span class="number">1</span>;</span><br><span class="line"> <span class="keyword">final</span> AtomicInteger count = <span class="keyword">this</span>.count;</span><br><span class="line"> <span class="keyword">final</span> ReentrantLock takeLock = <span class="keyword">this</span>.takeLock;</span><br><span class="line"> takeLock.lockInterruptibly();</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> <span class="keyword">while</span> (count.get() == <span class="number">0</span>) &#123;</span><br><span class="line"> notEmpty.await();</span><br><span class="line"> &#125;</span><br><span class="line"> x = dequeue();</span><br><span class="line"> c = count.getAndDecrement();</span><br><span class="line"> <span class="keyword">if</span> (c &gt; <span class="number">1</span>)</span><br><span class="line"> notEmpty.signal();</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> takeLock.unlock();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="comment">// 如果队列中只有一个空位时, 叫醒 put 线程</span></span><br><span class="line"> <span class="comment">// 如果有多个线程进行出队, 第一个线程满足 c == capacity, 但后续线程 c &lt; capacity</span></span><br><span class="line"> <span class="keyword">if</span> (c == capacity)</span><br><span class="line"> <span class="comment">// 这里调用的是 notFull.signal() 而不是 notFull.signalAll() 是为了减少竞争</span></span><br><span class="line"> signalNotFull()</span><br><span class="line">     <span class="keyword">return</span> x; &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="3-性能比较">3. <strong>性能比较</strong></h2>
+<h2 id="3-strong-xing-neng-bi-jiao-strong" id="3-性能比较">3. <strong>性能比较</strong></h2>
 <p>主要列举 LinkedBlockingQueue 与 ArrayBlockingQueue 的性能比较</p>
 <ul>
 <li>Linked 支持有界，Array 强制有界</li>
@@ -492,7 +497,7 @@
 <li>Linked 每次入队会生成新 Node，而 Array 的 Node 是提前创建好的</li>
 <li>Linked 两把锁，Array 一把锁</li>
 </ul>
-<h1>ConcurrentLinkedQueue</h1>
+<h1 id="concurrent-linked-queue">ConcurrentLinkedQueue</h1>
 <p>ConcurrentLinkedQueue 的设计与 LinkedBlockingQueue 非常像，也是</p>
 <ul>
 <li>两把【锁】，同一时刻，可以允许两个线程同时（一个生产者与一个消费者）执行</li>
@@ -504,7 +509,7 @@
 ConcurrentLinkedQueue 将 SocketChannel 给 Poller 使用</p>
 <p>tomcat:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211202214542.png" alt=""></p>
-<h1>CopyOnWriteArraySet</h1>
+<h1 id="copy-on-write-array-set">CopyOnWriteArraySet</h1>
 <p>是它的马甲 底层实现采用了 写入时拷贝 的思想，增删改操作会将底层数组拷贝一份，更</p>
 <p>改操作在新数组上执行，这时不影响其它线程的<strong>并发读</strong>，<strong>读写分离</strong>。 以新增为例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span><span class="params">(E e)</span> </span>&#123;</span><br><span class="line"> <span class="keyword">synchronized</span> (lock) &#123;</span><br><span class="line"> <span class="comment">// 获取旧的数组</span></span><br><span class="line"> Object[] es = getArray();</span><br><span class="line"> <span class="keyword">int</span> len = es.length;</span><br><span class="line"> <span class="comment">// 拷贝新的数组（这里是比较耗时的操作，但不影响其它读线程）</span></span><br><span class="line"> es = Arrays.copyOf(es, len + <span class="number">1</span>);</span><br><span class="line"> <span class="comment">// 添加新元素</span></span><br><span class="line"> es[len] = e;</span><br><span class="line"> <span class="comment">// 替换旧的数组</span></span><br><span class="line"> setArray(es);</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -730,7 +735,7 @@ ConcurrentLinkedQueue 将 SocketChannel 给 Poller 使用</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">LinkedBlockingQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E7%9A%84%E5%85%A5%E9%98%9F%E5%87%BA%E9%98%9F"><span class="nav-number">1.1.</span> <span class="nav-text">1.基本的入队出队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%8A%A0%E9%94%81%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">2. 加锁分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83"><span class="nav-number">1.3.</span> <span class="nav-text">3. 性能比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">ConcurrentLinkedQueue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">CopyOnWriteArraySet</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linked-blocking-queue"><span class="nav-number">1.</span> <span class="nav-text">LinkedBlockingQueue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-ji-ben-de-ru-dui-chu-dui"><span class="nav-number">1.1.</span> <span class="nav-text">1.基本的入队出队</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-2-strong-strong-jia-suo-fen-xi-strong"><span class="nav-number">1.2.</span> <span class="nav-text">2. 加锁分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-strong-xing-neng-bi-jiao-strong"><span class="nav-number">1.3.</span> <span class="nav-text">3. 性能比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#concurrent-linked-queue"><span class="nav-number">2.</span> <span class="nav-text">ConcurrentLinkedQueue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#copy-on-write-array-set"><span class="nav-number">3.</span> <span class="nav-text">CopyOnWriteArraySet</span></a></li></ol></div>
             
 
           </div>
@@ -783,7 +788,29 @@ ConcurrentLinkedQueue 将 SocketChannel 给 Poller 使用</p>
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1250,7 +1277,6 @@ ConcurrentLinkedQueue 将 SocketChannel 给 Poller 使用</p>
 
 
   
-
   
 
   

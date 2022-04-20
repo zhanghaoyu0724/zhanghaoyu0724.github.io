@@ -386,6 +386,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -445,10 +450,10 @@
 <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211126201801.png" alt=""><br>
 <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211126201820.png" alt=""><br>
 <img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211126201833.png" alt=""></p>
-<h1>获取Unsafe对象</h1>
+<h1 id="huo-qu-unsafe-dui-xiang">获取Unsafe对象</h1>
 <p>反射：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Field unsafe1 = Unsafe.class.getDeclaredField(<span class="string">&quot;theUnsafe&quot;</span>);</span><br><span class="line"><span class="comment">//设置私有属性可见</span></span><br><span class="line">   unsafe1.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">   unsafe= (Unsafe) unsafe1.get(<span class="keyword">null</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1>cas实现之AtomicInteger（一部分）</h1>
+<h1 id="cas-shi-xian-zhi-atomic-integer-yi-bu-fen">cas实现之AtomicInteger（一部分）</h1>
 <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @author zhy</span></span><br><span class="line"><span class="comment"> * @date 2021/11/26 19:29</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="keyword">class</span> MyAtomicInteger &#123;</span><br><span class="line">    <span class="keyword">private</span> static final Unsafe unsafe;</span><br><span class="line">    <span class="keyword">private</span>  final static Long valueOffest;</span><br><span class="line">    <span class="keyword">private</span>  volatile  <span class="built_in">int</span> value;</span><br><span class="line"></span><br><span class="line">    public <span class="constructor">MyAtomicInteger(<span class="params">int</span> <span class="params">initialValue</span>)</span> &#123;</span><br><span class="line">        this.value = initialValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    static &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Field unsafe1 = <span class="module-access"><span class="module"><span class="identifier">Unsafe</span>.</span></span><span class="keyword">class</span>.get<span class="constructor">DeclaredField(<span class="string">&quot;theUnsafe&quot;</span>)</span>;</span><br><span class="line">            unsafe1.set<span class="constructor">Accessible(<span class="params">true</span>)</span>;</span><br><span class="line">             unsafe= (Unsafe) unsafe1.get(null);</span><br><span class="line">            valueOffest=unsafe.<span class="keyword">object</span><span class="constructor">FieldOffset(MyAtomicInteger.<span class="params">class</span>.<span class="params">getDeclaredField</span>(<span class="string">&quot;value&quot;</span>)</span>);</span><br><span class="line">        &#125; catch (NoSuchFieldException <span class="pattern-match">| <span class="constructor">IllegalAccessException</span> e) &#123;</span></span><br><span class="line"><span class="pattern-match">            e.print<span class="constructor">StackTrace()</span>;</span></span><br><span class="line"><span class="pattern-match">            throw  <span class="keyword">new</span> <span class="constructor">RuntimeException()</span>;</span></span><br><span class="line"><span class="pattern-match">        &#125;</span></span><br><span class="line"><span class="pattern-match">    &#125;</span></span><br><span class="line"><span class="pattern-match"></span></span><br><span class="line"><span class="pattern-match">    public <span class="built_in">int</span> get<span class="constructor">Value()</span>&#123;</span></span><br><span class="line"><span class="pattern-match">        return  value;</span></span><br><span class="line"><span class="pattern-match">    &#125;</span></span><br><span class="line"><span class="pattern-match"></span></span><br><span class="line"><span class="pattern-match">    public  <span class="built_in">int</span> get<span class="constructor">AndUpdate(IntUnaryOperator <span class="params">amount</span>)</span>&#123;</span></span><br><span class="line"><span class="pattern-match">        <span class="built_in">int</span> pre ,next;</span></span><br><span class="line"><span class="pattern-match">        <span class="keyword">while</span> (<span class="literal">true</span>)&#123;</span></span><br><span class="line"><span class="pattern-match">            pre=get<span class="constructor">Value()</span>;</span></span><br><span class="line"><span class="pattern-match">            next=amount.apply<span class="constructor">AsInt(<span class="params">pre</span>)</span>;</span></span><br><span class="line"><span class="pattern-match">            <span class="keyword">if</span> (compare<span class="constructor">AndSet(<span class="params">pre</span>,<span class="params">next</span>)</span>)&#123;</span></span><br><span class="line"><span class="pattern-match">                break;</span></span><br><span class="line"><span class="pattern-match">            &#125;</span></span><br><span class="line"><span class="pattern-match">        &#125;</span></span><br><span class="line"><span class="pattern-match">        return pre;</span></span><br><span class="line"><span class="pattern-match">    &#125;</span></span><br><span class="line"><span class="pattern-match"></span></span><br><span class="line"><span class="pattern-match">    public boolean compare<span class="constructor">AndSet(<span class="params">int</span> <span class="params">expect</span>,<span class="params">int</span> <span class="params">next</span>)</span>&#123;</span></span><br><span class="line"><span class="pattern-match">        return unsafe.compare<span class="constructor">AndSwapInt(<span class="params">this</span>,<span class="params">valueOffest</span>,<span class="params">expect</span>,<span class="params">next</span>)</span>;</span></span><br><span class="line"><span class="pattern-match">    &#125;</span></span><br><span class="line"><span class="pattern-match"></span></span><br><span class="line"><span class="pattern-match">&#125;</span></span><br></pre></td></tr></table></figure>
 
       
@@ -649,7 +654,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">获取Unsafe对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">cas实现之AtomicInteger（一部分）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#huo-qu-unsafe-dui-xiang"><span class="nav-number">1.</span> <span class="nav-text">获取Unsafe对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cas-shi-xian-zhi-atomic-integer-yi-bu-fen"><span class="nav-number">2.</span> <span class="nav-text">cas实现之AtomicInteger（一部分）</span></a></li></ol></div>
             
 
           </div>
@@ -702,7 +707,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1169,7 +1196,6 @@
 
 
   
-
   
 
   

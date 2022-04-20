@@ -380,6 +380,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -429,7 +434,7 @@
       
 
       
-        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xazo8d/">二叉搜索树中第K小的元素</a></h1>
+        <h1 id="a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xazo-8-d-er-cha-sou-suo-shu-zhong-di-k-xiao-de-yuan-su-a"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xazo8d/">二叉搜索树中第K小的元素</a></h1>
 <p>中序遍历刚好就是从小到大输出，我使用了一个数组表示当输出第k个最小值时返回，为什么要用数组呢，因为如果用一个整型变量在方法中就是传递是值：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">int</span> count;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(TreeNode root, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> [] dp=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">1</span>];</span><br><span class="line">       count=<span class="number">0</span>;</span><br><span class="line">       dfs(root,dp,k);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> dp[<span class="number">0</span>];</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode node, <span class="keyword">int</span>[] dp, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (count==k||node==<span class="keyword">null</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       dfs(node.left,dp,k);</span><br><span class="line">       <span class="keyword">if</span> (count==k)&#123;</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       count++;</span><br><span class="line">       dp[<span class="number">0</span>]=node.val;</span><br><span class="line">       dfs(node.right,dp,k);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
@@ -631,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">二叉搜索树中第K小的元素</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xazo-8-d-er-cha-sou-suo-shu-zhong-di-k-xiao-de-yuan-su-a"><span class="nav-number">1.</span> <span class="nav-text">二叉搜索树中第K小的元素</span></a></li></ol></div>
             
 
           </div>
@@ -684,7 +689,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1151,7 +1178,6 @@
 
 
   
-
   
 
   

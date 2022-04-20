@@ -410,6 +410,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -459,18 +464,18 @@
       
 
       
-        <h1>为什么使用索引</h1>
+        <h1 id="wei-shi-yao-shi-yong-suo-yin">为什么使用索引</h1>
 <p>索引是存储引擎用于快速找到数据记录的一种数据结构，就好比一本教课书的目录部分，通过目录中找到对应文章的页码，便可快速定位到需要的文章。MySQL中也是一样的道理，进行数据查找时，首先查看查询条件是否命中某条索引，符合则通过索引查找相关数据，如果不符合则需要全表扫描，即需要一条一条地查找记录，直到找到与条件符合的记录。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220408194050795.png" alt="image-20220408194050795"></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220408194056262.png" alt="image-20220408194056262"></p>
 <p>对字段Col2添加了索引，就相当于在硬盘上为Col 2维护了一个索引的数据结构，即这个二叉搜索树。二叉搜索树的每个结点存储的是（K，V)结构，key是Col 2， value是该key所在行的文件指针（地址)。比如:该二叉搜索树的根节点就是: (34,0x07)。现在对Col 2添加了索引，这时再去查找Col 2=89这条记录的时候会先去查找该二叉搜索树（二叉树的遍历查找)。读34到内存，89&gt;34;继续右侧数据，读89到内存，89 == 89;找到数据返回。找到之后就根据当前结点的value快速定位到要查找的记录对应的地址。我们可以发现，只需要查找两次就可以定位到记录的地址，查询速度就提高了。<br>
 这就是我们为什么要建索引，目的就是为了<strong>减少磁盘I/O的次数</strong>，加快查询速率。</p>
-<h1>索引及其优缺点</h1>
-<h2 id="索引概述">索引概述</h2>
+<h1 id="suo-yin-ji-qi-you-que-dian">索引及其优缺点</h1>
+<h2 id="suo-yin-gai-shu" id="索引概述">索引概述</h2>
 <p>MySQL官方对索引的定义为：索引（Index）是帮助MySQL高效获取数据的数据结构。<br>
 <strong>索引的本质</strong>：索引是数据结构。你可以简单理解为“排好序的快速查找数据结构”，满足特定查找算法。这些数据结构以某种方式指向数据， 这样就可以在这些数据结构的基础上实现<strong>高级查找算法</strong>。</p>
 <p><strong>索引是在存储引擎中实现的</strong>，因此每种存储引擎的索引不一定完全相同，并且每种存储引擎不一定支持所有索引类型。同时，存储引擎可以定义每个表的最大索引数和最大索引长度。所有存储引擎支持每个表至少16个索引，总索引长度至少为256字节。有些存储引擎支持更多的索引数和更大的索引长度。</p>
-<h2 id="优点">优点</h2>
+<h2 id="you-dian" id="优点">优点</h2>
 <p>​	(1)类似大学图书馆建书目索引，提高数据检索的效率，降低数据库的IO成本，这也是创建索引最主<br>
 要的原因。</p>
 <p>（2）通过创建唯一索引，可以保证数据库表中每一行数据的唯一性。</p>
@@ -478,7 +483,7 @@
 可以提高查询速度。</p>
 <p>（4）在使用分组和排序子句进行数据查询时，可以显著减少查询中分组和排序的时<br>
 间，降低了CPU的消耗。</p>
-<h2 id="缺点">缺点:</h2>
+<h2 id="que-dian" id="缺点">缺点:</h2>
 <p>增加索引也有许多不利的方面，主要表现在如下几个方面：</p>
 <p>（1）创建索引和维护索引要耗费时间，并且随着数据量的增加，所耗费的时间也会增加。</p>
 <p>（2）索引需要占磁盘空间，除了数据表占数据空间之外，每一个索引还要占一定的物理空间， 存储在磁盘上，如果有大量的索引，索引文件就可能比数据文件更快达到最大文件尺寸。</p>
@@ -487,11 +492,11 @@
 <p>提示:<br>
 索引可以提高查询的速度，但是会影响插入记录的速度。这种情况下，最好的办法是先删除表中的索引，然后插入数据，插入完成后再创建索引。</p>
 </blockquote>
-<h1>InnoDB中索引的推演</h1>
-<h2 id="索引之前的查找">索引之前的查找</h2>
+<h1 id="inno-db-zhong-suo-yin-de-tui-yan">InnoDB中索引的推演</h1>
+<h2 id="suo-yin-zhi-qian-de-cha-zhao" id="索引之前的查找">索引之前的查找</h2>
 <p>先来看一个精确匹配的例子：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT [列名列表] FROM 表名 WHERE 列名 = xxx;</span><br></pre></td></tr></table></figure>
-<h2 id="在一个页中查找">在一个页中查找</h2>
+<h2 id="zai-yi-ge-ye-zhong-cha-zhao" id="在一个页中查找">在一个页中查找</h2>
 <p>假设目前表中的记录比较少，所有的记录都可以被存放到一个页中，在查找记录的时候可以根据搜索条件的不同分为两种情况:</p>
 <ul>
 <li>以主键为搜索条件<br>
@@ -499,14 +504,14 @@
 <li>以其他列作为搜索条件<br>
 因为在数据页中并没有对非主键列建立所谓的页目录，所以我们无法通过二分法快速定位相应的槽。这种情况下只能从最小记录开始依次遍历单键表中的每条记录，然后对比每条记录是不是符合搜索条件。很显然，这种查找的效率是非常低的。|</li>
 </ul>
-<h2 id="在很多页中查找">在很多页中查找</h2>
+<h2 id="zai-hen-duo-ye-zhong-cha-zhao" id="在很多页中查找">在很多页中查找</h2>
 <p>1:定位到记录所在的页</p>
 <p>2: 从所在的页内中查找相应的记录</p>
 <p>在没有索引的情况下，不论是根据主键列或者其他列的值进行查找，由于我们并不能快速的定位到记录<br>
 所在的页，所以只能从<strong>第一个页</strong>沿着双向链表<strong>一直往下找</strong>，在每一个页中根据我们上面的查找方式去查<br>
 找指定的记录。因为要遍历所有的数据页，所以这种方式显然是<strong>超级耗时</strong>的。如果一个表有一亿条记录<br>
 呢？此时<strong>索引</strong>应运而生。</p>
-<h2 id="设计索引">设计索引</h2>
+<h2 id="she-ji-suo-yin" id="设计索引">设计索引</h2>
 <p>建一个表：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE index_demo(</span><br><span class="line">-&gt; c1 INT,</span><br><span class="line">-&gt; c2 INT,</span><br><span class="line">-&gt; c3 CHAR(1),</span><br><span class="line">-&gt; PRIMARY KEY(c1)</span><br><span class="line">-&gt; ) ROW_FORMAT = Compact;</span><br></pre></td></tr></table></figure>
 <p>这个新建的index_demo 表中有2个INT类型的列，1个CHAR(1)类型的列，而且我们规定了c1列为主键，<br>
@@ -531,7 +536,7 @@
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220408201326909.png" alt="image-20220408201326909"></p>
 </li>
 </ul>
-<h3 id="一个简单的索引设计方案">一个简单的索引设计方案</h3>
+<h3 id="yi-ge-jian-dan-de-suo-yin-she-ji-fang-an" id="一个简单的索引设计方案">一个简单的索引设计方案</h3>
 <p>我们在根据某个搜索条件查找一些记录时为什么要遍历所有的数据页呢？因为各个页中的记录并没有规律，我们并不知道我们的搜索条件匹配哪些页中的记录，所以不得不依次遍历所有的数据页。所以如果我们想快速的定位到需要查找的记录在哪些数据页中该咋办？我们可以为快速定位记录所在的数据页而建立一个目录，建这个目录必须完成下边这些事：</p>
 <ul>
 <li>
@@ -554,8 +559,8 @@
 <li>再根据前边说的在页中查找记录的方式去页9 中定位具体的记录。</li>
 </ol>
 <p><strong>至此，针对数据页做的简易目录就搞定了。这个目录有一个别名，称为索引。</strong></p>
-<h3 id="InnoDB中的索引方案">InnoDB中的索引方案</h3>
-<h4 id="迭代1次：目录项纪录的页">迭代1次：目录项纪录的页</h4>
+<h3 id="inno-db-zhong-de-suo-yin-fang-an" id="InnoDB中的索引方案">InnoDB中的索引方案</h3>
+<h4 id="die-dai-1-ci-mu-lu-xiang-ji-lu-de-ye" id="迭代1次：目录项纪录的页">迭代1次：目录项纪录的页</h4>
 <p>上边称为一个简易的索引方案，是因为我们为了在根据主键值进行查找时使用二分法快速定位具体的目录项而假设所有目录项都可以在物理存储器上<strong>连续存储</strong>，但是这样做有几个问题:</p>
 <ul>
 <li>
@@ -589,7 +594,7 @@ record_type属性，它的各个取值代表的意思如下:</p>
 <li>先到存储目录项记录的页，也就是页30中通过二分法快速定位到对应目录项，因为12 &lt; 20 &lt;209 ，所以定位到对应的记录所在的页就是页9。</li>
 <li>再到存储用户记录的页9中根据二分法快速定位到主键值为20 的用户记录。</li>
 </ol>
-<h4 id="迭代2次：多个目录项纪录的页">迭代2次：多个目录项纪录的页</h4>
+<h4 id="die-dai-2-ci-duo-ge-mu-lu-xiang-ji-lu-de-ye" id="迭代2次：多个目录项纪录的页">迭代2次：多个目录项纪录的页</h4>
 <p>虽然说<strong>目录项记录</strong>中只存储主键值和对应的页号，比用户记录需要的存储空间小多了，但是不论怎么说一个页只有16KB大小，能存放的<strong>目录项记录</strong>也是有限的，那如果表中的数据太多，以至于一个数据页不足以存放所有的目录项记录，<strong>如何处理呢</strong>?<br>
 这里我们假设一个存储目录项记录的页最多<strong>只能存放4条目录项记录</strong>，所以如果此时我们再向上图中插入一条主键值为320的用户记录的话，那就需要分配一个新的存储目录项记录的页:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220408203610.png" alt=""></p>
@@ -612,7 +617,7 @@ record_type属性，它的各个取值代表的意思如下:</p>
 在一个存储目录项记录的页中通过主键值定位一条目录项记录的方式说过了。</li>
 <li>在真实存储用户记录的页中定位到具体的记录。</li>
 </ol>
-<h4 id="迭代3次：目录项记录页的目录页">迭代3次：目录项记录页的目录页</h4>
+<h4 id="die-dai-3-ci-mu-lu-xiang-ji-lu-ye-de-mu-lu-ye" id="迭代3次：目录项记录页的目录页">迭代3次：目录项记录页的目录页</h4>
 <p>问题来了，在这个查询步骤的第1步中我们需要定位存储目录项记录的页，但是这些页是不连续的，如果我们表中的数据非常多则会产生很多存储目录项记录的页，那我们怎么根据主键值快速定位一个存储目录项记录的页呢?那就为这些存储目录项记录的页再生成一个更高级的目录，就像是一个多级目录一样，大目录里嵌套小目录，小目录里才是实际的数据，所以现在各个页的示意图就是这样子:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220408203549.png" alt=""></p>
 <p>如图，我们生成了一个存储更高级目录项的页33 ，这个页中的两条记录分别代表页30和页32，如果用户记录的主键值在[1, 320) 之间，则到页30中查找更详细的目录项记录，如果主键值不小于320 的话，就到页32中查找更详细的目录项记录。</p>
@@ -628,9 +633,9 @@ record_type属性，它的各个取值代表的意思如下:</p>
 <li>如果B+树有4层，最多能存放1000×1000×1000×100=1000,0000,0000 条记录。相当多的记录！！！</li>
 </ul>
 <p>你的表里能存放<strong>100000000000</strong> 条记录吗？所以一般情况下，我们用到的B+树都不会超过4层，那我们通过主键值去查找某条记录最多只需要做4个页面内的查找（查找3个目录项页和一个用户记录页），又因为在每个页面内有所谓的Page Directory （页目录），所以在页面内也可以通过<strong>二分法</strong>实现快速定位记录。</p>
-<h2 id="常见索引概念">常见索引概念</h2>
+<h2 id="chang-jian-suo-yin-gai-nian" id="常见索引概念">常见索引概念</h2>
 <p>索引按照物理实现方式，索引可以分为 2 种：聚簇（聚集）和非聚簇（非聚集）索引。我们也把非聚集索引称为二级索引或者辅助索引。</p>
-<h3 id="聚簇索引">聚簇索引</h3>
+<h3 id="ju-cu-suo-yin" id="聚簇索引">聚簇索引</h3>
 <p>聚簇索引并不是一种单独的索引类型，而是一种数据存储方式(所有的用户记录都存储在了叶子节点)，也就是所谓的索引即<strong>数据，数据即索引。</strong></p>
 <blockquote>
 <p>术语&quot;聚簇&quot;表示数据行和相邻的键值聚簇的存储在一起。 就是数据和索引就是存储在一起的</p>
@@ -664,12 +669,12 @@ record_type属性，它的各个取值代表的意思如下:</p>
 <li>如果没有定义主键，Innodb会选择非空的唯一索引代替。如果没有这样的索引，Innodb会隐式的定义一个主键来作为聚簇索引。|</li>
 <li>为了充分利用聚簇索引的聚簇的特性，所以innodb表的主键列尽量选用有序的顺序id，而不建议用无序的id,比如UUID、MD5、HASH、字符串列作为主键无法保证数据的顺序增长。</li>
 </ul>
-<h3 id="二级索引（辅助索引、非聚簇索引）">二级索引（辅助索引、非聚簇索引）</h3>
+<h3 id="er-ji-suo-yin-fu-zhu-suo-yin-fei-ju-cu-suo-yin" id="二级索引（辅助索引、非聚簇索引）">二级索引（辅助索引、非聚簇索引）</h3>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220408210302868.png" alt="image-20220408210302868"></p>
 <p>概念：回表 我们根据这个以c2列大小排序的B+树只能确定我们要查找记录的主键值，所以如果我们想根据c2列的值查找到完整的用户记录的话，仍然需要到聚簇索引中再查一遍，这个过程称为回表。也就是根据c2列的值查询一条完整的用户记录需要使用到2 棵B+树！</p>
 <p><strong>问题：为什么我们还需要一次回表操作呢？直接把完整的用户记录放到叶子节点不OK吗？</strong></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220408210455540.png" alt="image-20220408210455540"></p>
-<h3 id="联合索引">联合索引</h3>
+<h3 id="lian-he-suo-yin" id="联合索引">联合索引</h3>
 <p>我们也可以同时以多个列的大小作为排序规则，也就是同时为多个列建立索引，比方说我们想让B+树按<br>
 照c2和c3列的大小进行排序，这个包含两层含义：</p>
 <ul>
@@ -681,8 +686,8 @@ record_type属性，它的各个取值代表的意思如下:</p>
 <li>建立联合索引只会建立如上图一样的1棵B+树。</li>
 <li>为c2和c3列分别建立索引会分别以c2和c3列的大小为排序规则建立2棵B+树。</li>
 </ul>
-<h2 id="InnoDB的B-树索引的注意事项">InnoDB的B+树索引的注意事项</h2>
-<h3 id="根页面位置万年不动">根页面位置万年不动</h3>
+<h2 id="inno-db-de-b-shu-suo-yin-de-zhu-yi-shi-xiang" id="InnoDB的B-树索引的注意事项">InnoDB的B+树索引的注意事项</h2>
+<h3 id="gen-ye-mian-wei-zhi-mo-nian-bu-dong" id="根页面位置万年不动">根页面位置万年不动</h3>
 <p>我们前边介绍B+树索引的时候，为了大家理解上的方便，先把存储用户记录的叶子节点都画出来，然后接着画存储目录项记录的内节点，实际上B+树的形成过程是这样的:</p>
 <ul>
 <li>
@@ -697,15 +702,15 @@ record_type属性，它的各个取值代表的意思如下:</p>
 </li>
 </ul>
 <p>这个过程特别注意的是:一个B+树索引的根节点自诞生之日起，便不会再移动。这样只要我们对某个表建立一个索引，那么它的根节点的页号便会被记录到某个地方，然后凡是InnoDB存储引擎需要用到这个索引l的时候，都会从那个固定的地方取出根节点的页号，从而来访问这个索引。</p>
-<h3 id="内节点中目录项记录的唯一性">内节点中目录项记录的唯一性</h3>
+<h3 id="nei-jie-dian-zhong-mu-lu-xiang-ji-lu-de-wei-yi-xing" id="内节点中目录项记录的唯一性">内节点中目录项记录的唯一性</h3>
 <p>目录项记录的索引列要唯一， 如果对应的目录项索引一致时，构建目录项时要加上主键值。</p>
-<h3 id="一个页面最少存储2条记录">一个页面最少存储2条记录</h3>
-<h1>MyISAM中的索引方案</h1>
+<h3 id="yi-ge-ye-mian-zui-shao-cun-chu-2-tiao-ji-lu" id="一个页面最少存储2条记录">一个页面最少存储2条记录</h3>
+<h1 id="my-isam-zhong-de-suo-yin-fang-an">MyISAM中的索引方案</h1>
 <p><strong>B树索引适用存储引擎如表所示：</strong></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220408212918408.png" alt="image-20220408212918408"></p>
 <p>即使多个存储引擎支持同一种类型的索引，但是他们的实现原理也是不同的。Innodb和MyISAM默认的索引是Btree索引；而Memory默认的索引是Hash索引。<br>
 MyISAM引擎使用B+Tree 作为索引结构，叶子节点的data域存放的是<strong>数据记录的地址</strong>。</p>
-<h2 id="MyISAM索引的原理">MyISAM索引的原理</h2>
+<h2 id="my-isam-suo-yin-de-yuan-li" id="MyISAM索引的原理">MyISAM索引的原理</h2>
 <p>下图是MyISAM索引的原理图。<br>
 我们知道<strong>InnoDB中索引即数据</strong>，也就是聚簇索引的那棵B+树的叶子节点中已经把所有完整的用户记录都包含了，而<strong>MyISAM</strong>的索引方案虽然也使用树形结构，但是却<strong>将索引和数据分开存储</strong>︰</p>
 <ul>
@@ -716,7 +721,7 @@ MyISAM引擎使用B+Tree 作为索引结构，叶子节点的data域存放的是
 <p>如果我们在Col2上建立一个二级索引，则此索引的结构如下图所示：</p>
 <p>在构建叶子节点的时候是要按照数据进行排序的（如下图）</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220408213603370.png" alt="image-20220408213603370"></p>
-<h2 id="MyISAM-与-InnoDB对比">MyISAM 与 InnoDB对比</h2>
+<h2 id="my-isam-yu-inno-db-dui-bi" id="MyISAM-与-InnoDB对比">MyISAM 与 InnoDB对比</h2>
 <p><strong>MyISAM的索引方式都是“非聚簇”的，与InnoDB包含1个聚簇索引是不同的。小结两种引擎中索引的区别：</strong><br>
 ① 在InnoDB存储引擎中，我们只需要根据主键值对聚簇索引进行一次查找就能找到对应的记录，而在MyISAM 中却需要进行一次<strong>回表</strong>操作，意味着MyISAM中建立的索引相当于全部都是<strong>二级索引</strong>。<br>
 ② InnoDB的数据文件本身就是索引文件，而MyISAM索引文件和数据文件是<strong>分离的</strong>，索引文件仅保存数据记录的地址。<br>
@@ -724,7 +729,7 @@ MyISAM引擎使用B+Tree 作为索引结构，叶子节点的data域存放的是
 ④ MyISAM的回表操作是十分<strong>快速</strong>的，因为是拿着地址偏移量直接到文件中取数据的，<strong>反观InnoDB是通过获取主键之后再去聚簇索引里找记录，虽然说也不慢，但还是比不上直接用地址去访问。</strong><br>
 ⑤ InnoDB要求表<strong>必须有主键（ MyISAM可以没有）</strong>。如果没有显式指定，则MySQL系统会自动选择一个可以非空且唯一标识数据记录的列作为主键。如果不存在这种列，则MySQL自动为InnoDB表生成一个隐含字段作为主键，这个字段长度为6个字节，类型为长整型。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220408213853597.png" alt="image-20220408213853597"></p>
-<h2 id="索引的代价">索引的代价</h2>
+<h2 id="suo-yin-de-dai-jie" id="索引的代价">索引的代价</h2>
 <p>索引是个好东西，可不能乱建，它在空间和时间上都会有消耗：</p>
 <ul>
 <li>
@@ -737,11 +742,11 @@ MyISAM引擎使用B+Tree 作为索引结构，叶子节点的data域存放的是
 <p>每次对表中的数据进行<strong>增、删、改</strong>操作时，都需要去修改各个B+树索引。而且我们讲过，B+树每层节点都是按照索引列的值<strong>从小到大的顺序排序</strong>而组成了双向链表。不论是叶子节点中的记录，还是内节点中的记录（也就是不论是用户记录还是目录项记录）都是按照索引列的值从小到大的顺序而形成了一个单向链表。而增、删、改操作可能会对节点和记录的排序造成破坏，所以存储引擎需要额外的时间进行一些记录移位， 页面分裂、页面回收等操作来维护好节点和记录的排序。如果我们建了许多索引，每个索引对应的B+树都要进行相关的维护操作，会给性能拖后腿。</p>
 </li>
 </ul>
-<h1>MySQL数据结构选择的合理性</h1>
+<h1 id="my-sql-shu-ju-jie-gou-xuan-ze-de-he-li-xing">MySQL数据结构选择的合理性</h1>
 <p>从MysQL的角度讲，不得不考虑一个现实问题就是磁盘to。如果我们能让索引的数据结构尽量减少硬盘的I/o操作，所消耗的时间也就越小。可以说，磁盘的 I/O操作次数对索引的使用效率至关重要。<br>
 查找都是索引操作，一般来说索引非常大，尤其是关系型数据库，当数据量比较大的时候，索引的大小有可能几个G甚至更多，为了减少索引在内存的占用，数据库索引是存储在外部磁盘上的。当我们利用索引查询的时候，不可能把整个索引全部加载到内存，只能逐一加载，那么MySQL衡量查询效率的标准就是磁盘IO次数。</p>
-<h2 id="全表遍历">全表遍历</h2>
-<h2 id="Hash结构">Hash结构</h2>
+<h2 id="quan-biao-bian-li" id="全表遍历">全表遍历</h2>
+<h2 id="hash-jie-gou" id="Hash结构">Hash结构</h2>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409194514590.png" alt="image-20220409194514590"></p>
 <p>Hash结构效率高，那为什么索引结构要设计成树型呢？</p>
 <p>原因1: Hash索引仅能满足(=)(&lt;&gt;)和IN查询。如果进行<strong>范围查询</strong>，哈希型的索引，时间复杂度会退化为o(n);而树型的“有序”特性，依然能够保持o(log2N)的高效率。<br>
@@ -755,7 +760,7 @@ MyISAM引擎使用B+Tree 作为索引结构，叶子节点的data域存放的是
 我们可以通过innodb_adaptive_hash_index 变量来查看是否开启了自适应 Hash，比如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;%adaptive_hash_index&#x27;;</span><br></pre></td></tr></table></figure>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409195535804.png" alt="image-20220409195535804"></p>
-<h2 id="二叉搜索树">二叉搜索树</h2>
+<h2 id="er-cha-sou-suo-shu" id="二叉搜索树">二叉搜索树</h2>
 <p>如果我们利用二叉树作为索引结构，那么磁盘的IO次数和索引树的高度是相关的。</p>
 <p>我们先来看下最基础的二叉搜索树(Binary Search Tree)，搜索某个节点和插入节点的规则一样，我们假设搜索插入的数值为key:<br>
 1.如果key大于根节点，则在右子树中进行查找;</p>
@@ -766,14 +771,14 @@ MyISAM引擎使用B+Tree 作为索引结构，叶子节点的data域存放的是
 <p>但是存在特殊的情况，就是有时候二叉树的深度非常大。比如我们给出的数据顺序是(5, 22,23,34,77,89,91),创造出来的二分搜索树如下图所示：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409195743502.png" alt="image-20220409195743502"></p>
 <p>为了提高查询效率，就需要减少磁盘IO数。为了减少磁盘IO的次数，就需要尽量降低树的高度，需要把原来“瘦高”的树结构变的“矮胖”，树的每层的分叉越多越好</p>
-<h2 id="AVL树">AVL树</h2>
+<h2 id="avl-shu" id="AVL树">AVL树</h2>
 <p>为了解决上面二叉查找树退化成链表的问题，人们提出了平衡二叉搜索树（Balanced Binary Ttree),<br>
 AVL树(有别于AVL算法)，它在二叉搜索树的基础上增加了约束，具有以下性质:<br>
 <strong>它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。</strong><br>
 这里说一下，常见的平衡二叉树有很多种，包括了平衡二叉树、红黑树、数堆，伸展树，平衡二叉搜索树是最早提出来的自平衡二叉搜索树，当我们提到平衡二叉树时一般指的就是平衡二叉搜索树，事实上，第一棵树就属于平衡二叉树就属于平衡二叉搜索树，搜索时间复杂度就是0( log2n)。<br>
 数据查询的时间主要依赖于磁盘l/o的次数，如果我们采用二叉树的形式，即使通过平衡二叉搜索树进行了改进，树的深度也是o(log2n)，当n 比较大时，深度也是比较高的，比如下图的情况:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409200244364.png" alt="image-20220409200244364"></p>
-<h2 id="B-Tree">B-Tree</h2>
+<h2 id="b-tree" id="B-Tree">B-Tree</h2>
 <p>B 树的结构如下图所示：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409200657367.png" alt="image-20220409200657367"></p>
 <p>一个 M 阶的 B 树（M&gt;2）有以下的特性：</p>
@@ -809,7 +814,7 @@ AVL树(有别于AVL算法)，它在二叉搜索树的基础上增加了约束，
 </ol>
 <p>再举例：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409200813998.png" alt="image-20220409200813998"></p>
-<h2 id="B-Tree-2">B+Tree</h2>
+<h2 id="b-tree-1" id="B-Tree-2">B+Tree</h2>
 <p>B+树也是一种多路搜索树，基于B树做出了改进，主流的DBMS都支持B+树的索引方式，比如MySQL。相比于B-Tree，B+Tree适合文件索引系统。|</p>
 <p>MySQL官网说明：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409200948975.png" alt="image-20220409200948975"></p>
@@ -844,7 +849,7 @@ AVL树(有别于AVL算法)，它在二叉搜索树的基础上增加了约束，
 <p>4.InnonDB 不支持哈希索引</p>
 <p><strong>思考题：Hash 索引与 B+ 树索引是在建索引的时候手动指定的吗？</strong></p>
 <p>InnonDB 和MyISAM不支持hash索引，但是InnonDb可以有自适应Hash索引并且不需要手动指定，而且默认开启</p>
-<h2 id="R树">R树</h2>
+<h2 id="r-shu" id="R树">R树</h2>
 <p>R-Tree在MySQL很少使用，仅支持geometry数据类型，支持该类型的存储引擎只有myisam、bdb、innodb、ndb、archive几种。举个R树在现实领域中能够解决的例子：查找20英里以内所有的餐厅。如果没有R树你会怎么解决？一般情况下我们会把餐厅的坐标(x,y)分为两个字段存放在数据库中，一个字段记录经度，另一个字段记录纬度。这样的话我们就需要遍历所有的餐厅获取其位置信息，然后计算是否满足要求。如果一个地区有100家餐厅的话，我们就要进行100次位置计算操作了，如果应用到谷歌、百度地图这种超大数据库中，这种方法便必定不可行了。R树就很好的解决了这种高维空间搜索问题。它把B树的思想很好的扩展到了多维空间，采用了B树分割空间的思想，并在添加、删除操作时采用合并、分解结点的方法，保证树的平衡性。因此，R树就是一棵用来存储高维数据的平衡树。相对于B-Tree，R-Tree的优势在于范围查找。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220409203722429.png" alt="image-20220409203722429"></p>
 
@@ -1040,7 +1045,7 @@ AVL树(有别于AVL算法)，它在二叉搜索树的基础上增加了约束，
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">为什么使用索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">索引及其优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">索引概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">2.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">2.3.</span> <span class="nav-text">缺点:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">InnoDB中索引的推演</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E4%B9%8B%E5%89%8D%E7%9A%84%E6%9F%A5%E6%89%BE"><span class="nav-number">3.1.</span> <span class="nav-text">索引之前的查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%B8%80%E4%B8%AA%E9%A1%B5%E4%B8%AD%E6%9F%A5%E6%89%BE"><span class="nav-number">3.2.</span> <span class="nav-text">在一个页中查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%BE%88%E5%A4%9A%E9%A1%B5%E4%B8%AD%E6%9F%A5%E6%89%BE"><span class="nav-number">3.3.</span> <span class="nav-text">在很多页中查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E7%B4%A2%E5%BC%95"><span class="nav-number">3.4.</span> <span class="nav-text">设计索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%B4%A2%E5%BC%95%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%A1%88"><span class="nav-number">3.4.1.</span> <span class="nav-text">一个简单的索引设计方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InnoDB%E4%B8%AD%E7%9A%84%E7%B4%A2%E5%BC%95%E6%96%B9%E6%A1%88"><span class="nav-number">3.4.2.</span> <span class="nav-text">InnoDB中的索引方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A31%E6%AC%A1%EF%BC%9A%E7%9B%AE%E5%BD%95%E9%A1%B9%E7%BA%AA%E5%BD%95%E7%9A%84%E9%A1%B5"><span class="nav-number">3.4.2.1.</span> <span class="nav-text">迭代1次：目录项纪录的页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A32%E6%AC%A1%EF%BC%9A%E5%A4%9A%E4%B8%AA%E7%9B%AE%E5%BD%95%E9%A1%B9%E7%BA%AA%E5%BD%95%E7%9A%84%E9%A1%B5"><span class="nav-number">3.4.2.2.</span> <span class="nav-text">迭代2次：多个目录项纪录的页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A33%E6%AC%A1%EF%BC%9A%E7%9B%AE%E5%BD%95%E9%A1%B9%E8%AE%B0%E5%BD%95%E9%A1%B5%E7%9A%84%E7%9B%AE%E5%BD%95%E9%A1%B5"><span class="nav-number">3.4.2.3.</span> <span class="nav-text">迭代3次：目录项记录页的目录页</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%B4%A2%E5%BC%95%E6%A6%82%E5%BF%B5"><span class="nav-number">3.5.</span> <span class="nav-text">常见索引概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95"><span class="nav-number">3.5.1.</span> <span class="nav-text">聚簇索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BA%A7%E7%B4%A2%E5%BC%95%EF%BC%88%E8%BE%85%E5%8A%A9%E7%B4%A2%E5%BC%95%E3%80%81%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%EF%BC%89"><span class="nav-number">3.5.2.</span> <span class="nav-text">二级索引（辅助索引、非聚簇索引）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95"><span class="nav-number">3.5.3.</span> <span class="nav-text">联合索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB%E7%9A%84B-%E6%A0%91%E7%B4%A2%E5%BC%95%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">3.6.</span> <span class="nav-text">InnoDB的B+树索引的注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E9%A1%B5%E9%9D%A2%E4%BD%8D%E7%BD%AE%E4%B8%87%E5%B9%B4%E4%B8%8D%E5%8A%A8"><span class="nav-number">3.6.1.</span> <span class="nav-text">根页面位置万年不动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E8%8A%82%E7%82%B9%E4%B8%AD%E7%9B%AE%E5%BD%95%E9%A1%B9%E8%AE%B0%E5%BD%95%E7%9A%84%E5%94%AF%E4%B8%80%E6%80%A7"><span class="nav-number">3.6.2.</span> <span class="nav-text">内节点中目录项记录的唯一性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E9%A1%B5%E9%9D%A2%E6%9C%80%E5%B0%91%E5%AD%98%E5%82%A82%E6%9D%A1%E8%AE%B0%E5%BD%95"><span class="nav-number">3.6.3.</span> <span class="nav-text">一个页面最少存储2条记录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">MyISAM中的索引方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MyISAM%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">MyISAM索引的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyISAM-%E4%B8%8E-InnoDB%E5%AF%B9%E6%AF%94"><span class="nav-number">4.2.</span> <span class="nav-text">MyISAM 与 InnoDB对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BB%A3%E4%BB%B7"><span class="nav-number">4.3.</span> <span class="nav-text">索引的代价</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">MySQL数据结构选择的合理性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E8%A1%A8%E9%81%8D%E5%8E%86"><span class="nav-number">5.1.</span> <span class="nav-text">全表遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hash%E7%BB%93%E6%9E%84"><span class="nav-number">5.2.</span> <span class="nav-text">Hash结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91"><span class="nav-number">5.3.</span> <span class="nav-text">二叉搜索树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AVL%E6%A0%91"><span class="nav-number">5.4.</span> <span class="nav-text">AVL树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-Tree"><span class="nav-number">5.5.</span> <span class="nav-text">B-Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-Tree-2"><span class="nav-number">5.6.</span> <span class="nav-text">B+Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#R%E6%A0%91"><span class="nav-number">5.7.</span> <span class="nav-text">R树</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#wei-shi-yao-shi-yong-suo-yin"><span class="nav-number">1.</span> <span class="nav-text">为什么使用索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#suo-yin-ji-qi-you-que-dian"><span class="nav-number">2.</span> <span class="nav-text">索引及其优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#suo-yin-gai-shu"><span class="nav-number">2.1.</span> <span class="nav-text">索引概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#you-dian"><span class="nav-number">2.2.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#que-dian"><span class="nav-number">2.3.</span> <span class="nav-text">缺点:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#inno-db-zhong-suo-yin-de-tui-yan"><span class="nav-number">3.</span> <span class="nav-text">InnoDB中索引的推演</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#suo-yin-zhi-qian-de-cha-zhao"><span class="nav-number">3.1.</span> <span class="nav-text">索引之前的查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zai-yi-ge-ye-zhong-cha-zhao"><span class="nav-number">3.2.</span> <span class="nav-text">在一个页中查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zai-hen-duo-ye-zhong-cha-zhao"><span class="nav-number">3.3.</span> <span class="nav-text">在很多页中查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#she-ji-suo-yin"><span class="nav-number">3.4.</span> <span class="nav-text">设计索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yi-ge-jian-dan-de-suo-yin-she-ji-fang-an"><span class="nav-number">3.4.1.</span> <span class="nav-text">一个简单的索引设计方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inno-db-zhong-de-suo-yin-fang-an"><span class="nav-number">3.4.2.</span> <span class="nav-text">InnoDB中的索引方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#die-dai-1-ci-mu-lu-xiang-ji-lu-de-ye"><span class="nav-number">3.4.2.1.</span> <span class="nav-text">迭代1次：目录项纪录的页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#die-dai-2-ci-duo-ge-mu-lu-xiang-ji-lu-de-ye"><span class="nav-number">3.4.2.2.</span> <span class="nav-text">迭代2次：多个目录项纪录的页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#die-dai-3-ci-mu-lu-xiang-ji-lu-ye-de-mu-lu-ye"><span class="nav-number">3.4.2.3.</span> <span class="nav-text">迭代3次：目录项记录页的目录页</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chang-jian-suo-yin-gai-nian"><span class="nav-number">3.5.</span> <span class="nav-text">常见索引概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ju-cu-suo-yin"><span class="nav-number">3.5.1.</span> <span class="nav-text">聚簇索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#er-ji-suo-yin-fu-zhu-suo-yin-fei-ju-cu-suo-yin"><span class="nav-number">3.5.2.</span> <span class="nav-text">二级索引（辅助索引、非聚簇索引）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lian-he-suo-yin"><span class="nav-number">3.5.3.</span> <span class="nav-text">联合索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inno-db-de-b-shu-suo-yin-de-zhu-yi-shi-xiang"><span class="nav-number">3.6.</span> <span class="nav-text">InnoDB的B+树索引的注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gen-ye-mian-wei-zhi-mo-nian-bu-dong"><span class="nav-number">3.6.1.</span> <span class="nav-text">根页面位置万年不动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nei-jie-dian-zhong-mu-lu-xiang-ji-lu-de-wei-yi-xing"><span class="nav-number">3.6.2.</span> <span class="nav-text">内节点中目录项记录的唯一性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yi-ge-ye-mian-zui-shao-cun-chu-2-tiao-ji-lu"><span class="nav-number">3.6.3.</span> <span class="nav-text">一个页面最少存储2条记录</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-isam-zhong-de-suo-yin-fang-an"><span class="nav-number">4.</span> <span class="nav-text">MyISAM中的索引方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#my-isam-suo-yin-de-yuan-li"><span class="nav-number">4.1.</span> <span class="nav-text">MyISAM索引的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#my-isam-yu-inno-db-dui-bi"><span class="nav-number">4.2.</span> <span class="nav-text">MyISAM 与 InnoDB对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#suo-yin-de-dai-jie"><span class="nav-number">4.3.</span> <span class="nav-text">索引的代价</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-sql-shu-ju-jie-gou-xuan-ze-de-he-li-xing"><span class="nav-number">5.</span> <span class="nav-text">MySQL数据结构选择的合理性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#quan-biao-bian-li"><span class="nav-number">5.1.</span> <span class="nav-text">全表遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash-jie-gou"><span class="nav-number">5.2.</span> <span class="nav-text">Hash结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#er-cha-sou-suo-shu"><span class="nav-number">5.3.</span> <span class="nav-text">二叉搜索树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#avl-shu"><span class="nav-number">5.4.</span> <span class="nav-text">AVL树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#b-tree"><span class="nav-number">5.5.</span> <span class="nav-text">B-Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#b-tree-1"><span class="nav-number">5.6.</span> <span class="nav-text">B+Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-shu"><span class="nav-number">5.7.</span> <span class="nav-text">R树</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1093,7 +1098,29 @@ AVL树(有别于AVL算法)，它在二叉搜索树的基础上增加了约束，
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1560,7 +1587,6 @@ AVL树(有别于AVL算法)，它在二叉搜索树的基础上增加了约束，
 
 
   
-
   
 
   

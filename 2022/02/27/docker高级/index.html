@@ -397,6 +397,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -446,24 +451,24 @@
       
 
       
-        <h1>Docker Compose</h1>
+        <h1 id="docker-compose">Docker Compose</h1>
 <p>Compose 是 Docker 公司推出的一个工具软件，可以管理多个 Docker 容器组成一个应用。你需要定义一个 YAML 格式的配置文件docker-compose.yml，写好多个容器之间的调用关系。然后，只要一个命令，就能同时启动/关闭这些容器</p>
-<h2 id="能干嘛">能干嘛</h2>
+<h2 id="neng-gan-ma" id="能干嘛">能干嘛</h2>
 <p>docker建议我们每一个容器中只运行一个服务,因为docker容器本身占用资源极少,所以最好是将每个服务单独的分割开来但是这样我们又面临了一个问题？</p>
 <p>如果我需要同时部署好多个服务,难道要每个服务单独写Dockerfile然后在构建镜像,构建容器,这样累都累死了,所以docker官方给我们提供了docker-compose多服务部署的工具</p>
 <p>例如要实现一个Web微服务项目，除了Web服务容器本身，往往还需要再加上后端的数据库mysql服务容器，redis服务器，注册中心eureka，甚至还包括负载均衡容器等等。。。。。。</p>
 <p>Compose允许用户通过一个单独的docker-compose.yml模板文件（YAML 格式）来定义一组相关联的应用容器为一个项目（project）。</p>
 <p>可以很容易地用一个配置文件定义一个多容器的应用，然后使用一条指令安装这个应用的所有依赖，完成构建。Docker-Compose 解决了容器与容器之间如何管理编排的问题。</p>
-<h2 id="安装步骤：">安装步骤：</h2>
+<h2 id="an-zhuang-bu-zou" id="安装步骤：">安装步骤：</h2>
 <p>官网地址：<a target="_blank" rel="noopener" href="https://docs.docker.com/compose/install/">https://docs.docker.com/compose/install/</a></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">下载 Docker Compose</span></span><br><span class="line">curl -L &quot;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta">#</span><span class="bash">对二进制文件应用可执行权限：</span></span><br><span class="line">chmod +x /usr/local/bin/docker-compose</span><br><span class="line"><span class="meta">#</span><span class="bash">测试是否安装成功</span></span><br><span class="line">docker-compose --version</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">卸载</span></span><br><span class="line">rm /usr/local/bin/docker-compose</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="Compose的核心概念">Compose的核心概念</h2>
-<h3 id="一文件">一文件</h3>
+<h2 id="compose-de-he-xin-gai-nian" id="Compose的核心概念">Compose的核心概念</h2>
+<h3 id="yi-wen-jian" id="一文件">一文件</h3>
 <p>docker-compose.yml</p>
-<h3 id="二要素">二要素</h3>
+<h3 id="er-yao-su" id="二要素">二要素</h3>
 <p>服务：一个个应用容器实例，比如订单微服务，库存微服务，mysql容器等等</p>
 <p>工程：由一组关联的应用容器组成的一个<strong>完整业务单元</strong>，在docker-compose.yml文件中定义</p>
-<h2 id="Compose使用的三步骤">Compose使用的三步骤</h2>
+<h2 id="compose-shi-yong-de-san-bu-zou" id="Compose使用的三步骤">Compose使用的三步骤</h2>
 <p>1.编写Dockerfile定义各个微服务应用并构建出对应的镜像文件</p>
 <p>2.使用docker-compose.yml定义一个完整业务单元，安排好整体应用中的各个容器服务</p>
 <p>3.最后,执行docker-compose up命令来启动并运行整个应用程序，完成一键部署上线</p>
@@ -495,19 +500,19 @@
 <p>bug排查：</p>
 <p>maven打包后找不到主属性清单</p>
 <figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#修改pom配置为</span></span><br><span class="line"> <span class="params">&lt;build&gt;</span></span><br><span class="line">        <span class="params">&lt;plugins&gt;</span></span><br><span class="line">            <span class="params">&lt;plugin&gt;</span></span><br><span class="line">                <span class="params">&lt;groupId&gt;</span>org.springframework.boot<span class="params">&lt;/groupId&gt;</span></span><br><span class="line">                <span class="params">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="params">&lt;/artifactId&gt;</span></span><br><span class="line">                <span class="params">&lt;executions&gt;</span></span><br><span class="line">                    <span class="params">&lt;execution&gt;</span></span><br><span class="line">                        <span class="params">&lt;goals&gt;</span></span><br><span class="line">                            <span class="params">&lt;goal&gt;</span>repackage<span class="params">&lt;/goal&gt;</span></span><br><span class="line">                        <span class="params">&lt;/goals&gt;</span></span><br><span class="line">                    <span class="params">&lt;/execution&gt;</span></span><br><span class="line">                <span class="params">&lt;/executions&gt;</span></span><br><span class="line">            <span class="params">&lt;/plugin&gt;</span></span><br><span class="line">            <span class="params">&lt;plugin&gt;</span></span><br><span class="line">                <span class="params">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="params">&lt;/groupId&gt;</span></span><br><span class="line">                <span class="params">&lt;artifactId&gt;</span>maven-resources-plugin<span class="params">&lt;/artifactId&gt;</span></span><br><span class="line">                <span class="params">&lt;version&gt;</span><span class="number">3.1</span><span class="number">.0</span><span class="params">&lt;/version&gt;</span></span><br><span class="line">            <span class="params">&lt;/plugin&gt;</span></span><br><span class="line">        <span class="params">&lt;/plugins&gt;</span></span><br><span class="line">    <span class="params">&lt;/build&gt;</span></span><br></pre></td></tr></table></figure>
-<h1>Docker 容器监控</h1>
+<h1 id="docker-rong-qi-jian-kong">Docker 容器监控</h1>
 <p>docker stats查看容器占用情况：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220228191503.png" alt=""></p>
 <p>通过docker stats命令可以很方便的看到当前宿主机上所有容器的CPU,内存以及网络流量等数据，一般小公司够用了。。。。</p>
 <p>但是，docker stats统计结果只能是当前宿主机的全部容器，数据资料是实时的，没有地方存储、没有健康指标过线预警等功能</p>
 <p><strong>CAdvisor监控收集+influxDB存储数据+Granfana展示图表</strong></p>
-<h2 id="CAdvisor：">CAdvisor：</h2>
+<h2 id="c-advisor" id="CAdvisor：">CAdvisor：</h2>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220228191852.png" alt=""></p>
-<h2 id="InfluxDB：">InfluxDB：</h2>
+<h2 id="influx-db" id="InfluxDB：">InfluxDB：</h2>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220228191953.png" alt=""></p>
-<h2 id="Granfana">Granfana:</h2>
+<h2 id="granfana" id="Granfana">Granfana:</h2>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220228192017.png" alt=""></p>
-<h2 id="compose一键搭建平台">compose一键搭建平台</h2>
+<h2 id="compose-yi-jian-da-jian-ping-tai" id="compose一键搭建平台">compose一键搭建平台</h2>
 <p>docker-compose.yml</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.1&#x27;</span></span><br><span class="line"> </span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">grafana_data:</span> &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"> <span class="attr">influxdb:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">tutum/influxdb:0.9</span></span><br><span class="line">  <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">PRE_CREATE_DB=cadvisor</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;8083:8083&quot;</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;8086:8086&quot;</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./data/influxdb:/data</span></span><br><span class="line"> </span><br><span class="line"> <span class="attr">cadvisor:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">google/cadvisor</span></span><br><span class="line">  <span class="attr">links:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">influxdb:influxsrv</span></span><br><span class="line">  <span class="attr">command:</span> <span class="string">-storage_driver=influxdb</span> <span class="string">-storage_driver_db=cadvisor</span> <span class="string">-storage_driver_host=influxsrv:8086</span></span><br><span class="line">  <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/:/rootfs:ro</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/var/run:/var/run:rw</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/sys:/sys:ro</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/var/lib/docker/:/var/lib/docker:ro</span></span><br><span class="line"> </span><br><span class="line"> <span class="attr">grafana:</span></span><br><span class="line">  <span class="attr">user:</span> <span class="string">&quot;104&quot;</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">grafana/grafana</span></span><br><span class="line">  <span class="attr">user:</span> <span class="string">&quot;104&quot;</span></span><br><span class="line">  <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">  <span class="attr">links:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">influxdb:influxsrv</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;3000:3000&quot;</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">grafana_data:/var/lib/grafana</span></span><br><span class="line">  <span class="attr">environment:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">HTTP_USER=admin</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">HTTP_PASS=admin</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">INFLUXDB_HOST=influxsrv</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">INFLUXDB_PORT=8086</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">INFLUXDB_NAME=cadvisor</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">INFLUXDB_USER=root</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">INFLUXDB_PASS=root</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>执行：</p>
@@ -718,7 +723,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">Docker Compose</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%BD%E5%B9%B2%E5%98%9B"><span class="nav-number">1.1.</span> <span class="nav-text">能干嘛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">安装步骤：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compose%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">1.3.</span> <span class="nav-text">Compose的核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.1.</span> <span class="nav-text">一文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%A6%81%E7%B4%A0"><span class="nav-number">1.3.2.</span> <span class="nav-text">二要素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Compose%E4%BD%BF%E7%94%A8%E7%9A%84%E4%B8%89%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.4.</span> <span class="nav-text">Compose使用的三步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Docker 容器监控</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CAdvisor%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">CAdvisor：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InfluxDB%EF%BC%9A"><span class="nav-number">2.2.</span> <span class="nav-text">InfluxDB：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Granfana"><span class="nav-number">2.3.</span> <span class="nav-text">Granfana:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compose%E4%B8%80%E9%94%AE%E6%90%AD%E5%BB%BA%E5%B9%B3%E5%8F%B0"><span class="nav-number">2.4.</span> <span class="nav-text">compose一键搭建平台</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-compose"><span class="nav-number">1.</span> <span class="nav-text">Docker Compose</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#neng-gan-ma"><span class="nav-number">1.1.</span> <span class="nav-text">能干嘛</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-zhuang-bu-zou"><span class="nav-number">1.2.</span> <span class="nav-text">安装步骤：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compose-de-he-xin-gai-nian"><span class="nav-number">1.3.</span> <span class="nav-text">Compose的核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yi-wen-jian"><span class="nav-number">1.3.1.</span> <span class="nav-text">一文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#er-yao-su"><span class="nav-number">1.3.2.</span> <span class="nav-text">二要素</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compose-shi-yong-de-san-bu-zou"><span class="nav-number">1.4.</span> <span class="nav-text">Compose使用的三步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-rong-qi-jian-kong"><span class="nav-number">2.</span> <span class="nav-text">Docker 容器监控</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-advisor"><span class="nav-number">2.1.</span> <span class="nav-text">CAdvisor：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#influx-db"><span class="nav-number">2.2.</span> <span class="nav-text">InfluxDB：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#granfana"><span class="nav-number">2.3.</span> <span class="nav-text">Granfana:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compose-yi-jian-da-jian-ping-tai"><span class="nav-number">2.4.</span> <span class="nav-text">compose一键搭建平台</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -771,7 +776,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1238,7 +1265,6 @@
 
 
   
-
   
 
   

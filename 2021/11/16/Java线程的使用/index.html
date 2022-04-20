@@ -380,6 +380,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -429,9 +434,9 @@
       
 
       
-        <h2 id="方法一-直接使用">方法一:直接使用</h2>
+        <h2 id="fang-fa-yi-zhi-jie-shi-yong" id="方法一-直接使用">方法一:直接使用</h2>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建线程对象</span></span><br><span class="line">Thread t = <span class="keyword">new</span> Thread() &#123;</span><br><span class="line"> 	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> 	<span class="comment">// 要执行的任务</span></span><br><span class="line"> 	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 启动线程</span></span><br><span class="line">t.start();</span><br></pre></td></tr></table></figure>
-<h2 id="方法二：使用-Runnable-配合-Thread">方法二：使用 Runnable 配合 Thread</h2>
+<h2 id="fang-fa-er-shi-yong-runnable-pei-he-thread" id="方法二：使用-Runnable-配合-Thread">方法二：使用 Runnable 配合 Thread</h2>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Runnable runnable = <span class="keyword">new</span> Runnable() &#123;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="comment">// 要执行的任务</span></span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 创建线程对象</span></span><br><span class="line">Thread t = <span class="keyword">new</span> Thread( runnable );</span><br><span class="line"><span class="comment">// 启动线程</span></span><br><span class="line">t.start();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>Java 8 以后可以使用 lambda 精简代码:<br>
 注意：@FunctionalInterface注解的接口可以使用lambda表达式</p>
@@ -442,10 +447,10 @@
 <li>用 Runnable 更容易与线程池等高级 API 配合</li>
 <li>用 Runnable 让任务类脱离了 Thread 继承体系，更灵活</li>
 </ul>
-<h2 id="方法三，FutureTask-配合-Thread">方法三，FutureTask 配合 Thread</h2>
+<h2 id="fang-fa-san-future-task-pei-he-thread" id="方法三，FutureTask-配合-Thread">方法三，FutureTask 配合 Thread</h2>
 <p>FutureTask 能够接收 Callable 类型的参数，用来处理有返回结果的情况</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Slf4j(topic = &quot;c.Test3&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test3</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">        FutureTask futureTask = <span class="keyword">new</span> FutureTask&lt;Integer&gt;(<span class="keyword">new</span> Callable&lt;Integer&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                log.debug(<span class="string">&quot;call running&quot;</span>);</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="number">100</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread thread = <span class="keyword">new</span> Thread(futureTask,<span class="string">&quot;t1&quot;</span>);</span><br><span class="line">        thread.start();</span><br><span class="line"></span><br><span class="line">        System.out.println(futureTask.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="查看进程线程的方法">查看进程线程的方法</h2>
+<h2 id="cha-kan-jin-cheng-xian-cheng-de-fang-fa" id="查看进程线程的方法">查看进程线程的方法</h2>
 <p><strong>windows</strong><br>
 任务管理器可以查看进程和线程数，也可以用来杀死进程<br>
 <code>tasklist</code> 查看进程<br>
@@ -673,7 +678,7 @@ Dcom.sun.management.jmxremote.authenticate=false java类名
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80-%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">方法一:直接使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8-Runnable-%E9%85%8D%E5%90%88-Thread"><span class="nav-number">2.</span> <span class="nav-text">方法二：使用 Runnable 配合 Thread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%8CFutureTask-%E9%85%8D%E5%90%88-Thread"><span class="nav-number">3.</span> <span class="nav-text">方法三，FutureTask 配合 Thread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">查看进程线程的方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#fang-fa-yi-zhi-jie-shi-yong"><span class="nav-number">1.</span> <span class="nav-text">方法一:直接使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fang-fa-er-shi-yong-runnable-pei-he-thread"><span class="nav-number">2.</span> <span class="nav-text">方法二：使用 Runnable 配合 Thread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fang-fa-san-future-task-pei-he-thread"><span class="nav-number">3.</span> <span class="nav-text">方法三，FutureTask 配合 Thread</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-jin-cheng-xian-cheng-de-fang-fa"><span class="nav-number">4.</span> <span class="nav-text">查看进程线程的方法</span></a></li></ol></div>
             
 
           </div>
@@ -726,7 +731,29 @@ Dcom.sun.management.jmxremote.authenticate=false java类名
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1193,7 +1220,6 @@ Dcom.sun.management.jmxremote.authenticate=false java类名
 
 
   
-
   
 
   

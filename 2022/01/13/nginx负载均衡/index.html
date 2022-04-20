@@ -383,6 +383,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -432,24 +437,24 @@
       
 
       
-        <h1>1、实现效果</h1>
+        <h1 id="1-shi-xian-xiao-guo">1、实现效果</h1>
 <p>（1）浏览器地址栏输入地址 <a target="_blank" rel="noopener" href="http://192.168.17.129/edu/a.html%EF%BC%8C%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%95%88%E6%9E%9C%EF%BC%8C%E5%B9%B3%E5%9D%87">http://192.168.17.129/edu/a.html，负载均衡效果，平均</a> 8080和 8081 端口中</p>
-<h1>2、准备工作</h1>
+<h1 id="2-zhun-bei-gong-zuo">2、准备工作</h1>
 <p>（1）准备两台 tomcat 服务器，一台 8080，一台 8081<br>
 （2）在两台 tomcat 里面 webapps 目录中，创建名称是 edu 文件夹，在 edu 文件夹中创建页面 a.html，用于测试</p>
-<h1>3、在 nginx 的配置文件中进行负载均衡的配置</h1>
+<h1 id="3-zai-nginx-de-pei-zhi-wen-jian-zhong-jin-xing-fu-zai-jun-heng-de-pei-zhi">3、在 nginx 的配置文件中进行负载均衡的配置</h1>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113192825.png" alt=""></p>
-<h1>测试效果：</h1>
+<h1 id="ce-shi-xiao-guo">测试效果：</h1>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113193003.png" alt=""></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113193030.png" alt=""></p>
-<h1>nginx 分配服务器策略</h1>
-<h2 id="第一种-轮询（默认）">第一种 轮询（默认）</h2>
+<h1 id="nginx-fen-pei-fu-wu-qi-ce-lue">nginx 分配服务器策略</h1>
+<h2 id="di-yi-chong-lun-xun-mo-ren" id="第一种-轮询（默认）">第一种 轮询（默认）</h2>
 <p>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器 down 掉，能自动剔除。</p>
-<h2 id="第二种-weight">第二种 weight</h2>
+<h2 id="di-er-chong-weight" id="第二种-weight">第二种 weight</h2>
 <p>weight 代表权重默认为 1,权重越高被分配的客户端越多</p>
-<h2 id="第三种-ip-hash">第三种 ip_hash</h2>
+<h2 id="di-san-chong-ip-hash" id="第三种-ip-hash">第三种 ip_hash</h2>
 <p>每个请求按访问 ip 的 hash 结果分配，这样每个访客固定访问一个后端服务器</p>
-<h2 id="第四种-fair（第三方）">第四种 fair（第三方）</h2>
+<h2 id="di-si-chong-fair-di-san-fang" id="第四种-fair（第三方）">第四种 fair（第三方）</h2>
 <p>按后端服务器的响应时间来分配请求，响应时间短的优先分配。</p>
 
       
@@ -644,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1、实现效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2、准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3、在 nginx 的配置文件中进行负载均衡的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">测试效果：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">nginx 分配服务器策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D-%E8%BD%AE%E8%AF%A2%EF%BC%88%E9%BB%98%E8%AE%A4%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">第一种 轮询（默认）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D-weight"><span class="nav-number">5.2.</span> <span class="nav-text">第二种 weight</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D-ip-hash"><span class="nav-number">5.3.</span> <span class="nav-text">第三种 ip_hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%A7%8D-fair%EF%BC%88%E7%AC%AC%E4%B8%89%E6%96%B9%EF%BC%89"><span class="nav-number">5.4.</span> <span class="nav-text">第四种 fair（第三方）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-shi-xian-xiao-guo"><span class="nav-number">1.</span> <span class="nav-text">1、实现效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-zhun-bei-gong-zuo"><span class="nav-number">2.</span> <span class="nav-text">2、准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-zai-nginx-de-pei-zhi-wen-jian-zhong-jin-xing-fu-zai-jun-heng-de-pei-zhi"><span class="nav-number">3.</span> <span class="nav-text">3、在 nginx 的配置文件中进行负载均衡的配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ce-shi-xiao-guo"><span class="nav-number">4.</span> <span class="nav-text">测试效果：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-fen-pei-fu-wu-qi-ce-lue"><span class="nav-number">5.</span> <span class="nav-text">nginx 分配服务器策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#di-yi-chong-lun-xun-mo-ren"><span class="nav-number">5.1.</span> <span class="nav-text">第一种 轮询（默认）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#di-er-chong-weight"><span class="nav-number">5.2.</span> <span class="nav-text">第二种 weight</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#di-san-chong-ip-hash"><span class="nav-number">5.3.</span> <span class="nav-text">第三种 ip_hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#di-si-chong-fair-di-san-fang"><span class="nav-number">5.4.</span> <span class="nav-text">第四种 fair（第三方）</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -697,7 +702,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1164,7 +1191,6 @@
 
 
   
-
   
 
   

@@ -390,6 +390,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -439,37 +444,37 @@
       
 
       
-        <h1><strong>字符集的相关操作</strong></h1>
+        <h1 id="strong-zi-fu-ji-de-xiang-guan-cao-zuo-strong"><strong>字符集的相关操作</strong></h1>
 <p><strong>修改MySQL5.7字符集</strong></p>
-<h2 id="修改步骤"><strong>修改步骤</strong></h2>
+<h2 id="strong-xiu-gai-bu-zou-strong" id="修改步骤"><strong>修改步骤</strong></h2>
 <p>在MySQL 8.0版本之前，默认字符集为 latin1 ，utf8字符集指向的是 utf8mb3 。网站开发人员在数据库</p>
 <p>设计的时候往往会将编码修改为utf8字符集。如果遗忘修改默认的编码，就会出现乱码的问题。从MySQL</p>
 <p>8.0开始，数据库的默认编码将改为 utf8mb4 ，从而避免上述乱码的问题。</p>
-<h3 id="操作1：查看默认使用的字符集"><strong>操作1：查看默认使用的字符集</strong></h3>
+<h3 id="strong-cao-zuo-1-cha-kan-mo-ren-shi-yong-de-zi-fu-ji-strong" id="操作1：查看默认使用的字符集"><strong>操作1：查看默认使用的字符集</strong></h3>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;character%&#x27;; </span><br><span class="line"># 或者 </span><br><span class="line">show variables like &#x27;%char%&#x27;;</span><br></pre></td></tr></table></figure>
 <p>8.0.27下:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404192215776.png" alt="image-20220404192215776"></p>
 <p>8.7.27下:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404192235498.png" alt="image-20220404192235498"></p>
 <p>这就导致了我们在5.7.27 版本下添加 中文字符的时候会报错 ，需要修改它的字符集</p>
-<h3 id="操作2：修改字符集"><strong>操作2：修改字符集</strong></h3>
+<h3 id="strong-cao-zuo-2-xiu-gai-zi-fu-ji-strong" id="操作2：修改字符集"><strong>操作2：修改字符集</strong></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
 <p>在MySQL5.7或之前的版本中，在文件最后加上中文字符集配置：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">character_set_server</span>=utf8</span><br></pre></td></tr></table></figure>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404192528385.png" alt="image-20220404192528385"></p>
-<h3 id="操作3：重新启动MySQL服务"><strong>操作3</strong>：重新启动<strong>MySQL服务</strong></h3>
+<h3 id="strong-cao-zuo-3-strong-zhong-xin-qi-dong-strong-my-sql-fu-wu-strong" id="操作3：重新启动MySQL服务"><strong>操作3</strong>：重新启动<strong>MySQL服务</strong></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
 <p>tag:</p>
 <blockquote>
 <p>但是原库、原表的设定不会发生变化，参数修改只对新建的数据库生效。</p>
 </blockquote>
-<h2 id="已有库-表字符集的变更"><strong>已有库&amp;表字符集的变更</strong></h2>
+<h2 id="strong-yi-you-ku-amp-biao-zi-fu-ji-de-bian-geng-strong" id="已有库-表字符集的变更"><strong>已有库&amp;表字符集的变更</strong></h2>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#修改已创建数据库的字符集</span><br><span class="line">alter database dbtest1 character set &#x27;utf8&#x27;;</span><br><span class="line">#修改已创建数据表的字符集</span><br><span class="line">alter table t_emp convert to character set &#x27;utf8&#x27;;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意：但是原有的数据如果是用非’utf8’编码的话，数据本身编码不会发生改变。已有数据需要导</p>
 <p>出或删除，然后重新插入。</p>
 </blockquote>
-<h3 id="各级别的字符集"><strong>各级别的字符集</strong></h3>
+<h3 id="strong-ge-ji-bie-de-zi-fu-ji-strong" id="各级别的字符集"><strong>各级别的字符集</strong></h3>
 <p>MySQL有4个级别的字符集和比较规则，分别是</p>
 <ul>
 <li>
@@ -508,22 +513,22 @@
 <p>character_set_results：服务器向客户端返回数据时使用的字符集</p>
 </li>
 </ul>
-<h4 id="服务器级别"><strong>服务器级别</strong></h4>
+<h4 id="strong-fu-wu-qi-ji-bie-strong" id="服务器级别"><strong>服务器级别</strong></h4>
 <p>character_set_server ：服务器级别的字符集</p>
 <p>我们可以在启动服务器程序时通过启动选项或者在服务器程序运行过程中使用 SET 语句修改这两个变量</p>
 <p>的值。比如我们可以在配置文件中这样写：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[server] character_set_server=gbk </span><br><span class="line"># 默认字符集 </span><br><span class="line">collation_server=gbk_chinese_ci #对应的默认的比较规则</span><br></pre></td></tr></table></figure>
 <p>当服务器启动的时候读取这个配置文件后这两个系统变量的值便修改了。</p>
-<h4 id="数据库级别"><strong>数据库级别</strong></h4>
+<h4 id="strong-shu-ju-ku-ji-bie-strong" id="数据库级别"><strong>数据库级别</strong></h4>
 <p>character_set_database ：当前数据库的字符集</p>
 <p>我们在创建和修改数据库的时候可以指定该数据库的字符集和比较规则，具体语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE 数据库名 </span><br><span class="line">	[[DEFAULT] CHARACTER SET 字符集名称] </span><br><span class="line">	[[DEFAULT] COLLATE 比较规则名称]; </span><br><span class="line">ALTER DATABASE 数据库名 </span><br><span class="line">	[[DEFAULT] CHARACTER SET 字符集名称] </span><br><span class="line">	[[DEFAULT] COLLATE 比较规则名称];</span><br></pre></td></tr></table></figure>
-<h4 id="表级别"><strong>表级别</strong></h4>
+<h4 id="strong-biao-ji-bie-strong" id="表级别"><strong>表级别</strong></h4>
 <p>我们也可以在创建和修改表的时候指定表的字符集和比较规则，语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE 表名 (列的信息) </span><br><span class="line">	[[DEFAULT] CHARACTER SET 字符集名称] </span><br><span class="line">	[COLLATE 比较规则名称]] </span><br><span class="line"></span><br><span class="line">ALTER TABLE 表名 </span><br><span class="line">	[[DEFAULT] CHARACTER SET 字符集名称] </span><br><span class="line">	[COLLATE 比较规则名称]</span><br></pre></td></tr></table></figure>
 <p><strong>如果创建和修改表的语句中没有指明字符集和比较规则，将使用该表所在数据库的字符集和比较规则作</strong></p>
 <p><strong>为该表的字符集和比较规则。</strong></p>
-<h4 id="列级别"><strong>列级别</strong></h4>
+<h4 id="strong-lie-ji-bie-strong" id="列级别"><strong>列级别</strong></h4>
 <p>对于存储字符串的列，同一个表中的不同的列也可以有不同的字符集和比较规则。我们在创建和修改列</p>
 <p>定义的时候可以指定该列的字符集和比较规则，语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE 表名( </span><br><span class="line">    列名 字符串类型 [CHARACTER SET 字符集名称] [COLLATE 比较规则名称], 其他列... </span><br><span class="line">);ALTER TABLE 表名 MODIFY 列名 字符串类型 [CHARACTER SET 字符集名称] [COLLATE 比较规则名称];</span><br></pre></td></tr></table></figure>
@@ -587,7 +592,7 @@
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404201040917.png" alt="image-20220404201040917"></p>
 <p>通常把character_set_client，character_set_connection,character_set_results这三个系统变量设置成和客户端使用的字符集一致的情况，这样减少了很多无谓的字符集转换。为了方便我们设置，mysql提供了一条简单的语句</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET NAMES 字符集名;</span><br></pre></td></tr></table></figure>
-<h1>SQL大小写规范</h1>
+<h1 id="sql-da-xiao-xie-gui-fan">SQL大小写规范</h1>
 <p><strong>Windows和Linux平台区别</strong></p>
 <p>在 SQL 中，关键字和函数名是不用区分字母大小写的，比如 SELECT、WHERE、ORDER、GROUP BY 等关键字，以及 ABS、MOD、ROUND、MAX 等函数名。不过在 SQL 中，你还是要确定大小写的规范，</p>
 <p>因为在 Linux 和 Windows 环境下，你可能会遇到不同的大小写问题。 <strong>windows系统默认大小写不敏感</strong> ，但是 <strong>linux系统是大小写敏感的</strong></p>
@@ -812,7 +817,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">字符集的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.1.</span> <span class="nav-text">修改步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C1%EF%BC%9A%E6%9F%A5%E7%9C%8B%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">操作1：查看默认使用的字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C2%EF%BC%9A%E4%BF%AE%E6%94%B9%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">操作2：修改字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C3%EF%BC%9A%E9%87%8D%E6%96%B0%E5%90%AF%E5%8A%A8MySQL%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.3.</span> <span class="nav-text">操作3：重新启动MySQL服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%B2%E6%9C%89%E5%BA%93-%E8%A1%A8%E5%AD%97%E7%AC%A6%E9%9B%86%E7%9A%84%E5%8F%98%E6%9B%B4"><span class="nav-number">1.2.</span> <span class="nav-text">已有库&amp;表字符集的变更</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84%E7%BA%A7%E5%88%AB%E7%9A%84%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">1.2.1.</span> <span class="nav-text">各级别的字符集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BA%A7%E5%88%AB"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">服务器级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BA%A7%E5%88%AB"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">数据库级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A1%A8%E7%BA%A7%E5%88%AB"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">表级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E7%BA%A7%E5%88%AB"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">列级别</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">SQL大小写规范</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#strong-zi-fu-ji-de-xiang-guan-cao-zuo-strong"><span class="nav-number">1.</span> <span class="nav-text">字符集的相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-xiu-gai-bu-zou-strong"><span class="nav-number">1.1.</span> <span class="nav-text">修改步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-cao-zuo-1-cha-kan-mo-ren-shi-yong-de-zi-fu-ji-strong"><span class="nav-number">1.1.1.</span> <span class="nav-text">操作1：查看默认使用的字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-cao-zuo-2-xiu-gai-zi-fu-ji-strong"><span class="nav-number">1.1.2.</span> <span class="nav-text">操作2：修改字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-cao-zuo-3-strong-zhong-xin-qi-dong-strong-my-sql-fu-wu-strong"><span class="nav-number">1.1.3.</span> <span class="nav-text">操作3：重新启动MySQL服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#strong-yi-you-ku-amp-biao-zi-fu-ji-de-bian-geng-strong"><span class="nav-number">1.2.</span> <span class="nav-text">已有库&amp;表字符集的变更</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-ge-ji-bie-de-zi-fu-ji-strong"><span class="nav-number">1.2.1.</span> <span class="nav-text">各级别的字符集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#strong-fu-wu-qi-ji-bie-strong"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">服务器级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#strong-shu-ju-ku-ji-bie-strong"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">数据库级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#strong-biao-ji-bie-strong"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">表级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#strong-lie-ji-bie-strong"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">列级别</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sql-da-xiao-xie-gui-fan"><span class="nav-number">2.</span> <span class="nav-text">SQL大小写规范</span></a></li></ol></div>
             
 
           </div>
@@ -865,7 +870,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1332,7 +1359,6 @@
 
 
   
-
   
 
   

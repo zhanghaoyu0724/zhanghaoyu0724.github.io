@@ -380,6 +380,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -429,8 +434,8 @@
       
 
       
-        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule/submissions/">课程表</a></h1>
-<h2 id="方法一DFS（深度优先遍历）：">方法一DFS（深度优先遍历）：</h2>
+        <h1 id="a-href-https-leetcode-cn-com-problems-course-schedule-submissions-ke-cheng-biao-a"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule/submissions/">课程表</a></h1>
+<h2 id="fang-fa-yi-dfs-shen-du-you-xian-bian-li" id="方法一DFS（深度优先遍历）：">方法一DFS（深度优先遍历）：</h2>
 <p>首先来一个自己想到的思路：</p>
 <p>​	主要利用3个变量：</p>
 <p>​		变量1.已经走完的节点 i（课程） //int[] status = new int[numCourses];</p>
@@ -453,9 +458,9 @@
 <p>​	5，判断完上面的条件如果没返回false，也就是没有出现死环，返回true，</p>
 <p>​	 说实话有点绕对于我自己来说， 代码修修改改了半个小时</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canFinish</span><span class="params">(<span class="keyword">int</span> numCourses, <span class="keyword">int</span>[][] prerequisites)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span>[] status = <span class="keyword">new</span> <span class="keyword">int</span>[numCourses];</span><br><span class="line">       HashMap&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span>[] prerequisite : prerequisites) &#123;</span><br><span class="line">           List&lt;Integer&gt; objects1=<span class="keyword">null</span>;</span><br><span class="line">           <span class="keyword">if</span> ((objects1=map.get(prerequisite[<span class="number">0</span>]))!=<span class="keyword">null</span>)&#123;</span><br><span class="line">               objects1.add(prerequisite[<span class="number">1</span>]);</span><br><span class="line">           &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">               objects1=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">               objects1.add(prerequisite[<span class="number">1</span>]);</span><br><span class="line">               map.put(prerequisite[<span class="number">0</span>],objects1);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prerequisites.length; i++) &#123;</span><br><span class="line">           <span class="keyword">boolean</span>[] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[numCourses];</span><br><span class="line">         <span class="keyword">if</span> (!dfs(prerequisites[i][<span class="number">0</span>],status,visited,map))&#123;</span><br><span class="line">             <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">         &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span>[] status, <span class="keyword">boolean</span>[] visited, HashMap&lt;Integer, List&lt;Integer&gt;&gt; map)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (status[i]==<span class="number">1</span>)&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span> (visited[i])&#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       visited[i]=<span class="keyword">true</span>;</span><br><span class="line">       List&lt;Integer&gt; integers = map.get(i);</span><br><span class="line">       <span class="keyword">if</span> (integers!=<span class="keyword">null</span>)&#123;</span><br><span class="line">           <span class="keyword">boolean</span> flag=<span class="keyword">true</span>;</span><br><span class="line">           <span class="keyword">for</span> (Integer integer : integers) &#123;</span><br><span class="line">               flag=dfs(integer,status,visited,map);</span><br><span class="line">               <span class="keyword">if</span> (!flag)&#123;</span><br><span class="line">                   <span class="keyword">break</span>;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (!flag)&#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">           &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">               status[i]=<span class="number">1</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">           status[i]=<span class="number">1</span>;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="方法二BFS：">方法二BFS：</h2>
+<h2 id="fang-fa-er-bfs" id="方法二BFS：">方法二BFS：</h2>
 <p>我一开始没想到这个，具体看题解。</p>
-<h3 id="课程表（拓扑排序：入度表BFS法-DFS法，清晰图解）"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule/solution/course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa/">课程表（拓扑排序：入度表BFS法 / DFS法，清晰图解）</a></h3>
+<h3 id="a-href-https-leetcode-cn-com-problems-course-schedule-solution-course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa-ke-cheng-biao-tuo-bu-pai-xu-ru-du-biao-bfs-fa-dfs-fa-qing-xi-tu-jie-a" id="课程表（拓扑排序：入度表BFS法-DFS法，清晰图解）"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/course-schedule/solution/course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa/">课程表（拓扑排序：入度表BFS法 / DFS法，清晰图解）</a></h3>
 <p>看完自己手写了一个，</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canFinish</span><span class="params">(<span class="keyword">int</span> numCourses, <span class="keyword">int</span>[][] prerequisites)</span> </span>&#123;</span><br><span class="line">        Queue&lt;Integer&gt; queue=<span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> [] dp=<span class="keyword">new</span> <span class="keyword">int</span>[numCourses];</span><br><span class="line">        Map&lt;Integer,List&lt;Integer&gt;&gt; map=<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span>[] prerequisite : prerequisites) &#123;</span><br><span class="line">            <span class="keyword">int</span> i = prerequisite[<span class="number">1</span>];</span><br><span class="line">            dp[i]=dp[i]+<span class="number">1</span>;</span><br><span class="line">            List&lt;Integer&gt; objects1=<span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">if</span> ((objects1=map.get(prerequisite[<span class="number">0</span>]))!=<span class="keyword">null</span>)&#123;</span><br><span class="line">                objects1.add(prerequisite[<span class="number">1</span>]);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                objects1=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                objects1.add(prerequisite[<span class="number">1</span>]);</span><br><span class="line">                map.put(prerequisite[<span class="number">0</span>],objects1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dp.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dp[i]==<span class="number">0</span>)&#123;</span><br><span class="line">                queue.add(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty())</span><br><span class="line">        &#123;</span><br><span class="line">            Integer poll = queue.poll();</span><br><span class="line">            numCourses--;</span><br><span class="line">            List&lt;Integer&gt; integers = map.get(poll);</span><br><span class="line">            <span class="keyword">if</span> (integers!=<span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span> (Integer integer : integers) &#123;</span><br><span class="line">                    dp[integer]--;</span><br><span class="line">                    <span class="keyword">if</span> (dp[integer] == <span class="number">0</span>)</span><br><span class="line">                        queue.add(integer);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> numCourses==<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
@@ -657,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">课程表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80DFS%EF%BC%88%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E9%81%8D%E5%8E%86%EF%BC%89%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">方法一DFS（深度优先遍历）：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8CBFS%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">方法二BFS：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E8%A1%A8%EF%BC%88%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%EF%BC%9A%E5%85%A5%E5%BA%A6%E8%A1%A8BFS%E6%B3%95-DFS%E6%B3%95%EF%BC%8C%E6%B8%85%E6%99%B0%E5%9B%BE%E8%A7%A3%EF%BC%89"><span class="nav-number">1.2.1.</span> <span class="nav-text">课程表（拓扑排序：入度表BFS法 &#x2F; DFS法，清晰图解）</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#a-href-https-leetcode-cn-com-problems-course-schedule-submissions-ke-cheng-biao-a"><span class="nav-number">1.</span> <span class="nav-text">课程表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fang-fa-yi-dfs-shen-du-you-xian-bian-li"><span class="nav-number">1.1.</span> <span class="nav-text">方法一DFS（深度优先遍历）：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fang-fa-er-bfs"><span class="nav-number">1.2.</span> <span class="nav-text">方法二BFS：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#a-href-https-leetcode-cn-com-problems-course-schedule-solution-course-schedule-tuo-bu-pai-xu-bfsdfsliang-chong-fa-ke-cheng-biao-tuo-bu-pai-xu-ru-du-biao-bfs-fa-dfs-fa-qing-xi-tu-jie-a"><span class="nav-number">1.2.1.</span> <span class="nav-text">课程表（拓扑排序：入度表BFS法 &#x2F; DFS法，清晰图解）</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -710,7 +715,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1177,7 +1204,6 @@
 
 
   
-
   
 
   

@@ -386,6 +386,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -436,14 +441,14 @@
 
       
         <p>事务的隔离性由这章讲述的锁来实现。</p>
-<h1>概述</h1>
+<h1 id="gai-shu">概述</h1>
 <p>锁是计算机协调多个进程或线程并发访问某一资源的机制。在程序开发中会存在多线程同步的问题，当多个线程并发访问某个数据的时候，尤其是针对一些敏感的数据〈比如订单、金额等)，我们就需要保证这个数据在任何时刻最多只有一个线程在访问，保证数据的完整性和一致性。在开发过程中加锁是为了保证数据的一致性，这个思想在数据库领域中同样很重要。</p>
 <p>在数据库中，除传统的计算资源（如CPU、RAM、I/O等）的争用以外，数据也是一种供许多用户共享的资源。为保证数据的一致性，需要对并发操作进行控制，因此产生了锁。同时锁机制也为实现MySQL的各个隔离级别提供了保证。<strong>锁冲突</strong>也是影响数据库并发访问性能的一个重要因素。所以锁对数据库而言显得尤其重要，也更加复杂</p>
-<h1>MySQL并发事务访问相同记录</h1>
+<h1 id="my-sql-bing-fa-shi-wu-fang-wen-xiang-tong-ji-lu">MySQL并发事务访问相同记录</h1>
 <p>并发事务访问相同记录的情况大致可以划分为3种：</p>
-<h2 id="读-读情况">读-读情况</h2>
+<h2 id="du-du-qing-kuang" id="读-读情况">读-读情况</h2>
 <p>读-读情况，即并发事务相继读取相同的记录。读取操作本身不会对记录有任何影响，并不会引起什么问题，所以允许这种情况的发生。</p>
-<h2 id="写-写情况">写-写情况</h2>
+<h2 id="xie-xie-qing-kuang" id="写-写情况">写-写情况</h2>
 <p>写-写情况，即并发事务相继对相同的记录做出改动。</p>
 <p>在这种情况下会发生<strong>脏写</strong>的问题，任何一种隔离级别都不允许这种问题的发生。所以在多个未提交事务相继对一条记录做改动时，需要让它们排队执行，这个排队的过程其实是通过锁来实现的。这个所谓的锁其实是一个内存中的结构，在事务执行前本来是没有锁的，也就是说一开始是没有锁结构和记录进行关联的，如图所示：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220420181423224.png" alt="image-20220420181423224"></p>
@@ -474,10 +479,10 @@
 <p>意思就是在内存中生成了对应的锁结构，不过锁结构的is_waiting 属性为true ，也就是事务需要等待，不可以继续执行操作。</p>
 </li>
 </ul>
-<h2 id="读-写或写-读情况">读-写或写-读情况</h2>
+<h2 id="du-xie-huo-xie-du-qing-kuang" id="读-写或写-读情况">读-写或写-读情况</h2>
 <p>读-写或写-读，即一个事务进行读取操作，另一个进行改动操作。这种情况下可能发生脏读、不可重复读、幻读的问题。<br>
 各个数据库厂商对SQL标准的支持都可能不一样。比如MySQL在REPEATABLE READ 隔离级别上就已经解决了幻读问题。</p>
-<h2 id="并发问题的解决方案">并发问题的解决方案</h2>
+<h2 id="bing-fa-wen-ti-de-jie-jue-fang-an" id="并发问题的解决方案">并发问题的解决方案</h2>
 <p>怎么解决脏读、不可重复读、幻读这些问题呢？其实有两种可选的解决方案：</p>
 <ul>
 <li>
@@ -505,10 +510,10 @@
 </li>
 </ul>
 <p>一般情况下我们当然愿意采用MVCC 来解决读-写操作并发执行的问题，但是业务在某些特殊情况下，要求必须采用加锁的方式执行。下面就讲解下MySQL中不同类别的锁。</p>
-<h1>锁的不同角度分类</h1>
+<h1 id="suo-de-bu-tong-jiao-du-fen-lei">锁的不同角度分类</h1>
 <p>锁的分类图，如下：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220420183007253.png" alt="image-20220420183007253"></p>
-<h2 id="从数据操作的类型划分：读锁、写锁">从数据操作的类型划分：读锁、写锁</h2>
+<h2 id="cong-shu-ju-cao-zuo-de-lei-xing-hua-fen-du-suo-xie-suo" id="从数据操作的类型划分：读锁、写锁">从数据操作的类型划分：读锁、写锁</h2>
 <p>对于数据库中并发事务的读-读情况并不会引起什么问题。对于写-写、读-写或写-读这些情况可能会引起一些问题，需要使用MVCC或者加锁的方式来解决它们。在使用<strong>加锁的方式</strong>解决问题时，由于既要允许读-读情况不受影响，又要使写-写、读-写或写-读情况中的操作相互阻塞，所以<strong>MySQL实现一个由两种类型的锁组成的锁系统</strong>来解决。这两种类型的锁通常被称为<strong>共享锁</strong>(Shared Lock，SLock)和<strong>排他锁</strong>(Exclusive Lock，XLock),也叫<strong>读锁</strong>（readlock)和<strong>写锁</strong>(write lock)。</p>
 <ul>
 <li><strong>读锁</strong>：也称为<strong>共享锁</strong>、英文用S 表示。针对同一份数据，多个事务的读操作可以同时进行而不会互相影响，相互不阻塞的。</li>
@@ -518,7 +523,7 @@
 <p>**举例(行级读写锁)**∶如果一个事务T1已经获得了某个行r的读锁，那么此时另外的一个事务这个行r的读锁的，因为读取操作并没有改变行r的数据;但是，如果某个事务T3想获得行r的写锁，则它必须等待事务T1、T2释放掉行r上的读锁才行。<br>
 总结:这里的兼容是指对同一张表或记录的锁的兼容性情况。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220420184828040.png" alt="image-20220420184828040"></p>
-<h3 id="锁定读">锁定读</h3>
+<h3 id="suo-ding-du" id="锁定读">锁定读</h3>
 <p>在采用加锁方式解决脏读、不可重复读、幻读这些问题时，读取一条记录时需要获取该记录的S锁，其实是不严谨的，有时候需要在读取记录时就获取记录的X锁，来禁止别的事务读写该记录，为此MysQL提出了两种比较特殊的SELECT语句格式:</p>
 <ul>
 <li>
@@ -544,7 +549,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="写操作">写操作</h3>
+<h3 id="xie-cao-zuo" id="写操作">写操作</h3>
 <p>平常所用到的写操作无非是DELETE、UPDATE、INSERT这三种:</p>
 <ul>
 <li>
@@ -755,7 +760,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">MySQL并发事务访问相同记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB-%E8%AF%BB%E6%83%85%E5%86%B5"><span class="nav-number">2.1.</span> <span class="nav-text">读-读情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99-%E5%86%99%E6%83%85%E5%86%B5"><span class="nav-number">2.2.</span> <span class="nav-text">写-写情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB-%E5%86%99%E6%88%96%E5%86%99-%E8%AF%BB%E6%83%85%E5%86%B5"><span class="nav-number">2.3.</span> <span class="nav-text">读-写或写-读情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">2.4.</span> <span class="nav-text">并发问题的解决方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">锁的不同角度分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E6%95%B0%E6%8D%AE%E6%93%8D%E4%BD%9C%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%88%92%E5%88%86%EF%BC%9A%E8%AF%BB%E9%94%81%E3%80%81%E5%86%99%E9%94%81"><span class="nav-number">3.1.</span> <span class="nav-text">从数据操作的类型划分：读锁、写锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%81%E5%AE%9A%E8%AF%BB"><span class="nav-number">3.1.1.</span> <span class="nav-text">锁定读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E6%93%8D%E4%BD%9C"><span class="nav-number">3.1.2.</span> <span class="nav-text">写操作</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gai-shu"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-sql-bing-fa-shi-wu-fang-wen-xiang-tong-ji-lu"><span class="nav-number">2.</span> <span class="nav-text">MySQL并发事务访问相同记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#du-du-qing-kuang"><span class="nav-number">2.1.</span> <span class="nav-text">读-读情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xie-xie-qing-kuang"><span class="nav-number">2.2.</span> <span class="nav-text">写-写情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#du-xie-huo-xie-du-qing-kuang"><span class="nav-number">2.3.</span> <span class="nav-text">读-写或写-读情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bing-fa-wen-ti-de-jie-jue-fang-an"><span class="nav-number">2.4.</span> <span class="nav-text">并发问题的解决方案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#suo-de-bu-tong-jiao-du-fen-lei"><span class="nav-number">3.</span> <span class="nav-text">锁的不同角度分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cong-shu-ju-cao-zuo-de-lei-xing-hua-fen-du-suo-xie-suo"><span class="nav-number">3.1.</span> <span class="nav-text">从数据操作的类型划分：读锁、写锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#suo-ding-du"><span class="nav-number">3.1.1.</span> <span class="nav-text">锁定读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xie-cao-zuo"><span class="nav-number">3.1.2.</span> <span class="nav-text">写操作</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -808,7 +813,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1275,7 +1302,6 @@
 
 
   
-
   
 
   

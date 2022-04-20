@@ -380,6 +380,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -429,18 +434,18 @@
       
 
       
-        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xm42hs/">轮转数组</a></h1>
+        <h1 id="a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xm-42-hs-lun-zhuan-shu-zu-a"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xm42hs/">轮转数组</a></h1>
 <p>刚做这个题的第一个思路：</p>
 <p>​	使用另外一个数组存储移动后的位置，不需要改变原数组：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res[]=<span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> index =( i + k )% nums.length;</span><br><span class="line">            res[index]=nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        System.arraycopy(res,<span class="number">0</span>,nums,<span class="number">0</span>,nums.length);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>看到题解有一个个人觉得，很穷巧妙的思路：</p>
-<h1>数组翻转：</h1>
+<h1 id="shu-zu-fan-zhuan">数组翻转：</h1>
 <p>看到题解自己写的代码:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">       k=k%nums.length;</span><br><span class="line">       nums=reverse(nums);</span><br><span class="line">       <span class="keyword">int</span> data1[]=reverse(Arrays.copyOf(nums,k));</span><br><span class="line">       <span class="keyword">int</span> data2[]=reverse(Arrays.copyOfRange(nums,k,nums.length));</span><br><span class="line">       <span class="keyword">int</span> res[]= IntStream.concat(Arrays.stream(data1), Arrays.stream(data2)).toArray();</span><br><span class="line">       System.arraycopy(res,<span class="number">0</span>,nums,<span class="number">0</span>,nums.length);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span>[] reverse(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">    <span class="keyword">int</span> start=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> end=nums.length-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (start&lt;=end)&#123;</span><br><span class="line">        <span class="keyword">int</span> temp=nums[start];</span><br><span class="line">        nums[start]=nums[end];</span><br><span class="line">        nums[end]=temp;</span><br><span class="line">        start++;</span><br><span class="line">        end--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> nums;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>时间花的比我之前的还多， 。。。。</p>
 <p>仔细一想，我为啥要切割原来的数组的呢？真的菜，</p>
 <p><strong>下次一想到关于数组的位置变化时， 第一先想一想能不能再原来的数组上实现。</strong></p>
-<h1>力扣题解代码：</h1>
+<h1 id="li-kou-ti-jie-dai-ma">力扣题解代码：</h1>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        k %= nums.length;</span><br><span class="line">        reverse(nums, <span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">        reverse(nums, <span class="number">0</span>, k - <span class="number">1</span>);</span><br><span class="line">        reverse(nums, k, nums.length - <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (start &lt; end) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = nums[start];</span><br><span class="line">            nums[start] = nums[end];</span><br><span class="line">            nums[end] = temp;</span><br><span class="line">            start += <span class="number">1</span>;</span><br><span class="line">            end -= <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">作者：LeetCode-Solution</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/rotate-array/solution/xuan-zhuan-shu-zu-by-leetcode-solution-nipk/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
 
       
@@ -641,7 +646,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">轮转数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">数组翻转：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">力扣题解代码：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xm-42-hs-lun-zhuan-shu-zu-a"><span class="nav-number">1.</span> <span class="nav-text">轮转数组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shu-zu-fan-zhuan"><span class="nav-number">2.</span> <span class="nav-text">数组翻转：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#li-kou-ti-jie-dai-ma"><span class="nav-number">3.</span> <span class="nav-text">力扣题解代码：</span></a></li></ol></div>
             
 
           </div>
@@ -694,7 +699,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1161,7 +1188,6 @@
 
 
   
-
   
 
   

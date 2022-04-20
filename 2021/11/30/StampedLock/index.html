@@ -385,6 +385,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -434,7 +439,7 @@
       
 
       
-        <h1><strong>StampedLock</strong></h1>
+        <h1 id="strong-stamped-lock-strong"><strong>StampedLock</strong></h1>
 <p>该类自 JDK 8 加入，是为了进一步优化读性能，它的特点是在使用读锁、写锁时都必须配合【戳】使用加解读锁</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> stamp = lock.readLock();</span><br><span class="line">lock.unlockRead(stamp);</span><br></pre></td></tr></table></figure>
 <p>加解写锁</p>
@@ -456,12 +461,12 @@
 StampedLock 不支持条件变量<br>
 StampedLock 不支持可重入</p>
 </blockquote>
-<h1><strong>Semaphore</strong></h1>
+<h1 id="strong-semaphore-strong"><strong>Semaphore</strong></h1>
 <p>信号量，用来限制能同时访问共享资源的线程上限。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"> <span class="comment">// 1. 创建 semaphore 对象</span></span><br><span class="line"> Semaphore semaphore = <span class="keyword">new</span> Semaphore(<span class="number">3</span>);</span><br><span class="line"> <span class="comment">// 2. 10个线程同时运行</span></span><br><span class="line"> <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line"> <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line"> <span class="comment">// 3. 获取许可</span></span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> semaphore.acquire();</span><br><span class="line"> &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line"> e.printStackTrace();</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;running...&quot;</span>);</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> log.debug(<span class="string">&quot;end...&quot;</span>);</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> <span class="comment">// 4. 释放许可</span></span><br><span class="line"> semaphore.release();</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;).start();</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>输出：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">15.485</span> c.TestSemaphore [Thread-<span class="number">2</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">15.485</span> c.TestSemaphore [Thread-<span class="number">1</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">15.485</span> c.TestSemaphore [Thread-<span class="number">0</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">16.490</span> c.TestSemaphore [Thread-<span class="number">2</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">16.490</span> c.TestSemaphore [Thread-<span class="number">0</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">16.490</span> c.TestSemaphore [Thread-<span class="number">1</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">16.490</span> c.TestSemaphore [Thread-<span class="number">3</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">16.490</span> c.TestSemaphore [Thread-<span class="number">5</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">16.490</span> c.TestSemaphore [Thread-<span class="number">4</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">17.490</span> c.TestSemaphore [Thread-<span class="number">5</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">17.490</span> c.TestSemaphore [Thread-<span class="number">4</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">17.490</span> c.TestSemaphore [Thread-<span class="number">3</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">17.490</span> c.TestSemaphore [Thread-<span class="number">6</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">17.490</span> c.TestSemaphore [Thread-<span class="number">7</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">17.490</span> c.TestSemaphore [Thread-<span class="number">9</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">18.491</span> c.TestSemaphore [Thread-<span class="number">6</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">18.491</span> c.TestSemaphore [Thread-<span class="number">7</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">18.491</span> c.TestSemaphore [Thread-<span class="number">9</span>] - end... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">18.491</span> c.TestSemaphore [Thread-<span class="number">8</span>] - running... </span><br><span class="line"><span class="number">07</span>:<span class="number">35</span>:<span class="number">19.492</span> c.TestSemaphore [Thread-<span class="number">8</span>] - end...</span><br></pre></td></tr></table></figure>
-<h1>Semaphore 原理</h1>
+<h1 id="semaphore-yuan-li">Semaphore 原理</h1>
 <p><strong>加锁解锁流程</strong></p>
 <p>Semaphore 有点像一个停车场，permits 就好像停车位数量，当线程获得了 permits 就像是获得了停车位，然后停车场显示空余车位减一刚开始，permits（state）为 3，这时 5 个线程来获取资源</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211130213950.png" alt=""></p>
@@ -670,7 +675,7 @@ StampedLock 不支持可重入</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">StampedLock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Semaphore</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">Semaphore 原理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#strong-stamped-lock-strong"><span class="nav-number">1.</span> <span class="nav-text">StampedLock</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#strong-semaphore-strong"><span class="nav-number">2.</span> <span class="nav-text">Semaphore</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#semaphore-yuan-li"><span class="nav-number">3.</span> <span class="nav-text">Semaphore 原理</span></a></li></ol></div>
             
 
           </div>
@@ -723,7 +728,29 @@ StampedLock 不支持可重入</p>
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1190,7 +1217,6 @@ StampedLock 不支持可重入</p>
 
 
   
-
   
 
   

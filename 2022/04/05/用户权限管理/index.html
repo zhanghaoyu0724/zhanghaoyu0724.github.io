@@ -394,6 +394,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -443,8 +448,8 @@
       
 
       
-        <h1>用户管理</h1>
-<h2 id="登录SQL服务器">登录SQL服务器</h2>
+        <h1 id="yong-hu-guan-li">用户管理</h1>
+<h2 id="deng-lu-sql-fu-wu-qi" id="登录SQL服务器">登录SQL服务器</h2>
 <p>启动MySQL服务后，可以通过mysql命令来登录MySQL服务器，命令如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql –h hostname|hostIP –P port –u username –p DatabaseName –e &quot;SQL语句&quot;</span><br></pre></td></tr></table></figure>
 <p>下面详细介绍命令中的参数：</p>
@@ -456,7 +461,7 @@
 <li>-p参数会提示输入密码。DatabaseName参数指明登录到哪一个数据库中。如果没有该参数，就会直接登录到MySQL数据库中，然后可以使用USE命令来选择数据库。</li>
 <li>-e参数后面可以直接加SQL语句。登录MySQL服务器以后即可执行这个SQL语句，然后退出MySQL服务器。</li>
 </ul>
-<h2 id="创建用户">创建用户</h2>
+<h2 id="chuang-jian-yong-hu" id="创建用户">创建用户</h2>
 <p>CREATE USER语句的基本语法形式如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER 用户名 [IDENTIFIED BY &#x27;密码&#x27;][,用户名 [IDENTIFIED BY &#x27;密码&#x27;]];</span><br></pre></td></tr></table></figure>
 <ul>
@@ -465,14 +470,14 @@
 <li>CREATE USER语句可以同时创建多个用户。</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER zhang3 IDENTIFIED BY &#x27;123123&#x27;; # 默认host是 %</span><br></pre></td></tr></table></figure>
-<h2 id="修改用户">修改用户</h2>
+<h2 id="xiu-gai-yong-hu" id="修改用户">修改用户</h2>
 <p>修改用户名：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UPDATE mysql.user SET USER=&#x27;li4&#x27; WHERE USER=&#x27;wang5&#x27;;</span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
-<h2 id="删除用户">删除用户</h2>
+<h2 id="shan-chu-yong-hu" id="删除用户">删除用户</h2>
 <p>方式1：使用DROP方式删除（推荐）</p>
 <p>使用DROP USER语句来删除用户时，必须用于DROP USER权限。DROP USER语句的基本语法形式如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP USER user[,user]…;</span><br></pre></td></tr></table></figure>
-<h2 id="设置当前用户密码">设置当前用户密码</h2>
+<h2 id="she-zhi-dang-qian-yong-hu-mi-ma" id="设置当前用户密码">设置当前用户密码</h2>
 <p>旧的写法如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 修改当前用户的密码：（MySQL5.7测试有效）</span></span><br><span class="line">SET PASSWORD = PASSWORD(&#x27;123456&#x27;);</span><br></pre></td></tr></table></figure>
 <p>这里介绍推荐的写法：</p>
@@ -487,7 +492,7 @@ SQL语句如下：</li>
 </ol>
   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET PASSWORD=&#x27;new_password&#x27;;</span><br></pre></td></tr></table></figure>
 <p>该语句会自动将密码加密后再赋给当前用户。</p>
-<h2 id="修改其它用户密码">修改其它用户密码</h2>
+<h2 id="xiu-gai-qi-ta-yong-hu-mi-ma" id="修改其它用户密码">修改其它用户密码</h2>
 <p>1.使用ALTER语句来修改普通用户的密码 可以使用ALTER USER语句来修改普通用户的密码。基本语法形<br>
 式如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ALTER USER user [IDENTIFIED BY &#x27;新密码&#x27;]</span><br><span class="line">[,user[IDENTIFIED BY &#x27;新密码&#x27;]]…;</span><br></pre></td></tr></table></figure>
@@ -496,8 +501,8 @@ SQL语句如下：</li>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET PASSWORD FOR &#x27;username&#x27;@&#x27;hostname&#x27;=&#x27;new_password&#x27;;</span><br></pre></td></tr></table></figure>
 <p>3.使用UPDATE语句修改普通用户的密码（不推荐）</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UPDATE MySQL.user SET authentication_string=PASSWORD(&quot;123456&quot;)</span><br><span class="line">WHERE User = &quot;username&quot; AND Host = &quot;hostname&quot;;</span><br></pre></td></tr></table></figure>
-<h1>权限管理</h1>
-<h2 id="权限列表">权限列表</h2>
+<h1 id="quan-xian-guan-li">权限管理</h1>
+<h2 id="quan-xian-lie-biao" id="权限列表">权限列表</h2>
 <p>MySQL到底都有哪些权限呢？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show privileges;</span><br></pre></td></tr></table></figure>
 <p>（1） CREATE和DROP权限，可以创建新的数据库和表，或删除（移掉）已有的数据库和表。如果将<br>
@@ -510,7 +515,7 @@ MySQL数据库中的DROP权限授予某用户，用户就可以删除MySQL访问
 <p>（6） CREATE ROUTINE权限用来创建保存的程序（函数和程序），ALTER ROUTINE权限用来更改和删除保存的程序， EXECUTE权限用来执行保存的程序。</p>
 <p>（7） GRANT权限允许授权给其他用户，可用于数据库、表和保存的程序。</p>
 <p>（8） FILE权限使用户可以使用LOAD DATA INFILE和SELECT … INTO OUTFILE语句读或写服务器上的文件，任何被授予FILE权限的用户都能读或写MySQL服务器上的任何文件（说明用户可以读任何数据库目录下的文件，因为服务器可以访问这些文件）。</p>
-<h2 id="授予权限">授予权限</h2>
+<h2 id="shou-yu-quan-xian" id="授予权限">授予权限</h2>
 <p>给用户授权的方式有 2 种，分别是通过把角色赋予用户给用户授权和直接给用户授权。用户是数据库的使用者，我们可以通过给用户授予访问数据库中资源的权限，来控制使用者对数据库的访问，消除安全隐患。</p>
 <p>授权命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT 权限1,权限2,…权限n ON 数据库名称.表名称 TO 用户名@用户地址 [IDENTIFIED BY ‘密码口令’];</span><br></pre></td></tr></table></figure>
@@ -519,7 +524,7 @@ MySQL数据库中的DROP权限授予某用户，用户就可以删除MySQL访问
 </ul>
 <p>给li4用户用本地命令行方式，授予atguigudb这个库下的所有表的插删改查的权限。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT SELECT,INSERT,DELETE,UPDATE ON atguigudb.* TO li4@localhost ;</span><br></pre></td></tr></table></figure>
-<h2 id="查看权限">查看权限</h2>
+<h2 id="cha-kan-quan-xian" id="查看权限">查看权限</h2>
 <ul>
 <li>查看当前用户权限</li>
 </ul>
@@ -540,9 +545,9 @@ MySQL数据库中的DROP权限授予某用户，用户就可以删除MySQL访问
 <p>举例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#收回全库全表的所有权限</span><br><span class="line">REVOKE ALL PRIVILEGES ON *.* FROM joe@&#x27;%&#x27;;</span><br><span class="line">#收回mysql库下的所有表的插删改查权限</span><br><span class="line">REVOKE SELECT,INSERT,UPDATE,DELETE ON mysql.* FROM joe@localhost;</span><br></pre></td></tr></table></figure>
 <p>注意： 须用户重新登录后才能生效</p>
-<h1>权限表</h1>
+<h1 id="quan-xian-biao">权限表</h1>
 <p>mysql服务器通过权限表来控制用户对数据库的访问,权限表存放再mysql数据库中.mysql数据库系统会根据这些权限表的内容为每个用户赋予相应的权限. 这些权限表中最重要的是<strong>user</strong>表，<strong>db</strong>表，除此之外，还有<strong>table_priv</strong>表，<strong>column_priv</strong>表和<strong>proc_pric</strong>表等,在mysql启动时，服务器将这些数据库表中权限信息的内容读取到内存</p>
-<h2 id="user表：">user表：</h2>
+<h2 id="user-biao" id="user表：">user表：</h2>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405193649226.png" alt="image-20220405193649226"></p>
 <p>这些字段可以分成4类，分别是范围列（或用户列）、权限列、安全列和资源控制列。</p>
 <p>1.<strong>范围列</strong>（或用户列）</p>
@@ -592,7 +597,7 @@ MySQL数据库中的DROP权限授予某用户，用户就可以删除MySQL访问
 </ul>
 </li>
 </ul>
-<h2 id="db表">db表</h2>
+<h2 id="db-biao" id="db表">db表</h2>
 <p>使用DESCRIBE查看db表的基本结构：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DESCRIBE mysql.db;</span><br></pre></td></tr></table></figure>
 <ol>
@@ -601,7 +606,7 @@ MySQL数据库中的DROP权限授予某用户，用户就可以删除MySQL访问
 <li>权限列<br>
 Create_routine_priv和Alter_routine_priv这两个字段决定用户是否具有创建和修改存储过程的权限。</li>
 </ol>
-<h2 id="tables-priv表和columns-priv表">tables_priv表和columns_priv表</h2>
+<h2 id="tables-priv-biao-he-columns-priv-biao" id="tables-priv表和columns-priv表">tables_priv表和columns_priv表</h2>
 <p>tables_priv表用来对表设置操作权限，columns_priv表用来对表的某一列设置权限。tables_priv表和<br>
 columns_priv表的结构分别如图：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc mysql.tables_priv;</span><br></pre></td></tr></table></figure>
@@ -615,25 +620,25 @@ Column_priv，各个字段说明如下：</p>
 <li>Column_priv字段表示对表中的列的操作权限，包括Select、Insert、Update和References。</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc mysql.columns_priv;</span><br></pre></td></tr></table></figure>
-<h2 id="procs-priv表">procs_priv表</h2>
+<h2 id="procs-priv-biao" id="procs-priv表">procs_priv表</h2>
 <p>procs_priv表可以对存储过程和存储函数设置操作权限，表结构如图：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc mysql.procs_priv;</span><br></pre></td></tr></table></figure>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405194340759.png" alt="image-20220405194340759"></p>
-<h1>权限控制：</h1>
-<h2 id="请求核实阶段">请求核实阶段</h2>
+<h1 id="quan-xian-kong-zhi">权限控制：</h1>
+<h2 id="qing-qiu-he-shi-jie-duan" id="请求核实阶段">请求核实阶段</h2>
 <p>一旦建立了连接，服务器就进入了访问控制的阶段2，也就是请求核实阶段。对此连接上进来的每个请求，服务器检查该请求要执行什么操作、是否有足够的权限来执行它，这正是需要授权表中的权限列发挥作用的地方。这些权限可以来自user、db、table_priv和column_priv表。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405194642494.png" alt="image-20220405194642494"></p>
-<h1>角色管理</h1>
+<h1 id="jiao-se-guan-li">角色管理</h1>
 <p>角色是在Mysql8.0中引入的新功能</p>
 <p>引入角色的目的是方便管理拥有相同权限的用户。恰当的权限设定，可以确保数据的安全性，这是至关<br>
 重要的。</p>
-<h2 id="创建角色">创建角色</h2>
+<h2 id="chuang-jian-jiao-se" id="创建角色">创建角色</h2>
 <p>创建角色使用CREATE ROLE 语句，语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE ROLE &#x27;role_name&#x27;[@&#x27;host_name&#x27;] [,&#x27;role_name&#x27;[@&#x27;host_name&#x27;]]...</span><br></pre></td></tr></table></figure>
 <p>角色名称的命名规则和用户名类似。如果host_name省略，默认为% ， role_name不可省略，不可为空。<br>
 练习：我们现在需要创建一个经理的角色，就可以用下面的代码：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE ROLE &#x27;manager&#x27;@&#x27;localhost&#x27;;</span><br></pre></td></tr></table></figure>
-<h2 id="给角色赋予权限">给角色赋予权限</h2>
+<h2 id="gei-jiao-se-fu-yu-quan-xian" id="给角色赋予权限">给角色赋予权限</h2>
 <p>案例：给角色manager 赋予对dbtest1库查询，修改的权限</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405195947379.png" alt="image-20220405195947379"></p>
 <p>创建角色之后，默认这个角色是没有任何权限的，我们需要给角色授权。给角色授权的语法结构是：</p>
@@ -642,21 +647,21 @@ Column_priv，各个字段说明如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW PRIVILEGES\G;</span><br></pre></td></tr></table></figure>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405200025748.png" alt="image-20220405200025748"></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405200031333.png" alt="image-20220405200031333"></p>
-<h2 id="查看角色的权限">查看角色的权限</h2>
+<h2 id="cha-kan-jiao-se-de-quan-xian" id="查看角色的权限">查看角色的权限</h2>
 <p>赋予角色权限之后，我们可以通过 SHOW GRANTS 语句，来查看权限是否创建成功了：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405200333451.png" alt="image-20220405200333451"></p>
-<h2 id="回收角色的权限">回收角色的权限</h2>
+<h2 id="hui-shou-jiao-se-de-quan-xian" id="回收角色的权限">回收角色的权限</h2>
 <p>角色授权后，可以对角色的权限进行维护，对权限进行添加或撤销。添加权限使用GRANT语句，与角色授权相同。撤销角色或角色权限使用REVOKE语句。<br>
 修改了角色的权限，会影响拥有该角色的账户的权限。<br>
 撤销角色权限的SQL语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REVOKE privileges ON tablename FROM &#x27;rolename&#x27;;</span><br></pre></td></tr></table></figure>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405201041180.png" alt="image-20220405201041180"></p>
-<h2 id="删除角色">删除角色:</h2>
+<h2 id="shan-chu-jiao-se" id="删除角色">删除角色:</h2>
 <p>当我们需要对业务重新整合的时候，可能就需要对之前创建的角色进行清理，删除一些不会再使用的角<br>
 色。删除角色的操作很简单，你只要掌握语法结构就行了。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP ROLE role [,role2]...</span><br></pre></td></tr></table></figure>
 <p>注意， 如果你删除了角色，那么用户也就失去了通过这个角色所获得的所有权限。</p>
-<h2 id="给用户赋予角色">给用户赋予角色</h2>
+<h2 id="gei-yong-hu-fu-yu-jiao-se" id="给用户赋予角色">给用户赋予角色</h2>
 <p>角色创建并授权后，要赋给用户并处于激活状态才能发挥作用。给用户添加角色可使用GRANT语句，语<br>
 法形式如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT role [,role2,...] TO user [,user2,...];</span><br></pre></td></tr></table></figure>
@@ -667,18 +672,18 @@ Column_priv，各个字段说明如下：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405201433468.png" alt="image-20220405201433468"></p>
 <p>再给他分配角色</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405201821627.png" alt="image-20220405201821627"></p>
-<h2 id="激活角色">激活角色</h2>
+<h2 id="ji-huo-jiao-se" id="激活角色">激活角色</h2>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405202232764.png" alt="image-20220405202232764"></p>
 <p>这里登录的用户是wangwu 可以看到它对应的角色<strong>未激活</strong></p>
 <p>方式1：使用set default role 命令激活角色</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405202358436.png" alt="image-20220405202358436"></p>
 <p>可以看到激活后：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405202507540.png" alt="image-20220405202507540"></p>
-<h2 id="撤销用户的角色">撤销用户的角色</h2>
+<h2 id="che-xiao-yong-hu-de-jiao-se" id="撤销用户的角色">撤销用户的角色</h2>
 <p>撤销用户角色的SQL语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REVOKE role FROM user;</span><br></pre></td></tr></table></figure>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220405203037530.png" alt="image-20220405203037530"></p>
-<h2 id="设置强制角色-mandatory-role">设置强制角色(mandatory role)</h2>
+<h2 id="she-zhi-qiang-zhi-jiao-se-mandatory-role" id="设置强制角色-mandatory-role">设置强制角色(mandatory role)</h2>
 <p>强制角色就是给每个创建的用户指定默认角色，不需要手动设置，强制角色无法revoke或者drop</p>
 <p>方式1：服务启动前设置</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">mandatory_roles=&#x27;role1,role2@localhost&#x27;</span><br></pre></td></tr></table></figure>
@@ -877,7 +882,7 @@ Column_priv，各个字段说明如下：</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%BD%95SQL%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">登录SQL服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="nav-number">1.2.</span> <span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7"><span class="nav-number">1.3.</span> <span class="nav-text">修改用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7"><span class="nav-number">1.4.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-number">1.5.</span> <span class="nav-text">设置当前用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%85%B6%E5%AE%83%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-number">1.6.</span> <span class="nav-text">修改其它用户密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%83%E9%99%90%E5%88%97%E8%A1%A8"><span class="nav-number">2.1.</span> <span class="nav-text">权限列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%88%E4%BA%88%E6%9D%83%E9%99%90"><span class="nav-number">2.2.</span> <span class="nav-text">授予权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9D%83%E9%99%90"><span class="nav-number">2.3.</span> <span class="nav-text">查看权限</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">权限表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#user%E8%A1%A8%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">user表：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#db%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">db表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tables-priv%E8%A1%A8%E5%92%8Ccolumns-priv%E8%A1%A8"><span class="nav-number">3.3.</span> <span class="nav-text">tables_priv表和columns_priv表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#procs-priv%E8%A1%A8"><span class="nav-number">3.4.</span> <span class="nav-text">procs_priv表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">权限控制：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%A0%B8%E5%AE%9E%E9%98%B6%E6%AE%B5"><span class="nav-number">4.1.</span> <span class="nav-text">请求核实阶段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">角色管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%92%E8%89%B2"><span class="nav-number">5.1.</span> <span class="nav-text">创建角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E8%A7%92%E8%89%B2%E8%B5%8B%E4%BA%88%E6%9D%83%E9%99%90"><span class="nav-number">5.2.</span> <span class="nav-text">给角色赋予权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A7%92%E8%89%B2%E7%9A%84%E6%9D%83%E9%99%90"><span class="nav-number">5.3.</span> <span class="nav-text">查看角色的权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E6%94%B6%E8%A7%92%E8%89%B2%E7%9A%84%E6%9D%83%E9%99%90"><span class="nav-number">5.4.</span> <span class="nav-text">回收角色的权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A7%92%E8%89%B2"><span class="nav-number">5.5.</span> <span class="nav-text">删除角色:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E7%94%A8%E6%88%B7%E8%B5%8B%E4%BA%88%E8%A7%92%E8%89%B2"><span class="nav-number">5.6.</span> <span class="nav-text">给用户赋予角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BF%80%E6%B4%BB%E8%A7%92%E8%89%B2"><span class="nav-number">5.7.</span> <span class="nav-text">激活角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%A4%E9%94%80%E7%94%A8%E6%88%B7%E7%9A%84%E8%A7%92%E8%89%B2"><span class="nav-number">5.8.</span> <span class="nav-text">撤销用户的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%BA%E5%88%B6%E8%A7%92%E8%89%B2-mandatory-role"><span class="nav-number">5.9.</span> <span class="nav-text">设置强制角色(mandatory role)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#yong-hu-guan-li"><span class="nav-number">1.</span> <span class="nav-text">用户管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#deng-lu-sql-fu-wu-qi"><span class="nav-number">1.1.</span> <span class="nav-text">登录SQL服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chuang-jian-yong-hu"><span class="nav-number">1.2.</span> <span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiu-gai-yong-hu"><span class="nav-number">1.3.</span> <span class="nav-text">修改用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shan-chu-yong-hu"><span class="nav-number">1.4.</span> <span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#she-zhi-dang-qian-yong-hu-mi-ma"><span class="nav-number">1.5.</span> <span class="nav-text">设置当前用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiu-gai-qi-ta-yong-hu-mi-ma"><span class="nav-number">1.6.</span> <span class="nav-text">修改其它用户密码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#quan-xian-guan-li"><span class="nav-number">2.</span> <span class="nav-text">权限管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#quan-xian-lie-biao"><span class="nav-number">2.1.</span> <span class="nav-text">权限列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shou-yu-quan-xian"><span class="nav-number">2.2.</span> <span class="nav-text">授予权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-quan-xian"><span class="nav-number">2.3.</span> <span class="nav-text">查看权限</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#quan-xian-biao"><span class="nav-number">3.</span> <span class="nav-text">权限表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#user-biao"><span class="nav-number">3.1.</span> <span class="nav-text">user表：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#db-biao"><span class="nav-number">3.2.</span> <span class="nav-text">db表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tables-priv-biao-he-columns-priv-biao"><span class="nav-number">3.3.</span> <span class="nav-text">tables_priv表和columns_priv表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#procs-priv-biao"><span class="nav-number">3.4.</span> <span class="nav-text">procs_priv表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#quan-xian-kong-zhi"><span class="nav-number">4.</span> <span class="nav-text">权限控制：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#qing-qiu-he-shi-jie-duan"><span class="nav-number">4.1.</span> <span class="nav-text">请求核实阶段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jiao-se-guan-li"><span class="nav-number">5.</span> <span class="nav-text">角色管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#chuang-jian-jiao-se"><span class="nav-number">5.1.</span> <span class="nav-text">创建角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gei-jiao-se-fu-yu-quan-xian"><span class="nav-number">5.2.</span> <span class="nav-text">给角色赋予权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-jiao-se-de-quan-xian"><span class="nav-number">5.3.</span> <span class="nav-text">查看角色的权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hui-shou-jiao-se-de-quan-xian"><span class="nav-number">5.4.</span> <span class="nav-text">回收角色的权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shan-chu-jiao-se"><span class="nav-number">5.5.</span> <span class="nav-text">删除角色:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gei-yong-hu-fu-yu-jiao-se"><span class="nav-number">5.6.</span> <span class="nav-text">给用户赋予角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-huo-jiao-se"><span class="nav-number">5.7.</span> <span class="nav-text">激活角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#che-xiao-yong-hu-de-jiao-se"><span class="nav-number">5.8.</span> <span class="nav-text">撤销用户的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#she-zhi-qiang-zhi-jiao-se-mandatory-role"><span class="nav-number">5.9.</span> <span class="nav-text">设置强制角色(mandatory role)</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -930,7 +935,29 @@ Column_priv，各个字段说明如下：</p>
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1397,7 +1424,6 @@ Column_priv，各个字段说明如下：</p>
 
 
   
-
   
 
   

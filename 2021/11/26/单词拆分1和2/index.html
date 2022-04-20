@@ -380,6 +380,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -429,13 +434,13 @@
       
 
       
-        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xa503c/">单词拆分2</a></h1>
+        <h1 id="a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xa-503-c-dan-ci-chai-fen-2-a"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xa503c/">单词拆分2</a></h1>
 <p><font  size=3 color="red">BFS（个人思路}</font></p>
 <span id="more"></span>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">wordBreak</span><span class="params">(String s, List&lt;String&gt; wordDict)</span> </span>&#123;</span><br><span class="line">        Queue&lt;String&gt; queue=<span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        Set&lt;String&gt; set=<span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        queue.offer(s);</span><br><span class="line">        set.add(s);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (!queue.isEmpty())&#123;</span><br><span class="line">            String s1=queue.poll();</span><br><span class="line">            <span class="keyword">if</span> (s1.equals(<span class="string">&quot;&quot;</span>))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; wordDict.size(); i++) &#123;</span><br><span class="line">                String word = wordDict.get(i);</span><br><span class="line">                <span class="keyword">if</span> (word.length() &lt;= s1.length()) &#123;</span><br><span class="line">                    String substring = s1.substring(<span class="number">0</span>, word.length());</span><br><span class="line">                    String substring1 = s1.substring(word.length() );</span><br><span class="line">                    <span class="keyword">if</span> (substring.equals(word) &amp;&amp; !set.contains(substring1)) &#123;</span><br><span class="line">                        set.add(substring1);</span><br><span class="line">                        queue.add(substring1);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>动态规划(来源力扣题解)：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">wordBreak</span><span class="params">(String s, List&lt;String&gt; wordDict)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Set&lt;String&gt; set=<span class="keyword">new</span> HashSet&lt;&gt;(wordDict);</span><br><span class="line">        <span class="keyword">boolean</span> dp[] = <span class="keyword">new</span> <span class="keyword">boolean</span>[s.length() +<span class="number">1</span>];</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;=s.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; i; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (dp[j] &amp;&amp; set.contains(s.substring(j,i)))&#123;</span><br><span class="line">                    dp[i]=<span class="keyword">true</span>;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[s.length()];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xa9v8i/">单词拆分2</a></h1>
+<h1 id="a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xa-9-v-8-i-dan-ci-chai-fen-2-a"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xa9v8i/">单词拆分2</a></h1>
 <p><font color="red">DFS（个人思路）：</font></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Set&lt;String&gt; set;</span><br><span class="line">    List&lt;List&lt;String&gt;&gt; lists;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">wordBreak</span><span class="params">(String s, List&lt;String&gt; wordDict)</span> </span>&#123;</span><br><span class="line">        lists=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        List&lt;String&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Deque&lt;String&gt; deque=<span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">        set=<span class="keyword">new</span> HashSet&lt;&gt;(wordDict);</span><br><span class="line">        dfs(s,deque);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = lists.size()-<span class="number">1</span>; i&gt;=<span class="number">0</span>; i--) &#123;</span><br><span class="line">            StringBuffer buffer = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; lists.get(i).size(); j++) &#123;</span><br><span class="line">                buffer.append(lists.get(i).get(j)+<span class="string">&quot; &quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            list.add(buffer.substring(<span class="number">0</span>,buffer.length()-<span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(String str, Deque&lt;String&gt; deque)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (str.equals(<span class="string">&quot;&quot;</span>))&#123;</span><br><span class="line">            lists.add(<span class="keyword">new</span> ArrayList&lt;&gt;(deque));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= str.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (set.contains(str.substring(<span class="number">0</span>,i)))&#123;</span><br><span class="line">                deque.addLast(str.substring(<span class="number">0</span>,i));</span><br><span class="line">                dfs(str.substring(i),deque);</span><br><span class="line">                deque.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>动态规划加记忆搜索(来自力扣题解)：<br>
@@ -639,7 +644,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">单词拆分2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">单词拆分2</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xa-503-c-dan-ci-chai-fen-2-a"><span class="nav-number">1.</span> <span class="nav-text">单词拆分2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xa-9-v-8-i-dan-ci-chai-fen-2-a"><span class="nav-number">2.</span> <span class="nav-text">单词拆分2</span></a></li></ol></div>
             
 
           </div>
@@ -692,7 +697,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1159,7 +1186,6 @@
 
 
   
-
   
 
   

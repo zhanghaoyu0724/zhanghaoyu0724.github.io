@@ -380,6 +380,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -429,7 +434,7 @@
       
 
       
-        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xaygd7/">摆动排序II</a></h1>
+        <h1 id="a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xaygd-7-bai-dong-pai-xu-ii-a"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xaygd7/">摆动排序II</a></h1>
 <p><strong>解法一</strong>： 直接排序然后插入相应的位置。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">wiggleSort</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        <span class="keyword">int</span> n= nums.length%<span class="number">2</span>==<span class="number">0</span>?nums.length-<span class="number">2</span>:nums.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> max=nums.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> min=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> index=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span>[] ints = Arrays.copyOf(nums, nums.length);</span><br><span class="line">        <span class="keyword">while</span> (n&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span> (n&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">                nums[n]=ints[min++];</span><br><span class="line">                n-=<span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (index&lt; nums.length)&#123;</span><br><span class="line">                nums[index]=ints[max--];</span><br><span class="line">                index+=<span class="number">2</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p><strong>解法二</strong>：利用大根堆和小根堆， 具体可以看我之前的 <a href="https://blacke1111.github.io/2021/12/11/%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/">数据流中的中位数</a>,具体实现有些差异，主要是当小根堆与大根堆元素相等时，插入的是小根堆还是大根堆。</p>
@@ -633,7 +638,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">摆动排序II</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xaygd-7-bai-dong-pai-xu-ii-a"><span class="nav-number">1.</span> <span class="nav-text">摆动排序II</span></a></li></ol></div>
             
 
           </div>
@@ -686,7 +691,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1153,7 +1180,6 @@
 
 
   
-
   
 
   

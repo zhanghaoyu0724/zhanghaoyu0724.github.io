@@ -380,6 +380,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -429,7 +434,7 @@
       
 
       
-        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xatgye/">滑动窗口最大值</a></h1>
+        <h1 id="a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xatgye-hua-dong-chuang-kou-zui-da-zhi-a"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xatgye/">滑动窗口最大值</a></h1>
 <p>总结：改变以往的固定删除思想，，多想想能不能延迟删除，</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MaxSlidingWindow</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MaxSlidingWindow window = <span class="keyword">new</span> MaxSlidingWindow();</span><br><span class="line">        <span class="keyword">int</span> nums[]=&#123;<span class="number">9</span>,<span class="number">10</span>,<span class="number">9</span>,-<span class="number">7</span>,-<span class="number">4</span>,-<span class="number">8</span>,<span class="number">2</span>,-<span class="number">6</span>&#125;;</span><br><span class="line">        nums= window.maxSlidingWindow(nums,<span class="number">5</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            System.out.print(nums[i]+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        LinkedList&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();   </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (queue.size()&gt;<span class="number">0</span>&amp;&amp;nums[i]&gt;nums[queue.getLast()])&#123;</span><br><span class="line">                <span class="comment">//保持我们的头节点为最大值。 并且链表的值是递减的。</span></span><br><span class="line">                queue.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            queue.addLast(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> res[]=<span class="keyword">new</span> <span class="keyword">int</span>[nums.length-k+<span class="number">1</span>];</span><br><span class="line">        res[<span class="number">0</span>]=nums[queue.getFirst()];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;nums.length-k; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span> (queue.size() &gt; <span class="number">0</span> &amp;&amp; nums[i + k] &gt; nums[queue.getLast()]) &#123;</span><br><span class="line">                <span class="comment">//保持我们的头节点为最大值，。 并且链表的值是递减的。</span></span><br><span class="line">                queue.removeLast();</span><br><span class="line">            &#125;</span><br><span class="line">            queue.addLast(i + k);</span><br><span class="line">            <span class="keyword">while</span> (queue.peek() &lt;= i) &#123;  </span><br><span class="line">                <span class="comment">//如果首个元素在当前的滑动窗口内，这不会影响我们的结果，但是当我们的头节点，不在滑动窗口内，要把它删除，并循环检测他的下一个节点是不是在滑动窗口内，不是也删除，</span></span><br><span class="line">                queue.removeFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            res[i + <span class="number">1</span>] = nums[queue.getFirst()];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -631,7 +636,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">滑动窗口最大值</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#a-href-https-leetcode-cn-com-leetbook-read-top-interview-questions-xatgye-hua-dong-chuang-kou-zui-da-zhi-a"><span class="nav-number">1.</span> <span class="nav-text">滑动窗口最大值</span></a></li></ol></div>
             
 
           </div>
@@ -684,7 +689,29 @@
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1151,7 +1178,6 @@
 
 
   
-
   
 
   

@@ -403,6 +403,11 @@
           
 
           
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
 
           
             <div class="post-wordcount">
@@ -452,19 +457,19 @@
       
 
       
-        <h2 id="手动打包">手动打包</h2>
-<h3 id="创建一个普通的spring-boot工程">创建一个普通的spring boot工程</h3>
+        <h2 id="shou-dong-da-bao" id="手动打包">手动打包</h2>
+<h3 id="chuang-jian-yi-ge-pu-tong-de-spring-boot-gong-cheng" id="创建一个普通的spring-boot工程">创建一个普通的spring boot工程</h3>
 <p>我用的是之前docker时测试的一个工程，就是一个最简单的web工程 就一个接口</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220330154746974.png" alt="image-20220330154746974"></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220330154657657.png" alt="image-20220330154657657"></p>
-<h3 id="工程进行打包：">工程进行打包：</h3>
+<h3 id="gong-cheng-jin-xing-da-bao" id="工程进行打包：">工程进行打包：</h3>
 <p>打开idea的命令行：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220330154941176.png" alt="image-20220330154941176"></p>
 <p>使用maven进行打包</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">执行</span></span><br><span class="line">mvn clean package</span><br></pre></td></tr></table></figure>
 <p>打包完成后：</p>
 <p>进入项目中target陌路，找到打包完成后的jar包，就好了</p>
-<h1></h1>
+<h1 id=""></h1>
 <p>配置java环境（略）</p>
 <p>配置maven环境：</p>
 <p>上传maven压缩包到linux上。</p>
@@ -483,8 +488,8 @@ source /etc/profile</p>
 <p>第五步、测试是否安装成功<br>
 mvn –v</p>
 <p>安装git环境：（略）</p>
-<h1>jenkins安装：</h1>
-<h2 id="第一步：上传或下载安装包">第一步：上传或下载安装包</h2>
+<h1 id="jenkins-an-zhuang">jenkins安装：</h1>
+<h2 id="di-yi-bu-shang-chuan-huo-xia-zai-an-zhuang-bao" id="第一步：上传或下载安装包">第一步：上传或下载安装包</h2>
 <p>cd/usr/local/software/jenkins<br>
 jenkins.war</p>
 <p>第二步：启动<br>
@@ -546,7 +551,7 @@ nohup java -jar /usr/local/software/jenkins.war &gt;/usr/local/software/jenkins.
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220330204531875.png" alt="image-20220330204531875"></p>
 <p>这只是打包一个测试项目。 多模块类似打包就可以了</p>
 <p>下面是我自己遇到打包多模块是遇到的错误 ，找了好久中找到了一篇博客完美解决我的困扰。</p>
-<h1>maven模块化项目总共模块相互引用打包失败问题解决</h1>
+<h1 id="maven-mo-kuai-hua-xiang-mu-zong-gong-mo-kuai-xiang-hu-yin-yong-da-bao-shi-bai-wen-ti-jie-jue">maven模块化项目总共模块相互引用打包失败问题解决</h1>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/liqi_q/article/details/80557157">https://blog.csdn.net/liqi_q/article/details/80557157</a></p>
 
       
@@ -741,7 +746,7 @@ nohup java -jar /usr/local/software/jenkins.war &gt;/usr/local/software/jenkins.
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E6%89%93%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">手动打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%99%AE%E9%80%9A%E7%9A%84spring-boot%E5%B7%A5%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">创建一个普通的spring boot工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E7%A8%8B%E8%BF%9B%E8%A1%8C%E6%89%93%E5%8C%85%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">工程进行打包：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">jenkins安装：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E4%B8%8A%E4%BC%A0%E6%88%96%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">第一步：上传或下载安装包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text">maven模块化项目总共模块相互引用打包失败问题解决</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#shou-dong-da-bao"><span class="nav-number">1.</span> <span class="nav-text">手动打包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chuang-jian-yi-ge-pu-tong-de-spring-boot-gong-cheng"><span class="nav-number">1.1.</span> <span class="nav-text">创建一个普通的spring boot工程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gong-cheng-jin-xing-da-bao"><span class="nav-number">1.2.</span> <span class="nav-text">工程进行打包：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number"></span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jenkins-an-zhuang"><span class="nav-number"></span> <span class="nav-text">jenkins安装：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#di-yi-bu-shang-chuan-huo-xia-zai-an-zhuang-bao"><span class="nav-number">1.</span> <span class="nav-text">第一步：上传或下载安装包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#maven-mo-kuai-hua-xiang-mu-zong-gong-mo-kuai-xiang-hu-yin-yong-da-bao-shi-bai-wen-ti-jie-jue"><span class="nav-number"></span> <span class="nav-text">maven模块化项目总共模块相互引用打包失败问题解决</span></a></div>
             
 
           </div>
@@ -794,7 +799,29 @@ nohup java -jar /usr/local/software/jenkins.war &gt;/usr/local/software/jenkins.
 
 
 
+
+
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
 
 
 
@@ -1261,7 +1288,6 @@ nohup java -jar /usr/local/software/jenkins.war &gt;/usr/local/software/jenkins.
 
 
   
-
   
 
   
