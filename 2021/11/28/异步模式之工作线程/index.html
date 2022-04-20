@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="并发设计模式," />
+  <meta name="keywords" content="zhy, NexT" />
 
 
 
@@ -79,17 +79,16 @@
 
 
 
-<meta name="description" content="定义让有限的工作线程（Worker Thread）来轮流异步处理无限多的任务。也可以将其归类为分工模式，它的典型实现就是线程池，也体现了经典设计模式中的享元模式。 例如，海底捞的服务员（线程），轮流处理每位客人的点餐（任务），如果为每位客人都配一名专属的服务员，那么成本就太高了（对比另一种多线程设计模式：Thread-Per-Message） 注意，不同任务类型应该使用不同的线程池，这样能够避免饥">
+<meta name="description" content="定义 让有限的工作线程（Worker Thread）来轮流异步处理无限多的任务。也可以将其归类为分工模式，它的典型实现就是线程池，也体现了经典设计模式中的享元模式。 例如，海底捞的服务员（线程），轮流处理每位客人的点餐（任务），如果为每位客人都配一名专属的服务员，那么成本就太高了（对比另一种多线程设计模式：Thread-Per-Message） 注意，不同任务类型应该使用不同的线程池，这样能够避免">
 <meta property="og:type" content="article">
 <meta property="og:title" content="异步模式之工作线程">
 <meta property="og:url" content="https://blacke1111.github.io/2021/11/28/%E5%BC%82%E6%AD%A5%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%B7%A5%E4%BD%9C%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="定义让有限的工作线程（Worker Thread）来轮流异步处理无限多的任务。也可以将其归类为分工模式，它的典型实现就是线程池，也体现了经典设计模式中的享元模式。 例如，海底捞的服务员（线程），轮流处理每位客人的点餐（任务），如果为每位客人都配一名专属的服务员，那么成本就太高了（对比另一种多线程设计模式：Thread-Per-Message） 注意，不同任务类型应该使用不同的线程池，这样能够避免饥">
+<meta property="og:description" content="定义 让有限的工作线程（Worker Thread）来轮流异步处理无限多的任务。也可以将其归类为分工模式，它的典型实现就是线程池，也体现了经典设计模式中的享元模式。 例如，海底捞的服务员（线程），轮流处理每位客人的点餐（任务），如果为每位客人都配一名专属的服务员，那么成本就太高了（对比另一种多线程设计模式：Thread-Per-Message） 注意，不同任务类型应该使用不同的线程池，这样能够避免">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-11-28T05:27:56.000Z">
 <meta property="article:modified_time" content="2021-11-28T05:34:58.951Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="并发设计模式">
 <meta name="twitter:card" content="summary">
 
 
@@ -349,28 +348,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -429,11 +406,13 @@
       
 
       
-        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p>让有限的工作线程（Worker Thread）来轮流异步处理无限多的任务。也可以将其归类为分工模式，它的典型实现就是线程池，也体现了经典设计模式中的享元模式。</p>
+        <h1>定义</h1>
+<p>让有限的工作线程（Worker Thread）来轮流异步处理无限多的任务。也可以将其归类为分工模式，它的典型实现就是线程池，也体现了经典设计模式中的享元模式。</p>
 <p>例如，海底捞的服务员（线程），轮流处理每位客人的点餐（任务），如果为每位客人都配一名专属的服务员，那么成本就太高了（对比另一种多线程设计模式：Thread-Per-Message）</p>
-<p>注意，不同任务类型应该使用不同的线程池，这样能够避免饥饿，并能提升效率例如..</p>
+<p>注意，不同任务类型应该使用不同的线程池，这样能够避免饥饿，并能提升效率例如…</p>
 <p>如果一个餐馆的工人既要招呼客人（任务类型A），又要到后厨做菜（任务类型B）显然效率不咋地，分成服务员（线程池A）与厨师（线程池B）更为合理，当然你能想到更细致的分工</p>
-<h1 id="饥饿"><a href="#饥饿" class="headerlink" title="饥饿"></a>饥饿</h1><p>固定大小线程池会有饥饿现象</p>
+<h1>饥饿</h1>
+<p>固定大小线程池会有饥饿现象</p>
 <p>两个工人是同一个线程池中的两个线程</p>
 <p>他们要做的事情是：为客人点餐和到后厨做菜，这是两个阶段的工作</p>
 <p>客人点餐：必须先点完餐，等菜做好，上菜，在此期间处理点餐的工人必须等待</p>
@@ -441,16 +420,12 @@
 <p>比如工人A 处理了点餐任务，接下来它要等着 工人B 把菜做好，然后上菜，他俩也配合的蛮好</p>
 <p>但现在同时来了两个客人，这个时候工人A 和工人B 都去处理点餐了，这时没人做饭了，饥饿</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;c.TestStarvation&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStarvation</span> </span>&#123;</span><br><span class="line"><span class="keyword">static</span> List&lt;String&gt; list= Arrays.asList(<span class="string">&quot;辣椒炒肉&quot;</span>,<span class="string">&quot;可乐鸡翅&quot;</span>,<span class="string">&quot;红烧肉&quot;</span>,<span class="string">&quot;鸡公煲&quot;</span>);</span><br><span class="line"><span class="keyword">static</span> Random random=<span class="keyword">new</span> Random();</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  String <span class="title">cooking</span><span class="params">()</span></span>&#123;<span class="keyword">return</span>  list.get(random.nextInt(list.size()));&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ExecutorService waiter = Executors.newFixedThreadPool(<span class="number">2</span>);</span><br><span class="line">        waiter.execute(()-&gt;&#123;</span><br><span class="line">            log.debug(<span class="string">&quot;点菜&quot;</span>);</span><br><span class="line">            Future&lt;String&gt; future = waiter.submit(() -&gt; &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;做菜&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> cooking();</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;上菜&#123;&#125;&quot;</span>,future.get());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        waiter.execute(()-&gt;&#123;</span><br><span class="line">            log.debug(<span class="string">&quot;点菜&quot;</span>);</span><br><span class="line">            Future&lt;String&gt; future = waiter.submit(() -&gt; &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;做菜&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> cooking();</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;上菜&#123;&#125;&quot;</span>,future.get());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>输出:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>:<span class="number">32</span>:<span class="number">39.901</span> c.TestStarvation [pool-<span class="number">1</span>-thread-<span class="number">2</span>] - 点菜</span><br><span class="line"><span class="number">13</span>:<span class="number">32</span>:<span class="number">39.901</span> c.TestStarvation [pool-<span class="number">1</span>-thread-<span class="number">1</span>] - 点菜</span><br></pre></td></tr></table></figure>
-
 <p>解决方法可以增加线程池的大小，不过不是根本解决方案，还是前面提到的，不同的任务类型，采用不同的线程池，例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;c.TestStarvation&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestStarvation</span> </span>&#123;</span><br><span class="line"><span class="keyword">static</span> List&lt;String&gt; list= Arrays.asList(<span class="string">&quot;辣椒炒肉&quot;</span>,<span class="string">&quot;可乐鸡翅&quot;</span>,<span class="string">&quot;红烧肉&quot;</span>,<span class="string">&quot;鸡公煲&quot;</span>);</span><br><span class="line"><span class="keyword">static</span> Random random=<span class="keyword">new</span> Random();</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span>  String <span class="title">cooking</span><span class="params">()</span></span>&#123;<span class="keyword">return</span>  list.get(random.nextInt(list.size()));&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ExecutorService waiter = Executors.newFixedThreadPool(<span class="number">1</span>);</span><br><span class="line">        ExecutorService cookpool = Executors.newFixedThreadPool(<span class="number">1</span>);</span><br><span class="line">        waiter.execute(()-&gt;&#123;</span><br><span class="line">            log.debug(<span class="string">&quot;点菜&quot;</span>);</span><br><span class="line">            Future&lt;String&gt; future = cookpool.submit(() -&gt; &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;做菜&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> cooking();</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;上菜&#123;&#125;&quot;</span>,future.get());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        waiter.execute(()-&gt;&#123;</span><br><span class="line">            log.debug(<span class="string">&quot;点菜&quot;</span>);</span><br><span class="line">            Future&lt;String&gt; future = cookpool.submit(() -&gt; &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;做菜&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> cooking();</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">&quot;上菜&#123;&#125;&quot;</span>,future.get());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>输出：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>:<span class="number">34</span>:<span class="number">36.638</span> c.TestStarvation [pool-<span class="number">1</span>-thread-<span class="number">1</span>] - 点菜</span><br><span class="line"><span class="number">13</span>:<span class="number">34</span>:<span class="number">36.641</span> c.TestStarvation [pool-<span class="number">2</span>-thread-<span class="number">1</span>] - 做菜</span><br><span class="line"><span class="number">13</span>:<span class="number">34</span>:<span class="number">36.642</span> c.TestStarvation [pool-<span class="number">1</span>-thread-<span class="number">1</span>] - 上菜红烧肉</span><br><span class="line"><span class="number">13</span>:<span class="number">34</span>:<span class="number">36.643</span> c.TestStarvation [pool-<span class="number">1</span>-thread-<span class="number">1</span>] - 点菜</span><br><span class="line"><span class="number">13</span>:<span class="number">34</span>:<span class="number">36.643</span> c.TestStarvation [pool-<span class="number">2</span>-thread-<span class="number">1</span>] - 做菜</span><br><span class="line"><span class="number">13</span>:<span class="number">34</span>:<span class="number">36.643</span> c.TestStarvation [pool-<span class="number">1</span>-thread-<span class="number">1</span>] - 上菜红烧肉</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -474,12 +449,6 @@
 	
 	</div>
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 并发设计模式</a>
-          
-        </div>
       
 
       
@@ -592,25 +561,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -650,7 +601,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A5%A5%E9%A5%BF"><span class="nav-number">2.</span> <span class="nav-text">饥饿</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">饥饿</span></a></li></ol></div>
             
 
           </div>
@@ -691,7 +642,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

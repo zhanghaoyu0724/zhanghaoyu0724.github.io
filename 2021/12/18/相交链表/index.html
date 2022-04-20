@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="动态规划," />
+  <meta name="keywords" content="zhy, NexT" />
 
 
 
@@ -79,17 +79,16 @@
 
 
 
-<meta name="description" content="相交链表这种题第一想到的就是哈希表，先保存一个链表的所有节点，然后再遍历第二个链表，然后返回第一个在哈希表中存在的节点。 但是当我看到题目的数据格式，节点的数值全部是大于0的数，我就想到了一个投机取巧的办法，先遍历一个节点，把所有值全部改为负数，然后遍历第二个链表遇到第一个结点的值为负数，就先保存这个节点，然后遍历第一个链表，修改回原来的值， 代码如下: 123456789101112131415">
+<meta name="description" content="相交链表 这种题第一想到的就是哈希表，先保存一个链表的所有节点，然后再遍历第二个链表，然后返回第一个在哈希表中存在的节点。 但是当我看到题目的数据格式，节点的数值全部是大于0的数，我就想到了一个投机取巧的办法，先遍历一个节点，把所有值全部改为负数，然后遍历第二个链表遇到第一个结点的值为负数，就先保存这个节点，然后遍历第一个链表，修改回原来的值， 代码如下: 12345678910111213141">
 <meta property="og:type" content="article">
 <meta property="og:title" content="相交链表">
 <meta property="og:url" content="https://blacke1111.github.io/2021/12/18/%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="相交链表这种题第一想到的就是哈希表，先保存一个链表的所有节点，然后再遍历第二个链表，然后返回第一个在哈希表中存在的节点。 但是当我看到题目的数据格式，节点的数值全部是大于0的数，我就想到了一个投机取巧的办法，先遍历一个节点，把所有值全部改为负数，然后遍历第二个链表遇到第一个结点的值为负数，就先保存这个节点，然后遍历第一个链表，修改回原来的值， 代码如下: 123456789101112131415">
+<meta property="og:description" content="相交链表 这种题第一想到的就是哈希表，先保存一个链表的所有节点，然后再遍历第二个链表，然后返回第一个在哈希表中存在的节点。 但是当我看到题目的数据格式，节点的数值全部是大于0的数，我就想到了一个投机取巧的办法，先遍历一个节点，把所有值全部改为负数，然后遍历第二个链表遇到第一个结点的值为负数，就先保存这个节点，然后遍历第一个链表，修改回原来的值， 代码如下: 12345678910111213141">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-18T11:22:53.000Z">
 <meta property="article:modified_time" content="2021-12-18T11:30:13.319Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary">
 
 
@@ -349,28 +348,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -429,16 +406,13 @@
       
 
       
-        <h1 id="相交链表"><a href="#相交链表" class="headerlink" title="相交链表"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/solution/xiang-jiao-lian-biao-by-leetcode-solutio-a8jn/">相交链表</a></h1><p>这种题第一想到的就是哈希表，先保存一个链表的所有节点，然后再遍历第二个链表，然后返回第一个在哈希表中存在的节点。</p>
+        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/intersection-of-two-linked-lists/solution/xiang-jiao-lian-biao-by-leetcode-solutio-a8jn/">相交链表</a></h1>
+<p>这种题第一想到的就是哈希表，先保存一个链表的所有节点，然后再遍历第二个链表，然后返回第一个在哈希表中存在的节点。</p>
 <p>但是当我看到题目的数据格式，节点的数值全部是大于0的数，我就想到了一个投机取巧的办法，先遍历一个节点，把所有值全部改为负数，然后遍历第二个链表遇到第一个结点的值为负数，就先保存这个节点，然后遍历第一个链表，修改回原来的值，</p>
 <p>代码如下:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span><span class="params">(ListNode headA, ListNode headB)</span> </span>&#123;</span><br><span class="line">        ListNode res=<span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (headA==<span class="keyword">null</span>||headB==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode node1=headA;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            node1.val=-node1.val;</span><br><span class="line">        &#125;<span class="keyword">while</span> ((node1=node1.next)!=<span class="keyword">null</span>);</span><br><span class="line">        ListNode node2=headB;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (node2.val&lt;<span class="number">0</span>)&#123;</span><br><span class="line">               res=node2;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">while</span> ((node2=node2.next)!=<span class="keyword">null</span>);</span><br><span class="line">        node1=headA;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            node1.val=-node1.val;</span><br><span class="line">        &#125;<span class="keyword">while</span> ((node1=node1.next)!=<span class="keyword">null</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
 <p>然后就是官方的题解，具体思路看代码更显而易见：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span><span class="params">(ListNode headA, ListNode headB)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (headA == <span class="keyword">null</span> || headB == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode pA = headA, pB = headB;</span><br><span class="line">        <span class="keyword">while</span> (pA != pB) &#123;</span><br><span class="line">            pA = pA == <span class="keyword">null</span> ? headB : pA.next;</span><br><span class="line">            pB = pB == <span class="keyword">null</span> ? headA : pB.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pA;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">作者：LeetCode-Solution</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/intersection-of-two-linked-lists/solution/xiang-jiao-lian-biao-by-leetcode-solutio-a8jn/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -462,12 +436,6 @@
 	
 	</div>
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
-          
-        </div>
       
 
       
@@ -580,25 +548,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -638,7 +588,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E4%BA%A4%E9%93%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">相交链表</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">相交链表</span></a></li></ol></div>
             
 
           </div>
@@ -679,7 +629,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

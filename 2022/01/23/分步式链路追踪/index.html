@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前段请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败。 需要用带一个jar包： zipkin-server-2.12.9-exec.jar 直接对应目录打开cmd，执行： 1java -jar zipkin-server-2.12.9">
+<meta name="description" content="在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前段请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败。 需要用带一个jar包： zipkin-server-2.12.9-exec.jar 直接对应目录打开cmd，执行： 1java -jar zipkin-server-2.12.9-">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分步式链路追踪">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/23/%E5%88%86%E6%AD%A5%E5%BC%8F%E9%93%BE%E8%B7%AF%E8%BF%BD%E8%B8%AA/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前段请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败。 需要用带一个jar包： zipkin-server-2.12.9-exec.jar 直接对应目录打开cmd，执行： 1java -jar zipkin-server-2.12.9">
+<meta property="og:description" content="在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前段请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败。 需要用带一个jar包： zipkin-server-2.12.9-exec.jar 直接对应目录打开cmd，执行： 1java -jar zipkin-server-2.12.9-">
 <meta property="og:locale">
-<meta property="og:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20220124181113267.png">
+<meta property="og:image" content="c:%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220124181113267.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182143.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182337.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182818.png">
@@ -94,7 +94,7 @@
 <meta property="article:modified_time" content="2022-03-26T08:11:03.211Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/ASUS/AppData/Roaming/Typora/typora-user-images/image-20220124181113267.png">
+<meta name="twitter:image" content="c:%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220124181113267.png">
 
 
 
@@ -353,28 +353,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/springcloud/" itemprop="url" rel="index">
-                    <span itemprop="name">springcloud</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -433,42 +411,31 @@
       
 
       
-        <p> 在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前段请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败。</p>
+        <p>在微服务框架中，一个由客户端发起的请求在后端系统中会经过多个不同的的服务节点调用来协同产生最后的请求结果，每一个前段请求都会形成一条复杂的分布式服务调用链路，链路中的任何一环出现高延时或错误都会引起整个请求最后的失败。</p>
 <p>需要用带一个jar包：</p>
 <p>zipkin-server-2.12.9-exec.jar</p>
 <p>直接对应目录打开cmd，执行：</p>
 <figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">java</span> -jar zipkin-server-<span class="number">2</span>.<span class="number">12</span>.<span class="number">9</span>-exec.jar</span><br></pre></td></tr></table></figure>
-
 <p>然后进入：</p>
 <p><a target="_blank" rel="noopener" href="http://localhost:9411/zipkin/">http://localhost:9411/zipkin/</a></p>
-<p><img src="C:\Users\ASUS\AppData\Roaming\Typora\typora-user-images\image-20220124181113267.png" alt="image-20220124181113267"></p>
+<p><img src="C:%5CUsers%5CASUS%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20220124181113267.png" alt="image-20220124181113267"></p>
 <p>案例：</p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182143.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182143.png" alt=""></p>
 <p>pom中添加依赖：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--包含了sleuth+zipkin--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-zipkin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>添加yml:</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-payment-service</span></span><br><span class="line">  <span class="attr">zipkin:</span></span><br><span class="line">    <span class="attr">base-url:</span> <span class="string">http://localhost:9411</span></span><br><span class="line">  <span class="attr">sleuth:</span></span><br><span class="line">    <span class="attr">sampler:</span></span><br><span class="line">      <span class="attr">probability:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
 <p>编写：controller</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/payment/zipkin&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">paymentZipkin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">&quot;hi ,i&#x27;am paymentzipkin server fall back，welcome to atguigu，O(∩_∩)O哈哈~&quot;</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182337.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182337.png" alt=""></p>
 <p>pom中添加依赖：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--包含了sleuth+zipkin--&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-zipkin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
 <p>添加yml:</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">cloud-payment-service</span></span><br><span class="line">  <span class="attr">zipkin:</span></span><br><span class="line">    <span class="attr">base-url:</span> <span class="string">http://localhost:9411</span></span><br><span class="line">  <span class="attr">sleuth:</span></span><br><span class="line">    <span class="attr">sampler:</span></span><br><span class="line">      <span class="attr">probability:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-
-
-
 <p>编写：controller</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ====================&gt; zipkin+sleuth</span></span><br><span class="line">   <span class="meta">@GetMapping(&quot;/consumer/payment/zipkin&quot;)</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">paymentZipkin</span><span class="params">()</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">       String result = restTemplate.getForObject(<span class="string">&quot;http://localhost:8001&quot;</span>+<span class="string">&quot;/payment/zipkin/&quot;</span>, String.class);</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>查看页面<a target="_blank" rel="noopener" href="http://localhost:9411/zipkin/">http://localhost:9411/zipkin/</a></p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182818.png"></p>
+<p>查看页面http://localhost:9411/zipkin/</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220124182818.png" alt=""></p>
 
       
     </div>
@@ -595,25 +562,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -678,7 +627,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

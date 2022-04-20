@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="什么是动静分离Nginx 动静分离简单来说就是把动态跟静态请求分开，不能理解成只是单纯的把动态页面和静态页面物理分离。严格意义上说应该是动态请求跟静态请求分开，可以理解成使用 Nginx 处理静态页面，Tomcat 处理动态页面。动静分离从目前实现角度来讲大致分为两种，一种是纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前主流推崇的方案；另外一种方法就是动态跟静态文件混合在一起发布，通">
+<meta name="description" content="¶什么是动静分离 Nginx 动静分离简单来说就是把动态跟静态请求分开，不能理解成只是单纯的把动态页面和静态页面物理分离。严格意义上说应该是动态请求跟静态请求分开，可以理解成使用 Nginx 处理静态页面，Tomcat 处理动态页面。动静分离从目前实现角度来讲大致分为两种，一种是纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前主流推崇的方案；另外一种方法就是动态跟静态文件混合在一起发布">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx动静分离">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/13/nginx%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="什么是动静分离Nginx 动静分离简单来说就是把动态跟静态请求分开，不能理解成只是单纯的把动态页面和静态页面物理分离。严格意义上说应该是动态请求跟静态请求分开，可以理解成使用 Nginx 处理静态页面，Tomcat 处理动态页面。动静分离从目前实现角度来讲大致分为两种，一种是纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前主流推崇的方案；另外一种方法就是动态跟静态文件混合在一起发布，通">
+<meta property="og:description" content="¶什么是动静分离 Nginx 动静分离简单来说就是把动态跟静态请求分开，不能理解成只是单纯的把动态页面和静态页面物理分离。严格意义上说应该是动态请求跟静态请求分开，可以理解成使用 Nginx 处理静态页面，Tomcat 处理动态页面。动静分离从目前实现角度来讲大致分为两种，一种是纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前主流推崇的方案；另外一种方法就是动态跟静态文件混合在一起发布">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195854.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195913.png">
@@ -355,28 +355,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -435,15 +413,18 @@
       
 
       
-        <h2 id="什么是动静分离"><a href="#什么是动静分离" class="headerlink" title="什么是动静分离"></a><strong>什么是动静分离</strong></h2><p>Nginx 动静分离简单来说就是把动态跟静态请求分开，不能理解成只是单纯的把动态页面和静态页面物理分离。严格意义上说应该是动态请求跟静态请求分开，可以理解成使用 Nginx 处理静态页面，Tomcat 处理动态页面。动静分离从目前实现角度来讲大致分为两种，一种是纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前主流推崇的方案；另外一种方法就是动态跟静态文件混合在一起发布，通过 nginx 来分开。通过 location 指定不同的后缀名实现不同的请求转发。通过 expires 参数设置，可以使浏览器缓存过期时间，减少与服务器之前的请求和流量。具体 Expires 定义：是给一个资源设定一个过期时间，也就是说无需去服务端验证，直接通过浏览器自身确认是否过期即可，所以不会产生额外的流量。此种方法非常适合不经常变动的资源。（如果经常更新的文件，不建议使用 Expires 来缓存），我这里设置 3d，表示在这 3 天之内访问这个 URL，发送一个请求，比对服务器该文件最后更新时间没有变化，则不会从服务器抓取，返回状态码304，如果有修改，则直接从服务器重新下载，返回状态码 200。</p>
-<h2 id="1-项目资源准备"><a href="#1-项目资源准备" class="headerlink" title="1.项目资源准备"></a>1.项目资源准备</h2><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195854.png"></p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195913.png"></p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195928.png"></p>
-<h2 id="2-进行-nginx-配置"><a href="#2-进行-nginx-配置" class="headerlink" title="2.进行 nginx 配置"></a>2.进行 nginx 配置</h2><p>找到 nginx 安装目录，打开/conf/nginx.conf 配置文件，</p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195225.png"></p>
+        <h2 id="什么是动静分离"><a class="header-anchor" href="#什么是动静分离">¶</a><strong>什么是动静分离</strong></h2>
+<p>Nginx 动静分离简单来说就是把动态跟静态请求分开，不能理解成只是单纯的把动态页面和静态页面物理分离。严格意义上说应该是动态请求跟静态请求分开，可以理解成使用 Nginx 处理静态页面，Tomcat 处理动态页面。动静分离从目前实现角度来讲大致分为两种，一种是纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前主流推崇的方案；另外一种方法就是动态跟静态文件混合在一起发布，通过 nginx 来分开。通过 location 指定不同的后缀名实现不同的请求转发。通过 expires 参数设置，可以使浏览器缓存过期时间，减少与服务器之前的请求和流量。具体 Expires 定义：是给一个资源设定一个过期时间，也就是说无需去服务端验证，直接通过浏览器自身确认是否过期即可，所以不会产生额外的流量。此种方法非常适合不经常变动的资源。（如果经常更新的文件，不建议使用 Expires 来缓存），我这里设置 3d，表示在这 3 天之内访问这个 URL，发送一个请求，比对服务器该文件最后更新时间没有变化，则不会从服务器抓取，返回状态码304，如果有修改，则直接从服务器重新下载，返回状态码 200。</p>
+<h2 id="1-项目资源准备"><a class="header-anchor" href="#1-项目资源准备">¶</a>1.项目资源准备</h2>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195854.png" alt=""></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195913.png" alt=""></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195928.png" alt=""></p>
+<h2 id="2-进行-nginx-配置"><a class="header-anchor" href="#2-进行-nginx-配置">¶</a>2.进行 nginx 配置</h2>
+<p>找到 nginx 安装目录，打开/conf/nginx.conf 配置文件，</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195225.png" alt=""></p>
 <p>测试结果：</p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195719.png"></p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195658.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195719.png" alt=""></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113195658.png" alt=""></p>
 
       
     </div>
@@ -579,25 +560,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -678,7 +641,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

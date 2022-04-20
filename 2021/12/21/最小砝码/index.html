@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="贪心算法," />
+  <meta name="keywords" content="zhy, NexT" />
 
 
 
@@ -79,17 +79,16 @@
 
 
 
-<meta name="description" content="最小砝码你有一架天平。现在你要设计一套砝码，使得利用这些砝码可以称出任意小于等于 N 的正整数重量。那么这套砝码最少需要包含多少个砝码？注意砝码可以放在天平两边。 输入包含一个正整数 N。输出一个整数代表答案。 输入N： 17  输出： 13    这题第一次做的时候，毫无思路， 感觉纯纯智商题。。 ·················································">
+<meta name="description" content="最小砝码 你有一架天平。现在你要设计一套砝码，使得利用这些砝码可以称出任意小于等于 N 的正整数重量。 那么这套砝码最少需要包含多少个砝码？ 注意砝码可以放在天平两边。 输入包含一个正整数 N。 输出一个整数代表答案。 输入N： 17 输出： 13 这题第一次做的时候，毫无思路， 感觉纯纯智商题。。 ·················································">
 <meta property="og:type" content="article">
 <meta property="og:title" content="最小砝码">
 <meta property="og:url" content="https://blacke1111.github.io/2021/12/21/%E6%9C%80%E5%B0%8F%E7%A0%9D%E7%A0%81/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="最小砝码你有一架天平。现在你要设计一套砝码，使得利用这些砝码可以称出任意小于等于 N 的正整数重量。那么这套砝码最少需要包含多少个砝码？注意砝码可以放在天平两边。 输入包含一个正整数 N。输出一个整数代表答案。 输入N： 17  输出： 13    这题第一次做的时候，毫无思路， 感觉纯纯智商题。。 ·················································">
+<meta property="og:description" content="最小砝码 你有一架天平。现在你要设计一套砝码，使得利用这些砝码可以称出任意小于等于 N 的正整数重量。 那么这套砝码最少需要包含多少个砝码？ 注意砝码可以放在天平两边。 输入包含一个正整数 N。 输出一个整数代表答案。 输入N： 17 输出： 13 这题第一次做的时候，毫无思路， 感觉纯纯智商题。。 ·················································">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-21T12:56:16.000Z">
 <meta property="article:modified_time" content="2021-12-21T13:45:46.482Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="贪心算法">
 <meta name="twitter:card" content="summary">
 
 
@@ -349,28 +348,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -429,23 +406,23 @@
       
 
       
-        <h1 id="最小砝码"><a href="#最小砝码" class="headerlink" title="最小砝码"></a><strong>最小砝码</strong></h1><p>你有一架天平。现在你要设计一套砝码，使得利用这些砝码可以称出任意小于等于 N 的正整数重量。<br>那么这套砝码最少需要包含多少个砝码？<br>注意砝码可以放在天平两边。</p>
-<p>输入包含一个正整数 N。<br>输出一个整数代表答案。</p>
+        <h1><strong>最小砝码</strong></h1>
+<p>你有一架天平。现在你要设计一套砝码，使得利用这些砝码可以称出任意小于等于 N 的正整数重量。<br>
+那么这套砝码最少需要包含多少个砝码？<br>
+注意砝码可以放在天平两边。</p>
+<p>输入包含一个正整数 N。<br>
+输出一个整数代表答案。</p>
 <p>输入N：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span></span><br></pre></td></tr></table></figure>
-
 <p>输出：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span></span><br></pre></td></tr></table></figure>
-
-
-
 <p>这题第一次做的时候，毫无思路， 感觉纯纯智商题。。</p>
 <p>·························································</p>
 <p>看了题解之后：</p>
 <p>贪心算法：</p>
 <p>顾名思义：思路和他的名字一样。</p>
 <p>要称重量为1，我只能选择1</p>
-<p>要称重量为2，我们已经有一个砝码1，我选最大可以表示这个重量的砝码，我再加一个3，**(3-1=2)** </p>
+<p>要称重量为2，我们已经有一个砝码1，我选最大可以表示这个重量的砝码，我再加一个3，<strong>(3-1=2)</strong></p>
 <p>要称重量为3，3</p>
 <p>要称重量为4，3+1</p>
 <p>要称重量为5，我们用3和1就表示不了了，我们就需要新加一个砝码，我们肯定和上面一样选最大的， n-4=5，n=9  ,所以再加一个砝码9</p>
@@ -454,13 +431,11 @@
 <p>现在规律应该知道了，<strong>我们新加的砝码都是3的倍数，</strong></p>
 <p>只要总砝码重量小于当前重量我们就新加一个砝码，n-已有法码总重量=当前要称重量。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">minimumWeight</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="comment">//要称重量1的砝码肯定为1</span></span><br><span class="line">        <span class="keyword">int</span> a=<span class="number">1</span>; <span class="comment">//当前砝码最大数</span></span><br><span class="line">        <span class="keyword">int</span> count=<span class="number">1</span>;   <span class="comment">//砝码数量</span></span><br><span class="line">        <span class="keyword">int</span> weight=<span class="number">1</span>;  <span class="comment">//当前砝码总重量</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (weight&lt;i)&#123;</span><br><span class="line">                <span class="comment">//a-weight=i</span></span><br><span class="line">                a=weight+i;</span><br><span class="line">                count++;</span><br><span class="line">                weight=a+weight;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>  count;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
 <p>这个算法时间复杂度为, O(n)，</p>
 <p>我们还可以进一步优化这个代码，可以看到上面的规律：<strong>我们最大砝码时以3的倍数递增</strong></p>
 <p>具体看代码：</p>
 <p>时间一下子就减少了3倍。。。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">minimumWeight</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> a=<span class="number">1</span>;  <span class="comment">//当前砝码最大数</span></span><br><span class="line">        <span class="keyword">int</span> count=<span class="number">1</span>;   <span class="comment">//砝码数量</span></span><br><span class="line">        <span class="keyword">int</span> weight=<span class="number">1</span>;  <span class="comment">//当前砝码总重量</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (weight&lt;i)&#123;</span><br><span class="line">            a=a*<span class="number">3</span>;</span><br><span class="line">            count++;</span><br><span class="line">            weight=weight+a;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -484,12 +459,6 @@
 	
 	</div>
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag"># 贪心算法</a>
-          
-        </div>
       
 
       
@@ -602,25 +571,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -660,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E7%A0%9D%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">最小砝码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">最小砝码</span></a></li></ol></div>
             
 
           </div>
@@ -701,7 +652,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

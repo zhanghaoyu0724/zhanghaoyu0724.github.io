@@ -349,28 +349,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -431,8 +409,10 @@
       
         
           
-          CountdownLatch用来进行线程同步协作，等待所有线程完成倒计时。其中构造参数用来初始化等待计数值，await() 用来等待计数归零，countDown() 用来让计数减一
-1234567891011121314151617181920212223 CountDownLatch latch 
+          CountdownLatch
+用来进行线程同步协作，等待所有线程完成倒计时。
+其中构造参数用来初始化等待计数值，await() 用来等待计数归零，countDown() 用来让计数减一
+1234567891011121314151617181920212223 CountDownLatch latc
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -543,28 +523,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -625,9 +583,9 @@
       
         
           
-          StampedLock该类自 JDK 8 加入，是为了进一步优化读性能，它的特点是在使用读锁、写锁时都必须配合【戳】使用加解读锁
+          StampedLock
+该类自 JDK 8 加入，是为了进一步优化读性能，它的特点是在使用读锁、写锁时都必须配合【戳】使用加解读锁
 12long stamp = lock.readLock();lock.unlockRead(stamp);
-
 加解写锁
 12long stamp = lock.writ
           ...
@@ -740,28 +698,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -822,8 +758,10 @@
       
         
           
-          读写锁ReentrantReadWriteLock当读操作远远高于写操作时，这时候使用 读写锁 让 读-读 可以并发，提高性能。 类似于数据库中的 select …from … lock in share mode
-提供一个 数据容器类 内部分别使用读锁保护数据的 read() 方法，写锁保护数据的
+          读写锁
+¶ReentrantReadWriteLock
+当读操作远远高于写操作时，这时候使用 读写锁 让 读-读 可以并发，提高性能。 类似于数据库中的 select …from … lock in share mode
+提供一个 数据容器类 内部分别使用读锁保护数据的 read() 方法，写锁保护
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -934,28 +872,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1016,8 +932,9 @@
       
         
           
-          二叉搜索树中第K小的元素中序遍历刚好就是从小到大输出，我使用了一个数组表示当输出第k个最小值时返回，为什么要用数组呢，因为如果用一个整型变量在方法中就是传递是值：
-12345678910111213141516171819202122int count;   public int kthSmalle
+          二叉搜索树中第K小的元素
+中序遍历刚好就是从小到大输出，我使用了一个数组表示当输出第k个最小值时返回，为什么要用数组呢，因为如果用一个整型变量在方法中就是传递是值：
+12345678910111213141516171819202122int count;   public int kthSmall
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1128,28 +1045,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index">
-                    <span itemprop="name">java基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1210,13 +1105,16 @@
       
         
           
-          AQS原理1. 概述
-全称是 AbstractQueuedSynchronizer，是阻塞式锁和相关的同步器工具的框架特点：
+          AQS原理
+1. 概述
+全称是 AbstractQueuedSynchronizer，是阻塞式锁和相关的同步器工具的框架
+特点：
+
 
 用 state 属性来表示资源的状态（分独占模式和共享模式），子类需要定义如何维护这个状态，控制如何获取锁和释放锁
 
 getState - 获取 state 状态
-setS
+s
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1323,25 +1221,7 @@ setS
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -1406,7 +1286,7 @@ setS
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

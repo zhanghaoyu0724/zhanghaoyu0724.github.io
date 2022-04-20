@@ -349,28 +349,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -431,8 +409,9 @@
       
         
           
-          最长不含重复字符的子字符串我的解法也类似于滑动窗口，只是可能代码实现不同，具体思路一样。
-利用一个map集合来存储无重复元素，key值为字符值，value索引位置，如果遇到相同的字符，改变滑动窗口的开始位置start，并且重新设置这个字符串的索引位置，如果存储的字符在集合中的索引小于当前的开始位置，
+          最长不含重复字符的子字符串
+我的解法也类似于滑动窗口，只是可能代码实现不同，具体思路一样。
+利用一个map集合来存储无重复元素，key值为字符值，value索引位置，如果遇到相同的字符，改变滑动窗口的开始位置start，并且重新设置这个字符串的索引位置，如果存储的字符在集合中的索引小于当前的开始位置
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -543,28 +522,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -625,8 +582,9 @@
       
         
           
-          相交链表这种题第一想到的就是哈希表，先保存一个链表的所有节点，然后再遍历第二个链表，然后返回第一个在哈希表中存在的节点。
-但是当我看到题目的数据格式，节点的数值全部是大于0的数，我就想到了一个投机取巧的办法，先遍历一个节点，把所有值全部改为负数，然后遍历第二个链表遇到第一个结点的值为负数，就先保存这
+          相交链表
+这种题第一想到的就是哈希表，先保存一个链表的所有节点，然后再遍历第二个链表，然后返回第一个在哈希表中存在的节点。
+但是当我看到题目的数据格式，节点的数值全部是大于0的数，我就想到了一个投机取巧的办法，先遍历一个节点，把所有值全部改为负数，然后遍历第二个链表遇到第一个结点的值为负数，就先保存
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -737,28 +695,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -818,7 +754,8 @@
 
       
         
-          <h1 id="链表排序"><a href="#链表排序" class="headerlink" title="链表排序"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xa262d/">链表排序</a></h1><p>我自己实现的是基于数组的堆排序：</p>
+          <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/xa262d/">链表排序</a></h1>
+<p>我自己实现的是基于数组的堆排序：</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2021/12/17/%E9%93%BE%E8%A1%A8%E6%8E%92%E5%BA%8F/#more" rel="contents">
@@ -928,28 +865,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1010,8 +925,9 @@
       
         
           
-          复制带随机指针的链表思路：重点就是哈希表；
-12345678910111213141516171819202122232425262728public Node copyRandomList(Node head) &#123;        if (head==null)&#123;        
+          复制带随机指针的链表
+思路：重点就是哈希表；
+12345678910111213141516171819202122232425262728public Node copyRandomList(Node head) &#123;        if (head==null)&#123;       
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1122,28 +1038,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1204,11 +1098,13 @@
       
         
           
-          最大矩形做这种类型题目真的是一点思路没有，想了一上午， 没想到  ，，
+          最大矩形
+做这种类型题目真的是一点思路没有，想了一上午， 没想到  ，，
 下午上课时，没忍住看了题解。。。
 看了题解后感觉做出来的话我觉得这题目不算难，主要是没想到思路，😔，还有就是优化算法的话还是真的难，，，
-题解链接看了题解后自己敲的代码。。。
-1234567891011121314151617
+¶题解链接
+看了题解后自己敲的代码。。。
+1234567891011121314151
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1315,25 +1211,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -1398,7 +1276,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

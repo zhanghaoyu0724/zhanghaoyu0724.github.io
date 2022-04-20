@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="2worker如何进行工作的  3、一个 master 和多个 woker 有好处（1）可以使用 nginx –s reload 热部署，利用 nginx 进行热部署操作（2）每个 woker 是独立的进程，如果有其中的一个 woker 出现问题，其他 woker 独立的，继续进行争抢，实现请求过程，不会造成服务中断4、设置多少个 woker 合适 ​    worker 数和服务器的 cpu">
+<meta name="description" content="2worker如何进行工作的  3、一个 master 和多个 woker 有好处 （1）可以使用 nginx –s reload 热部署，利用 nginx 进行热部署操作 （2）每个 woker 是独立的进程，如果有其中的一个 woker 出现问题，其他 woker 独立的， 继续进行争抢，实现请求过程，不会造成服务中断 4、设置多少个 woker 合适 ​	worker 数和服务器的 cpu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx原理">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/13/nginx%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="2worker如何进行工作的  3、一个 master 和多个 woker 有好处（1）可以使用 nginx –s reload 热部署，利用 nginx 进行热部署操作（2）每个 woker 是独立的进程，如果有其中的一个 woker 出现问题，其他 woker 独立的，继续进行争抢，实现请求过程，不会造成服务中断4、设置多少个 woker 合适 ​    worker 数和服务器的 cpu">
+<meta property="og:description" content="2worker如何进行工作的  3、一个 master 和多个 woker 有好处 （1）可以使用 nginx –s reload 热部署，利用 nginx 进行热部署操作 （2）每个 woker 是独立的进程，如果有其中的一个 woker 出现问题，其他 woker 独立的， 继续进行争抢，实现请求过程，不会造成服务中断 4、设置多少个 woker 合适 ​	worker 数和服务器的 cpu">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224412.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224439.png">
@@ -351,28 +351,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -431,12 +409,20 @@
       
 
       
-        <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224412.png"></p>
+        <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224412.png" alt=""></p>
 <p><strong>2worker如何进行工作的</strong></p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224439.png"></p>
-<p>3、一个 master 和多个 woker 有好处<br><strong>（1）可以使用 nginx –s reload 热部署，利用 nginx 进行热部署操作</strong><br><strong>（2）每个 woker 是独立的进程，如果有其中的一个 woker 出现问题，其他 woker 独立的，</strong><br>继续进行争抢，实现请求过程，不会造成服务中断<br>4、设置多少个 woker 合适</p>
-<p>​    <strong>worker</strong> <strong>数和服务器的</strong> <strong>cpu</strong> <strong>数相等是最为适宜的</strong></p>
-<p>5、连接数 worker_connection<br>    第一个：发送请求，占用了 woker 的几个连接数？<br>        <strong>2 或者 4 个</strong><br>    第二个：nginx 有一个 master，有四个 woker，每个 woker 支持最大的连接数 1024，支持的最大并发数是多少？<br>        <strong>普通的静态访问最大并发数是： worker_connections * worker_processes /2，  而如果是 HTTP 作 为反向代理来说，最大并发数量应该是 worker_connections * worker_processes/4。</strong></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113224439.png" alt=""></p>
+<p>3、一个 master 和多个 woker 有好处<br>
+<strong>（1）可以使用 nginx –s reload 热部署，利用 nginx 进行热部署操作</strong><br>
+<strong>（2）每个 woker 是独立的进程，如果有其中的一个 woker 出现问题，其他 woker 独立的，</strong><br>
+继续进行争抢，实现请求过程，不会造成服务中断<br>
+4、设置多少个 woker 合适</p>
+<p>​	<strong>worker</strong> <strong>数和服务器的</strong> <strong>cpu</strong> <strong>数相等是最为适宜的</strong></p>
+<p>5、连接数 worker_connection<br>
+第一个：发送请求，占用了 woker 的几个连接数？<br>
+<strong>2 或者 4 个</strong><br>
+第二个：nginx 有一个 master，有四个 woker，每个 woker 支持最大的连接数 1024，支持的最大并发数是多少？<br>
+<strong>普通的静态访问最大并发数是： worker_connections * worker_processes /2，  而如果是 HTTP 作 为反向代理来说，最大并发数量应该是 worker_connections * worker_processes/4。</strong></p>
 
       
     </div>
@@ -563,25 +549,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -646,7 +614,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

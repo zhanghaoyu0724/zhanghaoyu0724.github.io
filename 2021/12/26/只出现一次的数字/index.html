@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="位运算," />
+  <meta name="keywords" content="zhy, NexT" />
 
 
 
@@ -79,17 +79,16 @@
 
 
 
-<meta name="description" content="只出现一次的数字简单题，主要记录下思路。1，位运算解决一直这个题题，数组中的数之可能出现一次，或者两次 利用位运算异或^： 1^1&#x3D;0 0^0&#x3D;0; 1^0&#x3D;1; 0^1&#x3D;1; 有因为异或有交换率。 所以只要相同的元素是偶数，异或的结果就会等于零。最后数组元素全部异或的结果就会等于那个只出现过一次的数. 1234567public int singleNumber(int[] nums) &amp;#12">
+<meta name="description" content="只出现一次的数字 ¶简单题，主要记录下思路。 ¶1，位运算解决 一直这个题题，数组中的数之可能出现一次，或者两次 利用位运算异或^： 1^1&#x3D;0 0^0&#x3D;0; 1^0&#x3D;1; 0^1&#x3D;1; 有因为异或有交换率。 所以只要相同的元素是偶数，异或的结果就会等于零。最后数组元素全部异或的结果就会等于那个只出现过一次的数. 1234567public int singleNumber(int[] nums)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="只出现一次的数字">
 <meta property="og:url" content="https://blacke1111.github.io/2021/12/26/%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="只出现一次的数字简单题，主要记录下思路。1，位运算解决一直这个题题，数组中的数之可能出现一次，或者两次 利用位运算异或^： 1^1&#x3D;0 0^0&#x3D;0; 1^0&#x3D;1; 0^1&#x3D;1; 有因为异或有交换率。 所以只要相同的元素是偶数，异或的结果就会等于零。最后数组元素全部异或的结果就会等于那个只出现过一次的数. 1234567public int singleNumber(int[] nums) &amp;#12">
+<meta property="og:description" content="只出现一次的数字 ¶简单题，主要记录下思路。 ¶1，位运算解决 一直这个题题，数组中的数之可能出现一次，或者两次 利用位运算异或^： 1^1&#x3D;0 0^0&#x3D;0; 1^0&#x3D;1; 0^1&#x3D;1; 有因为异或有交换率。 所以只要相同的元素是偶数，异或的结果就会等于零。最后数组元素全部异或的结果就会等于那个只出现过一次的数. 1234567public int singleNumber(int[] nums)">
 <meta property="og:locale">
 <meta property="article:published_time" content="2021-12-26T12:46:57.000Z">
 <meta property="article:modified_time" content="2021-12-26T12:59:57.271Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="位运算">
 <meta name="twitter:card" content="summary">
 
 
@@ -349,28 +348,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -429,7 +406,10 @@
       
 
       
-        <h1 id="只出现一次的数字"><a href="#只出现一次的数字" class="headerlink" title="只出现一次的数字"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/x22wsm/">只出现一次的数字</a></h1><h3 id="简单题，主要记录下思路。"><a href="#简单题，主要记录下思路。" class="headerlink" title="简单题，主要记录下思路。"></a>简单题，主要记录下思路。</h3><h3 id="1，位运算解决"><a href="#1，位运算解决" class="headerlink" title="1，位运算解决"></a>1，位运算解决</h3><p>一直这个题题，数组中的数之可能出现一次，或者两次</p>
+        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/leetbook/read/top-interview-questions/x22wsm/">只出现一次的数字</a></h1>
+<h3 id="简单题，主要记录下思路。"><a class="header-anchor" href="#简单题，主要记录下思路。">¶</a>简单题，主要记录下思路。</h3>
+<h3 id="1，位运算解决"><a class="header-anchor" href="#1，位运算解决">¶</a>1，位运算解决</h3>
+<p>一直这个题题，数组中的数之可能出现一次，或者两次</p>
 <p>利用位运算异或^：</p>
 <p>1^1=0</p>
 <p>0^0=0;</p>
@@ -438,9 +418,6 @@
 <p>有因为异或有交换率。</p>
 <p>所以只要相同的元素是偶数，异或的结果就会等于零。最后数组元素全部异或的结果就会等于那个只出现过一次的数.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNumber</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">           res=res^nums[i];</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> res;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-
-
 
       
     </div>
@@ -464,12 +441,6 @@
 	
 	</div>
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E4%BD%8D%E8%BF%90%E7%AE%97/" rel="tag"># 位运算</a>
-          
-        </div>
       
 
       
@@ -582,25 +553,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -640,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97"><span class="nav-number">1.</span> <span class="nav-text">只出现一次的数字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E9%A2%98%EF%BC%8C%E4%B8%BB%E8%A6%81%E8%AE%B0%E5%BD%95%E4%B8%8B%E6%80%9D%E8%B7%AF%E3%80%82"><span class="nav-number">1.0.1.</span> <span class="nav-text">简单题，主要记录下思路。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E4%BD%8D%E8%BF%90%E7%AE%97%E8%A7%A3%E5%86%B3"><span class="nav-number">1.0.2.</span> <span class="nav-text">1，位运算解决</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">只出现一次的数字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E9%A2%98%EF%BC%8C%E4%B8%BB%E8%A6%81%E8%AE%B0%E5%BD%95%E4%B8%8B%E6%80%9D%E8%B7%AF%E3%80%82"><span class="nav-number">1.0.1.</span> <span class="nav-text">简单题，主要记录下思路。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%EF%BC%8C%E4%BD%8D%E8%BF%90%E7%AE%97%E8%A7%A3%E5%86%B3"><span class="nav-number">1.0.2.</span> <span class="nav-text">1，位运算解决</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -681,7 +634,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

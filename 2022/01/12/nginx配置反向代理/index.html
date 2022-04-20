@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="反向代理实例一实现效果：使用 nginx 反向代理，访问 www.123.com 直接跳转到 127.0.0.1:8080 准备工作 （1）再linux系统安装tomcat，使用默认端口8080 tomcat安装文件放到linux系统中，解压 进入tomcat的bin目录中，.&#x2F;startup.sh启动tomcat服务器 记得关闭防火墙  配置反向代理过程: 具体配置第一步 在 windows 系">
+<meta name="description" content="反向代理实例一 实现效果：使用 nginx 反向代理，访问 www.123.com 直接跳转到 127.0.0.1:8080 准备工作 （1）再linux系统安装tomcat，使用默认端口8080 tomcat安装文件放到linux系统中，解压 进入tomcat的bin目录中，.&#x2F;startup.sh启动tomcat服务器 记得关闭防火墙  ¶配置反向代理 ¶过程:  ¶具体配置 第一步 在 wi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx配置反向代理">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/12/nginx%E9%85%8D%E7%BD%AE%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="反向代理实例一实现效果：使用 nginx 反向代理，访问 www.123.com 直接跳转到 127.0.0.1:8080 准备工作 （1）再linux系统安装tomcat，使用默认端口8080 tomcat安装文件放到linux系统中，解压 进入tomcat的bin目录中，.&#x2F;startup.sh启动tomcat服务器 记得关闭防火墙  配置反向代理过程: 具体配置第一步 在 windows 系">
+<meta property="og:description" content="反向代理实例一 实现效果：使用 nginx 反向代理，访问 www.123.com 直接跳转到 127.0.0.1:8080 准备工作 （1）再linux系统安装tomcat，使用默认端口8080 tomcat安装文件放到linux系统中，解压 进入tomcat的bin目录中，.&#x2F;startup.sh启动tomcat服务器 记得关闭防火墙  ¶配置反向代理 ¶过程:  ¶具体配置 第一步 在 wi">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112201738.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112201858.png">
@@ -355,28 +355,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">nginx</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -435,31 +413,31 @@
       
 
       
-        <h1 id="反向代理实例一"><a href="#反向代理实例一" class="headerlink" title="反向代理实例一"></a><strong>反向代理实例一</strong></h1><p>实现效果：使用 nginx 反向代理，访问 <a target="_blank" rel="noopener" href="http://www.123.com/">www.123.com</a> 直接跳转到 127.0.0.1:8080</p>
+        <h1><strong>反向代理实例一</strong></h1>
+<p>实现效果：使用 nginx 反向代理，访问 <a target="_blank" rel="noopener" href="http://www.123.com">www.123.com</a> 直接跳转到 127.0.0.1:8080</p>
 <p>准备工作</p>
 <p>（1）再linux系统安装tomcat，使用默认端口8080</p>
 <p>tomcat安装文件放到linux系统中，解压</p>
 <p>进入tomcat的bin目录中，./startup.sh启动tomcat服务器</p>
 <p>记得<strong>关闭防火墙</strong></p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112201738.png"></p>
-<h2 id="配置反向代理"><a href="#配置反向代理" class="headerlink" title="配置反向代理"></a>配置反向代理</h2><h3 id="过程"><a href="#过程" class="headerlink" title="过程:"></a>过程:</h3><p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112201858.png"></p>
-<h3 id="具体配置"><a href="#具体配置" class="headerlink" title="具体配置"></a><strong>具体配置</strong></h3><p><strong>第一步</strong> 在 <strong>windows 系统的host文件进行域名和 ip 对应关系的配置</strong></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112201738.png" alt=""></p>
+<h2 id="配置反向代理"><a class="header-anchor" href="#配置反向代理">¶</a>配置反向代理</h2>
+<h3 id="过程"><a class="header-anchor" href="#过程">¶</a>过程:</h3>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112201858.png" alt=""></p>
+<h3 id="具体配置"><a class="header-anchor" href="#具体配置">¶</a><strong>具体配置</strong></h3>
+<p><strong>第一步</strong> 在 <strong>windows 系统的host文件进行域名和 ip 对应关系的配置</strong></p>
 <p>现在自己本机上配置host文件</p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112202522.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112202522.png" alt=""></p>
 <p>hosts文件最下面添加：</p>
 <figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">192.168.17.129</span> www.<span class="number">123</span>.com</span><br></pre></td></tr></table></figure>
-
 <p><strong>第二步 在</strong> <strong>nginx</strong> <strong>进行请求转发的配置（反向代理配置）</strong></p>
 <p>配置文件目录 /usr/local/nginx/conf下</p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112202626.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112202626.png" alt=""></p>
 <p><strong>第三步最终测试</strong></p>
 <p><strong>重启nginx：</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./nginx -s reload</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112204036.png"></p>
-<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112212255.png"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112204036.png" alt=""></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220112212255.png" alt=""></p>
 
       
     </div>
@@ -595,25 +573,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -653,7 +613,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%AE%9E%E4%BE%8B%E4%B8%80"><span class="nav-number">1.</span> <span class="nav-text">反向代理实例一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">配置反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">过程:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">具体配置</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">反向代理实例一</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">配置反向代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B"><span class="nav-number">1.1.1.</span> <span class="nav-text">过程:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">具体配置</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -694,7 +654,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

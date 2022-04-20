@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="两数相加思路：就是和我们手算加法一样的思路，把她用代码展示出来 123456789101112131415161718192021222324252627public ListNode addTwoNumbers(ListNode l1, ListNode l2) &amp;#123;       int preValue&#x3D;0;       ListNode pre&#x3D;null;       ListNod">
+<meta name="description" content="两数相加 思路：就是和我们手算加法一样的思路，把她用代码展示出来 123456789101112131415161718192021222324252627public ListNode addTwoNumbers(ListNode l1, ListNode l2) &amp;#123;       int preValue&#x3D;0;       ListNode pre&#x3D;null;       ListNo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="两数相加">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/15/%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="两数相加思路：就是和我们手算加法一样的思路，把她用代码展示出来 123456789101112131415161718192021222324252627public ListNode addTwoNumbers(ListNode l1, ListNode l2) &amp;#123;       int preValue&#x3D;0;       ListNode pre&#x3D;null;       ListNod">
+<meta property="og:description" content="两数相加 思路：就是和我们手算加法一样的思路，把她用代码展示出来 123456789101112131415161718192021222324252627public ListNode addTwoNumbers(ListNode l1, ListNode l2) &amp;#123;       int preValue&#x3D;0;       ListNode pre&#x3D;null;       ListNo">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-01-15T07:51:30.000Z">
 <meta property="article:modified_time" content="2022-01-15T08:37:29.061Z">
@@ -348,28 +348,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -428,9 +406,9 @@
       
 
       
-        <h1 id="两数相加"><a href="#两数相加" class="headerlink" title="两数相加"></a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/add-two-numbers/">两数相加</a></h1><p>思路：就是和我们手算加法一样的思路，把她用代码展示出来</p>
+        <h1><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/add-two-numbers/">两数相加</a></h1>
+<p>思路：就是和我们手算加法一样的思路，把她用代码展示出来</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span> preValue=<span class="number">0</span>;</span><br><span class="line">       ListNode pre=<span class="keyword">null</span>;</span><br><span class="line">       ListNode head=<span class="keyword">new</span> ListNode();</span><br><span class="line">       ListNode node=head;</span><br><span class="line">       <span class="keyword">while</span> (l1!=<span class="keyword">null</span>||l2!=<span class="keyword">null</span>||preValue!=<span class="number">0</span>)&#123;</span><br><span class="line">           <span class="keyword">int</span> value=preValue,res=<span class="number">0</span>;</span><br><span class="line">           <span class="keyword">if</span> (l1!=<span class="keyword">null</span>)&#123;</span><br><span class="line">               value+=l1.val;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (l2!=<span class="keyword">null</span>)&#123;</span><br><span class="line">               value+=l2.val;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (node==head)&#123;</span><br><span class="line">               node.val=value%<span class="number">10</span>;</span><br><span class="line">               pre=node;</span><br><span class="line">           &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">               pre.next=<span class="keyword">new</span> ListNode(value%<span class="number">10</span>);</span><br><span class="line">               pre=pre.next;</span><br><span class="line">           &#125;</span><br><span class="line">           node=<span class="keyword">null</span>;</span><br><span class="line">           preValue=value/<span class="number">10</span>;</span><br><span class="line">           l1=l1!=<span class="keyword">null</span>?l1.next:<span class="keyword">null</span>;</span><br><span class="line">           l2=l2!=<span class="keyword">null</span>?l2.next:<span class="keyword">null</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> head;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
 
       
     </div>
@@ -566,25 +544,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -624,7 +584,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0"><span class="nav-number">1.</span> <span class="nav-text">两数相加</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">两数相加</span></a></li></ol></div>
             
 
           </div>
@@ -665,7 +625,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 

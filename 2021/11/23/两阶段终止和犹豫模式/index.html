@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="并发设计模式," />
+  <meta name="keywords" content="zhy, NexT" />
 
 
 
@@ -89,7 +89,6 @@
 <meta property="article:published_time" content="2021-11-23T14:18:19.000Z">
 <meta property="article:modified_time" content="2021-11-24T15:56:46.855Z">
 <meta property="article:author" content="Zhang Hao Hu">
-<meta property="article:tag" content="并发设计模式">
 <meta name="twitter:card" content="summary">
 
 
@@ -349,28 +348,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -435,8 +412,6 @@
 <p>犹豫模式:发现某个人执行某事之前有人把这件事做了，所以我们执行某件事的时候要判断是否别人已经做过</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j(topic = &quot;c.TwoPhaseTermination&quot;)</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TwoPhaseTermination</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 监控线程</span></span><br><span class="line">    <span class="keyword">private</span> Thread monitorThread;</span><br><span class="line">    <span class="comment">// 停止标记</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> stop = <span class="keyword">false</span>;</span><br><span class="line">    <span class="comment">// 判断是否执行过 start 方法</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> starting = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 启动监控线程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (starting) &#123; <span class="comment">// false</span></span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            starting = <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        monitorThread = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                Thread current = Thread.currentThread();</span><br><span class="line">                <span class="comment">// 是否被打断</span></span><br><span class="line">                <span class="keyword">if</span> (stop) &#123;</span><br><span class="line">                    log.debug(<span class="string">&quot;料理后事&quot;</span>);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">                    log.debug(<span class="string">&quot;执行监控记录&quot;</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, <span class="string">&quot;monitor&quot;</span>);</span><br><span class="line">        monitorThread.start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 停止监控线程</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        stop = <span class="keyword">true</span>;</span><br><span class="line">        monitorThread.interrupt();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-
-
       
     </div>
     
@@ -459,12 +434,6 @@
 	
 	</div>
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E5%B9%B6%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 并发设计模式</a>
-          
-        </div>
       
 
       
@@ -568,25 +537,7 @@
             
 
             
-              
-              
-              <div class="site-state-item site-state-categories">
-                <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
-                  <span class="site-state-item-name">分类</span>
-                </a>
-              </div>
-            
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
-                  <span class="site-state-item-name">标签</span>
-                </a>
-              </div>
             
 
           </nav>
@@ -651,7 +602,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">279k</span>
+    <span title="博客全站字数">279.3k</span>
   
 </div>
 
