@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="字符集的相关操作 修改MySQL5.7字符集 ¶修改步骤 在MySQL 8.0版本之前，默认字符集为 latin1 ，utf8字符集指向的是 utf8mb3 。网站开发人员在数据库 设计的时候往往会将编码修改为utf8字符集。如果遗忘修改默认的编码，就会出现乱码的问题。从MySQL 8.0开始，数据库的默认编码将改为 utf8mb4 ，从而避免上述乱码的问题。 ¶操作1：查看默认使用的字符集 12">
+<meta name="description" content="字符集的相关操作 修改MySQL5.7字符集 修改步骤 在MySQL 8.0版本之前，默认字符集为 latin1 ，utf8字符集指向的是 utf8mb3 。网站开发人员在数据库 设计的时候往往会将编码修改为utf8字符集。如果遗忘修改默认的编码，就会出现乱码的问题。从MySQL 8.0开始，数据库的默认编码将改为 utf8mb4 ，从而避免上述乱码的问题。 操作1：查看默认使用的字符集 123s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql字符集">
 <meta property="og:url" content="https://blacke1111.github.io/2022/04/04/mysql-p1/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="字符集的相关操作 修改MySQL5.7字符集 ¶修改步骤 在MySQL 8.0版本之前，默认字符集为 latin1 ，utf8字符集指向的是 utf8mb3 。网站开发人员在数据库 设计的时候往往会将编码修改为utf8字符集。如果遗忘修改默认的编码，就会出现乱码的问题。从MySQL 8.0开始，数据库的默认编码将改为 utf8mb4 ，从而避免上述乱码的问题。 ¶操作1：查看默认使用的字符集 12">
+<meta property="og:description" content="字符集的相关操作 修改MySQL5.7字符集 修改步骤 在MySQL 8.0版本之前，默认字符集为 latin1 ，utf8字符集指向的是 utf8mb3 。网站开发人员在数据库 设计的时候往往会将编码修改为utf8字符集。如果遗忘修改默认的编码，就会出现乱码的问题。从MySQL 8.0开始，数据库的默认编码将改为 utf8mb4 ，从而避免上述乱码的问题。 操作1：查看默认使用的字符集 123s">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404192215776.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404192235498.png">
@@ -441,35 +441,35 @@
       
         <h1><strong>字符集的相关操作</strong></h1>
 <p><strong>修改MySQL5.7字符集</strong></p>
-<h2 id="修改步骤"><a class="header-anchor" href="#修改步骤">¶</a><strong>修改步骤</strong></h2>
+<h2 id="修改步骤"><strong>修改步骤</strong></h2>
 <p>在MySQL 8.0版本之前，默认字符集为 latin1 ，utf8字符集指向的是 utf8mb3 。网站开发人员在数据库</p>
 <p>设计的时候往往会将编码修改为utf8字符集。如果遗忘修改默认的编码，就会出现乱码的问题。从MySQL</p>
 <p>8.0开始，数据库的默认编码将改为 utf8mb4 ，从而避免上述乱码的问题。</p>
-<h3 id="操作1：查看默认使用的字符集"><a class="header-anchor" href="#操作1：查看默认使用的字符集">¶</a><strong>操作1：查看默认使用的字符集</strong></h3>
+<h3 id="操作1：查看默认使用的字符集"><strong>操作1：查看默认使用的字符集</strong></h3>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;character%&#x27;; </span><br><span class="line"># 或者 </span><br><span class="line">show variables like &#x27;%char%&#x27;;</span><br></pre></td></tr></table></figure>
 <p>8.0.27下:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404192215776.png" alt="image-20220404192215776"></p>
 <p>8.7.27下:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404192235498.png" alt="image-20220404192235498"></p>
 <p>这就导致了我们在5.7.27 版本下添加 中文字符的时候会报错 ，需要修改它的字符集</p>
-<h3 id="操作2：修改字符集"><a class="header-anchor" href="#操作2：修改字符集">¶</a><strong>操作2：修改字符集</strong></h3>
+<h3 id="操作2：修改字符集"><strong>操作2：修改字符集</strong></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
 <p>在MySQL5.7或之前的版本中，在文件最后加上中文字符集配置：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">character_set_server</span>=utf8</span><br></pre></td></tr></table></figure>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404192528385.png" alt="image-20220404192528385"></p>
-<h3 id="操作3：重新启动MySQL服务"><a class="header-anchor" href="#操作3：重新启动MySQL服务">¶</a><strong>操作3</strong>：重新启动<strong>MySQL服务</strong></h3>
+<h3 id="操作3：重新启动MySQL服务"><strong>操作3</strong>：重新启动<strong>MySQL服务</strong></h3>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
 <p>tag:</p>
 <blockquote>
 <p>但是原库、原表的设定不会发生变化，参数修改只对新建的数据库生效。</p>
 </blockquote>
-<h2 id="已有库-表字符集的变更"><a class="header-anchor" href="#已有库-表字符集的变更">¶</a><strong>已有库&amp;表字符集的变更</strong></h2>
+<h2 id="已有库-表字符集的变更"><strong>已有库&amp;表字符集的变更</strong></h2>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#修改已创建数据库的字符集</span><br><span class="line">alter database dbtest1 character set &#x27;utf8&#x27;;</span><br><span class="line">#修改已创建数据表的字符集</span><br><span class="line">alter table t_emp convert to character set &#x27;utf8&#x27;;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意：但是原有的数据如果是用非’utf8’编码的话，数据本身编码不会发生改变。已有数据需要导</p>
 <p>出或删除，然后重新插入。</p>
 </blockquote>
-<h3 id="各级别的字符集"><a class="header-anchor" href="#各级别的字符集">¶</a><strong>各级别的字符集</strong></h3>
+<h3 id="各级别的字符集"><strong>各级别的字符集</strong></h3>
 <p>MySQL有4个级别的字符集和比较规则，分别是</p>
 <ul>
 <li>
@@ -508,22 +508,22 @@
 <p>character_set_results：服务器向客户端返回数据时使用的字符集</p>
 </li>
 </ul>
-<h4 id="服务器级别"><a class="header-anchor" href="#服务器级别">¶</a><strong>服务器级别</strong></h4>
+<h4 id="服务器级别"><strong>服务器级别</strong></h4>
 <p>character_set_server ：服务器级别的字符集</p>
 <p>我们可以在启动服务器程序时通过启动选项或者在服务器程序运行过程中使用 SET 语句修改这两个变量</p>
 <p>的值。比如我们可以在配置文件中这样写：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[server] character_set_server=gbk </span><br><span class="line"># 默认字符集 </span><br><span class="line">collation_server=gbk_chinese_ci #对应的默认的比较规则</span><br></pre></td></tr></table></figure>
 <p>当服务器启动的时候读取这个配置文件后这两个系统变量的值便修改了。</p>
-<h4 id="数据库级别"><a class="header-anchor" href="#数据库级别">¶</a><strong>数据库级别</strong></h4>
+<h4 id="数据库级别"><strong>数据库级别</strong></h4>
 <p>character_set_database ：当前数据库的字符集</p>
 <p>我们在创建和修改数据库的时候可以指定该数据库的字符集和比较规则，具体语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE 数据库名 </span><br><span class="line">	[[DEFAULT] CHARACTER SET 字符集名称] </span><br><span class="line">	[[DEFAULT] COLLATE 比较规则名称]; </span><br><span class="line">ALTER DATABASE 数据库名 </span><br><span class="line">	[[DEFAULT] CHARACTER SET 字符集名称] </span><br><span class="line">	[[DEFAULT] COLLATE 比较规则名称];</span><br></pre></td></tr></table></figure>
-<h4 id="表级别"><a class="header-anchor" href="#表级别">¶</a><strong>表级别</strong></h4>
+<h4 id="表级别"><strong>表级别</strong></h4>
 <p>我们也可以在创建和修改表的时候指定表的字符集和比较规则，语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE 表名 (列的信息) </span><br><span class="line">	[[DEFAULT] CHARACTER SET 字符集名称] </span><br><span class="line">	[COLLATE 比较规则名称]] </span><br><span class="line"></span><br><span class="line">ALTER TABLE 表名 </span><br><span class="line">	[[DEFAULT] CHARACTER SET 字符集名称] </span><br><span class="line">	[COLLATE 比较规则名称]</span><br></pre></td></tr></table></figure>
 <p><strong>如果创建和修改表的语句中没有指明字符集和比较规则，将使用该表所在数据库的字符集和比较规则作</strong></p>
 <p><strong>为该表的字符集和比较规则。</strong></p>
-<h4 id="列级别"><a class="header-anchor" href="#列级别">¶</a><strong>列级别</strong></h4>
+<h4 id="列级别"><strong>列级别</strong></h4>
 <p>对于存储字符串的列，同一个表中的不同的列也可以有不同的字符集和比较规则。我们在创建和修改列</p>
 <p>定义的时候可以指定该列的字符集和比较规则，语法如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE 表名( </span><br><span class="line">    列名 字符串类型 [CHARACTER SET 字符集名称] [COLLATE 比较规则名称], 其他列... </span><br><span class="line">);ALTER TABLE 表名 MODIFY 列名 字符串类型 [CHARACTER SET 字符集名称] [COLLATE 比较规则名称];</span><br></pre></td></tr></table></figure>

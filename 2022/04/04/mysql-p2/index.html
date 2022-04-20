@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="MySQL8的主要目录结构 这是我自己指定的mysql 数据的存储的地方  可以看到我指定的存放位置对应的就上面的位置  数据库运行起来对应的文件：  ¶配置文件目录 linux下： 配置文件目录：&#x2F;usr&#x2F;share&#x2F;mysql-8.0（命令及配置文件），&#x2F;etc&#x2F;mysql（如my.cnf）  my.cnf就相当于windows 下的my。ini  数据库和文件系统的关系 ¶查看默认数据库 查">
+<meta name="description" content="MySQL8的主要目录结构 这是我自己指定的mysql 数据的存储的地方  可以看到我指定的存放位置对应的就上面的位置  数据库运行起来对应的文件：  配置文件目录 linux下： 配置文件目录：&#x2F;usr&#x2F;share&#x2F;mysql-8.0（命令及配置文件），&#x2F;etc&#x2F;mysql（如my.cnf）  my.cnf就相当于windows 下的my。ini  数据库和文件系统的关系 查看默认数据库 查看一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql的数据目录">
 <meta property="og:url" content="https://blacke1111.github.io/2022/04/04/mysql-p2/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="MySQL8的主要目录结构 这是我自己指定的mysql 数据的存储的地方  可以看到我指定的存放位置对应的就上面的位置  数据库运行起来对应的文件：  ¶配置文件目录 linux下： 配置文件目录：&#x2F;usr&#x2F;share&#x2F;mysql-8.0（命令及配置文件），&#x2F;etc&#x2F;mysql（如my.cnf）  my.cnf就相当于windows 下的my。ini  数据库和文件系统的关系 ¶查看默认数据库 查">
+<meta property="og:description" content="MySQL8的主要目录结构 这是我自己指定的mysql 数据的存储的地方  可以看到我指定的存放位置对应的就上面的位置  数据库运行起来对应的文件：  配置文件目录 linux下： 配置文件目录：&#x2F;usr&#x2F;share&#x2F;mysql-8.0（命令及配置文件），&#x2F;etc&#x2F;mysql（如my.cnf）  my.cnf就相当于windows 下的my。ini  数据库和文件系统的关系 查看默认数据库 查看一">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404203836567.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204358589.png">
@@ -450,14 +450,14 @@
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204358589.png" alt="image-20220404204358589"></p>
 <p>数据库运行起来对应的文件：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204010084.png" alt="image-20220404204010084"></p>
-<h2 id="配置文件目录"><a class="header-anchor" href="#配置文件目录">¶</a>配置文件目录</h2>
+<h2 id="配置文件目录">配置文件目录</h2>
 <p><strong>linux下：</strong></p>
 <p>配置文件目录：/usr/share/mysql-8.0（命令及配置文件），/etc/mysql（如my.cnf）</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204833928.png" alt="image-20220404204833928"></p>
 <p>my.cnf就相当于windows 下的my。ini</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404204929562.png" alt="image-20220404204929562"></p>
 <h1>数据库和文件系统的关系</h1>
-<h2 id="查看默认数据库"><a class="header-anchor" href="#查看默认数据库">¶</a>查看默认数据库</h2>
+<h2 id="查看默认数据库">查看默认数据库</h2>
 <p>查看一下在我的计算机上当前有哪些数据库：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW DATABASES;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -479,9 +479,9 @@
 </ul>
 <p>MySQL 系统自带的数据库，这个数据库主要是通过视图的形式把information_schema 和<br>
 performance_schema 结合起来，帮助系统管理员和开发人员监控 MySQL 的技术性能。</p>
-<h2 id="数据库在文件系统中的表示"><a class="header-anchor" href="#数据库在文件系统中的表示">¶</a>数据库在文件系统中的表示</h2>
-<h3 id="InnoDB存储引擎模式"><a class="header-anchor" href="#InnoDB存储引擎模式">¶</a>InnoDB存储引擎模式</h3>
-<h4 id="mysql5-7下："><a class="header-anchor" href="#mysql5-7下：">¶</a><strong>mysql5.7下：</strong></h4>
+<h2 id="数据库在文件系统中的表示">数据库在文件系统中的表示</h2>
+<h3 id="InnoDB存储引擎模式">InnoDB存储引擎模式</h3>
+<h4 id="mysql5-7下："><strong>mysql5.7下：</strong></h4>
 <p>进入存储目录:</p>
 <p>cd /var/lib/mysql</p>
 <p>再进入对应的数据库下:</p>
@@ -497,7 +497,7 @@ performance_schema 结合起来，帮助系统管理员和开发人员监控 MyS
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[server]</span></span><br><span class="line"><span class="attr">innodb_file_per_table</span>=<span class="number">0</span> <span class="comment"># 0：代表使用系统表空间； 1：代表使用独立表空间</span></span><br></pre></td></tr></table></figure>
 <p>默认情况： 表示使用独立表空间</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404210646933.png" alt="image-20220404210646933"></p>
-<h4 id="mysql8-0下"><a class="header-anchor" href="#mysql8-0下">¶</a><strong>mysql8.0下:</strong></h4>
+<h4 id="mysql8-0下"><strong>mysql8.0下:</strong></h4>
 <p>如下看到他也有自己的系统表空间</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404210849579.png" alt="image-20220404210849579"></p>
 <p>进入数据库中，看到<strong>8.0</strong>没有.opt后缀名的文件，这不能说他没有保存每个数据库的字符集和比较规则，他把这些都存放到每个表的结构中去了。</p>
@@ -506,8 +506,8 @@ performance_schema 结合起来，帮助系统管理员和开发人员监控 MyS
 <p>.frm的文件也没有了。 这是他把.frm和.ibd文件都存放到.ibd文件中了</p>
 <p>这就需要解析ibd文件。oracle官方将frm文件的信息及更多信息移动到叫做序列化字典信息，SDI，SDI被写在ibd文件内部，Mysql8.0属于oracle旗下，oracle提供了一个应用程序ibd2sdi。</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404211857538.png" alt="image-20220404211857538"></p>
-<h3 id="MyISAM存储引擎模式"><a class="header-anchor" href="#MyISAM存储引擎模式">¶</a>MyISAM存储引擎模式</h3>
-<h4 id="mysql5-7下"><a class="header-anchor" href="#mysql5-7下">¶</a><strong>mysql5.7下:</strong></h4>
+<h3 id="MyISAM存储引擎模式">MyISAM存储引擎模式</h3>
+<h4 id="mysql5-7下"><strong>mysql5.7下:</strong></h4>
 <p>先创建MyISAM存储引擎的数据表:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE `student_myisam` (</span><br><span class="line">`id` bigint NOT NULL AUTO_INCREMENT,</span><br><span class="line">`name` varchar(64) DEFAULT NULL,</span><br><span class="line">`age` int DEFAULT NULL,</span><br><span class="line">`sex` varchar(2) DEFAULT NULL,</span><br><span class="line">PRIMARY KEY (`id`)</span><br><span class="line">)ENGINE=MYISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb3;</span><br></pre></td></tr></table></figure>
 <p>看到student_myisam表的文件有三个。</p>
@@ -518,7 +518,7 @@ performance_schema 结合起来，帮助系统管理员和开发人员监控 MyS
 <p>表中数据和索引:</p>
 <p>在MyISAM中的索引全部都是二级索引，该存储引擎的数据和索引是分开存放的。所以在文件系统中也是使用不同的文件来存储数据文件和索引文件，同时表数据都存放在对应的数据库子目录下。假如test表使用MyISAM存储引擎的话，那么在它所在数据库对应的atguigu 目录下会为test 表创建这三个文件：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test.frm 存储表结构</span><br><span class="line">#MYD和MYI 对应着InnoDB的ibd文件 可以看到索引和数据分开存储</span><br><span class="line">test.MYD和 存储数据 (MYData)</span><br><span class="line">test.MYI 存储索引 (MYIndex)</span><br></pre></td></tr></table></figure>
-<h4 id="mysql8-0下："><a class="header-anchor" href="#mysql8-0下：">¶</a>mysql8.0下：</h4>
+<h4 id="mysql8-0下：">mysql8.0下：</h4>
 <p>sdi相当于5.7下的frm文件</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220404213409091.png" alt="image-20220404213409091"></p>
 <h1>小结：</h1>

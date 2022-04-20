@@ -431,13 +431,13 @@
       
         
           
-          ¶1.定义
+          1.定义
 
 与前面的保护性暂停中的 GuardObject 不同，不需要产生结果和消费结果的线程一一对应
 消费队列可以用来平衡生产和消费的线程资源
 生产者仅负责产生结果数据，不关心数据该如何处理，而消费者专心处理结果数据
 消息队列是有容量限制的，满时不会再加入数据，空时不会再消耗数据
-JDK 中各
+JDK 中各种
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -629,7 +629,7 @@ JDK 中各
 
       
         
-          <h2 id="LC-迷宫（贪吃蛇"><a class="header-anchor" href="#LC-迷宫（贪吃蛇">¶</a><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-moves-to-reach-target-with-rotations/">LC:迷宫（贪吃蛇)</a></h2>
+          <h2 id="LC-迷宫（贪吃蛇"><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/minimum-moves-to-reach-target-with-rotations/">LC:迷宫（贪吃蛇)</a></h2>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2021/11/22/%E8%BF%B7%E5%AE%AB%EF%BC%88%E8%B4%AA%E5%90%83%E8%9B%87/#more" rel="contents">
@@ -821,13 +821,13 @@ JDK 中各
       
         
           
-          ¶定义：
+          定义：
 即 Guarded Suspension，用在一个线程等待另一个线程的执行结果
 要点
 
 有一个结果需要从一个线程传递到另一个线程，让他们关联同一个 GuardedObject
 如果有结果不断从一个线程到另一个线程那么可以使用消息队列（见生产者/消费者）
-JDK 中，join 的实现、Fut
+JDK 中，join 的实现、Futu
           ...
           <!--noindex-->
           <div class="post-button text-center">

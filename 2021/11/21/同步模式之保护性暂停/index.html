@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="¶定义： 即 Guarded Suspension，用在一个线程等待另一个线程的执行结果 要点  有一个结果需要从一个线程传递到另一个线程，让他们关联同一个 GuardedObject 如果有结果不断从一个线程到另一个线程那么可以使用消息队列（见生产者&#x2F;消费者） JDK 中，join 的实现、Future 的实现，采用的就是此模式 因为要等待另一方的结果，因此归类到同步模式   123456789">
+<meta name="description" content="定义： 即 Guarded Suspension，用在一个线程等待另一个线程的执行结果 要点  有一个结果需要从一个线程传递到另一个线程，让他们关联同一个 GuardedObject 如果有结果不断从一个线程到另一个线程那么可以使用消息队列（见生产者&#x2F;消费者） JDK 中，join 的实现、Future 的实现，采用的就是此模式 因为要等待另一方的结果，因此归类到同步模式   1234567891">
 <meta property="og:type" content="article">
 <meta property="og:title" content="同步模式之保护性暂停">
 <meta property="og:url" content="https://blacke1111.github.io/2021/11/21/%E5%90%8C%E6%AD%A5%E6%A8%A1%E5%BC%8F%E4%B9%8B%E4%BF%9D%E6%8A%A4%E6%80%A7%E6%9A%82%E5%81%9C/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="¶定义： 即 Guarded Suspension，用在一个线程等待另一个线程的执行结果 要点  有一个结果需要从一个线程传递到另一个线程，让他们关联同一个 GuardedObject 如果有结果不断从一个线程到另一个线程那么可以使用消息队列（见生产者&#x2F;消费者） JDK 中，join 的实现、Future 的实现，采用的就是此模式 因为要等待另一方的结果，因此归类到同步模式   123456789">
+<meta property="og:description" content="定义： 即 Guarded Suspension，用在一个线程等待另一个线程的执行结果 要点  有一个结果需要从一个线程传递到另一个线程，让他们关联同一个 GuardedObject 如果有结果不断从一个线程到另一个线程那么可以使用消息队列（见生产者&#x2F;消费者） JDK 中，join 的实现、Future 的实现，采用的就是此模式 因为要等待另一方的结果，因此归类到同步模式   1234567891">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211121195525.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211122221841.png">
@@ -432,7 +432,7 @@
       
 
       
-        <h2 id="定义："><a class="header-anchor" href="#定义：">¶</a>定义：</h2>
+        <h2 id="定义：">定义：</h2>
 <p>即 Guarded Suspension，用在一个线程等待另一个线程的执行结果<br>
 要点</p>
 <ul>
@@ -447,7 +447,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">join</span><span class="params">(<span class="keyword">long</span> millis)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> base = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">long</span> now = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (millis &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;timeout value is negative&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (millis == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (isAlive()) &#123;</span><br><span class="line">                wait(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">while</span> (isAlive()) &#123;</span><br><span class="line">                <span class="keyword">long</span> delay = millis - now;</span><br><span class="line">                <span class="keyword">if</span> (delay &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                wait(delay);</span><br><span class="line">                now = System.currentTimeMillis() - base;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p><strong>这个是一个线程的方法。所以synchronized锁住的是调用这个方法的对象然后执行wait（）方法。从而让<br>
 调用join（）方法的线程进行了阻塞。然后直到该对象线程，执行完然后唤醒所有因为该线程对象而进行wait（）的线程</strong></p>
-<h2 id="拓展2-人收信和邮递员寄信"><a class="header-anchor" href="#拓展2-人收信和邮递员寄信">¶</a>拓展2(人收信和邮递员寄信)</h2>
+<h2 id="拓展2-人收信和邮递员寄信">拓展2(人收信和邮递员寄信)</h2>
 <p>图中 Futures 就好比居民楼一层的信箱（每个信箱有房间编号），左侧的 t0，t2，t4 就好比等待邮件的居民，右侧的 t1，t3，t5 就好比邮递员<br>
 如果需要在多个类之间使用 GuardedObject 对象，作为参数传递不是很方便，因此设计一个用来解耦的中间类，<br>
 这样不仅能够解耦【结果等待者】和【结果生产者】，还能够同时支持多个任务的管理<br>

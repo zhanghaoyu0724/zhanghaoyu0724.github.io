@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="读写锁 ¶ReentrantReadWriteLock 当读操作远远高于写操作时，这时候使用 读写锁 让 读-读 可以并发，提高性能。 类似于数据库中的 select …from … lock in share mode 提供一个 数据容器类 内部分别使用读锁保护数据的 read() 方法，写锁保护数据的 write() 方法 12345678910111213141516171819202122">
+<meta name="description" content="读写锁 ReentrantReadWriteLock 当读操作远远高于写操作时，这时候使用 读写锁 让 读-读 可以并发，提高性能。 类似于数据库中的 select …from … lock in share mode 提供一个 数据容器类 内部分别使用读锁保护数据的 read() 方法，写锁保护数据的 write() 方法 123456789101112131415161718192021222">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ReentrantReadWriteLock">
 <meta property="og:url" content="https://blacke1111.github.io/2021/11/29/ReentrantReadWriteLock/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="读写锁 ¶ReentrantReadWriteLock 当读操作远远高于写操作时，这时候使用 读写锁 让 读-读 可以并发，提高性能。 类似于数据库中的 select …from … lock in share mode 提供一个 数据容器类 内部分别使用读锁保护数据的 read() 方法，写锁保护数据的 write() 方法 12345678910111213141516171819202122">
+<meta property="og:description" content="读写锁 ReentrantReadWriteLock 当读操作远远高于写操作时，这时候使用 读写锁 让 读-读 可以并发，提高性能。 类似于数据库中的 select …from … lock in share mode 提供一个 数据容器类 内部分别使用读锁保护数据的 read() 方法，写锁保护数据的 write() 方法 123456789101112131415161718192021222">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211129232507.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211129232530.png">
@@ -448,7 +448,7 @@
 
       
         <h1>读写锁</h1>
-<h2 id="ReentrantReadWriteLock"><a class="header-anchor" href="#ReentrantReadWriteLock">¶</a>ReentrantReadWriteLock</h2>
+<h2 id="ReentrantReadWriteLock">ReentrantReadWriteLock</h2>
 <p>当读操作远远高于写操作时，这时候使用 读写锁 让 读-读 可以并发，提高性能。 类似于数据库中的 select …from … lock in share mode</p>
 <p>提供一个 数据容器类 内部分别使用读锁保护数据的 read() 方法，写锁保护数据的 write() 方法</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DataContainer</span> </span>&#123;</span><br><span class="line"> <span class="keyword">private</span> Object data;</span><br><span class="line"> <span class="keyword">private</span> ReentrantReadWriteLock rw = <span class="keyword">new</span> ReentrantReadWriteLock();</span><br><span class="line"> <span class="keyword">private</span> ReentrantReadWriteLock.ReadLock r = rw.readLock();</span><br><span class="line"> <span class="keyword">private</span> ReentrantReadWriteLock.WriteLock w = rw.writeLock();</span><br><span class="line"> <span class="function"><span class="keyword">public</span> Object <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> log.debug(<span class="string">&quot;获取读锁...&quot;</span>);</span><br><span class="line"> r.lock();</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;读取&quot;</span>);</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> <span class="keyword">return</span> data;</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;释放读锁...&quot;</span>);</span><br><span class="line">     r.unlock();</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">()</span> </span>&#123;</span><br><span class="line"> log.debug(<span class="string">&quot;获取写锁...&quot;</span>);</span><br><span class="line"> w.lock();</span><br><span class="line"> <span class="keyword">try</span> &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;写入&quot;</span>);</span><br><span class="line"> sleep(<span class="number">1</span>);</span><br><span class="line"> &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line"> log.debug(<span class="string">&quot;释放写锁...&quot;</span>);</span><br><span class="line"> w.unlock();</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -504,9 +504,9 @@
 </ul>
 </blockquote>
 <h1>读写锁原理</h1>
-<h2 id="1-图解流程"><a class="header-anchor" href="#1-图解流程">¶</a><strong>1.</strong> <strong>图解流程</strong></h2>
+<h2 id="1-图解流程"><strong>1.</strong> <strong>图解流程</strong></h2>
 <p>读写锁用的是同一个 Sycn 同步器，因此等待队列、state 等也是同一个</p>
-<h3 id="t1-w-lock-t2-r-lock"><a class="header-anchor" href="#t1-w-lock-t2-r-lock">¶</a><strong>t1 w.lock, t2 r.lock</strong></h3>
+<h3 id="t1-w-lock-t2-r-lock"><strong>t1 w.lock, t2 r.lock</strong></h3>
 <p>1） t1 成功上锁，流程与 ReentrantLock 加锁相比没有特殊之处，不同是写锁状态占了 state 的低 16 位，而读锁</p>
 <p>使用的是 state 的高 16 位</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211130205756.png" alt=""></p>
@@ -525,10 +525,10 @@
 <p>4）t2 会看看自己的节点是不是老二，如果是，还会再次调用 tryAcquireShared(1) 来尝试获取锁</p>
 <p>5）如果没有成功，在 doAcquireShared 内 for (;;) 循环一次，把前驱节点的 waitStatus 改为 -1，再 for (;;) 循环一次尝试 tryAcquireShared(1) 如果还不成功，那么在 parkAndCheckInterrupt() 处 park</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211130205942.png" alt=""></p>
-<h3 id="t3-r-lock，t4-w-lock"><a class="header-anchor" href="#t3-r-lock，t4-w-lock">¶</a><strong>t3 r.lock，t4 w.lock</strong></h3>
+<h3 id="t3-r-lock，t4-w-lock"><strong>t3 r.lock，t4 w.lock</strong></h3>
 <p>这种状态下，假设又有 t3 加读锁和 t4 加写锁，这期间 t1 仍然持有锁，就变成了下面的样子</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211130210024.png" alt=""></p>
-<h3 id="t1-w-unlock"><a class="header-anchor" href="#t1-w-unlock">¶</a><strong>t1 w.unlock</strong></h3>
+<h3 id="t1-w-unlock"><strong>t1 w.unlock</strong></h3>
 <p>这时会走到写锁的 sync.release(1) 流程，调用 sync.tryRelease(1) 成功，变成下面的样子</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211130210044.png" alt=""></p>
 <p>接下来执行唤醒流程 sync.unparkSuccessor，即让老二恢复运行，这时 t2 在 doAcquireShared 内parkAndCheckInterrupt() 处恢复运行</p>
@@ -545,7 +545,7 @@
 <p>这时 t3 已经恢复运行，接下来 t3 调用 setHeadAndPropagate(node, 1)，它原本所在节点被置为头节点</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211130210224.png" alt=""></p>
 <p>下一个节点不是 shared 了，因此不会继续唤醒 t4 所在节点</p>
-<h3 id="t2-r-unlock-t3-r-unlock"><a class="header-anchor" href="#t2-r-unlock-t3-r-unlock">¶</a><strong>t2 r.unlock,  t3 r.unlock</strong></h3>
+<h3 id="t2-r-unlock-t3-r-unlock"><strong>t2 r.unlock,  t3 r.unlock</strong></h3>
 <p>t2 进入 sync.releaseShared(1) 中，调用 tryReleaseShared(1) 让计数减一，但由于计数还不为零</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20211130210247.png" alt=""></p>
 <p>t3 进入 sync.releaseShared(1) 中，调用 tryReleaseShared(1) 让计数减一，这回计数为零了，进入</p>

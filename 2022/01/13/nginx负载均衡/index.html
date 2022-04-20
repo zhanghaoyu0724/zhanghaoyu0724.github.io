@@ -443,13 +443,13 @@
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113193003.png" alt=""></p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113193030.png" alt=""></p>
 <h1>nginx 分配服务器策略</h1>
-<h2 id="第一种-轮询（默认）"><a class="header-anchor" href="#第一种-轮询（默认）">¶</a>第一种 轮询（默认）</h2>
+<h2 id="第一种-轮询（默认）">第一种 轮询（默认）</h2>
 <p>每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器 down 掉，能自动剔除。</p>
-<h2 id="第二种-weight"><a class="header-anchor" href="#第二种-weight">¶</a>第二种 weight</h2>
+<h2 id="第二种-weight">第二种 weight</h2>
 <p>weight 代表权重默认为 1,权重越高被分配的客户端越多</p>
-<h2 id="第三种-ip-hash"><a class="header-anchor" href="#第三种-ip-hash">¶</a>第三种 ip_hash</h2>
+<h2 id="第三种-ip-hash">第三种 ip_hash</h2>
 <p>每个请求按访问 ip 的 hash 结果分配，这样每个访客固定访问一个后端服务器</p>
-<h2 id="第四种-fair（第三方）"><a class="header-anchor" href="#第四种-fair（第三方）">¶</a>第四种 fair（第三方）</h2>
+<h2 id="第四种-fair（第三方）">第四种 fair（第三方）</h2>
 <p>按后端服务器的响应时间来分配请求，响应时间短的优先分配。</p>
 
       

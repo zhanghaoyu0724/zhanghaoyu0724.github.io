@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="¶1,前提 （1）需要两台 nginx 服务器 （我用的是虚拟机centos7） （2）需要 keepalived （3）需要虚拟 ip ¶2、配置高可用的准备工作 （1）需要两台服务器 192.168.32.3 和 192.168.32.4 （2）在两台服务器安装 nginx （3）在两台服务器安装 keepalived ¶3、在两台服务器安装 keepalived （1）使用 yum 命令进">
+<meta name="description" content="1,前提 （1）需要两台 nginx 服务器 （我用的是虚拟机centos7） （2）需要 keepalived （3）需要虚拟 ip 2、配置高可用的准备工作 （1）需要两台服务器 192.168.32.3 和 192.168.32.4 （2）在两台服务器安装 nginx （3）在两台服务器安装 keepalived 3、在两台服务器安装 keepalived （1）使用 yum 命令进行安装">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx高可用">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/13/nginx%E9%AB%98%E5%8F%AF%E7%94%A8/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="¶1,前提 （1）需要两台 nginx 服务器 （我用的是虚拟机centos7） （2）需要 keepalived （3）需要虚拟 ip ¶2、配置高可用的准备工作 （1）需要两台服务器 192.168.32.3 和 192.168.32.4 （2）在两台服务器安装 nginx （3）在两台服务器安装 keepalived ¶3、在两台服务器安装 keepalived （1）使用 yum 命令进">
+<meta property="og:description" content="1,前提 （1）需要两台 nginx 服务器 （我用的是虚拟机centos7） （2）需要 keepalived （3）需要虚拟 ip 2、配置高可用的准备工作 （1）需要两台服务器 192.168.32.3 和 192.168.32.4 （2）在两台服务器安装 nginx （3）在两台服务器安装 keepalived 3、在两台服务器安装 keepalived （1）使用 yum 命令进行安装">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113204020.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113221746.png">
@@ -433,20 +433,20 @@
 
       
         <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113204020.png" alt=""></p>
-<h2 id="1-前提"><a class="header-anchor" href="#1-前提">¶</a>1,前提</h2>
+<h2 id="1-前提">1,前提</h2>
 <p>（1）需要两台 nginx 服务器 （我用的是虚拟机centos7）<br>
 （2）需要 keepalived<br>
 （3）需要虚拟 ip</p>
-<h2 id="2、配置高可用的准备工作"><a class="header-anchor" href="#2、配置高可用的准备工作">¶</a>2、配置高可用的准备工作</h2>
+<h2 id="2、配置高可用的准备工作">2、配置高可用的准备工作</h2>
 <p>（1）需要两台服务器 192.168.32.3 和 192.168.32.4<br>
 （2）在两台服务器安装 nginx<br>
 （3）在两台服务器安装 keepalived</p>
-<h2 id="3、在两台服务器安装-keepalived"><a class="header-anchor" href="#3、在两台服务器安装-keepalived">¶</a>3、在两台服务器安装 keepalived</h2>
+<h2 id="3、在两台服务器安装-keepalived">3、在两台服务器安装 keepalived</h2>
 <p>（1）使用 yum 命令进行安装</p>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> keepalived –y</span><br></pre></td></tr></table></figure>
 <p>查看keepalived是否安装成功</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -q -a keepalived</span><br></pre></td></tr></table></figure>
-<h2 id="4、完成高可用配置（主从配置）"><a class="header-anchor" href="#4、完成高可用配置（主从配置）">¶</a>4、完成高可用配置（主从配置）</h2>
+<h2 id="4、完成高可用配置（主从配置）">4、完成高可用配置（主从配置）</h2>
 <p>（1）修改/etc/keepalived/keepalived.conf 配置文件</p>
 <p>主机配置：</p>
 <figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File for keepalived</span><br><span class="line"><span class="keyword">global_defs</span> &#123;</span><br><span class="line"></span><br><span class="line">    notification_email &#123;</span><br><span class="line"></span><br><span class="line">        acassen@firewall.loc</span><br><span class="line"></span><br><span class="line">        failover@firewall.loc</span><br><span class="line"></span><br><span class="line">        sysadmin@firewall.loc</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">notification_email_from</span> <span class="keyword">Alexandre</span>.Cassen@firewall.loc</span><br><span class="line"></span><br><span class="line">        smtp_server 192.168.32.3</span><br><span class="line"></span><br><span class="line">        smtp_connect_timeout 30</span><br><span class="line"></span><br><span class="line">        router_id hadoop01 <span class="comment"># 主机名字</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vrrp_script <span class="keyword">chk_http_port</span> &#123;</span><br><span class="line">        script <span class="string">&quot;/usr/local/src/nginx_check.sh&quot;</span></span><br><span class="line">        interval <span class="number">2</span> <span class="comment">#（检测脚本执行的间隔）</span></span><br><span class="line">        weight <span class="number">2</span> <span class="comment"># 权重</span></span><br><span class="line">   &#125;</span><br><span class="line"><span class="keyword">vrrp_instance</span> <span class="keyword">VI_1</span> &#123;</span><br><span class="line">    state MASTER <span class="comment"># 备份服务器上将 MASTER 改为 BACKUP</span></span><br><span class="line">    interface ens33 <span class="comment"># 网卡</span></span><br><span class="line">    virtual_router_id <span class="number">51</span>  <span class="comment"># 主、备机的 virtual_router_id 必须相同</span></span><br><span class="line">    <span class="literal">priority</span> <span class="number">100</span> <span class="comment"># 主、备机取不同的优先级，主机值较大，备份机值较小</span></span><br><span class="line">    advert_int <span class="number">1</span></span><br><span class="line">    authentication &#123;</span><br><span class="line">        <span class="literal">auth_type</span> PASS</span><br><span class="line">        auth_pass <span class="number">1111</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">virtual_ipaddress</span> &#123;</span><br><span class="line">        <span class="number">192.168</span>.<span class="number">32.50</span> <span class="comment"># VRRP H 虚拟地址  这里一定还和你的虚拟机一个网段不然你的windows上访问不到。</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -457,9 +457,9 @@
 <p><strong>把两台服务器上nginx和keepalived启动</strong><br>
 <strong>启动nginx:</strong> ./nginx<br>
 <strong>启动keepalived</strong>：systemctl start keepalived.service</p>
-<h2 id="5-输入-ip-a查看虚拟地址映射"><a class="header-anchor" href="#5-输入-ip-a查看虚拟地址映射">¶</a>5  输入 ip a查看虚拟地址映射</h2>
+<h2 id="5-输入-ip-a查看虚拟地址映射">5  输入 ip a查看虚拟地址映射</h2>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113221746.png" alt=""></p>
-<h2 id="6-windows上访问测试："><a class="header-anchor" href="#6-windows上访问测试：">¶</a>6 windows上访问测试：</h2>
+<h2 id="6-windows上访问测试：">6 windows上访问测试：</h2>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220113221820.png" alt=""></p>
 
       

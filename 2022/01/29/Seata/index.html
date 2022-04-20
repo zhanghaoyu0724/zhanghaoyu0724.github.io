@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="一次业务操作需要跨多个数据源或需要多个系统进行远程调用，就会产生分步式事务 ¶安装: 解压官网下载的seate解压包。 进入conf目录： 先拷贝一份出厂默认的file.conf：  主要修改：自定义事务组名称+事务日志存储模式为db+数据库连接信息 service模块修改事务组名称：  存储模式为db  修改数据库连接信息：  建一个数据库：seata 导入conf下的db_store.sql文">
+<meta name="description" content="一次业务操作需要跨多个数据源或需要多个系统进行远程调用，就会产生分步式事务 安装: 解压官网下载的seate解压包。 进入conf目录： 先拷贝一份出厂默认的file.conf：  主要修改：自定义事务组名称+事务日志存储模式为db+数据库连接信息 service模块修改事务组名称：  存储模式为db  修改数据库连接信息：  建一个数据库：seata 导入conf下的db_store.sql文件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Seata">
 <meta property="og:url" content="https://blacke1111.github.io/2022/01/29/Seata/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="一次业务操作需要跨多个数据源或需要多个系统进行远程调用，就会产生分步式事务 ¶安装: 解压官网下载的seate解压包。 进入conf目录： 先拷贝一份出厂默认的file.conf：  主要修改：自定义事务组名称+事务日志存储模式为db+数据库连接信息 service模块修改事务组名称：  存储模式为db  修改数据库连接信息：  建一个数据库：seata 导入conf下的db_store.sql文">
+<meta property="og:description" content="一次业务操作需要跨多个数据源或需要多个系统进行远程调用，就会产生分步式事务 安装: 解压官网下载的seate解压包。 进入conf目录： 先拷贝一份出厂默认的file.conf：  主要修改：自定义事务组名称+事务日志存储模式为db+数据库连接信息 service模块修改事务组名称：  存储模式为db  修改数据库连接信息：  建一个数据库：seata 导入conf下的db_store.sql文件">
 <meta property="og:locale">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220129213623.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220130201514.png">
@@ -441,7 +441,7 @@
 
       
         <p>一次业务操作需要跨多个数据源或需要多个系统进行远程调用，就会产生分步式事务</p>
-<h2 id="安装-v3"><a class="header-anchor" href="#安装-v3">¶</a>安装:</h2>
+<h2 id="安装-3">安装:</h2>
 <p>解压官网下载的seate解压包。</p>
 <p>进入conf目录：</p>
 <p>先拷贝一份出厂默认的file.conf：</p>
@@ -463,7 +463,7 @@
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220129220056.png" alt=""></p>
 <p>然后cmd启动bin下的seata-server.bat</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/20220129220159.png" alt=""></p>
-<h2 id="案例准备工作："><a class="header-anchor" href="#案例准备工作：">¶</a>案例准备工作：</h2>
+<h2 id="案例准备工作：">案例准备工作：</h2>
 <p>建库：</p>
 <p><strong>seata_order:</strong></p>
 <p>建表：</p>
@@ -478,7 +478,7 @@
 <p>在每个库中导入db_undo_log.sql，对应建表语句如下：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> `undo_log` (</span><br><span class="line">  `id` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> AUTO_INCREMENT,</span><br><span class="line">  `branch_id` <span class="type">bigint</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `xid` <span class="type">varchar</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `context` <span class="type">varchar</span>(<span class="number">128</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `rollback_info` longblob <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `log_status` <span class="type">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `log_created` datetime <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `log_modified` datetime <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  `ext` <span class="type">varchar</span>(<span class="number">100</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>,</span><br><span class="line">  <span class="keyword">PRIMARY</span> KEY (`id`),</span><br><span class="line">  <span class="keyword">UNIQUE</span> KEY `ux_undo_log` (`xid`,`branch_id`)</span><br><span class="line">) ENGINE<span class="operator">=</span>InnoDB AUTO_INCREMENT<span class="operator">=</span><span class="number">1</span> <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8;</span><br></pre></td></tr></table></figure>
 <p>案例源码：<a target="_blank" rel="noopener" href="https://gitee.com/haoyumaster/springcoud2022study">https://gitee.com/haoyumaster/springcoud2022study</a></p>
-<h2 id="AT模式："><a class="header-anchor" href="#AT模式：">¶</a>AT模式：</h2>
+<h2 id="AT模式：">AT模式：</h2>
 <p>第一阶段：</p>
 <p>在一阶段，Seata 会拦截“业务 SQL”，<br>
 1  解析 SQL 语义，找到“业务 SQL”要更新的业务数据，在业务数据被更新前，将其保存成“before image”，<br>
@@ -691,7 +691,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-v3"><span class="nav-number">1.</span> <span class="nav-text">安装:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">案例准备工作：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AT%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">AT模式：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-3"><span class="nav-number">1.</span> <span class="nav-text">安装:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">案例准备工作：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AT%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="nav-number">3.</span> <span class="nav-text">AT模式：</span></a></li></ol></div>
             
 
           </div>
