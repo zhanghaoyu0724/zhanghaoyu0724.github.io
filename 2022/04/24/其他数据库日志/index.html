@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="zhy, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="我们在讲解数据库事务时，讲过两种日志:重做日志、回滚日志。 对于线上数据库应用系统，突然遭遇数据库宕机怎么办?在这种情况下，定位宕机的原因就非常关键。我们可以查看数据库的错误日志。因为日志中记录了数据库运行中的诊断信息，包括了错误、警告和注释等信息。比如:从日志中发现某个连接中的SQL操作发生了死循环，导致内存不足，被系统强行终止了。明确了原因，处理起来也就轻松了，系统很快就恢复了运行。 除了发现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="其他数据库日志">
+<meta property="og:url" content="https://blacke1111.github.io/2022/04/24/%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/index.html">
+<meta property="og:site_name" content="蓝天の博客">
+<meta property="og:description" content="我们在讲解数据库事务时，讲过两种日志:重做日志、回滚日志。 对于线上数据库应用系统，突然遭遇数据库宕机怎么办?在这种情况下，定位宕机的原因就非常关键。我们可以查看数据库的错误日志。因为日志中记录了数据库运行中的诊断信息，包括了错误、警告和注释等信息。比如:从日志中发现某个连接中的SQL操作发生了死循环，导致内存不足，被系统强行终止了。明确了原因，处理起来也就轻松了，系统很快就恢复了运行。 除了发现">
+<meta property="og:locale">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220424145746723.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220424150923657.png">
+<meta property="article:published_time" content="2022-04-24T06:30:59.000Z">
+<meta property="article:modified_time" content="2022-04-24T08:21:16.900Z">
+<meta property="article:author" content="Zhang Hao Hu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220424145746723.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":8,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://blacke1111.github.io/2022/04/24/其他数据库日志/"/>
+
+
+
+
+
+  <title>其他数据库日志 | 蓝天の博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蓝天の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blacke1111.github.io/2022/04/24/%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张浩宇">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蓝天の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">其他数据库日志</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-24T14:30:59+08:00">
+                2022-04-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-24T16:21:16+08:00">
+                2022-04-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  30
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们在讲解数据库事务时，讲过两种日志:重做日志、回滚日志。<br>
+对于线上数据库应用系统，突然遭遇<strong>数据库宕机</strong>怎么办?在这种情况下，定位宕机的原因就非常关键。我们可以查看数据库的错误日志。因为日志中记录了数据库运行中的诊断信息，包括了错误、警告和注释等信息。比如:从日志中发现某个连接中的SQL操作发生了死循环，导致内存不足，被系统强行终止了。明确了原因，处理起来也就轻松了，系统很快就恢复了运行。</p>
+<p>除了发现错误，日志在数据复制、数据恢复、操作审计，以及确保数据的永久性和一致性等方面,都有着不可替代的作用。</p>
+<p><strong>千万不要小看日志</strong>。很多看似奇怪的问题，答案往往就藏在日志里。很多情况下，只有通过查看日志才<br>
+能发现问题的原因，真正解决问题。所以，一定要学会查看日志，养成检查日志的习惯，对提升你的数<br>
+据库应用开发能力至关重要。</p>
+<p>MySQL8.0 官网日志地址：“ <a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/server-logs.html">https://dev.mysql.com/doc/refman/8.0/en/server-logs.html</a> ”</p>
+<h1 id="my-sql-zhi-chi-de-ri-zhi">MySQL支持的日志</h1>
+<h2 id="ri-zhi-lei-xing" id="日志类型">日志类型</h2>
+<p>MySQL有不同类型的日志文件，用来存储不同类型的日志，分为<strong>二进制日志、错误日志、通用查询日志和慢查询日志</strong>，这也是常用的4种。MySQL 8又新增两种支持的日志： <strong>中继日志</strong>和<strong>数据定义语句日志</strong>。使用这些日志文件，可以查看MySQL内部发生的事情。</p>
+<p>这6类日志分别为：</p>
+<ul>
+<li><strong>慢查询日志</strong>：记录所有执行时间超过long_query_time的所有查询，方便我们对查询进行优化。</li>
+<li><strong>通用查询日志</strong>：记录所有连接的起始时间和终止时间，以及连接发送给数据库服务器的所有指令，对我们复原操作的实际场景、发现问题，甚至是对数据库操作的审计都有很大的帮助。</li>
+<li><strong>错误日志</strong>：记录MySQL服务的启动、运行或停止MySQL服务时出现的问题，方便我们了解服务器的状态，从而对服务器进行维护。</li>
+<li><strong>二进制日志</strong>：记录所有更改数据的语句，可以用于主从服务器之间的数据同步，以及服务器遇到故障时数据的无损失恢复。</li>
+<li><strong>中继日志</strong>：用于主从服务器架构中，从服务器用来存放主服务器二进制日志内容的一个中间文件。从服务器通过读取中继日志的内容，来同步主服务器上的操作。</li>
+<li><strong>数据定义语句日志</strong>：记录数据定义语句执行的元数据操作。</li>
+</ul>
+<p>除二进制日志外，其他日志都是文本文件。默认情况下，所有日志创建于MySQL数据目录中。</p>
+<h2 id="ri-zhi-de-bi-duan" id="日志的弊端">日志的弊端</h2>
+<ul>
+<li>日志功能会降低MySQL数据库的性能。</li>
+<li>日志会占用大量的磁盘空间。</li>
+</ul>
+<h1 id="man-cha-xun-ri-zhi-slow-query-log">慢查询日志(slow query log)</h1>
+<p>在之前的性能分析工具的使用中已经说过</p>
+<h1 id="tong-yong-cha-xun-ri-zhi-general-query-log">通用查询日志(general query log)</h1>
+<p>通用查询日志用来记录用户的所有操作，包括启动和关闭MySQL服务、所有用户的连接开始时间和截止时间、发给 MySQL 数据库服务器的所有 SQL 指令等。当我们的数据发生异常时，查看通用查询日志，还原操作时的具体场景，可以帮助我们准确定位问题。</p>
+<p>在电商系统中，购买商品并且使用微信支付完成以后，却发现支付中心的记录并没有新增，此时用户再次使用支付宝支付，就会出现重复支付的问题。但是当去数据库中查询数据的时候，会发现只有一条记录存在。那么此时给到的现象就是只有一条支付记录，但是用户却支付了两次。</p>
+<p>查看之后，发现:1月1日下午2点，用户使用微信支付完以后，但是由于网络故障，支付中心没有及时收到微信支付的回调通知，导致当时没有写入数据。1月1日下午2点30，用户又使用支付宝支付，此时记录更新到支付中心。1月1日晚上9点，微信的回调通知过来了，但是支付中心已经存在了支付宝的记录，所以只能覆盖记录了。</p>
+<p>由于网络的原因导致了重复支付。至于解决问题的方案就很多了，这里省略。<br>
+可以看到通用查询日志可以帮助我们了解操作发生的具体时间和操作的细节，对找出异常发生的原因极其关键。</p>
+<h2 id="cha-kan-dang-qian-zhuang-tai" id="查看当前状态">查看当前状态</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;%general%&#x27;;</span><br><span class="line">+------------------+-----------------------------+</span><br><span class="line">| Variable_name    | Value                       |</span><br><span class="line">+------------------+-----------------------------+</span><br><span class="line">| general_log      | OFF                         |</span><br><span class="line">| general_log_file | /var/lib/mysql/hadoop01.log |</span><br><span class="line">+------------------+-----------------------------+</span><br><span class="line">2 rows in set (0.04 sec)</span><br></pre></td></tr></table></figure>
+<h2 id="qi-dong-ri-zhi" id="启动日志">启动日志</h2>
+<p><strong>方式1：永久性方式</strong><br>
+修改my.cnf或者my.ini配置文件来设置。在[mysqld]组下加入log选项，并重启MySQL服务。格式如下：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="attr">general_log</span>=<span class="literal">ON</span></span><br><span class="line"><span class="attr">general_log_file</span>=[path[filename]] <span class="comment">#日志文件所在目录路径，filename为日志文件名</span></span><br></pre></td></tr></table></figure>
+<p>如果不指定目录和文件名，通用查询日志将默认存储在MySQL数据目录中的hostname.log文件中，hostname表示主机名。</p>
+<p><strong>方式2：临时性方式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL general_log=on; # 开启通用查询日志</span><br><span class="line">SET GLOBAL general_log_file=’path/filename’; # 设置日志文件保存位置</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#关闭</span><br><span class="line">SET GLOBAL general_log=off; # 关闭通用查询日志</span><br></pre></td></tr></table></figure>
+<p>查看设置后情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#x27;general_log%&#x27;;</span><br></pre></td></tr></table></figure>
+<h2 id="cha-kan-ri-zhi" id="查看日志">查看日志</h2>
+<p>通用查询日志是以文本文件的形式存储在文件系统中的，可以使用文本编辑器直接打开日志文件。每台<br>
+MySQL服务器的通用查询日志内容是不同的。</p>
+<ul>
+<li>在Windows操作系统中，使用文本文件查看器；</li>
+<li>在Linux系统中，可以使用vi工具或者gedit工具查看；</li>
+<li>在Mac OSX系统中，可以使用文本文件查看器或者vi等工具查看。<br>
+从SHOW VARIABLES LIKE ‘general_log%’; 结果中可以看到通用查询日志的位置。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">/usr/sbin/mysqld, Version: 8.0.26 (MySQL Community Server - GPL). started with:</span><br><span class="line">Tcp port: 3306 Unix socket: /var/lib/mysql/mysql.sock</span><br><span class="line">Time Id Command Argument</span><br><span class="line">2022-01-04T07:44:58.052890Z 10 Query SHOW VARIABLES LIKE &#x27;%general%&#x27;</span><br><span class="line">2022-01-04T07:45:15.666672Z 10 Query SHOW VARIABLES LIKE &#x27;general_log%&#x27;</span><br><span class="line">2022-01-04T07:45:28.970765Z 10 Query select * from student</span><br><span class="line">2022-01-04T07:47:38.706804Z 11 Connect root@localhost on using Socket</span><br><span class="line">2022-01-04T07:47:38.707435Z 11 Query select @@version_comment limit 1</span><br><span class="line">2022-01-04T07:48:21.384886Z 12 Connect root@172.16.210.1 on using TCP/IP</span><br><span class="line">2022-01-04T07:48:21.385253Z 12 Query SET NAMES utf8</span><br><span class="line">2022-01-04T07:48:21.385640Z 12 Query USE `atguigu12`</span><br><span class="line">2022-01-04T07:48:21.386179Z 12 Query SHOW FULL TABLES WHERE Table_Type !=</span><br><span class="line">&#x27;VIEW&#x27;</span><br><span class="line">2022-01-04T07:48:23.901778Z 13 Connect root@172.16.210.1 on using TCP/IP</span><br><span class="line">2022-01-04T07:48:23.902128Z 13 Query SET NAMES utf8</span><br><span class="line">2022-01-04T07:48:23.905179Z 13 Query USE `atguigu`</span><br><span class="line">2022-01-04T07:48:23.905825Z 13 Query SHOW FULL TABLES WHERE Table_Type !=</span><br><span class="line">&#x27;VIEW&#x27;</span><br><span class="line">2022-01-04T07:48:32.163833Z 14 Connect root@172.16.210.1 on using TCP/IP</span><br><span class="line">2022-01-04T07:48:32.164451Z 14 Query SET NAMES utf8</span><br><span class="line">2022-01-04T07:48:32.164840Z 14 Query USE `atguigu`</span><br><span class="line">2022-01-04T07:48:40.006687Z 14 Query select * from account</span><br></pre></td></tr></table></figure>
+<p>在通用查询日志里面，我们可以清楚地看到，什么时候开启了新的客户端登陆数据库，登录之后做了什么 SQL 操作，针对的是哪个数据表等信息。</p>
+<h2 id="ting-zhi-ri-zhi" id="停止日志">停止日志</h2>
+<p>方式1：永久性方式<br>
+修改my.cnf 或者my.ini 文件，把[mysqld]组下的general_log 值设置为OFF 或者把general_log一项<br>
+注释掉。修改保存后，再重启MySQL服务，即可生效。 举例1：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="attr">general_log</span>=<span class="literal">OFF</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">#general_log=ON</span><br></pre></td></tr></table></figure>
+<p>方式2：临时性方式</p>
+<p>使用SET语句停止MySQL通用查询日志功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET GLOBAL general_log=off;</span><br></pre></td></tr></table></figure>
+<p>查询通用日志功能：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#x27;general_log%&#x27;;</span><br></pre></td></tr></table></figure>
+<h2 id="shan-chu-shua-xin-ri-zhi" id="删除-刷新日志">删除\刷新日志</h2>
+<p>如果数据的使用非常频繁，那么通用查询日志会占用服务器非常大的磁盘空间。数据管理员可以删除很长时间之前的查询日志，以保证MySQL服务器上的硬盘空间。</p>
+<p>手动删除文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW VARIABLES LIKE &#x27;general_log%&#x27;;</span><br></pre></td></tr></table></figure>
+<p>可以看出，通用查询日志的目录默认为MySQL数据目录。在该目录下手动删除通用查询日志hadoop01.log。<br>
+使用如下命令重新生成查询日志文件，具体命令如下。刷新MySQL数据目录，发现创建了新的日志文件。前提一定要开启通用日志。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqladmin -uroot -p flush-logs</span><br></pre></td></tr></table></figure>
+<h1 id="cuo-wu-ri-zhi-error-log">错误日志(error log)</h1>
+<h2 id="qi-dong-ri-zhi-1" id="启动日志-2">启动日志</h2>
+<p>在MySQL数据库中，错误日志功能是默认开启的。而且，错误日志无法被禁止。<br>
+默认情况下，错误日志存储在MySQL数据库的数据文件夹下，名称默认为mysqld.log （Linux系统）或hostname.err （mac系统）。如果需要制定文件名，则需要在my.cnf或者my.ini中做如下配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="attr">log-error</span>=[path/[filename]] <span class="comment">#path为日志文件所在的目录路径，filename为日志文件名</span></span><br></pre></td></tr></table></figure>
+<p>修改配置项后，需要重启MySQL服务以生效。</p>
+<h2 id="cha-kan-ri-zhi-1" id="查看日志-2">查看日志</h2>
+<p>MySQL错误日志是以文本文件形式存储的，可以使用文本编辑器直接查看。<br>
+查询错误日志的存储路径：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW VARIABLES LIKE &#x27;log_err%&#x27;;</span><br><span class="line">+----------------------------+----------------------------------------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+----------------------------+----------------------------------------+</span><br><span class="line">| log_error | /var/log/mysqld.log |</span><br><span class="line">| log_error_services | log_filter_internal; log_sink_internal |</span><br><span class="line">| log_error_suppression_list | |</span><br><span class="line">| log_error_verbosity | 2 |</span><br><span class="line">+----------------------------+----------------------------------------+</span><br><span class="line">4 rows in set (0.01 sec)</span><br></pre></td></tr></table></figure>
+<p>执行结果中可以看到错误日志文件是mysqld.log，位于MySQL默认的数据目录下。</p>
+<h2 id="shan-chu-shua-xin-ri-zhi-1" id="删除-刷新日志-2">删除\刷新日志</h2>
+<p>对于很久以前的错误日志，数据库管理员查看这些错误日志的可能性不大，可以将这些错误日志删除，以保证MySQL服务器上的硬盘空间。MySQL的错误日志是以文本文件的形式存储在文件系统中的，可以直接删除。</p>
+<p><strong>重新生成错误日志:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">[root@atguigu01 log]# mysqladmin -uroot -p flush-logs</span><br><span class="line">Enter password:</span><br><span class="line">mysqladmin: refresh failed; error: &#x27;Could not open file &#x27;/var/log/mysqld.log&#x27; for error logging.&#x27;</span><br></pre></td></tr></table></figure>
+<p>官网提示：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220424145746723.png" alt="image-20220424145746723"></p>
+<p>补充操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">install -omysql -gmysql -m0644 /dev/null /var/log/mysqld.log</span><br><span class="line">#再执行</span><br><span class="line">mysqladmin -uroot -p flush-logs</span><br></pre></td></tr></table></figure>
+<p>flush-logs指令操作:</p>
+<ul>
+<li>MySQL 5.5.7以前的版本，flush-logs将错误日志文件重命名为filename.eyr_old，并创建新的日志文件。</li>
+<li>从MySQL 5.5.7开始，flush-logs只是重新打开日志文件，并不做日志备份和创建的操作。</li>
+<li>如果日志文件不存在，MySQL启动或者执行flush-logs时会自动创建新的日志文件。重新创建错误日志，大小为0字节。</li>
+</ul>
+<h2 id="my-sql-8-0-xin-te-xing" id="MySQL8-0新特性">MySQL8.0新特性</h2>
+<p>MySQL8.0里对错误日志的改进。MySQL8.0的错误日志可以理解为一个全新的日志，在这个版本里，接受了来自社区的广泛批评意见，在这些意见和建议的基础上生成了新的日志。<br>
+下面这些是来自社区的意见:</p>
+<ul>
+<li>默认情况下内容过于冗长</li>
+<li>遗漏了有用的信息</li>
+<li>难以过滤某些信息</li>
+<li>没有标识错误信息的子系统源</li>
+<li>没有错误代码，解析消息需要识别错误。引导消息可能会丢失</li>
+<li>固定格式</li>
+</ul>
+<p>针对这些意见，MySQL做了如下改变:</p>
+<ul>
+<li>采用组件架构，通过不同的组件执行日志的写入和过滤功能</li>
+<li>写入错误日志的全部信息都具有唯一的错误代码从10000开始</li>
+<li>增加了一个新的消息分类《system》用于在错误日志中始终可见的非错误但服务器状态更改事件的消息。</li>
+<li>增加了额外的附加信息，例如关机时的版本信息，谁发起的关机等等</li>
+<li>两种过滤方式，Internal和Dragnet</li>
+<li>三种写入形式，经典、JSON和syseventlog</li>
+</ul>
+<h1 id="er-jin-zhi-ri-zhi-bin-log">二进制日志(bin log)</h1>
+<p>binlog可以说是MySQL中比较重要的日志了，在日常开发及运维过程中，经常会遇到。<br>
+binlog即binary log，二进制日志文件，也叫作变更日志（update log）。它记录了数据库所有执行的DDL 和DML 等数据库更新事件的语句，但是不包含没有修改任何数据的语句（如数据查询语句select、show等）。</p>
+<p>它以事件形式记录并保存在二进制文件中。通过这些信息，我们可以再现数据更新操作的全过程。</p>
+<blockquote>
+<p>如果想要记录所有语句（例如，为了识别有问题的查询)，需要使用通用查询日志。</p>
+</blockquote>
+<p>binlog主要应用场景:</p>
+<ul>
+<li>一是用于<strong>数据恢复</strong>，如果MysQL数据库意外停止，可以通过二进制日志文件来查看用户执行了哪些操作，对数据库服务器文件做了哪些修改，然后根据二进制日志文件中的记录来恢复数据库服务器。</li>
+<li>二是用于<strong>数据复制</strong>，由于日志的延续性和时效性，master把它的二进制日志传递给slaves来达到master-slave数据一致的目的。</li>
+</ul>
+<p>可以说MySQL数据库的<strong>数据备份、主备、主主、主从</strong>都离不开binlog，需要依靠binlog来同步数据，保证数据一致性。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220424150923657.png" alt="image-20220424150923657"></p>
+<h2 id="cha-kan-mo-ren-qing-kuang" id="查看默认情况">查看默认情况</h2>
+<p>查看记录二进制日志是否开启：在MySQL8中默认情况下，二进制文件是开启的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;%log_bin%&#x27;;</span><br><span class="line">+---------------------------------+----------------------------------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------------------------+----------------------------------+</span><br><span class="line">| log_bin | ON |</span><br><span class="line">| log_bin_basename | /var/lib/mysql/binlog |</span><br><span class="line">| log_bin_index | /var/lib/mysql/binlog.index |</span><br><span class="line">| log_bin_trust_function_creators | OFF |  #这个值OFF是不信任函数 ，因为使用函数now（）的时候主机，和从机的时间有偏差</span><br><span class="line">| log_bin_use_v1_row_events | OFF |</span><br><span class="line">| sql_log_bin | ON |</span><br><span class="line">+---------------------------------+----------------------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p><strong>每次重启都会创建一个binlig.index文件</strong></p>
+<h2 id="ri-zhi-can-shu-she-zhi" id="日志参数设置">日志参数设置</h2>
+<p>方式1：永久性方式<br>
+修改MySQL的my.cnf 或my.ini 文件可以设置二进制日志的相关参数：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="comment">#启用二进制日志</span></span><br><span class="line"><span class="attr">log-bin</span>=atguigu-bin</span><br><span class="line"><span class="attr">binlog_expire_logs_seconds</span>=<span class="number">600</span></span><br><span class="line"><span class="attr">max_binlog_size</span>=<span class="number">100</span>M</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>提示:</p>
+<ol>
+<li>log-bin=mysql-bin #打开日志(主机需要打开)，这个mysql-bin也可以自定义，这里也可以加上路径，如:/home/www/mysql_bin_log/mysql-bin</li>
+<li>binlog_expire_logs_seconds:此参数控制二进制日志文件保留的时长，单位是秒，默认2592000 30天-- 14400 4小时;86400 1天;259200 3天;</li>
+<li>max_binlog_size:控制单个二进制日志大小，当前日志文件大小超过此变量时，执行切换动作此参数的最大和默认值是1GB，该设置并不能严格控制Binlog的大小，尤其是Binlog比较靠近最大值而又遇到一个比较大事务时，为了保证事务的完整性，可能不做切换日志的动作，只能将该事务的所有sql都记录进当前日志，直到事务结束。一般情况下可采取默认值。</li>
+</ol>
+</blockquote>
+<p>重新启动MySQL服务，查询二进制日志的信息，执行结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;%log_bin%&#x27;;</span><br><span class="line">+---------------------------------+----------------------------------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------------------------+----------------------------------+</span><br><span class="line">| log_bin | ON |</span><br><span class="line">| log_bin_basename | /var/lib/mysql/atguigu-bin |</span><br><span class="line">| log_bin_index | /var/lib/mysql/atguigu-bin.index |</span><br><span class="line">| log_bin_trust_function_creators | OFF |</span><br><span class="line">| log_bin_use_v1_row_events | OFF |</span><br><span class="line">| sql_log_bin | ON |</span><br><span class="line">+---------------------------------+----------------------------------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>设置带文件夹的bin-log日志存放目录</p>
+<p>如果想改变日志文件的目录和名称，可以对my.cnf或my.ini中的log_bin参数修改如下：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[mysqld]</span></span><br><span class="line"><span class="attr">log-bin</span>=<span class="string">&quot;/var/lib/mysql/binlog/atguigu-bin&quot;</span></span><br></pre></td></tr></table></figure>
+<p>注意：新建的文件夹需要使用mysql用户，使用下面的命令即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown -R -v mysql:mysql binlog</span><br></pre></td></tr></table></figure>
+<p>方式2：临时性方式<br>
+如果不希望通过修改配置文件并重启的方式设置二进制日志的话，还可以使用如下指令，需要注意的是在mysql8中只有会话级别的设置，没有了global级别的设置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># global 级别</span><br><span class="line">mysql&gt; set global sql_log_bin=0;</span><br><span class="line">ERROR 1228 (HY000): Variable &#x27;sql_log_bin&#x27; is a SESSION variable and can`t be used</span><br><span class="line">with SET GLOBAL</span><br><span class="line"># session级别</span><br><span class="line">mysql&gt; SET sql_log_bin=0;</span><br><span class="line">Query OK, 0 rows affected (0.01 秒)</span><br></pre></td></tr></table></figure>
+<h2 id="cha-kan-ri-zhi-2" id="查看日志-3">查看日志</h2>
+<p>当MySQL创建二进制日志文件时，先创建一个以“filename”为名称、以“.index”为后缀的文件，再创建一个以“filename”为名称以“.000001”为后缀的文件。<br>
+MySQL服务重新启动一次，以“.000001”为后缀的文件就会增加一个，并且后缀名按1递增。即日志文件的个数与MySQL服务启动的次数相同；如果日志长度超过了max_binlog_size 的上限（默认是1GB），就会创建一个新的日志文件。<br>
+查看当前的二进制日志文件列表及大小。指令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW BINARY LOGS;</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">| Log_name         | File_size | Encrypted |</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">| mysql-bin.000001 |      4612 | No        |</span><br><span class="line">| mysql-bin.000002 | 139508556 | No        |</span><br><span class="line">| mysql-bin.000003 |       179 | No        |</span><br><span class="line">| mysql-bin.000004 | 385392488 | No        |</span><br><span class="line">| mysql-bin.000005 |      8897 | No        |</span><br><span class="line">+------------------+-----------+-----------+</span><br></pre></td></tr></table></figure>
+<p>执行结果可以看到，这是一个简单的日志文件，日志中记录了用户的一些操作，这里并没有出现具体的SsQL语句，这是因为binlog关键字后面的内容是经过编码后的二进制日志。<br>
+这里一个update语句包含如下事件</p>
+<ul>
+<li>Query事件负责开始一个事务(BEGIN)。</li>
+<li>Table_map事件负责映射需要的表.</li>
+<li>Update_rows事件负责写入数据。</li>
+<li>Xid事件负责结束事务<br>
+下面命令将行事件以伪SQL的形式表现出来</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">mysqlbinlog -v &quot;/var/lib/mysql/binlog/atguigu-bin.000002&quot;</span><br><span class="line">#220105 9:16:37 server id 1 end_log_pos 324 CRC32 0x6b31978b Query thread_id=10</span><br><span class="line">exec_time=0 error_code=0</span><br><span class="line">SET TIMESTAMP=1641345397/*!*/;</span><br><span class="line">SET @@session.pseudo_thread_id=10/*!*/;</span><br><span class="line">SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0,</span><br><span class="line">@@session.unique_checks=1, @@session.autocommit=1/*!*/;</span><br><span class="line">SET @@session.sql_mode=1168113696/*!*/;</span><br><span class="line">SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;</span><br><span class="line">/*!\C utf8mb3 *//*!*/;</span><br><span class="line">SET</span><br><span class="line">@@session.character_set_client=33,@@session.collation_connection=33,@@session.collatio</span><br><span class="line">n_server=255/*!*/;</span><br><span class="line">SET @@session.lc_time_names=0/*!*/;</span><br><span class="line">SET @@session.collation_database=DEFAULT/*!*/;</span><br><span class="line">/*!80011 SET @@session.default_collation_for_utf8mb4=255*//*!*/;</span><br><span class="line">BEGIN</span><br><span class="line">/*!*/;</span><br><span class="line"># at 324</span><br><span class="line">#220105 9:16:37 server id 1 end_log_pos 391 CRC32 0x74f89890 Table_map:</span><br><span class="line">`atguigu14`.`student` mapped to number 85</span><br><span class="line"># at 391</span><br><span class="line">#220105 9:16:37 server id 1 end_log_pos 470 CRC32 0xc9920491 Update_rows: table id</span><br><span class="line">85 flags: STMT_END_F</span><br><span class="line">BINLOG &#x27;</span><br><span class="line"></span><br><span class="line">dfHUYRMBAAAAQwAAAIcBAAAAAFUAAAAAAAEACWF0Z3VpZ3UxNAAHc3R1ZGVudAADAw8PBDwAHgAG</span><br><span class="line">AQEAAgEhkJj4dA==</span><br><span class="line">dfHUYR8BAAAATwAAANYBAAAAAFUAAAAAAAEAAgAD//8AAQAAAAblvKDkuIkG5LiA54+tAAEAAAAL</span><br><span class="line">5byg5LiJX2JhY2sG5LiA54+tkQSSyQ==</span><br><span class="line">&#x27;/*!*/;</span><br><span class="line">### UPDATE `atguigu`.`student`</span><br><span class="line">### WHERE</span><br><span class="line">### @1=1</span><br><span class="line">### @2=&#x27;张三&#x27;</span><br><span class="line">### @3=&#x27;一班&#x27;</span><br><span class="line">### SET</span><br><span class="line">### @1=1</span><br><span class="line">### @2=&#x27;张三_back&#x27;</span><br><span class="line">### @3=&#x27;一班&#x27;</span><br><span class="line"># at 470</span><br><span class="line">#220105 9:16:37 server id 1 end_log_pos 501 CRC32 0xca01d30f Xid = 15</span><br><span class="line">COMMIT/*!*/;</span><br></pre></td></tr></table></figure>
+<p>前面的命令同时显示binlog格式的语句，使用如下命令不显示它</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">mysqlbinlog -v --base64-output=DECODE-ROWS &quot;/var/lib/mysql/binlog/atguigu-bin.000002&quot;</span><br><span class="line">#220105 9:16:37 server id 1 end_log_pos 324 CRC32 0x6b31978b Query thread_id=10</span><br><span class="line">exec_time=0 error_code=0</span><br><span class="line">SET TIMESTAMP=1641345397/*!*/;</span><br><span class="line">SET @@session.pseudo_thread_id=10/*!*/;</span><br><span class="line">SET @@session.foreign_key_checks=1, @@session.sql_auto_is_null=0,</span><br><span class="line">@@session.unique_checks=1, @@session.autocommit=1/*!*/;</span><br><span class="line">SET @@session.sql_mode=1168113696/*!*/;</span><br><span class="line">SET @@session.auto_increment_increment=1, @@session.auto_increment_offset=1/*!*/;</span><br><span class="line">/*!\C utf8mb3 *//*!*/;</span><br><span class="line">SET</span><br><span class="line">@@session.character_set_client=33,@@session.collation_connection=33,@@session.collatio</span><br><span class="line">n_server=255/*!*/;</span><br><span class="line">SET @@session.lc_time_names=0/*!*/;</span><br><span class="line">SET @@session.collation_database=DEFAULT/*!*/;</span><br><span class="line">/*!80011 SET @@session.default_collation_for_utf8mb4=255*//*!*/;</span><br><span class="line">BEGIN</span><br><span class="line">/*!*/;</span><br><span class="line"># at 324</span><br><span class="line">#220105 9:16:37 server id 1 end_log_pos 391 CRC32 0x74f89890 Table_map:</span><br><span class="line">`atguigu14`.`student` mapped to number 85</span><br><span class="line"># at 391</span><br><span class="line">#220105 9:16:37 server id 1 end_log_pos 470 CRC32 0xc9920491 Update_rows: table id</span><br><span class="line">85 flags: STMT_END_F</span><br><span class="line">### UPDATE `atguigu14`.`student`</span><br><span class="line">### WHERE</span><br><span class="line">### @1=1</span><br><span class="line">### @2=&#x27;张三&#x27;</span><br><span class="line">### @3=&#x27;一班&#x27;</span><br><span class="line">### SET</span><br><span class="line">### @1=1</span><br><span class="line">### @2=&#x27;张三_back&#x27;</span><br><span class="line">### @3=&#x27;一班&#x27;</span><br><span class="line"># at 470</span><br><span class="line">#220105 9:16:37 server id 1 end_log_pos 501 CRC32 0xca01d30f Xid = 15</span><br></pre></td></tr></table></figure>
+<p>关于mysqlbinlog工具的使用技巧还有很多，例如只解析对某个库的操作或者某个时间段内的操作等。简单分享几个常用的语句，更多操作可以参考官方文档。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 可查看参数帮助</span><br><span class="line">mysqlbinlog --no-defaults --help</span><br><span class="line"># 查看最后100行</span><br><span class="line">mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.000002 |tai-100</span><br><span class="line"># 根据position查找</span><br><span class="line">mysqlbinlog --no-defaults --base64-output=decode-rows -vv atguigu-bin.000002 |grep -A 20 &#x27;4939002&#x27;</span><br></pre></td></tr></table></figure>
+<p>上面这种办法读取出binlog日志的全文内容比较多，不容易分辨查看到pos点信息，下面介绍一种更为方便的查询命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show binlog events [IN &#x27;log_name&#x27;] [FROM pos] [LIMIT [offset,] row_count];</span><br></pre></td></tr></table></figure>
+<ul>
+<li>IN ‘log_name’ ：指定要查询的binlog文件名（不指定就是第一个binlog文件）</li>
+<li>FROM pos ：指定从哪个pos起始点开始查起（不指定就是从整个文件首个pos点开始算）</li>
+<li>LIMIT [offset] ：偏移量(不指定就是0)</li>
+<li>row_count :查询总条数（不指定就是所有行）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show binlog events in &#x27;atguigu-bin.000002&#x27;;</span><br><span class="line">+--------------------+-----+----------------+-----------+-------------+---------------</span><br><span class="line">--------------------------------------------------------------+</span><br><span class="line">| Log_name | Pos | Event_type | Server_id | End_log_pos | Info</span><br><span class="line">|</span><br><span class="line">+--------------------+-----+----------------+-----------+-------------+---------------</span><br><span class="line">--------------------------------------------------------------+</span><br><span class="line">| atguigu-bin.000002 | 4 | Format_desc | 1 | 125 | Server ver:</span><br><span class="line">8.0.26, Binlog ver: 4 |</span><br><span class="line">| atguigu-bin.000002 | 125 | Previous_gtids | 1 | 156 |</span><br><span class="line">|</span><br><span class="line">| atguigu-bin.000002 | 156 | Anonymous_Gtid | 1 | 235 | SET</span><br><span class="line">@@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line">| atguigu-bin.000002 | 235 | Query | 1 | 324 | BEGIN</span><br><span class="line">|</span><br><span class="line">| atguigu-bin.000002 | 324 | Table_map | 1 | 391 | table_id: 85</span><br><span class="line">(atguigu14.student) |</span><br><span class="line">| atguigu-bin.000002 | 391 | Update_rows | 1 | 470 | table_id: 85</span><br><span class="line">flags: STMT_END_F |</span><br><span class="line">| atguigu-bin.000002 | 470 | Xid | 1 | 501 | COMMIT /*</span><br><span class="line">xid=15 */ |</span><br><span class="line">| atguigu-bin.000002 | 501 | Anonymous_Gtid | 1 | 578 | SET</span><br><span class="line">@@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line">| atguigu-bin.000002 | 578 | Query | 1 | 721 | use</span><br><span class="line">`atguigu14`; create table test(id int, title varchar(100)) /* xid=19 */ |</span><br><span class="line">| atguigu-bin.000002 | 721 | Anonymous_Gtid | 1 | 800 | SET</span><br><span class="line">@@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line">| atguigu-bin.000002 | 800 | Query | 1 | 880 | BEGIN</span><br><span class="line">|</span><br><span class="line">| atguigu-bin.000002 | 880 | Table_map | 1 | 943 | table_id: 89</span><br><span class="line">(atguigu14.test) |</span><br><span class="line">| atguigu-bin.000002 | 943 | Write_rows | 1 | 992 | table_id: 89</span><br><span class="line">flags: STMT_END_F |</span><br><span class="line">| atguigu-bin.000002 | 992 | Xid | 1 | 1023 | COMMIT /*</span><br><span class="line">xid=21 */</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#a、查询第一个最早的binlog日志:</span><br><span class="line">show binlog events\G;</span><br><span class="line">#b、指定查询mysql-bin.000002这个文件</span><br><span class="line">show binlog events in &#x27;atguigu-bin.000002 &#x27; \G;</span><br><span class="line">#c、指定查询mysql-bin.000002这个文件，从pos点:391开始查起:</span><br><span class="line">show binlog events in &#x27;atguigu-bin.000002&#x27; from 391\G;</span><br><span class="line">#d、指定查询mysql-bin.000002这个文件，从pos点:391开始查起，查询5条（即5条语句)</span><br><span class="line">show binlog events in &#x27;atguigu-bin.000002&#x27; from 391 limit 5\G;</span><br><span class="line">#e、指定查询 mysql-bin.000002这个文件，从pos点:391开始查起，偏移2行（即中间跳过2个）查询5条（即5条语句）。</span><br><span class="line">show binlog events in &#x27;atguigu-bin.000002 &#x27; from 391 limit 2,5\G;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面我们讲了这么多都是基于binlog的默认格式，binlog格式查看</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#x27;binlog_format&#x27;;</span><br><span class="line">+---------------+-------+</span><br><span class="line">| Variable_name | Value |</span><br><span class="line">+---------------+-------+</span><br><span class="line">| binlog_format | ROW |</span><br><span class="line">+---------------+-------+</span><br><span class="line">1 行于数据集 (0.02 秒)</span><br></pre></td></tr></table></figure>
+<p>除此之外，binlog还有2种格式，分别是Statement和Mixed</p>
+<ul>
+<li>
+<p>Statement<br>
+每一条会修改数据的sql都会记录在binlog中。</p>
+<p>优点：不需要记录每一行的变化，减少了binlog日志量，节约了IO，提高性能。</p>
+</li>
+<li>
+<p>Row<br>
+5.1.5版本的MySQL才开始支持row level 的复制，它不记录sql语句上下文相关信息，仅保存哪条记录被修改。<br>
+优点：row level 的日志内容会非常清楚的记录下每一行数据修改的细节。而且不会出现某些特定情况下的存储过程，或function，以及trigger的调用和触发无法被正确复制的问题。</p>
+</li>
+<li>
+<p>Mixed<br>
+从5.1.8版本开始，MySQL提供了Mixed格式，实际上就是Statement与Row的结合。<br>
+详细情况，下章讲解。</p>
+</li>
+</ul>
+<h2 id="shi-yong-ri-zhi-hui-fu-shu-ju" id="使用日志恢复数据">使用日志恢复数据</h2>
+<p>mysqlbinlog恢复数据的语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqlbinlog [option] filename|mysql –uuser -ppass;</span><br></pre></td></tr></table></figure>
+<p>这个命令可以这样理解：使用mysqlbinlog命令来读取filename中的内容，然后使用mysql命令将这些内容恢复到数据库中。</p>
+<ul>
+<li>filename ：是日志文件名。</li>
+<li>option ：可选项，比较重要的两对option参数是–start-date、–stop-date 和 --start-position、–stop-position。
+<ul>
+<li>–start-date 和 --stop-date ：可以指定恢复数据库的起始时间点和结束时间点。</li>
+<li>–start-position和–stop-position ：可以指定恢复数据的开始位置和结束位置。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注意：使用mysqlbinlog命令进行恢复操作时，必须是编号小的先恢复，例如atguigu-bin.000001必须在atguigu-bin.000002之前恢复。</p>
+</blockquote>
+<p>案例演示:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show binary logs;</span><br><span class="line">ERROR 2013 (HY000): Lost connection to MySQL server during query</span><br><span class="line">No connection. Trying to reconnect...</span><br><span class="line">Connection id:    8</span><br><span class="line">Current database: *** NONE ***</span><br><span class="line"></span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">| Log_name         | File_size | Encrypted |</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">| mysql-bin.000001 |      4612 | No        |</span><br><span class="line">| mysql-bin.000002 | 139508556 | No        |</span><br><span class="line">| mysql-bin.000003 |       179 | No        |</span><br><span class="line">| mysql-bin.000004 | 385392488 | No        |</span><br><span class="line">| mysql-bin.000005 |      8920 | No        |</span><br><span class="line">| mysql-bin.000006 |       156 | No        |</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; use atguigudb3;</span><br><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A</span><br><span class="line"></span><br><span class="line">Database changed</span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+----------+--------+</span><br><span class="line">| id | name     | class  |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">|  1 | 张三11   | 一班   |</span><br><span class="line">|  3 | 李四     | 一班   |</span><br><span class="line">|  8 | 王五     | 二班   |</span><br><span class="line">| 15 | 赵六     | 二班   |</span><br><span class="line">| 20 | 钱四     | 三班   |</span><br><span class="line">| 34 | 周八     | 二班   |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; insert into student(id,name,class) values(21,&#x27;aaa&#x27;,&#x27;No.1&#x27;);</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; insert into student(id,name,class) values(22,&#x27;aaa&#x27;,&#x27;No.1&#x27;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; insert into student(id,name,class) values(23,&#x27;aaa&#x27;,&#x27;No.1&#x27;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+----------+--------+</span><br><span class="line">| id | name     | class  |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">|  1 | 张三11   | 一班   |</span><br><span class="line">|  3 | 李四     | 一班   |</span><br><span class="line">|  8 | 王五     | 二班   |</span><br><span class="line">| 15 | 赵六     | 二班   |</span><br><span class="line">| 20 | 钱四     | 三班   |</span><br><span class="line">| 21 | aaa      | No.1   |</span><br><span class="line">| 22 | aaa      | No.1   |</span><br><span class="line">| 23 | aaa      | No.1   |</span><br><span class="line">| 34 | 周八     | 二班   |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">9 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; delete from student where id =21;</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+----------+--------+</span><br><span class="line">| id | name     | class  |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">|  1 | 张三11   | 一班   |</span><br><span class="line">|  3 | 李四     | 一班   |</span><br><span class="line">|  8 | 王五     | 二班   |</span><br><span class="line">| 15 | 赵六     | 二班   |</span><br><span class="line">| 20 | 钱四     | 三班   |</span><br><span class="line">| 22 | aaa      | No.1   |</span><br><span class="line">| 23 | aaa      | No.1   |</span><br><span class="line">| 34 | 周八     | 二班   |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">8 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; update student set name=&#x27;bbb&#x27; where id=22;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+----------+--------+</span><br><span class="line">| id | name     | class  |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">|  1 | 张三11   | 一班   |</span><br><span class="line">|  3 | 李四     | 一班   |</span><br><span class="line">|  8 | 王五     | 二班   |</span><br><span class="line">| 15 | 赵六     | 二班   |</span><br><span class="line">| 20 | 钱四     | 三班   |</span><br><span class="line">| 22 | bbb      | No.1   |</span><br><span class="line">| 23 | aaa      | No.1   |</span><br><span class="line">| 34 | 周八     | 二班   |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">8 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; delete from student where id&gt;20;</span><br><span class="line">Query OK, 3 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from student;</span><br><span class="line">+----+----------+--------+</span><br><span class="line">| id | name     | class  |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">|  1 | 张三11   | 一班   |</span><br><span class="line">|  3 | 李四     | 一班   |</span><br><span class="line">|  8 | 王五     | 二班   |</span><br><span class="line">| 15 | 赵六     | 二班   |</span><br><span class="line">| 20 | 钱四     | 三班   |</span><br><span class="line">+----+----------+--------+</span><br><span class="line">5 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show binary logs;</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">| Log_name         | File_size | Encrypted |</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">| mysql-bin.000001 |      4612 | No        |</span><br><span class="line">| mysql-bin.000002 | 139508556 | No        |</span><br><span class="line">| mysql-bin.000003 |       179 | No        |</span><br><span class="line">| mysql-bin.000004 | 385392488 | No        |</span><br><span class="line">| mysql-bin.000005 |      8920 | No        |</span><br><span class="line">| mysql-bin.000006 |      2061 | No        |</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">6 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; flush logs;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show binary logs;</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">| Log_name         | File_size | Encrypted |</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">| mysql-bin.000001 |      4612 | No        |</span><br><span class="line">| mysql-bin.000002 | 139508556 | No        |</span><br><span class="line">| mysql-bin.000003 |       179 | No        |</span><br><span class="line">| mysql-bin.000004 | 385392488 | No        |</span><br><span class="line">| mysql-bin.000005 |      8920 | No        |</span><br><span class="line">| mysql-bin.000006 |      2108 | No        |</span><br><span class="line">| mysql-bin.000007 |       156 | No        |</span><br><span class="line">+------------------+-----------+-----------+</span><br><span class="line">7 rows in set (0.00 sec)</span><br><span class="line">mysql&gt; show binlog events in &#x27;mysql-bin.000006&#x27;;</span><br><span class="line">+------------------+------+----------------+-----------+-------------+--------------------------------------+</span><br><span class="line">| Log_name         | Pos  | Event_type     | Server_id | End_log_pos | Info                                 |</span><br><span class="line">+------------------+------+----------------+-----------+-------------+--------------------------------------+</span><br><span class="line">| mysql-bin.000006 |    4 | Format_desc    |         1 |         125 | Server ver: 8.0.25, Binlog ver: 4    |</span><br><span class="line">| mysql-bin.000006 |  125 | Previous_gtids |         1 |         156 |                                      |</span><br><span class="line">| mysql-bin.000006 |  156 | Anonymous_Gtid |         1 |         235 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line"></span><br><span class="line">| mysql-bin.000006 |  235 | Query          |         1 |         316 | BEGIN                                |</span><br><span class="line">| mysql-bin.000006 |  316 | Table_map      |         1 |         384 | table_id: 93 (atguigudb3.student)    |</span><br><span class="line">| mysql-bin.000006 |  384 | Write_rows     |         1 |         433 | table_id: 93 flags: STMT_END_F       |</span><br><span class="line">| mysql-bin.000006 |  433 | Xid            |         1 |         464 | COMMIT /* xid=18 */                  |</span><br><span class="line">| mysql-bin.000006 |  464 | Anonymous_Gtid |         1 |         543 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line">| mysql-bin.000006 |  543 | Query          |         1 |         624 | BEGIN                                |</span><br><span class="line">| mysql-bin.000006 |  624 | Table_map      |         1 |         692 | table_id: 93 (atguigudb3.student)    |</span><br><span class="line">| mysql-bin.000006 |  692 | Write_rows     |         1 |         741 | table_id: 93 flags: STMT_END_F       |</span><br><span class="line">| mysql-bin.000006 |  741 | Xid            |         1 |         772 | COMMIT /* xid=19 */                  |</span><br><span class="line">| mysql-bin.000006 |  772 | Anonymous_Gtid |         1 |         851 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line">| mysql-bin.000006 |  851 | Query          |         1 |         932 | BEGIN                                |</span><br><span class="line">| mysql-bin.000006 |  932 | Table_map      |         1 |        1000 | table_id: 93 (atguigudb3.student)    |</span><br><span class="line">| mysql-bin.000006 | 1000 | Write_rows     |         1 |        1049 | table_id: 93 flags: STMT_END_F       |</span><br><span class="line">| mysql-bin.000006 | 1049 | Xid            |         1 |        1080 | COMMIT /* xid=20 */                  |</span><br><span class="line">| mysql-bin.000006 | 1080 | Anonymous_Gtid |         1 |        1159 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line"></span><br><span class="line">| mysql-bin.000006 | 1159 | Query          |         1 |        1240 | BEGIN                                |</span><br><span class="line">| mysql-bin.000006 | 1240 | Table_map      |         1 |        1308 | table_id: 93 (atguigudb3.student)    |</span><br><span class="line">| mysql-bin.000006 | 1308 | Delete_rows    |         1 |        1357 | table_id: 93 flags: STMT_END_F       |</span><br><span class="line">| mysql-bin.000006 | 1357 | Xid            |         1 |        1388 | COMMIT /* xid=22 */                  |</span><br><span class="line">| mysql-bin.000006 | 1388 | Anonymous_Gtid |         1 |        1467 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line">| mysql-bin.000006 | 1467 | Query          |         1 |        1557 | BEGIN                                |</span><br><span class="line">| mysql-bin.000006 | 1557 | Table_map      |         1 |        1625 | table_id: 93 (atguigudb3.student)    |</span><br><span class="line">| mysql-bin.000006 | 1625 | Update_rows    |         1 |        1689 | table_id: 93 flags: STMT_END_F       |</span><br><span class="line">| mysql-bin.000006 | 1689 | Xid            |         1 |        1720 | COMMIT /* xid=24 */                  |</span><br><span class="line">| mysql-bin.000006 | 1720 | Anonymous_Gtid |         1 |        1799 | SET @@SESSION.GTID_NEXT= &#x27;ANONYMOUS&#x27; |</span><br><span class="line">| mysql-bin.000006 | 1799 | Query          |         1 |        1880 | BEGIN                                |</span><br><span class="line">| mysql-bin.000006 | 1880 | Table_map      |         1 |        1948 | table_id: 93 (atguigudb3.student)    |</span><br><span class="line">| mysql-bin.000006 | 1948 | Delete_rows    |         1 |        2030 | table_id: 93 flags: STMT_END_F       |</span><br><span class="line">| mysql-bin.000006 | 2030 | Xid            |         1 |        2061 | COMMIT /* xid=27 */                  |</span><br><span class="line">| mysql-bin.000006 | 2061 | Rotate         |         1 |        2108 | mysql-bin.000007;pos=4               |</span><br><span class="line">+------------------+------+----------------+-----------+-------------+--------------------------------------+</span><br><span class="line">33 rows in set (0.00 sec</span><br><span class="line">    </span><br><span class="line">#数据恢复 基于pos编号</span><br><span class="line"> [root@hadoop01 mysql]# /usr/bin/mysqlbinlog  --start-position=316  --stop-position=1080 --database=atguigudb3 /var/lib/mysql/mysql-bin.000006 | /usr/bin/mysql -uroot -p123456 -v  atguigudb3</span><br><span class="line">                </span><br><span class="line">#基于时间 通过 mysqlbinlog -v &quot;/var/lib/mysql/binlog/mysql-bin.000006&quot; 查看</span><br><span class="line">#20424 15:45:14 220424 15:45:47 </span><br><span class="line"> [root@hadoop01 mysql]# /usr/bin/mysqlbinlog  --start-datetime=&quot;2022-04-24 15:45:14&quot;  --stop-datetime=&quot;2022-04-24 15:45:47&quot; --database=atguigudb3 /var/lib/mysql/mysql-bin.000006 | /usr/bin/mysql -uroot -p123456 -v  atguigudb3</span><br><span class="line">               </span><br></pre></td></tr></table></figure>
+<h2 id="shan-chu-er-jin-zhi-ri-zhi" id="删除二进制日志">删除二进制日志</h2>
+<p>MySQL的二进制文件可以配置自动删除，同时MySQL也提供了安全的手动删除二进制文件的方法。PURGE MASTER LOGS 只删除指定部分的二进制日志文件， RESET MASTER 删除所有的二进制日志文件。具体如下：</p>
+<ol>
+<li>PURGE MASTER LOGS：删除指定日志文件<br>
+PURGE MASTER LOGS语法如下：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PURGE &#123;MASTER | BINARY&#125; LOGS TO ‘指定日志文件名’</span><br><span class="line">PURGE &#123;MASTER | BINARY&#125; LOGS BEFORE ‘指定日期’</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	
+	</div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/23/%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/" rel="next" title="多版本并发控制">
+                <i class="fa fa-chevron-left"></i> 多版本并发控制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="张浩宇" />
+            
+              <p class="site-author-name" itemprop="name">张浩宇</p>
+              <p class="site-description motion-element" itemprop="description">日积月累,积少成多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/blacke1111" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#my-sql-zhi-chi-de-ri-zhi"><span class="nav-number">1.</span> <span class="nav-text">MySQL支持的日志</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ri-zhi-lei-xing"><span class="nav-number">1.1.</span> <span class="nav-text">日志类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ri-zhi-de-bi-duan"><span class="nav-number">1.2.</span> <span class="nav-text">日志的弊端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#man-cha-xun-ri-zhi-slow-query-log"><span class="nav-number">2.</span> <span class="nav-text">慢查询日志(slow query log)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tong-yong-cha-xun-ri-zhi-general-query-log"><span class="nav-number">3.</span> <span class="nav-text">通用查询日志(general query log)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-dang-qian-zhuang-tai"><span class="nav-number">3.1.</span> <span class="nav-text">查看当前状态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qi-dong-ri-zhi"><span class="nav-number">3.2.</span> <span class="nav-text">启动日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-ri-zhi"><span class="nav-number">3.3.</span> <span class="nav-text">查看日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ting-zhi-ri-zhi"><span class="nav-number">3.4.</span> <span class="nav-text">停止日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shan-chu-shua-xin-ri-zhi"><span class="nav-number">3.5.</span> <span class="nav-text">删除\刷新日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cuo-wu-ri-zhi-error-log"><span class="nav-number">4.</span> <span class="nav-text">错误日志(error log)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#qi-dong-ri-zhi-1"><span class="nav-number">4.1.</span> <span class="nav-text">启动日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-ri-zhi-1"><span class="nav-number">4.2.</span> <span class="nav-text">查看日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shan-chu-shua-xin-ri-zhi-1"><span class="nav-number">4.3.</span> <span class="nav-text">删除\刷新日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#my-sql-8-0-xin-te-xing"><span class="nav-number">4.4.</span> <span class="nav-text">MySQL8.0新特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#er-jin-zhi-ri-zhi-bin-log"><span class="nav-number">5.</span> <span class="nav-text">二进制日志(bin log)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-mo-ren-qing-kuang"><span class="nav-number">5.1.</span> <span class="nav-text">查看默认情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ri-zhi-can-shu-she-zhi"><span class="nav-number">5.2.</span> <span class="nav-text">日志参数设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cha-kan-ri-zhi-2"><span class="nav-number">5.3.</span> <span class="nav-text">查看日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yong-ri-zhi-hui-fu-shu-ju"><span class="nav-number">5.4.</span> <span class="nav-text">使用日志恢复数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shan-chu-er-jin-zhi-ri-zhi"><span class="nav-number">5.5.</span> <span class="nav-text">删除二进制日志</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Hao Hu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数&#58;</span>
+    
+    <span title="博客全站字数">304.4k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
