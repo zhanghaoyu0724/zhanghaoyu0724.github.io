@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="zhy, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="主从复制概述 如何提升数据库并发能力 在实际工作中，我们常常将Redis作为缓存与MySQL配合来使用，当有请求的时候，首先会从缓存中进行查找，如果存在就直接取出。如果不存在再访问数据库，这样就提升了读取的效率，也减少了对后端数据库的访问压力。Redis的缓存架构是高并发架构中非常重要的一  此外，一般应用对数据库而言都是“ 读多写少”，也就说对数据库读取数据的压力比较大，有一个思路就是采用数据库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="主从复制">
+<meta property="og:url" content="https://zhanghaoyu0724.github.io/2022/04/25/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/index.html">
+<meta property="og:site_name" content="蓝天の博客">
+<meta property="og:description" content="主从复制概述 如何提升数据库并发能力 在实际工作中，我们常常将Redis作为缓存与MySQL配合来使用，当有请求的时候，首先会从缓存中进行查找，如果存在就直接取出。如果不存在再访问数据库，这样就提升了读取的效率，也减少了对后端数据库的访问压力。Redis的缓存架构是高并发架构中非常重要的一  此外，一般应用对数据库而言都是“ 读多写少”，也就说对数据库读取数据的压力比较大，有一个思路就是采用数据库">
+<meta property="og:locale">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425155113001.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425155817576.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425160638128.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425160431122.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425161001609.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171020104.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171007201.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171227503.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171107921.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171736900.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171759785.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425172054015.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425173732498.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425173736712.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425174044209.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425174318496.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425174426202.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425174835832.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425175040649.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425175117528.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425175123537.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425175133305.png">
+<meta property="article:published_time" content="2022-04-25T07:48:22.000Z">
+<meta property="article:modified_time" content="2022-04-25T09:55:49.476Z">
+<meta property="article:author" content="Zhang Hao Hu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425155113001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":8,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhanghaoyu0724.github.io/2022/04/25/主从复制/"/>
+
+
+
+
+
+  <title>主从复制 | 蓝天の博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蓝天の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanghaoyu0724.github.io/2022/04/25/%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张浩宇">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蓝天の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">主从复制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-04-25T15:48:22+08:00">
+                2022-04-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-25T17:55:49+08:00">
+                2022-04-25
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="zhu-cong-fu-zhi-gai-shu">主从复制概述</h1>
+<h2 id="ru-he-ti-sheng-shu-ju-ku-bing-fa-neng-li" id="如何提升数据库并发能力">如何提升数据库并发能力</h2>
+<p>在实际工作中，我们常常将Redis作为缓存与MySQL配合来使用，当有请求的时候，首先会从缓存中进行查找，如果存在就直接取出。如果不存在再访问数据库，这样就提升了读取的效率，也减少了对后端数据库的访问压力。Redis的缓存架构是<strong>高并发架构</strong>中非常重要的一</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425155113001.png" alt="image-20220425155113001"></p>
+<p>此外，<strong>一般应用对数据库而言都是“ 读多写少”</strong>，也就说对数据库读取数据的压力比较大，有一个思路就是采用数据库集群的方案，做主从架构、进行读写分离，这样同样可以提升数据库的并发处理能力。但并不是所有的应用都需要对数据库进行主从架构的设置，毕竟设置架构本身是有成本的。如果我们的目的在于提升数据库高并发访问的效率，那么首先考虑的是如何优化SQL和索引，这种方式简单有效；其次才是采用缓存的策略，比如使用 Redis将热点数据保存在内存数据库中，提升读取的效率；最后才是对数据库采用主从架构，进行读写分离。</p>
+<h2 id="zhu-cong-fu-zhi-de-zuo-yong" id="主从复制的作用">主从复制的作用</h2>
+<p>主从同步设计不仅可以提高数据库的吞吐量，还有以下 3 个方面的作用。</p>
+<p><strong>第1个作用：读写分离。</strong></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425155817576.png" alt="image-20220425155817576"></p>
+<p><strong>第2个作用就是数据备份</strong>。我们通过主从复制将主库上的数据复制到了从库上，相当于是一种热备份机制，也就是在主库正常运行的情况下进行的备份，不会影响到服务。</p>
+<p><strong>第3个作用是具有高可用性</strong>。数据备份实际上是一种冗余的机制，通过这种冗余的方式可以换取数据库的高可用性，也就是当服务器出现<strong>故障</strong>或<strong>宕机</strong>的情况下，可以切换到<strong>从服务器</strong>上，保证服务的正常运行。<br>
+关于高可用性的程度，我们可以用一个指标衡量，即正常可用时间/全年时间。比如要达到全年99.999%的时间都可用，就意味着系统在一年中的不可用时间不得超过365+24<em>60</em>(1-99.999%)=5.256分钟（含系统崩溃的时间、日常维护操作导致的停机时间等)，其他时间都需要保持可用的状态。<br>
+实际上，更高的高可用性，意味着需要付出更高的成本代价。在现实中我们需要结合业务需求和成本来进行选择。</p>
+<h1 id="zhu-cong-fu-zhi-de-yuan-li">主从复制的原理</h1>
+<p>Slave 会从Master 读取binlog 来进行数据同步。</p>
+<h2 id="yuan-li-pou-xi" id="原理剖析">原理剖析</h2>
+<p><strong>三个线程</strong><br>
+实际上主从同步的原理就是基于 binlog 进行数据同步的。在主从复制过程中，会基于 3 个线程来操作，一个主库线程，两个从库线程。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425160638128.png" alt="image-20220425160638128"></p>
+<p><strong>二进制日志转储线程（Binlog dump thread）是一个主库线程</strong>。当从库线程连接的时候， 主库可以将二进制日志发送给从库，当主库读取事件（Event）的时候，会在 Binlog 上加锁，读取完成之后，再将锁释放掉。<br>
+<strong>从库 I/O 线程</strong>会连接到主库，向主库发送请求更新 Binlog。这时从库的 I/O 线程就可以读取到主库的二进制日志转储线程发送的 Binlog 更新部分，并且拷贝到本地的中继日志 （Relay log）。<br>
+<strong>从库 SQL 线程</strong>会读取从库中的中继日志，并且执行日志中的事件，将从库中的数据与主库保持同步。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425160431122.png" alt="image-20220425160431122"></p>
+<p><strong>复制三步骤</strong></p>
+<p>步骤1： Master 将写操作记录到二进制日志（ binlog ）。<br>
+步骤2： Slave 将Master 的binary log events拷贝到它的中继日志（ relay log ）；<br>
+步骤3： Slave 重做中继日志中的事件，将改变应用到自己的数据库中。 MySQL复制是异步的且串行化<br>
+的，而且重启后从接入点开始复制。</p>
+<p><strong>复制的问题</strong><br>
+复制的最大问题： 延时</p>
+<h2 id="fu-zhi-de-ji-ben-yuan-ze" id="复制的基本原则">复制的基本原则</h2>
+<ul>
+<li>每个Slave 只有一个Master</li>
+<li>每个Slave 只能有一个唯一的服务器ID</li>
+<li>每个Master 可以有多个Slave</li>
+</ul>
+<h1 id="yi-zhu-yi-cong-jia-gou-da-jian">一主一从架构搭建</h1>
+<p>一台主机用于处理所有写请求，一台从机负责所有读请求，架构图如下：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425161001609.png" alt="image-20220425161001609"></p>
+<h2 id="zhun-bei-gong-zuo" id="准备工作">准备工作</h2>
+<p>1、准备2台CentOS 虚拟机<br>
+2、每台虚拟机上需要安装好MySQL (可以是MySQL8.0 )<br>
+说明：前面我们讲过如何克隆一台CentOS。大家可以在一台CentOS上安装好MySQL，进而通过克隆的方<br>
+式复制出1台包含MySQL的虚拟机。<br>
+注意：克隆的方式需要修改新克隆出来主机的：① MAC地址 ② hostname ③ IP 地址 ④ UUID 。<br>
+此外，克隆的方式生成的虚拟机（包含MySQL Server），则克隆的虚拟机MySQL Server的UUID相同，必<br>
+须修改，否则在有些场景会报错。比如： <strong>show slave status\G</strong> ，报如下的错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave have</span><br><span class="line">equal MySQL server UUIDs; these UUIDs must be different for replication to work.</span><br></pre></td></tr></table></figure>
+<p>修改MySQL Server 的UUID方式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim /var/lib/mysql/auto.cnf</span><br><span class="line"></span><br><span class="line">systemctl restart mysqld</span><br></pre></td></tr></table></figure>
+<p>建议mysql版本一致且后台以服务运行，主从所有配置项都配置在[mysqld] 节点下，且都是小写字母。<br>
+具体参数配置如下：</p>
+<h2 id="zhu-ji-pei-zhi-wen-jian" id="主机配置文件">主机配置文件</h2>
+<p>配置: vim /etc/my.cnf</p>
+<ul>
+<li>必选</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[必须]主服务器唯一ID</span></span><br><span class="line"><span class="attr">server-id</span>=<span class="number">1</span></span><br><span class="line"><span class="comment">#[必须]启用二进制日志,指名路径。比如：自己本地的路径/log/mysqlbin</span></span><br><span class="line"><span class="attr">log-bin</span>=atguigu-bin</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可选</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[可选] 0（默认）表示读写（主机），1表示只读（从机）</span></span><br><span class="line"><span class="attr">read-only</span>=<span class="number">0</span></span><br><span class="line"><span class="comment">#设置日志文件保留的时长，单位是秒</span></span><br><span class="line"><span class="attr">binlog_expire_logs_seconds</span>=<span class="number">6000</span></span><br><span class="line"><span class="comment">#控制单个二进制日志大小。此参数的最大和默认值是1GB</span></span><br><span class="line"><span class="attr">max_binlog_size</span>=<span class="number">200</span>M</span><br><span class="line"><span class="comment">#[可选]设置不要复制的数据库</span></span><br><span class="line"><span class="attr">binlog-ignore-db</span>=test</span><br><span class="line"><span class="comment">#[可选]设置需要复制的数据库,默认全部记录。比如：binlog-do-db=atguigu_master_slave</span></span><br><span class="line"><span class="attr">binlog-do-db</span>=需要复制的主数据库名字</span><br><span class="line"><span class="comment">#[可选]设置binlog格式</span></span><br><span class="line"><span class="attr">binlog_format</span>=STATEMENT</span><br></pre></td></tr></table></figure>
+<p>binlog格式设置：</p>
+<p>格式1： STATEMENT模式（基于SQL语句的复制(statement-based replication, SBR)）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binlog_format=STATEMENT</span><br></pre></td></tr></table></figure>
+<p>每一条会修改数据的sql语句会记录到binlog中。这是默认的binlog格式。</p>
+<ul>
+<li>SBR 的优点：
+<ul>
+<li>历史悠久，技术成熟</li>
+<li>不需要记录每一行的变化，减少了binlog日志量，文件较小</li>
+<li>binlog中包含了所有数据库更改信息，可以据此来审核数据库的安全等情况</li>
+<li>binlog可以用于实时的还原，而不仅仅用于复制</li>
+<li>主从版本可以不一样，从服务器版本可以比主服务器版本高</li>
+</ul>
+</li>
+<li>SBR 的缺点：
+<ul>
+<li>不是所有的UPDATE语句都能被复制，尤其是包含不确定操作的时候</li>
+</ul>
+</li>
+<li>使用以下函数的语句也无法被复制：LOAD_FILE()、UUID()、USER()、FOUND_ROWS()、SYSDATE()(除非启动时启用了 --sysdate-is-now 选项)
+<ul>
+<li>INSERT … SELECT 会产生比 RBR 更多的行级锁</li>
+<li>复制需要进行全表扫描(WHERE 语句中没有使用到索引)的 UPDATE 时，需要比 RBR 请求更多的行级锁</li>
+<li>对于有 AUTO_INCREMENT 字段的 InnoDB表而言，INSERT 语句会阻塞其他 INSERT 语句</li>
+<li>对于一些复杂的语句，在从服务器上的耗资源情况会更严重，而 RBR 模式下，只会对那个发生变化的记录产生影响</li>
+<li>执行复杂语句如果出错的话，会消耗更多资源</li>
+<li>数据表必须几乎和主服务器保持一致才行，否则可能会导致复制出错</li>
+</ul>
+</li>
+</ul>
+<p>② ROW模式（基于行的复制(row-based replication, RBR)）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binlog_format=ROW</span><br></pre></td></tr></table></figure>
+<p>5.1.5版本的MySQL才开始支持，不记录每条sql语句的上下文信息，仅记录哪条数据被修改了，修改成什么样了。</p>
+<ul>
+<li>RBR 的优点：
+<ul>
+<li>任何情况都可以被复制，这对复制来说是最安全可靠的。（比如：不会出现某些特定情况下的存储过程、function、trigger的调用和触发无法被正确复制的问题）</li>
+<li>多数情况下，从服务器上的表如果有主键的话，复制就会快了很多</li>
+<li>复制以下几种语句时的行锁更少：INSERT … SELECT、包含 AUTO_INCREMENT 字段的 INSERT、没有附带条件或者并没有修改很多记录的 UPDATE 或 DELETE 语句</li>
+<li>执行 INSERT，UPDATE，DELETE 语句时锁更少</li>
+<li>从服务器上采用多线程来执行复制成为可能</li>
+</ul>
+</li>
+<li>RBR 的缺点：
+<ul>
+<li>binlog 大了很多</li>
+<li>复杂的回滚时 binlog 中会包含大量的数据</li>
+<li>主服务器上执行 UPDATE 语句时，所有发生变化的记录都会写到 binlog 中，而 SBR 只会写一次，这会导致频繁发生 binlog 的并发写问题</li>
+<li>无法从 binlog 中看到都复制了些什么语句</li>
+</ul>
+</li>
+</ul>
+<p>③ MIXED模式（混合模式复制(mixed-based replication, MBR)）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binlog_format=MIXED</span><br></pre></td></tr></table></figure>
+<p>从5.1.8版本开始，MySQL提供了Mixed格式，实际上就是Statement与Row的结合。</p>
+<p>在Mixed模式下，一般的语句修改使用statment格式保存binlog。如一些函数，statement无法完成主从复制的操作，则采用row格式保存binlog。<br>
+MySQL会根据执行的每一条具体的sql语句来区分对待记录的日志形式，也就是在Statement和Row之间选择一种。</p>
+<h2 id="cong-ji-pei-zhi-wen-jian" id="从机配置文件">从机配置文件</h2>
+<p>要求主从所有配置项都配置在my.cnf 的[mysqld] 栏位下，且都是小写字母。</p>
+<ul>
+<li>必选</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[必须]从服务器唯一ID</span></span><br><span class="line"><span class="attr">server-id</span>=<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>可选</li>
+</ul>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[可选]启用中继日志</span></span><br><span class="line"><span class="attr">relay-log</span>=mysql-relay</span><br></pre></td></tr></table></figure>
+<p>重启后台mysql服务，使配置生效。</p>
+<blockquote>
+<p>注意：主从机都关闭防火墙<br>
+service iptables stop #CentOS 6<br>
+systemctl stop firewalld.service #CentOS 7</p>
+</blockquote>
+<h2 id="zhu-ji-jian-li-zhang-hu-bing-shou-quan" id="主机：建立账户并授权">主机：建立账户并授权</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#在主机MySQL里执行授权主从复制的命令</span><br><span class="line">GRANT REPLICATION SLAVE ON *.* TO &#x27;slave1&#x27;@&#x27;从机器数据库IP&#x27; IDENTIFIED BY &#x27;abc123&#x27;; #5.5,5.7</span><br></pre></td></tr></table></figure>
+<p>注意：如果使用的是MySQL8，需要如下的方式建立账户，并授权slave：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CREATE USER &#x27;slave1&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;123456&#x27;;</span><br><span class="line">GRANT REPLICATION SLAVE ON *.* TO &#x27;slave1&#x27;@&#x27;%&#x27;;</span><br><span class="line">#此语句必须执行。否则见下面。</span><br><span class="line">ALTER USER &#x27;slave1&#x27;@&#x27;%&#x27; IDENTIFIED WITH mysql_native_password BY &#x27;123456&#x27;;</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：在从机执行show slave status\G时报错：<br>
+Last_IO_Error: error connecting to master ‘slave1@192.168.1.150:3306’ - retry-time: 60 retries: 1<br>
+message: Authentication plugin ‘caching_sha2_password’ reported error: Authentication requires<br>
+secure connection</p>
+</blockquote>
+<p>查询Master的状态，并记录下File和Position的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show master status;</span><br></pre></td></tr></table></figure>
+<p>记录下File和Position的值</p>
+<blockquote>
+<p>注意：执行完此步骤后不要再操作主服务器MySQL，防止主服务器状态值变化。</p>
+</blockquote>
+<h2 id="cong-ji-pei-zhi-xu-yao-fu-zhi-de-zhu-ji" id="从机：配置需要复制的主机">从机：配置需要复制的主机</h2>
+<p>步骤1：从机上复制主机的命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER TO</span><br><span class="line">MASTER_HOST=&#x27;主机的IP地址&#x27;,</span><br><span class="line">MASTER_USER=&#x27;主机用户名&#x27;,</span><br><span class="line">MASTER_PASSWORD=&#x27;主机用户名的密码&#x27;,</span><br><span class="line">MASTER_LOG_FILE=&#x27;mysql-bin.具体数字&#x27;,</span><br><span class="line">MASTER_LOG_POS=具体值;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER TO MASTER_HOST=&#x27;192.168.32.3&#x27;,MASTER_USER=&#x27;slave1&#x27;,MASTER_PASSWORD=&#x27;123456&#x27;,MASTER_LOG_FILE=&#x27;mysql-bin.000009&#x27;,MASTER_LOG_POS=1136;</span><br></pre></td></tr></table></figure>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171020104.png" alt="image-20220425171020104"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171007201.png" alt="image-20220425171007201"></p>
+<p>如果报错：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171227503.png" alt="image-20220425171227503"></p>
+<p>可以执行如下操作，删除之前的relay_log信息。然后重新执行 CHANGE MASTER TO …语句即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; reset slave; #删除SLAVE数据库的relaylog日志文件，并重新启用新的relaylog文件</span><br></pre></td></tr></table></figure>
+<p>接着，查看同步状态：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW SLAVE STATUS\G;</span><br></pre></td></tr></table></figure>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171107921.png" alt="image-20220425171107921"></p>
+<p>显式如下的情况，就是不正确的。可能错误的原因有：</p>
+<blockquote>
+<ol>
+<li>网络不通</li>
+<li>账户密码错误</li>
+<li>防火墙</li>
+<li>mysql配置文件问题</li>
+<li>连接服务器时语法</li>
+<li>主服务器mysql权限</li>
+</ol>
+</blockquote>
+<h2 id="ce-shi" id="测试：">测试：</h2>
+<p>创建再主机上my.cnf指定的数据库 看看从机会不会自动同步</p>
+<p>主机:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171736900.png" alt="image-20220425171736900"></p>
+<p>从机：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425171759785.png" alt="image-20220425171759785"></p>
+<p>可以看到从机已经进行了同步</p>
+<h2 id="ting-zhi" id="停止">停止:</h2>
+<p>在从机上：执行停止主从同步命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop slave;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如何重新配置主从<br>
+如果停止从服务器复制功能，再使用需要重新配置主从。否则会报错如下：</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425172054015.png" alt=""></p>
+<p>重新配置主从，需要在从机上执行:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">stop slave;</span><br><span class="line">reset slave;</span><br><span class="line"></span><br><span class="line">reset master; #删除Master中所有的binglog文件，并将日志索引文件清空，重新开始所有新的日志文件(慎用)</span><br></pre></td></tr></table></figure>
+<h2 id="hou-xu" id="后续">后续</h2>
+<p>搭建主从复制：双主双从</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425173732498.png" alt="image-20220425173732498"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425173736712.png" alt="image-20220425173736712"></p>
+<h1 id="tong-bu-shu-ju-yi-zhi-xing-wen-ti">同步数据一致性问题</h1>
+<p><strong>主从同步的要求：</strong></p>
+<ul>
+<li>读库和写库的数据一致(最终一致)；</li>
+<li>写数据必须写到写库；</li>
+<li>读数据必须到读库(不一定)；</li>
+</ul>
+<h2 id="li-jie-zhu-cong-yan-chi-wen-ti" id="理解主从延迟问题">理解主从延迟问题</h2>
+<p>进行主从同步的内容是二进制日志，它是一个文件，在进行网络传输的过程中就一定会存在主从延迟（比如 500ms），这样就可能造成用户在从库上读取的数据不是最新的数据，也就是主从同步中的数据不一致性问题。</p>
+<h2 id="zhu-cong-yan-chi-wen-ti-yuan-yin" id="主从延迟问题原因">主从延迟问题原因</h2>
+<p>在网络正常的时候，日志从主库传给从库所需的时间是很短的，即T2-T1的值是非常小的。即，网络正常情况下，主备延迟的主要来源是备库接收完binlog和执行完这个事务之间的时间差。主备延迟最直接的表现是，从库消费中继日志（relay log）的速度，比主库生产binlog的速度要慢。造成原因：<br>
+1、从库的机器性能比主库要差<br>
+2、从库的压力大<br>
+3、大事务的执行</p>
+<p>举例1：一次性用delete语句删除太多数据<br>
+结论：后续再删除数据的时候，要控制每个事务删除的数据量，分成多次删除。<br>
+举例2：一次性用insert…select插入太多数据<br>
+举例:3：大表DDL<br>
+比如在主库对一张500W的表添加一个字段耗费了10分钟，那么从节点上也会耗费10分钟</p>
+<h2 id="ru-he-jian-shao-zhu-cong-yan-chi" id="如何减少主从延迟">如何减少主从延迟</h2>
+<p>若想要减少主从延迟的时间，可以采取下面的办法：</p>
+<ol>
+<li>降低多线程大事务并发的概率，优化业务逻辑</li>
+<li>优化SQL，避免慢SQL， 减少批量操作，建议写脚本以update-sleep这样的形式完成。</li>
+<li>提高从库机器的配置，减少主库写binlog和从库读binlog的效率差。</li>
+<li>尽量采用短的链路，也就是主库和从库服务器的距离尽量要短，提升端口带宽，减少binlog传输的网络延时。</li>
+<li>实时性要求的业务读强制走主库，从库只做灾备，备份。</li>
+</ol>
+<h2 id="ru-he-jie-jue-yi-zhi-xing-wen-ti" id="如何解决一致性问题">如何解决一致性问题</h2>
+<p>如果操作的数据存储在同一个数据库中，那么对数据进行更新的时候，可以对记录加写锁，这样在读取的时候就不会发生数据不一致的情况。但这时从库的作用就是备份，并没有起到读写分离，分担主库读压力的作用。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425174044209.png" alt="image-20220425174044209"></p>
+<p>读写分离情况下，解决主从同步中数据不一致的问题， 就是解决主从之间数据复制方式的问题，如果按照数据一致性从弱到强来进行划分，有以下 3 种复制方式。</p>
+<h3 id="fang-fa-1-yi-bu-fu-zhi" id="方法-1：异步复制">方法 1：异步复制</h3>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425174318496.png" alt="image-20220425174318496"></p>
+<h3 id="fang-fa-2-ban-tong-bu-fu-zhi" id="方法-2：半同步复制">方法 2：半同步复制</h3>
+<p>MySQL5.5版本之后开始支持半同步复制的方式。原理是在客户端提交COMMIT之后不直接将结果返回给客户端，而是等待至少有一个从库接收到了Binlog，并且写入到中继日志中，再返回给客户端。<br>
+这样做的好处就是提高了数据的一致性，当然相比于异步复制来说，至少多增加了一个网络连接的延迟，降低了主库写的效率。<br>
+在MySQL5.7 版本中还增加了一个 rpl_semi_sync_master_wait_for_slave_count参数，可以对应答的从库数量进行设置，默认为1，也就是说只要有1个从库进行了响应，就可以返回给客户端。如果将这个参数调大，可以提升数据一致性的强度，但也会增加主库等待从库响应的时间。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425174426202.png" alt="image-20220425174426202"></p>
+<h3 id="fang-fa-3-zu-fu-zhi" id="方法-3：组复制">方法 3：组复制</h3>
+<p>异步复制和半同步复制都无法最终保证数据的一致性问题，半同步复制是通过判断从库响应的个数来决定是否返回给客户端，虽然数据一致性相比于异步复制有提升，但仍然无法满足对数据一致性要求高的<br>
+场景，比如金融领域。<strong>MGR</strong> 很好地弥补了这两种复制模式的不足。<br>
+组复制技术，简称 <strong>MGR</strong>（MySQL Group Replication）。是 MySQL 在 5.7.17 版本中推出的一种新的数据复制技术，这种复制技术是基于 Paxos 协议的状态机复制。</p>
+<p><strong>MGR 是如何工作的</strong></p>
+<p>首先我们将多个节点共同组成一个复制组，在执行读写（RW）事务的时候，需要通过一致性协议层（Consensus 层）的同意，也就是读写事务想要进行提交，必须要经过组里“大多数人”（对应 Node 节点）的同意，大多数指的是同意的节点数量需要大于 （N/2+1），这样才可以进行提交，而不是原发起方一个说了算。而针对只读（RO）事务则不需要经过组内同意，直接 COMMIT 即可。在一个复制组内有多个节点组成，它们各自维护了自己的数据副本，并且在一致性协议层实现了原子消息和全局有序消息，从而保证组内数据的一致性。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425174835832.png" alt="image-20220425174835832"></p>
+<p>MGR将MySQL带入了数据强一致性的时代，是一个划时代的创新，其中一个重要的原因就是MGR是基于Paxos协议的。Paxos算法是由2013年的图灵奖获得者Leslie Lamport于1990年提出的，有关这个算法的决策机制可以搜一下。事实上，Paxos算法提出来之后就作为分布式一致性算法被广泛应用，比如Apache的ZooKeeper也是基于Paxos 实现的。|I</p>
+<h2 id="zhi-shi-yan-shen" id="知识延申">知识延申</h2>
+<p>在主从架构的配置中，如果想要采取读写分离的策略，我们可以自己编写程序，也可以通过第三方的中间件来实现。</p>
+<ul>
+<li>自己编写程序的好处就在于比较自主，我们可以自己判断哪些查询在从库上来执行，针对实时性要求高的需求，我们还可以考虑哪些查询可以在主库上执行。同时，程序直接连接数据库，减少了中间件层，相当于减少了性能损耗。</li>
+<li>采用中间件的方法有很明显的优势， 功能强大， 使用简单。但因为在客户端和数据库之间增加了中间件层会有一些性能损耗，同时商业中间件也是有使用成本的。我们也可以考虑采取一些优秀的开源工具。</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425175040649.png" alt="image-20220425175040649"></p>
+<p>① Cobar 属于阿里B2B事业群，始于2008年，在阿里服役3年多，接管3000+个MySQL数据库的schema,集群日处理在线SQL请求50亿次以上。由于Cobar发起人的离职，Cobar停止维护。<br>
+② Mycat 是开源社区在阿里cobar基础上进行二次开发，解决了cobar存在的问题，并且加入了许多新的功能在其中。青出于蓝而胜于蓝。<br>
+③ OneProxy 基于MySQL官方的proxy思想利用c语言进行开发的，OneProxy是一款商业收费的中间件。舍弃了一些功能，专注在性能和稳定性上。<br>
+④ kingshard 由小团队用go语言开发，还需要发展，需要不断完善。<br>
+⑤ Vitess 是Youtube生产在使用，架构很复杂。不支持MySQL原生协议，使用需要大量改造成本。<br>
+⑥ Atlas 是360团队基于mysql proxy改写，功能还需完善，高并发下不稳定。<br>
+⑦ MaxScale 是mariadb（MySQL原作者维护的一个版本） 研发的中间件<br>
+⑧ MySQLRoute 是MySQL官方Oracle公司发布的中间件</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425175117528.png" alt="image-20220425175117528"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425175123537.png" alt="image-20220425175123537"></p>
+<p>主备切换：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220425175133305.png" alt="image-20220425175133305"></p>
+<ul>
+<li>主动切换</li>
+<li>被动切换</li>
+<li>如何判断主库出问题了？如何解决过程中的数据不一致性问题？</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	
+	</div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/04/24/%E5%85%B6%E4%BB%96%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A5%E5%BF%97/" rel="next" title="其他数据库日志">
+                <i class="fa fa-chevron-left"></i> 其他数据库日志
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="张浩宇" />
+            
+              <p class="site-author-name" itemprop="name">张浩宇</p>
+              <p class="site-description motion-element" itemprop="description">日积月累,积少成多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">133</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanghaoyu0724" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#zhu-cong-fu-zhi-gai-shu"><span class="nav-number">1.</span> <span class="nav-text">主从复制概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ru-he-ti-sheng-shu-ju-ku-bing-fa-neng-li"><span class="nav-number">1.1.</span> <span class="nav-text">如何提升数据库并发能力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhu-cong-fu-zhi-de-zuo-yong"><span class="nav-number">1.2.</span> <span class="nav-text">主从复制的作用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhu-cong-fu-zhi-de-yuan-li"><span class="nav-number">2.</span> <span class="nav-text">主从复制的原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yuan-li-pou-xi"><span class="nav-number">2.1.</span> <span class="nav-text">原理剖析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fu-zhi-de-ji-ben-yuan-ze"><span class="nav-number">2.2.</span> <span class="nav-text">复制的基本原则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yi-zhu-yi-cong-jia-gou-da-jian"><span class="nav-number">3.</span> <span class="nav-text">一主一从架构搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zhun-bei-gong-zuo"><span class="nav-number">3.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhu-ji-pei-zhi-wen-jian"><span class="nav-number">3.2.</span> <span class="nav-text">主机配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cong-ji-pei-zhi-wen-jian"><span class="nav-number">3.3.</span> <span class="nav-text">从机配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhu-ji-jian-li-zhang-hu-bing-shou-quan"><span class="nav-number">3.4.</span> <span class="nav-text">主机：建立账户并授权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cong-ji-pei-zhi-xu-yao-fu-zhi-de-zhu-ji"><span class="nav-number">3.5.</span> <span class="nav-text">从机：配置需要复制的主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ce-shi"><span class="nav-number">3.6.</span> <span class="nav-text">测试：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ting-zhi"><span class="nav-number">3.7.</span> <span class="nav-text">停止:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hou-xu"><span class="nav-number">3.8.</span> <span class="nav-text">后续</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tong-bu-shu-ju-yi-zhi-xing-wen-ti"><span class="nav-number">4.</span> <span class="nav-text">同步数据一致性问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#li-jie-zhu-cong-yan-chi-wen-ti"><span class="nav-number">4.1.</span> <span class="nav-text">理解主从延迟问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhu-cong-yan-chi-wen-ti-yuan-yin"><span class="nav-number">4.2.</span> <span class="nav-text">主从延迟问题原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ru-he-jian-shao-zhu-cong-yan-chi"><span class="nav-number">4.3.</span> <span class="nav-text">如何减少主从延迟</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ru-he-jie-jue-yi-zhi-xing-wen-ti"><span class="nav-number">4.4.</span> <span class="nav-text">如何解决一致性问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fang-fa-1-yi-bu-fu-zhi"><span class="nav-number">4.4.1.</span> <span class="nav-text">方法 1：异步复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fang-fa-2-ban-tong-bu-fu-zhi"><span class="nav-number">4.4.2.</span> <span class="nav-text">方法 2：半同步复制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fang-fa-3-zu-fu-zhi"><span class="nav-number">4.4.3.</span> <span class="nav-text">方法 3：组复制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhi-shi-yan-shen"><span class="nav-number">4.5.</span> <span class="nav-text">知识延申</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Hao Hu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数&#58;</span>
+    
+    <span title="博客全站字数">310.9k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
