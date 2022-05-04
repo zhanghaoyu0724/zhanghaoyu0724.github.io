@@ -79,13 +79,14 @@
 
 
 
-<meta name="description" content="操作系统 在请求页式存储管理方案中，当访问的页面不在内存时需要置换页面。 置换原则如下： 最先置换访问位和修改位为00的页 其次是访问位和修改位为01的页 然后是访问位和修改位为10的页 最后才置换访问位和修改位为11的页 病毒： 计算机病毒的特征包括:传播性、隐蔽性、感染性、潜伏性、触发性、破坏性等 worm表示蠕虫病毒、Trojan表示特洛伊木马、Backdoor表示后门病毒、Macro表示宏">
+<meta name="description" content="操作系统 在请求页式存储管理方案中，当访问的页面不在内存时需要置换页面。 置换原则如下： 最先置换访问位和修改位为00的页 其次是访问位和修改位为01的页 然后是访问位和修改位为10的页 最后才置换访问位和修改位为11的页 位示图： (2）位示图。这种方法是在外存上建立一张位示图(Bitmap)，记录文件存储器的使用情况。每一位对应文件存储器上的一个物理块，取值0和1分别表示空闲和占用。例如, 某">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件设计师复习">
 <meta property="og:url" content="https://zhanghaoyu0724.github.io/2022/05/02/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%B8%88%E5%A4%8D%E4%B9%A0/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="操作系统 在请求页式存储管理方案中，当访问的页面不在内存时需要置换页面。 置换原则如下： 最先置换访问位和修改位为00的页 其次是访问位和修改位为01的页 然后是访问位和修改位为10的页 最后才置换访问位和修改位为11的页 病毒： 计算机病毒的特征包括:传播性、隐蔽性、感染性、潜伏性、触发性、破坏性等 worm表示蠕虫病毒、Trojan表示特洛伊木马、Backdoor表示后门病毒、Macro表示宏">
+<meta property="og:description" content="操作系统 在请求页式存储管理方案中，当访问的页面不在内存时需要置换页面。 置换原则如下： 最先置换访问位和修改位为00的页 其次是访问位和修改位为01的页 然后是访问位和修改位为10的页 最后才置换访问位和修改位为11的页 位示图： (2）位示图。这种方法是在外存上建立一张位示图(Bitmap)，记录文件存储器的使用情况。每一位对应文件存储器上的一个物理块，取值0和1分别表示空闲和占用。例如, 某">
 <meta property="og:locale">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505001540013.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220503134030338.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220503134114065.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220503134438899.png">
@@ -112,11 +113,32 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220503144437162.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220503145113432.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220503145315933.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504203837274.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504203915640.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504204059217.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504204346280.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504204543793.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504222239589.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504222554094.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504224339040.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504224454289.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504224955504.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504225232345.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504225638452.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504230034562.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504230224942.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504231259398.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504232726961.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504234405658.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504235853645.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505000349931.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505000717150.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505001049045.png">
 <meta property="article:published_time" content="2022-05-02T13:29:00.000Z">
-<meta property="article:modified_time" content="2022-05-03T07:04:21.972Z">
+<meta property="article:modified_time" content="2022-05-04T16:20:22.020Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220503134030338.png">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505001540013.png">
 
 
 
@@ -368,8 +390,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-05-03T15:04:21+08:00">
-                2022-05-03
+              <time title="更新于" itemprop="dateModified" datetime="2022-05-05T00:20:22+08:00">
+                2022-05-05
               </time>
             
           </span>
@@ -423,7 +445,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5.1k
+                  9.2k
                 </span>
               
 
@@ -439,7 +461,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  17
+                  31
                 </span>
               
             </div>
@@ -467,6 +489,19 @@
 <p>其次是访问位和修改位为01的页</p>
 <p>然后是访问位和修改位为10的页</p>
 <p>最后才置换访问位和修改位为11的页</p>
+<p><strong>位示图：</strong></p>
+<p>(2）位示图。这种方法是在外存上建立一张位示图(Bitmap)，记录文件存储器的使用情况。每一位对应文件存储器上的一个物理块，取值0和1分别表示空闲和占用。例如,<br>
+某文件存储器上位示图的大小为(n)物理块依次编号为0，1，2，…。假如计算机系统中字长为32位，那么在位示图中的第0个字(逻辑编号）对应文件存储器上的0，1，2，…，31号物理块;第1个字对应文件存储器上的32，33，34，…，63号物理块，依此类推，如图4-30所示</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505001540013.png" alt=""></p>
+<p>这种方法的主要特点是位示图的大小由磁盘空间的大小(物理块总数）决定，位示图的描述能力强，适合各种物理结构。</p>
+<p><strong>目录结构：</strong></p>
+<p>文件目录结构的组织方式直接影响到文件的存取速度，关系到文件的共享性和安全性，因此组织好文件的目录是设计文件系统的重要环节。常见的目录结构有3种:一级目录结构、二级目录结构和多级目录结构。<br>
+(1)一级目录结构。一级目录的整个目录组织是一个线性结构，在整个系统中只需建立一张目录表，系统为每个文件分配一个目录项。一级目录结构简单，缺点是查找速度慢，不允许重名和不便于实现文件共享等，因此它主要用在单用户环境中。<br>
+(2）二级目录结构。为了克服一级目录结构存在的缺点引入了二级目录结构,<br>
+二级目录结构是由主文件目录(Master File Directory，MFD)和用户目录(User File Directory，UFD)组成的。在主文件目录中，每个用户文件目录都占有一个目录项，其目录项中包括用户名和指向该用户目录文件的指针。用户目录是由用户所有文件的目录项组成的。<br>
+二级目录结构基本上克服了单级目录的缺点，其优点是提高了检索目录的速度，较好地解决了重名问题。采用二级目录结构也存在一些问题。该结构虽然能有效地将多个用户隔离开(这种隔离在各个用户之间完全无关时是一个优点)，但当多个用户之间要相互合作去共同完成一个大任务，且一个用户又需要去访问其他用户的文件时，这种隔离便成为一个缺点，因为这种隔离使诸用户之间不便于共享文件。</p>
+<p>(3）多级目录结构。为了解决以上问题，文道程序设计系统中常采用多级目录结构，这种目录结构像一棵倒置的有根树，所以也称为树型目录结构。从树根向下，每一个结点是一个目录，叶结点是文件。MS-DOS和 UNIX等操作系统均采用多级目录结构。<br>
+在采用多级目录结构的文件系统中，用户要访问一个文件，必须指出文件所在的路径名，路径名是从根目录开始到该文件的通路上所有各级目录名拼起来得到的。在各目录名之间、目录名与文件名之间需要用分隔符隔开。例如，在MS-DOS中分隔符为“\”，在UNIX中分隔符为“/”。绝对路径名(Absolute Path Name）是指从根目录“(”开始的完整文件名,即它是由从根目录开始的所有目录名以及文件名构成的。</p>
 <h1 id="bing-du">病毒：</h1>
 <p>计算机病毒的特征包括:传播性、隐蔽性、感染性、潜伏性、触发性、破坏性等</p>
 <p><strong>worm</strong>表示蠕虫病毒、<strong>Trojan</strong>表示特洛伊木马、<strong>Backdoor</strong>表示后门病毒、<strong>Macro</strong>表示宏病毒</p>
@@ -677,6 +712,87 @@
 </ol>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220503145315933.png" alt="image-20220503145315933"></p>
 <p><strong>商标注册  先注册先得 同一天 先使用先得  同一天注册都没使用 协商</strong></p>
+<h1 id="uml">UML</h1>
+<h2 id="shi-wu" id="事务">事务</h2>
+<p>UML中有④种事物:结构事物、行为事物、分组事物和注释事物。<br>
+(1）结构事物(Structural Thing)。结构事物是UML模型中的名词。它们通常是模型的静态部分,描述概念或物理元素。结构事物包括类(Class)、接口(Interface)、协作(Collaboration)、用例(Use Case)、主动类(Active Class)、构件(Component)、制品(Artifact)和结点(Node)。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504203837274.png" alt="image-20220504203837274"></p>
+<p>(2) 行为事物(Behavior thing)。行为事物是UM模型的动态部分。它们是模型中的动词，描述了跨越时间和空间的行为。行为事物包括交互(Interaction)、状态机(State Machine）和活动（Activity)。各种行为事物的图形化表示如图7-3所示。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504203915640.png" alt="image-20220504203915640"></p>
+<p>(3）分组事物(Grouping Thing)。分组事物是UML模型的组织部分，是一些由模型分解成的“盒子”。在所有的分组事物中，最主要的分组事物是包(Package)。包是把元素组织成组的机制，这种机制具有多种用途。结构事物、行为事物甚至其他分组事物都可以放进包内。包与构件（仅在运行时存在）不同，它纯粹是概念上的(即它仅在开发时存在)。包的图形化表示如图7-4所示。<br>
+(4）注释事物(Annotational Thing)。注释事物是UML模型的解释部分。这些注释事物用来描述、说明和标注模型的任何元素。注解(Note）是一种主要的注释事物。注解是一个依附于一个元素或者一组元素之上，对它进行约束或解释的简单符号。注解的图形化表示如图 7-5所示。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504204059217.png" alt="image-20220504204059217"></p>
+<h2 id="guan-xi" id="关系">关系</h2>
+<p>UML中有4种关系:依赖、关联、泛化和实现。<br>
+(1）依赖(Dependency)。依赖是两个事物间的语义关系，其中一个事物（独立事物）发生变化会影响另一个事物（依赖事物)的语义。在图形上，把一个依赖画成一条可能有虚线，如图7-6所示。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504204346280.png" alt="image-20220504204346280"></p>
+<p>(2）关联(Association)。关联是一种结构关系，它描述了一组链，链是对象之间的连接。聚集(Aggregation）是一种特殊类型的关联，它描述了整体和部分间的结构关系。关联和聚集的图形化表示如图7-7和图7-8所示。在关联上可以标注重复度(Multiplicity)和角色(Role)。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504204543793.png" alt="image-20220504204543793"></p>
+<p>关联又分为 <strong>组合和聚合</strong></p>
+<p>聚合:部分和整体的生命周期不一致，整体消失了，部分仍然存在部分可以脱离整体存在。  空心的菱形</p>
+<p>组合：部分和整体的生命周期一致，整体消失了，部分也消失，部分不可以脱离整体存在。  实心的菱形</p>
+<p>(3）泛化(Generalization)。泛化是一种特殊/一般关系，特殊元素（子元素）的对象可替代一般元素(父元素）的对象。用这种方法，子元素共享了父元素的结构和行为。在图形上，把一个泛化关系画成一条带有空心箭头的实线，它指向父元素，如图7-9所示。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504222239589.png" alt="image-20220504222239589"></p>
+<p>(4）实现(Realization)。实现是类元之间的语义关系，其中一个类元指定了由另一个类元保证执行的契约。在两种情况下会使用实现关系:一种是在接口和实现它们的类或构件之间;另一种是在用例和实现它们的协作之间。在图形上，把一个实现关系画成一条带有空心箭头的虚线，如图7-10所示。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504222554094.png" alt="image-20220504222554094"></p>
+<h2 id="tu" id="图">图</h2>
+<p>图(Diagram)是一组元素的图形表示，大多数情况下把图画成顶点（代表事物)和弧（代表关系)的连通图。为了对系统进行可视化，可以从不同的角度画图，这样图是对系统的投影。<br>
+ML2.O提供了13种图，分别是<strong>类图、对象图，用例图，序列图、通信图。状态图、 活动图，构件图</strong>、组合结构图、部署图、包图、交互概览图和计时图。序列图、通信图、交互概览图和计时图均被称为交互图。</p>
+<h3 id="strong-lei-tu-strong" id="类图："><strong>类图：</strong></h3>
+<p>类图(Class Diagram）展现了一组对象、接口、协作和它们之间的关系。在面向对象系统的建模中所建立的最常见的图就是类图。类图给出系统的静态设计视图。包含主动类的类图给出了系统的静态进程视图。</p>
+<h3 id="strong-dui-xiang-tu-strong" id="对象图："><strong>对象图：</strong></h3>
+<p>对象图（Object Diagram）展现了某一时刻一组对象以及它们之间的关系，描述了在类图中所建立的事物的实例的静态快照。对象图一般包括对象和链，如图7-12所示。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504224339040.png" alt="image-20220504224339040"></p>
+<h3 id="strong-yong-li-tu-strong" id="用例图："><strong>用例图：</strong></h3>
+<p>用例图（Use Case Diagram）展现了一组用例、参与者(Actor）以及它们之间的关系。用例图通常包括以下内容（如图7-13所示)。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504224454289.png" alt="image-20220504224454289"></p>
+<p><strong>包含关系</strong>:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504224955504.png" alt="image-20220504224955504"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504225232345.png" alt="image-20220504225232345"></p>
+<p><strong>删除图书和修改图书操纵 中包含 了查询图书</strong></p>
+<p><strong>扩展关系：</strong></p>
+<p>一个用例执行的时候，可能会发生一些特殊的情况或可选的情况，这种情况就是这个用例的<strong>扩展用例</strong>。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504225638452.png" alt="image-20220504225638452"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504230034562.png" alt="image-20220504230034562"></p>
+<p><strong>泛化关系：</strong></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504230224942.png" alt="image-20220504230224942"></p>
+<h3 id="strong-jiao-hu-tu-strong" id="交互图："><strong>交互图：</strong></h3>
+<p>交互图用于对系统的动态方面进行建模。一张交互图表现的是一个交互，由一组对象和它们之间的关系组成，包含它们之间可能传递的消息。交互图表现光序列图、通信图、交互概览图和计时图，每种针对不同的目的，能适用于不同的情况。<strong>序列图是强调消息时间顺序的交互图;通信图是强调接收和发送消息的对象的结构组织的交互图;交互概览图强调控制流的交互图。</strong><br>
+交互图用于对一个系统的动态方面建模。在多数情况下，它包括对类、接口、构件和结点的具体的或原型化的实例以及它们之间传递的消息进行建模，所有这些都位于一个表达行为的脚本的语境中。交互图可以单独使用，来可视化、详述、构造和文档化一个特定的对象群体的动态方面，也可以用来对一个用例的特定的控制流进行建模。<br>
+<strong>交互图一般包含对象、链和消息。</strong></p>
+<p>1）序列图</p>
+<p>序列图(Sequence Diagram)是场景(Scenario）的图形化表示，描述了以时间顺序组织的对象之间的交互活动。如图7-14所示，形成序列图时，百北依次加放在右边。然后，把这些对沿水平方向排列。通常把发起交互的对象放在左边，下级对象依次放在右边。然后，把这些对象发送和接收的消息沿垂直方向按时间顺序从上到下放置。这样，就提供了控制流随时间推移的清晰的可视化轨迹。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504231259398.png" alt="image-20220504231259398"></p>
+<p>2）<strong>通信图 别名协作图</strong></p>
+<p>通信图(Communication Diagram）强调收发消息的对象的结构组织，在早期的版本中也被称作协作图。通信图强调参加交互的对象的组织。产生一张通信图，如图7-15所示，首先要将参加交互的对象作为图的顶点，然后把连接这些对象的链表示为图的弧，最后用对象发送和接收的消息来修饰这些链。这就提供了在协作对象的结构组织的语境中观察控制流的一个清晰的可视化轨迹。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504232726961.png" alt="image-20220504232726961"></p>
+<h3 id="strong-zhuang-tai-tu-strong" id="状态图"><strong>状态图</strong></h3>
+<p>初态是一个实心的原 ， 终态是一个是一个实心的原外加一个圆圈</p>
+<p>状态图(State Diagram）展现了一个状态机，它由<strong>状态，转换、事件和活动</strong>组成。状态图关注系统的动态视图，对于接口、类和协作的行为建模尤为重要，强调对象行为的事件顺序。<br>
+状态图通常包括**简单状态和组合状态、转换(事件和动作)，**如图7-18所示。状态是指对象的生命周期中某个条件或者状态，在此期间对象将满足某些条件、执行某些活动或等待某些事件，是对象执行了一系列活动的结果，当某个事件发生后，对象的状态将发生变化。嵌套在另外一个状态中的状态称为子状态，含有子状态的状态称为组合状态。转换是两个状态之间的一种关系，表示对象将在源状态中执行一定的动作，并在某个特定事件发生而且某个特定的警界（监护）条件满足时进入目标状态。动作是一个可执行的原子操作，是不可中断的，其执行时间是可忽略不计的。直接通过进入节点进入状态，通过退出节点可以结束状态。使用历史状态记住从组合状态中退出时所处的子状态，作用是当再次进入组合状态时，可以直接进入这个子状态，而不是再次从组合状态的初态开始。状态图可以分为区域，而区域又包括退出或者当前执行的子状态，说明组合状态可以在某一时刻同时到达多个子状态，此时通常在其前后使用fork和 join标识。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504234405658.png" alt="image-20220504234405658"></p>
+<p><strong>事件：</strong></p>
+<p>事件是在某个特定时刻发生的事情,它是对引起系统做动作或（和）从一个状态转换到另一个状态的外界事件的抽象。(例如，观众使用电视遥控器，用户移动鼠标、单击鼠标等都是事件。简而言之,事件就是引起系统做动作或（和)转换状态的控制信息。<br>
+状态变迁通常是由事件触发的，在这种情况下，应在表示状态转换的箭头线上标出触发转换的事件表达式。<br>
+如果在箭头线上未标明事件，则表示在源状态的内部活动执行完之后自动触发转换。事件表达式的语法如下。<br>
+<strong>事件说明[守卫条件]/动作表达式</strong><br>
+其中,事件说明的语法为:事件名(参数表)。<br>
+守卫条件是一个布尔表达式。如果同时使用事件说明和守卫条件,则当且仅当事件发生且布尔表达式为真时，状态转换才发生。如果只有守卫条件没有事件说明，则只要守卫条件为真，状态转换就发生。<br>
+动作表达式是一个过程表达式，当状态转换开始时执行该表达式。</p>
+<p><strong>转换包括两个状态（源状态，目标状态)事件，监护条件，动作</strong><br>
+<strong>事件触发 转换（迁移)</strong><br>
+<strong>活动（动作）可以在状态内执行，也可以在状态转换(迁移）时执行。</strong></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220504235853645.png" alt="image-20220504235853645"></p>
+<h3 id="huo-dong-tu" id="活动图">活动图</h3>
+<p><strong>活动图(Activity Diagram)是一种特殊的状态图</strong>，它展现了在系统内从一个活动到另一个活动的流程，如图7-19所示。活动图专注于系统的动态视图,它对于系统的功能建模特别重要，并强调对象间的控制流程。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505000349931.png" alt="image-20220505000349931"></p>
+<h3 id="gou-jian-tu" id="构件图：">构件图：</h3>
+<p><strong>构件图(Component Diagram)展现了一组构件之间的组织和依赖</strong>。构件图专注于系统的静态实现视图,如图7-20所示。它与类图相关，通常把构件映射为一个或多个类、接口或协作。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505000717150.png" alt="image-20220505000717150"></p>
+<h3 id="bu-shu-tu" id="部署图：">部署图：</h3>
+<p><strong>部署图展现了系统的软件和硬件之间的关系在实施阶段使用</strong></p>
+<p>部署图（Deployment Diagram）<strong>是用来对面向对象系统的物理方面建模的方法</strong>，展现了运行时处理结点以及其中构件(制品）的配置。部署图对系统的静态部署视图进行建模，它与构件图相关。通常，一个结点是一个在运行时存在并代表一项计算资源的物理元素，至少拥有一些内容，常常具有处理能力，包含一个或多个构件。部署图如图7-23所示，其中，&lt;<artifact>&gt;表示制品。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220505001049045.png" alt="image-20220505001049045"></p>
 
       
     </div>
@@ -866,7 +982,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cao-zuo-xi-tong"><span class="nav-number">1.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bing-du"><span class="nav-number">2.</span> <span class="nav-text">病毒：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wang-luo-gong-ji"><span class="nav-number">3.</span> <span class="nav-text">网络攻击：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhi-shi-chan-quan"><span class="nav-number">4.</span> <span class="nav-text">知识产权</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-ben-gai-nian"><span class="nav-number">4.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-zhu-zuo-quan"><span class="nav-number">4.2.</span> <span class="nav-text">计算机软件著作权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-zhu-zuo-quan-de-bao-hu-qi"><span class="nav-number">4.3.</span> <span class="nav-text">计算机软件著作权的保护期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti"><span class="nav-number">4.4.</span> <span class="nav-text">案例试题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-zhu-zuo-quan-de-gui-shu"><span class="nav-number">4.5.</span> <span class="nav-text">计算机软件著作权的归属:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-1"><span class="nav-number">4.6.</span> <span class="nav-text">案例试题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-tuo-kai-fa"><span class="nav-number">4.7.</span> <span class="nav-text">委托开发:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-2"><span class="nav-number">4.8.</span> <span class="nav-text">案例试题:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-zhu-zuo-quan-qin-quan-de-jian-bie"><span class="nav-number">4.9.</span> <span class="nav-text">计算机软件著作权侵权的鉴别:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-3"><span class="nav-number">4.10.</span> <span class="nav-text">案例试题:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-de-shang-ye-mi-mi-quan"><span class="nav-number">4.11.</span> <span class="nav-text">计算机软件的商业秘密权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-4"><span class="nav-number">4.12.</span> <span class="nav-text">案例试题:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhuan-li-de-shen-qing"><span class="nav-number">4.13.</span> <span class="nav-text">专利的申请：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-5"><span class="nav-number">4.14.</span> <span class="nav-text">案例试题:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shang-biao-quan"><span class="nav-number">4.15.</span> <span class="nav-text">商标权：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-6"><span class="nav-number">4.16.</span> <span class="nav-text">案例试题:</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cao-zuo-xi-tong"><span class="nav-number">1.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bing-du"><span class="nav-number">2.</span> <span class="nav-text">病毒：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wang-luo-gong-ji"><span class="nav-number">3.</span> <span class="nav-text">网络攻击：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zhi-shi-chan-quan"><span class="nav-number">4.</span> <span class="nav-text">知识产权</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-ben-gai-nian"><span class="nav-number">4.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-zhu-zuo-quan"><span class="nav-number">4.2.</span> <span class="nav-text">计算机软件著作权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-zhu-zuo-quan-de-bao-hu-qi"><span class="nav-number">4.3.</span> <span class="nav-text">计算机软件著作权的保护期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti"><span class="nav-number">4.4.</span> <span class="nav-text">案例试题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-zhu-zuo-quan-de-gui-shu"><span class="nav-number">4.5.</span> <span class="nav-text">计算机软件著作权的归属:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-1"><span class="nav-number">4.6.</span> <span class="nav-text">案例试题：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-tuo-kai-fa"><span class="nav-number">4.7.</span> <span class="nav-text">委托开发:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-2"><span class="nav-number">4.8.</span> <span class="nav-text">案例试题:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-zhu-zuo-quan-qin-quan-de-jian-bie"><span class="nav-number">4.9.</span> <span class="nav-text">计算机软件著作权侵权的鉴别:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-3"><span class="nav-number">4.10.</span> <span class="nav-text">案例试题:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-suan-ji-ruan-jian-de-shang-ye-mi-mi-quan"><span class="nav-number">4.11.</span> <span class="nav-text">计算机软件的商业秘密权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-4"><span class="nav-number">4.12.</span> <span class="nav-text">案例试题:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhuan-li-de-shen-qing"><span class="nav-number">4.13.</span> <span class="nav-text">专利的申请：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-5"><span class="nav-number">4.14.</span> <span class="nav-text">案例试题:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shang-biao-quan"><span class="nav-number">4.15.</span> <span class="nav-text">商标权：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#an-li-shi-ti-6"><span class="nav-number">4.16.</span> <span class="nav-text">案例试题:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#uml"><span class="nav-number">5.</span> <span class="nav-text">UML</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-wu"><span class="nav-number">5.1.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#guan-xi"><span class="nav-number">5.2.</span> <span class="nav-text">关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tu"><span class="nav-number">5.3.</span> <span class="nav-text">图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-lei-tu-strong"><span class="nav-number">5.3.1.</span> <span class="nav-text">类图：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-dui-xiang-tu-strong"><span class="nav-number">5.3.2.</span> <span class="nav-text">对象图：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-yong-li-tu-strong"><span class="nav-number">5.3.3.</span> <span class="nav-text">用例图：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-jiao-hu-tu-strong"><span class="nav-number">5.3.4.</span> <span class="nav-text">交互图：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strong-zhuang-tai-tu-strong"><span class="nav-number">5.3.5.</span> <span class="nav-text">状态图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#huo-dong-tu"><span class="nav-number">5.3.6.</span> <span class="nav-text">活动图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gou-jian-tu"><span class="nav-number">5.3.7.</span> <span class="nav-text">构件图：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bu-shu-tu"><span class="nav-number">5.3.8.</span> <span class="nav-text">部署图：</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -907,7 +1023,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">326k</span>
+    <span title="博客全站字数">330.1k</span>
   
 </div>
 
