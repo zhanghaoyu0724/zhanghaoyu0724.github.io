@@ -92,8 +92,18 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220517220231650.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220517230725671.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220517230737656.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518203300651.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518203649821.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518220436618.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518221539995.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518224426526.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518224439789.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518231322492.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518232634140.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518234446548.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518232807204.png">
 <meta property="article:published_time" content="2022-05-16T15:33:07.000Z">
-<meta property="article:modified_time" content="2022-05-17T15:45:07.703Z">
+<meta property="article:modified_time" content="2022-05-18T16:14:57.488Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220517152907974.png">
@@ -348,8 +358,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-05-17T23:45:07+08:00">
-                2022-05-17
+              <time title="更新于" itemprop="dateModified" datetime="2022-05-19T00:14:57+08:00">
+                2022-05-19
               </time>
             
           </span>
@@ -403,7 +413,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2k
+                  3.7k
                 </span>
               
 
@@ -419,7 +429,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  9
+                  17
                 </span>
               
             </div>
@@ -497,8 +507,149 @@ session的替代方案应该满足：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginInterceptor</span> <span class="keyword">implements</span> <span class="title">HandlerInterceptor</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LoginInterceptor</span><span class="params">(StringRedisTemplate redisTemplate)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.stringRedisTemplate=redisTemplate;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//1 判断是否需要拦截(ThreadLocal是是否头用户)</span></span><br><span class="line">        <span class="keyword">if</span> (UserHolder.getUser()==<span class="keyword">null</span>)&#123;</span><br><span class="line">            response.setStatus(<span class="number">401</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//由用户 ，则方行</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>MvcConfig:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//order 控制拦截器执行顺序 越小越先执行</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MvcConfig</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Resource</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> </span>&#123;</span><br><span class="line">        registry.addInterceptor(<span class="keyword">new</span> LoginInterceptor())</span><br><span class="line">                .excludePathPatterns(</span><br><span class="line">                        <span class="string">&quot;/user/login&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;/user/code&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;/blog/hot&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;/shop/**&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;/shop-type/**&quot;</span>,</span><br><span class="line">                        <span class="string">&quot;/voucher/**&quot;</span></span><br><span class="line">                        ).order(<span class="number">1</span>);</span><br><span class="line">        registry.addInterceptor(<span class="keyword">new</span> RefreshTokenInterceptor(stringRedisTemplate)).order(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>商户查询缓存<br>
-优惠券秒杀<br>
+<h1 id="shang-hu-cha-xun-huan-cun">商户查询缓存</h1>
+<h2 id="shi-yao-shi-huan-cun" id="什么是缓存">什么是缓存</h2>
+<p>缓存就是数据交换的缓冲区（称作Cache [ kæʃ ] ），是存贮数据的临时地方，一般读写性能较高</p>
+<p>缓存的作用:</p>
+<ul>
+<li>降低后端负载</li>
+<li>提高读写效率，降低响应时间</li>
+</ul>
+<p>缓存的成本:</p>
+<ul>
+<li>数据一致性成本</li>
+<li>代码维护成本</li>
+<li>运维成本</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518203300651.png" alt="image-20220518203300651"></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518203649821.png" alt="image-20220518203649821"></p>
+<p>给商铺详情信息：添加缓存</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShopServiceImpl</span> <span class="keyword">extends</span> <span class="title">ServiceImpl</span>&lt;<span class="title">ShopMapper</span>, <span class="title">Shop</span>&gt; <span class="keyword">implements</span> <span class="title">IShopService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate redisTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Result <span class="title">queryById</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String key = CACHE_SHOP_KEY + id;</span><br><span class="line">        <span class="comment">//1 从redis查询商铺缓存</span></span><br><span class="line"><span class="comment">//        Map&lt;Object, Object&gt; map = redisTemplate.opsForHash().entries(key);</span></span><br><span class="line">        String shopJson = redisTemplate.opsForValue().get(key);</span><br><span class="line">        <span class="comment">//2 判断是否存在</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(shopJson))&#123;</span><br><span class="line">            <span class="comment">//3 存在，直接返回</span></span><br><span class="line"><span class="comment">//            Shop shop = BeanUtil.fillBeanWithMap(map, new Shop(), false);</span></span><br><span class="line">            Shop shop = JSONUtil.toBean(shopJson, Shop.class);</span><br><span class="line">            <span class="keyword">return</span> Result.ok(shop);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//4不存在，根据id查询数据库</span></span><br><span class="line">        Shop shop = getById(id);</span><br><span class="line">        <span class="comment">//5 不存在返回错误</span></span><br><span class="line">        <span class="keyword">if</span> (shop==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> Result.fail(<span class="string">&quot;店铺不存在&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6 存在，写入redis</span></span><br><span class="line"><span class="comment">//        Map&lt;String, Object&gt; map1 = BeanUtil.beanToMap(shop,new HashMap&lt;&gt;(), CopyOptions.create().setIgnoreNullValue(true).setFieldValueEditor(((fieldKey,fieldValue)-&gt;fieldValue.toString())));</span></span><br><span class="line"><span class="comment">//        redisTemplate.opsForHash().putAll(key,map1);</span></span><br><span class="line">        String jsonStr = JSONUtil.toJsonStr(shop);</span><br><span class="line">        redisTemplate.opsForValue().set(key,jsonStr);</span><br><span class="line">        <span class="keyword">return</span> Result.ok(shop);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>List缓存 商店分类数据 :</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShopTypeServiceImpl</span> <span class="keyword">extends</span> <span class="title">ServiceImpl</span>&lt;<span class="title">ShopTypeMapper</span>, <span class="title">ShopType</span>&gt; <span class="keyword">implements</span> <span class="title">IShopTypeService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> StringRedisTemplate stringRedisTemplate;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Result <span class="title">queryAllType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1 查询redis缓存</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//String存储</span></span><br><span class="line"><span class="comment">//        String shopTypeJson = stringRedisTemplate.opsForValue().get(CACHE_SHOP_TYPE_KEY);</span></span><br><span class="line">        <span class="comment">//List存储</span></span><br><span class="line">        List&lt;String&gt; range = stringRedisTemplate.opsForList().range(CACHE_SHOP_TYPE_KEY, <span class="number">0L</span>, -<span class="number">1L</span>);</span><br><span class="line">        <span class="comment">//2 是否存在redis缓存</span></span><br><span class="line">        <span class="keyword">if</span> (range!=<span class="keyword">null</span>&amp;&amp;!range.isEmpty())&#123;</span><br><span class="line">            <span class="comment">// 3存在redis缓存</span></span><br><span class="line">            ArrayList&lt;ShopType&gt; shopTypes = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">            range.forEach((stringShopType)-&gt; shopTypes.add(JSONUtil.toBean(stringShopType,ShopType.class))  );</span><br><span class="line">            <span class="keyword">return</span> Result.ok(shopTypes);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//4 不存在redis 缓存查询数据库</span></span><br><span class="line">        List&lt;ShopType&gt; shopTypes = query().orderByAsc(<span class="string">&quot;sort&quot;</span>).list();</span><br><span class="line">        <span class="comment">//5 没有类型返回失败</span></span><br><span class="line">        <span class="keyword">if</span> (shopTypes==<span class="keyword">null</span> ||shopTypes.isEmpty())</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> Result.fail(<span class="string">&quot;没有商铺类型&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        ArrayList&lt;String&gt; stringShopTypes = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">//把List 元素 ShopType 全部转 String类型</span></span><br><span class="line">        shopTypes.forEach(shopType -&gt; stringShopTypes.add(JSONUtil.toJsonStr(shopType)));</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//6 存储到redis中</span></span><br><span class="line">        String toJsonStr = JSONUtil.toJsonStr(shopTypes);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//String存储</span></span><br><span class="line"><span class="comment">//        stringRedisTemplate.opsForValue().set(CACHE_SHOP_TYPE_KEY,toJsonStr);</span></span><br><span class="line">        <span class="comment">//List存储</span></span><br><span class="line">        stringRedisTemplate.opsForList().rightPushAll(CACHE_SHOP_TYPE_KEY,stringShopTypes);</span><br><span class="line">        <span class="keyword">return</span> Result.ok(shopTypes);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="huan-cun-geng-xin-ce-lue" id="缓存更新策略">缓存更新策略</h2>
+<p>业务场景：</p>
+<ul>
+<li>低一致性需求：<strong>使用内存 淘汰机制。例如店铺类型的查询缓存</strong></li>
+<li>高一致性需求：<strong>主动更新，并以超时剔除作为兜底方案。例如店铺详情查询的缓存</strong></li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518220436618.png" alt="image-20220518220436618"></p>
+<p>操作缓存和数据库时有三个问题需要考虑：</p>
+<ol>
+<li>删除缓存还是更新缓存？</li>
+</ol>
+<ul>
+<li>更新缓存：每次更新数据库都更新缓存，无效写操作 较多</li>
+<li>删除缓存：更新数据库时让缓存失效，查询时再更新缓存</li>
+</ul>
+<ol start="2">
+<li>如何保证缓存与数据库的操作的同时成功或失败？</li>
+</ol>
+<ul>
+<li>单体系统，将缓存与数据库操作放在一个事务</li>
+<li>分布式系统，利用TCC等分布式事务方案</li>
+</ul>
+<ol start="3">
+<li>先操作缓存还是先操作数据库？</li>
+</ol>
+<ul>
+<li>先删除缓存，再操作数据库</li>
+<li>先操作数据库，再删除缓存</li>
+<li><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518221539995.png" alt="image-20220518221539995"></li>
+</ul>
+<p>​	对比方案2 的缓存不一致问题几率更低</p>
+<p>给查询商铺的缓存添加超时剔除和主动更新的策略</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="meta">@Transactional</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Result <span class="title">update</span><span class="params">(Shop shop)</span> </span>&#123;</span><br><span class="line">        Long id = shop.getId();</span><br><span class="line">        <span class="keyword">if</span> (id==<span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Result.fail(<span class="string">&quot;店铺id不能为空&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//1 更新数据库</span></span><br><span class="line">        updateById(shop);</span><br><span class="line">        <span class="comment">//2 删除缓存</span></span><br><span class="line">        redisTemplate.delete(CACHE_SHOP_KEY+id);</span><br><span class="line">        <span class="keyword">return</span> Result.ok();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="huan-cun-chuan-tou" id="缓存穿透：">缓存穿透：</h2>
+<p>缓存穿透是指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远不会生效，这些请求都会打到数据库。</p>
+<p>常见的解决方案有两种：</p>
+<ul>
+<li>缓存空对象</li>
+<li>优点：实现简单，维护方便 用户id作为key</li>
+<li>缺点：
+<ul>
+<li>额外的内存消耗</li>
+<li>可能造成短期的不一致</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518224426526.png" alt="image-20220518224426526"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Result <span class="title">queryById</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String key = CACHE_SHOP_KEY + id;</span><br><span class="line">        <span class="comment">//1 从redis查询商铺缓存</span></span><br><span class="line"><span class="comment">//        Map&lt;Object, Object&gt; map = redisTemplate.opsForHash().entries(key);</span></span><br><span class="line">        String shopJson = redisTemplate.opsForValue().get(key);</span><br><span class="line">        <span class="comment">//2 判断是否存在</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(shopJson))&#123;</span><br><span class="line">            <span class="comment">//3 存在，直接返回</span></span><br><span class="line"><span class="comment">//            Shop shop = BeanUtil.fillBeanWithMap(map, new Shop(), false);</span></span><br><span class="line">            Shop shop = JSONUtil.toBean(shopJson, Shop.class);</span><br><span class="line">            <span class="keyword">return</span> Result.ok(shop);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//判断 数据为空值  解决缓存穿透 到数据库</span></span><br><span class="line">        <span class="keyword">if</span> (shopJson!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>  Result.fail(<span class="string">&quot;店铺信息不存在!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//4不存在，根据id查询数据库</span></span><br><span class="line">        Shop shop = getById(id);</span><br><span class="line">        <span class="comment">//5 不存在返回错误</span></span><br><span class="line">        <span class="keyword">if</span> (shop==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">//将空值写入 redis 解决缓存击穿</span></span><br><span class="line">            redisTemplate.opsForValue().set(key,<span class="string">&quot;&quot;</span>,CACHE_NULL_TTL,TimeUnit.MINUTES);</span><br><span class="line">            <span class="keyword">return</span> Result.fail(<span class="string">&quot;店铺不存在&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//6 存在，写入redis</span></span><br><span class="line"><span class="comment">//        Map&lt;String, Object&gt; map1 = BeanUtil.beanToMap(shop,new HashMap&lt;&gt;(), CopyOptions.create().setIgnoreNullValue(true).setFieldValueEditor(((fieldKey,fieldValue)-&gt;fieldValue.toString())));</span></span><br><span class="line"><span class="comment">//        redisTemplate.opsForHash().putAll(key,map1);</span></span><br><span class="line">        String jsonStr = JSONUtil.toJsonStr(shop);</span><br><span class="line">        redisTemplate.opsForValue().set(key,jsonStr,CACHE_SHOP_TTL, TimeUnit.MINUTES);</span><br><span class="line">        <span class="keyword">return</span> Result.ok(shop);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>布隆过滤</li>
+<li>优点：内存占用较少，没有多余key</li>
+<li>缺点：
+<ul>
+<li>实现复杂</li>
+<li>存在误判可能</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518224439789.png" alt="image-20220518224439789"></p>
+<p>缓存穿透产生的原因是什么？</p>
+<ul>
+<li>用户请求的数据在缓存中和数据库中都不存在，不断发起这样的请求，给数据库带来巨大压力</li>
+</ul>
+<p>缓存穿透的解决方案有哪些？</p>
+<ul>
+<li>缓存null值</li>
+<li>布隆过滤</li>
+<li>增强id的复杂度，避免被猜测id规律</li>
+<li>做好数据的基础格式校验</li>
+<li>加强用户权限校验</li>
+<li>做好热点参数的限流</li>
+</ul>
+<h2 id="huan-cun-xue-beng" id="缓存雪崩">缓存雪崩</h2>
+<p>缓存雪崩是指在同一时段大量的缓存key同时失效或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力。</p>
+<p>解决方案：</p>
+<ul>
+<li>给不同的Key的TTL添加随机值</li>
+<li>利用Redis集群提高服务的可用性</li>
+<li>给缓存业务添加降级限流策略 利用Springcloud做服务降级</li>
+<li>给业务添加多级缓存</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518231322492.png" alt="image-20220518231322492"></p>
+<h2 id="huan-cun-ji-chuan" id="缓存击穿">缓存击穿</h2>
+<p>缓存击穿问题也叫热点Key问题，就是一个被<strong>高并发访问</strong>并且<strong>缓存重建业务较复杂的key</strong>突然失效了，无数的请求访问会在瞬间给数据库带来巨大的冲击。</p>
+<p>解决方案：</p>
+<ul>
+<li>
+<p>互斥锁</p>
+</li>
+<li>
+<p>逻辑过期</p>
+</li>
+</ul>
+<p>互斥锁:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518232634140.png" alt="image-20220518232634140"></p>
+<p>互斥锁实现:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518234446548.png" alt="image-20220518234446548"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Shop <span class="title">queryWhitMutex</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        String key = CACHE_SHOP_KEY + id;</span><br><span class="line">        String shopJson = redisTemplate.opsForValue().get(key);</span><br><span class="line">        <span class="comment">//2 判断是否存在</span></span><br><span class="line">        <span class="keyword">if</span> (StrUtil.isNotBlank(shopJson))&#123;</span><br><span class="line">            <span class="keyword">return</span> JSONUtil.toBean(shopJson, Shop.class);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//判断 数据为空值  解决缓存穿透 到数据库</span></span><br><span class="line">        <span class="keyword">if</span> (shopJson!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>  <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//4 实现缓存重建</span></span><br><span class="line">        <span class="comment">//4.1 获取互斥锁</span></span><br><span class="line">        String lockKey = <span class="keyword">null</span>;</span><br><span class="line">        Shop shop = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            lockKey = LOCK_SHOP_KEY + id;</span><br><span class="line">            <span class="keyword">boolean</span> isLock = tryLock(lockKey);</span><br><span class="line">            <span class="comment">//4.2 判断是否获取成功</span></span><br><span class="line">            <span class="keyword">if</span> (!isLock) &#123;</span><br><span class="line">                <span class="comment">//4.3 失败，休眠并重试</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(<span class="number">50</span>);</span><br><span class="line">                   <span class="keyword">return</span> queryWhitMutex(id);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//4.4 成功 根据id查询数据库</span></span><br><span class="line">            <span class="comment">//4，根据id查询数据库</span></span><br><span class="line">            shop = getById(id);</span><br><span class="line">            <span class="comment">//模拟重建的延时</span></span><br><span class="line">            Thread.sleep(<span class="number">200</span>);</span><br><span class="line">            <span class="comment">//5 不存在返回错误</span></span><br><span class="line">            <span class="keyword">if</span> (shop==<span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="comment">//将空值写入 redis</span></span><br><span class="line">                redisTemplate.opsForValue().set(key,<span class="string">&quot;&quot;</span>,CACHE_NULL_TTL,TimeUnit.MINUTES);</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//6 存在，写入redis</span></span><br><span class="line">            String jsonStr = JSONUtil.toJsonStr(shop);</span><br><span class="line">            redisTemplate.opsForValue().set(key,jsonStr,CACHE_SHOP_TTL, TimeUnit.MINUTES);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="comment">//7 释放互斥锁</span></span><br><span class="line">            unlock(lockKey);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> shop;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>逻辑过期:</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220518232807204.png" alt="image-20220518232807204"></p>
+<p><strong>互斥锁</strong></p>
+<p>​	<strong>优点</strong></p>
+<pre><code>	1. 没有额外的内存消耗
+	1. 保证一致性
+	1. 实现简单
+</code></pre>
+<p>​	<strong>缺点</strong></p>
+<ol>
+<li>线程需要等待，性能受影响</li>
+<li>可能有死锁风险</li>
+</ol>
+<p><strong>逻辑过期</strong></p>
+<p>​	<strong>优点</strong></p>
+<ol>
+<li>线程无需等待，性能较好</li>
+</ol>
+<p>​	<strong>缺点</strong></p>
+<ol>
+<li>不保证一致性</li>
+<li>有额外的内存消耗</li>
+<li>实现复杂</li>
+</ol>
+<p>优惠券秒杀<br>
 达人探店<br>
 好友关注<br>
 附近的商户<br>
@@ -693,7 +844,7 @@ UV统计</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#duan-xin-deng-lu"><span class="nav-number">1.</span> <span class="nav-text">短信登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-yu-session-shi-xian-deng-lu"><span class="nav-number">1.1.</span> <span class="nav-text">基于Session实现登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-qun-de-session-gong-xiang-wen-ti"><span class="nav-number">1.2.</span> <span class="nav-text">集群的session共享问题</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#duan-xin-deng-lu"><span class="nav-number">1.</span> <span class="nav-text">短信登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-yu-session-shi-xian-deng-lu"><span class="nav-number">1.1.</span> <span class="nav-text">基于Session实现登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ji-qun-de-session-gong-xiang-wen-ti"><span class="nav-number">1.2.</span> <span class="nav-text">集群的session共享问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shang-hu-cha-xun-huan-cun"><span class="nav-number">2.</span> <span class="nav-text">商户查询缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shi-yao-shi-huan-cun"><span class="nav-number">2.1.</span> <span class="nav-text">什么是缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huan-cun-geng-xin-ce-lue"><span class="nav-number">2.2.</span> <span class="nav-text">缓存更新策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huan-cun-chuan-tou"><span class="nav-number">2.3.</span> <span class="nav-text">缓存穿透：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huan-cun-xue-beng"><span class="nav-number">2.4.</span> <span class="nav-text">缓存雪崩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huan-cun-ji-chuan"><span class="nav-number">2.5.</span> <span class="nav-text">缓存击穿</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -734,7 +885,7 @@ UV统计</p>
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">347.3k</span>
+    <span title="博客全站字数">349.1k</span>
   
 </div>
 
