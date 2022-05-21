@@ -122,7 +122,7 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220423154640931.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220423154651884.png">
 <meta property="article:published_time" content="2022-04-20T10:09:24.000Z">
-<meta property="article:modified_time" content="2022-04-23T08:02:17.060Z">
+<meta property="article:modified_time" content="2022-05-21T08:52:18.721Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220420181423224.png">
@@ -377,8 +377,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-04-23T16:02:17+08:00">
-                2022-04-23
+              <time title="更新于" itemprop="dateModified" datetime="2022-05-21T16:52:18+08:00">
+                2022-05-21
               </time>
             
           </span>
@@ -747,9 +747,7 @@ InnoDB与MyISAM的最大不同有两点:一是支持事务(TRANSACTION)﹔二是
 <p>有时候我们既想锁住某条记录，又想阻止其他事务在该记录前边的间隙插入新记录，所以InnoDB就提出了一种称之为Next-Key Locks 的锁，官方的类型名称为： LOCK_ORDINARY ，我们也可以简称为next-key锁。Next-Key Locks是在存储引擎innodb 、事务级别在可重复读的情况下使用的数据库锁，innodb默认的锁就是Next-Key locks。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">begin;</span><br><span class="line">select * from student where id &lt;=8 and id &gt; 3 for update</span><br></pre></td></tr></table></figure>
 <h4 id="cha-ru-yi-xiang-suo-insert-intention-locks" id="④-插入意向锁（Insert-Intention-Locks）">④ 插入意向锁（Insert Intention Locks）</h4>
-<p>我们说一个事务在插入一条记录时需要判断一下插入位置是不是被别的事务加了gap锁（ next-key锁也包含gap锁），如果有的话，插入操作需要等待，直到拥有gap锁的那个事务提交。但是InnoDB规定事务在等待的时候也需要在内存中生成一个锁结构，表明有事务想在某个间隙中插入新记录，但是现在在等待。InnoDB就把这种类型的锁命名为Insert Intention Locks ，官方的类型名称为：LOCK_INSERT_INTENTION ，我们称为插入意向锁。插入意向锁是一种Gap锁，不是意向锁，在insert操作时产生。<br>
-插入意向锁是在插入一条记录行前，由 INSERT 操作产生的一种间隙锁。<br>
-事实上插入意向锁并不会阻止别的事务继续获取该记录上任何类型的锁。</p>
+<p>我们说一个事务在插入一条记录时需要判断一下插入位置是不是被别的事务加了gap锁（ next-key锁也包含gap锁），如果有的话，插入操作需要等待，直到拥有gap锁的那个事务提交。**但是InnoDB规定事务在等待的时候也需要在内存中生成一个锁结构，表明有事务想在某个间隙中插入新记录，但是现在在等待。InnoDB就把这种类型的锁命名为Insert Intention Locks ，官方的类型名称为：LOCK_INSERT_INTENTION ，我们称为插入意向锁。**插入意向锁是一种Gap锁，不是意向锁，在insert操作时产生。插入意向锁是在插入一条记录行前，由 INSERT 操作产生的一种间隙锁。事实上插入意向锁并不会阻止别的事务继续获取该记录上任何类型的锁。</p>
 <h3 id="ye-suo" id="页锁">页锁</h3>
 <p>页锁就是在页的粒度上进行锁定，锁定的数据资源比行锁要多，因为一个页中可以有多个行记录。当我们使用页锁的时候，会出现数据浪费的现象，但这样的浪费最多也就是一个页上的数据行。页锁的开销介于表锁和行锁之间，会出现死锁。锁定粒度介于表锁和行锁之间，并发度一般。<br>
 每个层级的锁数量是有限制的，因为锁会占用内存空间， 锁空间的大小是有限的。当某个层级的锁数量超过了这个层级的阈值时，就会进行锁升级。锁升级就是用更大粒度的锁替代多个更小粒度的锁，比如InnoDB 中行锁升级为表锁，这样做的好处是占用的锁空间降低了，但同时数据的并发度也下降了。</p>
@@ -1338,7 +1336,7 @@ next-key lock的加锁规则<br>
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">350.5k</span>
+    <span title="博客全站字数">352.7k</span>
   
 </div>
 
