@@ -92,8 +92,9 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725151319695.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725151543640.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725151654046.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725151940515.png">
 <meta property="article:published_time" content="2022-06-13T05:10:49.000Z">
-<meta property="article:modified_time" content="2022-06-13T06:30:04.900Z">
+<meta property="article:modified_time" content="2022-06-13T06:59:10.778Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725144240631.png">
@@ -348,7 +349,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-06-13T14:30:04+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2022-06-13T14:59:10+08:00">
                 2022-06-13
               </time>
             
@@ -403,7 +404,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  869
+                  911
                 </span>
               
 
@@ -510,6 +511,9 @@
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 表示每执行一次写命令，立即记录到AOF文件</span></span><br><span class="line"><span class="attr">appendfsync</span> <span class="string">always </span></span><br><span class="line"><span class="comment"># 写命令执行完先放入AOF缓冲区，然后表示每隔1秒将缓冲区数据写到AOF文件，是默认方案</span></span><br><span class="line"><span class="attr">appendfsync</span> <span class="string">everysec </span></span><br><span class="line"><span class="comment"># 写命令执行完先放入AOF缓冲区，由操作系统决定何时将缓冲区内容写回磁盘</span></span><br><span class="line"><span class="attr">appendfsync</span> <span class="string">no</span></span><br></pre></td></tr></table></figure>
 <p>三种策略对比：</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725151654046.png" alt="image-20210725151654046"></p>
+<h2 id="rdb-yu-aof-dui-bi" id="RDB与AOF对比">RDB与AOF对比</h2>
+<p>RDB和AOF各有自己的优缺点，如果对数据安全性要求较高，在实际开发中往往会<strong>结合</strong>两者来使用。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725151940515.png" alt="image-20210725151940515"></p>
 
       
     </div>
@@ -699,7 +703,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-chi-jiu-hua"><span class="nav-number">1.</span> <span class="nav-text">Redis持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rdb-chi-jiu-hua"><span class="nav-number">1.1.</span> <span class="nav-text">RDB持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zhi-xing-shi-ji"><span class="nav-number">1.1.1.</span> <span class="nav-text">执行时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdb-yuan-li"><span class="nav-number">1.1.2.</span> <span class="nav-text">RDB原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xiao-jie"><span class="nav-number">1.1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aof-chi-jiu-hua"><span class="nav-number">1.2.</span> <span class="nav-text">AOF持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#aof-yuan-li"><span class="nav-number">1.2.1.</span> <span class="nav-text">AOF原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aof-pei-zhi"><span class="nav-number">1.2.2.</span> <span class="nav-text">AOF配置</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-chi-jiu-hua"><span class="nav-number">1.</span> <span class="nav-text">Redis持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rdb-chi-jiu-hua"><span class="nav-number">1.1.</span> <span class="nav-text">RDB持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zhi-xing-shi-ji"><span class="nav-number">1.1.1.</span> <span class="nav-text">执行时机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdb-yuan-li"><span class="nav-number">1.1.2.</span> <span class="nav-text">RDB原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xiao-jie"><span class="nav-number">1.1.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aof-chi-jiu-hua"><span class="nav-number">1.2.</span> <span class="nav-text">AOF持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#aof-yuan-li"><span class="nav-number">1.2.1.</span> <span class="nav-text">AOF原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aof-pei-zhi"><span class="nav-number">1.2.2.</span> <span class="nav-text">AOF配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rdb-yu-aof-dui-bi"><span class="nav-number">1.3.</span> <span class="nav-text">RDB与AOF对比</span></a></li></ol></li></ol></div>
             
 
           </div>
