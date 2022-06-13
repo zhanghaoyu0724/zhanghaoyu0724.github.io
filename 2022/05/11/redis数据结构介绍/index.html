@@ -92,8 +92,10 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220511211242749.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220511211255996.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220511212050177.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220611164142503.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220613123915888.png">
 <meta property="article:published_time" content="2022-05-11T12:17:07.000Z">
-<meta property="article:modified_time" content="2022-05-31T15:53:12.954Z">
+<meta property="article:modified_time" content="2022-06-13T04:56:32.386Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220511205015062.png">
@@ -348,8 +350,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-05-31T23:53:12+08:00">
-                2022-05-31
+              <time title="更新于" itemprop="dateModified" datetime="2022-06-13T12:56:32+08:00">
+                2022-06-13
               </time>
             
           </span>
@@ -403,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.2k
+                  2.6k
                 </span>
               
 
@@ -419,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8
+                  9
                 </span>
               
             </div>
@@ -638,6 +640,31 @@ Jack 85, Lucy 89, Rose 82, Tom 95, Jerry 78, Amy 92, Miles 76</p>
 功能</li>
 <li>GEOSEARCHSTORE：与GEOSEARCH功能一致，不过可以把结果存储到一个指定的key。 6.2.新功能</li>
 </ul>
+<h2 id="bit-map-shu-ju-jie-gou" id="BitMap-数据结构">BitMap 数据结构</h2>
+<p>Redis中是利用string类型数据结构实现BitMap，因此最大上限是512M，转换为bit则是 2^32个bit位。<br>
+BitMap的操作命令有：</p>
+<ul>
+<li>SETBIT：向指定位置（offset）存入一个0或1</li>
+<li>GETBIT ：获取指定位置（offset）的bit值</li>
+<li>BITCOUNT ：统计BitMap中值为1的bit位的数量</li>
+<li>BITFIELD ：操作（查询、修改、自增）BitMap中bit数组中的指定位置（offset）的值</li>
+<li>BITFIELD_RO ：获取BitMap中bit数组，并以十进制形式返回</li>
+<li>BITOP ：将多个BitMap的结果做位运算（与 、或、异或）</li>
+<li>BITPOS ：查找bit数组中指定范围内第一个0或1出现的位置</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220611164142503.png" alt="image-20220611164142503"></p>
+<p>第一位 从 左边算起 ，所以是1</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> u3 表示 无符号 查询3位bit 从第0位开始（按从左到右的顺序）</span></span><br><span class="line">BITFIELD  get bm1 u3 0</span><br><span class="line">结果 ：6 二进制位:110</span><br></pre></td></tr></table></figure>
+<h2 id="hyper-log-log-yong-fa" id="HyperLogLog用法">HyperLogLog用法</h2>
+<p>首先我们搞懂两个概念：</p>
+<ul>
+<li>UV：全称Unique Visitor，也叫<strong>独立访客量</strong>，是指通过互联网访问、浏览这个网页的自然人。1天内同一个用户多次<br>
+访问该网站，只记录1次。</li>
+<li>PV：全称Page View，也叫<strong>页面访问量或点击量</strong>，用户每访问网站的一个页面，记录1次PV，用户多次打开页面，则记<br>
+录多次PV。往往用来衡量网站的流量。</li>
+</ul>
+<p>UV统计在服务端做会比较麻烦，因为要判断该用户是否已经统计过了，需要将统计过的用户信息保存。但是如果每个访问的用户都保存到Redis中，数据量会非常恐怖。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220613123915888.png" alt="image-20220613123915888"></p>
 
       
     </div>
@@ -766,7 +793,7 @@ Jack 85, Lucy 89, Rose 82, Tom 95, Jerry 78, Amy 92, Miles 76</p>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">143</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -831,7 +858,7 @@ Jack 85, Lucy 89, Rose 82, Tom 95, Jerry 78, Amy 92, Miles 76</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-shu-ju-jie-gou-jie-shao"><span class="nav-number">1.</span> <span class="nav-text">Redis数据结构介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-tong-yong-ming-ling"><span class="nav-number">1.1.</span> <span class="nav-text">Redis通用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-lei-xing"><span class="nav-number">1.2.</span> <span class="nav-text">String类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#string-chang-jian-ming-ling"><span class="nav-number">1.2.1.</span> <span class="nav-text">String常见命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#si-kao"><span class="nav-number">1.2.2.</span> <span class="nav-text">思考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash-lei-xing"><span class="nav-number">1.3.</span> <span class="nav-text">Hash类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-de-chang-jian-ming-ling-you"><span class="nav-number">1.3.1.</span> <span class="nav-text">Hash的常见命令有：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list-lei-xing"><span class="nav-number">1.4.</span> <span class="nav-text">List类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#list-de-chang-jian-ming-ling-you"><span class="nav-number">1.4.1.</span> <span class="nav-text">List的常见命令有：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-lei-xing"><span class="nav-number">1.5.</span> <span class="nav-text">Set类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set-de-chang-jian-ming-ling-you"><span class="nav-number">1.5.1.</span> <span class="nav-text">Set的常见命令有：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sorted-set-lei-xing"><span class="nav-number">1.6.</span> <span class="nav-text">SortedSet类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sorted-set-de-chang-jian-ming-ling-you"><span class="nav-number">1.6.1.</span> <span class="nav-text">SortedSet的常见命令有：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#an-li-lian-xi"><span class="nav-number">1.6.2.</span> <span class="nav-text">案例练习:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geo-shu-ju-jie-gou"><span class="nav-number">1.7.</span> <span class="nav-text">GEO数据结构</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-shu-ju-jie-gou-jie-shao"><span class="nav-number">1.</span> <span class="nav-text">Redis数据结构介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-tong-yong-ming-ling"><span class="nav-number">1.1.</span> <span class="nav-text">Redis通用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#string-lei-xing"><span class="nav-number">1.2.</span> <span class="nav-text">String类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#string-chang-jian-ming-ling"><span class="nav-number">1.2.1.</span> <span class="nav-text">String常见命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#si-kao"><span class="nav-number">1.2.2.</span> <span class="nav-text">思考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash-lei-xing"><span class="nav-number">1.3.</span> <span class="nav-text">Hash类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash-de-chang-jian-ming-ling-you"><span class="nav-number">1.3.1.</span> <span class="nav-text">Hash的常见命令有：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#list-lei-xing"><span class="nav-number">1.4.</span> <span class="nav-text">List类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#list-de-chang-jian-ming-ling-you"><span class="nav-number">1.4.1.</span> <span class="nav-text">List的常见命令有：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#set-lei-xing"><span class="nav-number">1.5.</span> <span class="nav-text">Set类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#set-de-chang-jian-ming-ling-you"><span class="nav-number">1.5.1.</span> <span class="nav-text">Set的常见命令有：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sorted-set-lei-xing"><span class="nav-number">1.6.</span> <span class="nav-text">SortedSet类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sorted-set-de-chang-jian-ming-ling-you"><span class="nav-number">1.6.1.</span> <span class="nav-text">SortedSet的常见命令有：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#an-li-lian-xi"><span class="nav-number">1.6.2.</span> <span class="nav-text">案例练习:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#geo-shu-ju-jie-gou"><span class="nav-number">1.7.</span> <span class="nav-text">GEO数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bit-map-shu-ju-jie-gou"><span class="nav-number">1.8.</span> <span class="nav-text">BitMap 数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper-log-log-yong-fa"><span class="nav-number">1.9.</span> <span class="nav-text">HyperLogLog用法</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -872,7 +899,7 @@ Jack 85, Lucy 89, Rose 82, Tom 95, Jerry 78, Amy 92, Miles 76</p>
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">362.9k</span>
+    <span title="博客全站字数">365.5k</span>
   
 </div>
 
