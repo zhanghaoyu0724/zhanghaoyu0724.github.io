@@ -91,8 +91,13 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220626225007702.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220626230631647.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220626233447839.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627103935831.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627105217837.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627105805032.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627110118590.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627112012699.png">
 <meta property="article:published_time" content="2022-06-26T12:54:35.000Z">
-<meta property="article:modified_time" content="2022-06-26T15:35:20.381Z">
+<meta property="article:modified_time" content="2022-06-27T03:21:44.009Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
@@ -348,8 +353,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-06-26T23:35:20+08:00">
-                2022-06-26
+              <time title="更新于" itemprop="dateModified" datetime="2022-06-27T11:21:44+08:00">
+                2022-06-27
               </time>
             
           </span>
@@ -381,7 +386,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1.3k
                 </span>
               
 
@@ -397,7 +402,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  6
                 </span>
               
             </div>
@@ -443,6 +448,19 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">//map</span></span><br><span class="line">        List&lt;String&gt; list = Arrays.asList(<span class="string">&quot;aa&quot;</span>, <span class="string">&quot;bb&quot;</span>, <span class="string">&quot;cc&quot;</span>);</span><br><span class="line">        list.stream().map(String::toUpperCase).forEach(System.out::println);</span><br><span class="line"></span><br><span class="line">        System.out.println();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//map</span></span><br><span class="line">        List&lt;Employee&gt; employees = EmployeeData.getEmployee();</span><br><span class="line">        employees.stream().map(Employee::getName).filter(name-&gt;name.length()&gt;<span class="number">3</span>).forEach(System.out::println);</span><br><span class="line">        System.out.println();</span><br><span class="line">        <span class="comment">//flatMap</span></span><br><span class="line">        list.stream().map(StreamAPITest1::fromStringToStream).forEach(System.out::print);</span><br><span class="line">        <span class="comment">//输出结果为:java.util.stream.ReferencePipeline$Head@200a570f java.util.stream.ReferencePipeline$Head@16b3fc9e java.util.stream.ReferencePipeline$Head@e2d56bf</span></span><br><span class="line">                    </span><br><span class="line">        System.out.println(<span class="string">&quot;**&quot;</span>);</span><br><span class="line">        list.stream().flatMap(StreamAPITest1::fromStringToStream).forEach(System.out::print);</span><br><span class="line">        <span class="comment">//输出结果为：a a b b c c</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//mapToDouble</span></span><br><span class="line">        List&lt;String&gt; list1 = Arrays.asList(<span class="string">&quot;231&quot;</span>, <span class="string">&quot;23&quot;</span>, <span class="string">&quot;434.5&quot;</span>);</span><br><span class="line">        <span class="keyword">double</span>[] doubles = list1.stream().mapToDouble(Double::parseDouble).toArray();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">double</span> aDouble : doubles) &#123;</span><br><span class="line">            System.out.print(aDouble+<span class="string">&quot;,&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>排序:</p>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220626233447839.png" alt="image-20220626233447839"></p>
+<p>匹配和查找</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627103935831.png" alt="image-20220627103935831"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//allMatch</span></span><br><span class="line">    List&lt;Employee&gt; employees = EmployeeData.getEmployee();</span><br><span class="line">    <span class="keyword">boolean</span> b = employees.stream().allMatch(e-&gt;e.getAge()&gt;<span class="number">18</span>);</span><br><span class="line">    System.out.println(b);</span><br><span class="line">    <span class="comment">//anyMatch</span></span><br><span class="line">    <span class="keyword">boolean</span> b1 = employees.stream().anyMatch(e -&gt; e.getAge() &gt; <span class="number">18</span>);</span><br><span class="line">    System.out.println(b1);</span><br><span class="line">    <span class="comment">//noneMatch</span></span><br><span class="line">    <span class="keyword">boolean</span> b2 = employees.stream().noneMatch(e -&gt; e.getName().startsWith(<span class="string">&quot;雷&quot;</span>));</span><br><span class="line">    System.out.println(b2);</span><br><span class="line">    <span class="comment">//findFirst</span></span><br><span class="line">    Optional&lt;Employee&gt; employee = employees.stream().sorted((e1, e2) -&gt; e1.getAge() - e2.getAge()).findFirst();</span><br><span class="line">    System.out.println(employee);</span><br><span class="line">    <span class="comment">//count</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>归约</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627105217837.png" alt="image-20220627105217837"></p>
+<p><strong>T iden 表示初始值</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//归约</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span></span>&#123;</span><br><span class="line">    List&lt;Integer&gt; list = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>);</span><br><span class="line">    Integer reduce = list.stream().reduce(<span class="number">0</span>, Integer::sum);</span><br><span class="line">    System.out.println(<span class="string">&quot;reduce = &quot;</span> + reduce);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627105805032.png" alt="image-20220627105805032"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="collectors" id="Collectors">Collectors:</h2>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627110118590.png" alt="image-20220627110118590"></p>
+<h2 id="optional" id="Optional">Optional:</h2>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220627112012699.png" alt="image-20220627112012699"></p>
 
       
     </div>
@@ -491,6 +509,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/06/27/Redis%E5%8E%9F%E7%90%86%E7%AF%87/" rel="prev" title="Redis原理篇">
+                Redis原理篇 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -573,7 +595,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-count">149</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -638,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-biao-da-shi-de-shi-yong"><span class="nav-number">1.</span> <span class="nav-text">Lambda表达式的使用:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#han-shu-shi-jie-kou"><span class="nav-number">2.</span> <span class="nav-text">函数式接口：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fang-fa-yin-yong"><span class="nav-number">3.</span> <span class="nav-text">方法引用：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qiang-da-de-stream-api"><span class="nav-number">4.</span> <span class="nav-text">强大的StreamAPI</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lambda-biao-da-shi-de-shi-yong"><span class="nav-number">1.</span> <span class="nav-text">Lambda表达式的使用:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#han-shu-shi-jie-kou"><span class="nav-number">2.</span> <span class="nav-text">函数式接口：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#fang-fa-yin-yong"><span class="nav-number">3.</span> <span class="nav-text">方法引用：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#qiang-da-de-stream-api"><span class="nav-number">4.</span> <span class="nav-text">强大的StreamAPI</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#collectors"><span class="nav-number">4.1.</span> <span class="nav-text">Collectors:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optional"><span class="nav-number">4.2.</span> <span class="nav-text">Optional:</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -679,7 +701,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">385.1k</span>
+    <span title="博客全站字数">389.1k</span>
   
 </div>
 
