@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Redis," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="用户空间和内核空间 为了避免用户应用导致冲突甚至内核崩溃，用户应用与内核是分离的： 进程的寻址空间会划分为两部分：内核空间、用户空间 用户空间只能执行受限的命令（Ring3），而且不能直接调用系统资源，必须通过内核提供的接口来访问 内核空间可以执行特权命令（Ring0），调用一切系统资源  IO多路复用 文件描述符（File Descriptor）：简称FD，是一个从0 开始的无符号整数，用来关联">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis原理篇">
+<meta property="og:url" content="https://zhanghaoyu0724.github.io/2022/06/28/Redis%E5%8E%9F%E7%90%86%E7%AF%87/index.html">
+<meta property="og:site_name" content="蓝天の博客">
+<meta property="og:description" content="用户空间和内核空间 为了避免用户应用导致冲突甚至内核崩溃，用户应用与内核是分离的： 进程的寻址空间会划分为两部分：内核空间、用户空间 用户空间只能执行受限的命令（Ring3），而且不能直接调用系统资源，必须通过内核提供的接口来访问 内核空间可以执行特权命令（Ring0），调用一切系统资源  IO多路复用 文件描述符（File Descriptor）：简称FD，是一个从0 开始的无符号整数，用来关联">
+<meta property="og:locale">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705154421256.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705170314983.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705163424810.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705163619695.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705165556539.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705170135567.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705170427999.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706130657802.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706131338467.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706150519388.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706150613431.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706160511015.png">
+<meta property="article:published_time" content="2022-06-28T13:25:08.000Z">
+<meta property="article:modified_time" content="2022-07-06T08:07:23.368Z">
+<meta property="article:author" content="Zhang Hao Hu">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705154421256.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":8,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhanghaoyu0724.github.io/2022/06/28/Redis原理篇/"/>
+
+
+
+
+
+  <title>Redis原理篇 | 蓝天の博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蓝天の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanghaoyu0724.github.io/2022/06/28/Redis%E5%8E%9F%E7%90%86%E7%AF%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张浩宇">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蓝天の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Redis原理篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-06-28T21:25:08+08:00">
+                2022-06-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-07-06T16:07:23+08:00">
+                2022-07-06
+              </time>
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  26
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="yong-hu-kong-jian-he-nei-he-kong-jian">用户空间和内核空间</h1>
+<p>为了避免用户应用导致冲突甚至内核崩溃，用户应用与内核是分离的：<br>
+进程的寻址空间会划分为两部分：<strong>内核空间、用户空间</strong><br>
+用户空间只能执行受限的命令（Ring3），而且不能直接调用系统资源，必须通过内核提供的接口来访问<br>
+内核空间可以执行特权命令（Ring0），调用一切系统资源</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705154421256.png" alt="image-20220705154421256"></p>
+<h1 id="io-duo-lu-fu-yong">IO多路复用</h1>
+<p>文件描述符（File Descriptor）：简称FD，是一个从0 开始的无符号整数，用来关联Linux中的一个文件。在Linux中，一切皆文件，例如常规文件、视频、硬件设备等，当然也包括网络套接字（Socket）。<br>
+IO多路复用：是利用单个线程来同时监听多个FD，并在某个FD可读、可写时得到通知，从而避免无效的等待，充分利用CPU资源。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705170314983.png" alt="image-20220705170314983"></p>
+<p>阶段一：</p>
+<ol>
+<li>用户进程调用select，指定要监听的FD集合</li>
+<li>内核监听FD对应的多个socket</li>
+<li>任意一个或多个socket数据就绪则返回readable</li>
+<li>此过程中用户进程阻塞</li>
+</ol>
+<p>阶段二：</p>
+<ol>
+<li>用户进程找到就绪的socket</li>
+<li>依次调用recvfrom读取数据</li>
+<li>内核将数据拷贝到用户空间</li>
+<li>用户进程处理数据</li>
+</ol>
+<p>IO多路复用是利用单个线程来同时监听多个FD，并在某个FD可读、可写时得到通知，从而避免无效的等待，充分利用CPU资源。不过监听FD的方式、通知的方式又有多种实现，常见的有：</p>
+<ul>
+<li>select</li>
+<li>poll</li>
+<li>epoll</li>
+</ul>
+<p>差异：<br>
+<strong>select和poll只会通知用户进程有FD就绪，但不确定具体是哪个FD，需要用户进程逐个遍历FD来确认<br>
+epoll则会在通知用户进程FD就绪的同时，把已就绪的FD写入用户空间</strong></p>
+<h2 id="select" id="select">select</h2>
+<p>select是Linux最早是由的I/O多路复用技术：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义类型别名 __fd_mask，本质是 long int</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">int</span> __fd_mask;</span><br><span class="line"><span class="comment">/* fd_set 记录要监听的fd集合，及其对应状态 */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="comment">// fds_bits是long类型数组，长度为 1024/32 = 32</span></span><br><span class="line">    <span class="comment">// 共1024个bit位，每个bit位代表一个fd，0代表未就绪，1代表就绪</span></span><br><span class="line">    __fd_mask fds_bits[__FD_SETSIZE / __NFDBITS];</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125; fd_set;</span><br><span class="line"><span class="comment">// select函数，用于监听fd_set，也就是多个fd的集合</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">select</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> nfds, <span class="comment">// 要监视的fd_set的最大fd + 1</span></span></span></span><br><span class="line"><span class="params"><span class="function">    fd_set *readfds, <span class="comment">// 要监听读事件的fd集合</span></span></span></span><br><span class="line"><span class="params"><span class="function">    fd_set *writefds,<span class="comment">// 要监听写事件的fd集合</span></span></span></span><br><span class="line"><span class="params"><span class="function">    fd_set *exceptfds, <span class="comment">// // 要监听异常事件的fd集合</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="comment">// 超时时间，null-用不超时；0-不阻塞等待；大于0-固定等待时间</span></span></span></span><br><span class="line"><span class="params"><span class="function">    struct timeval *timeout</span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705163424810.png" alt="image-20220705163424810"></p>
+<blockquote>
+<p>select模式存在的问题：<br>
+需要将整个fd_set从用户空间拷贝到内核空间，select结束还要再次拷贝回用户空间<br>
+select无法得知具体是哪个fd就绪，需要遍历整个fd_set<br>
+fd_set监听的fd数量不能超过1024</p>
+</blockquote>
+<h2 id="poll" id="poll">poll</h2>
+<p>poll模式对select模式做了简单改进，但性能提升不明显，部分关键代码如下：<br>
+IO流程：</p>
+<ol>
+<li>创建pollfd数组，向其中添加关注的fd信息，数组大小自定义</li>
+<li>调用poll函数，将pollfd数组拷贝到内核空间，转链表存储，无上限</li>
+<li>内核遍历fd，判断是否就绪</li>
+<li>数据就绪或超时后，拷贝pollfd数组到用户空间，返回就绪fd数量n</li>
+<li>用户进程判断n是否大于0</li>
+<li>大于0则遍历pollfd数组，找到就绪的fd</li>
+</ol>
+<p>与select对比：</p>
+<ul>
+<li>select模式中的fd_set大小固定为1024，而pollfd在内核中采用链表，理论上无上限</li>
+<li>监听FD越多，每次遍历消耗时间也越久，性能反而会下降</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pollfd 中的事件类型</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> POLLIN     <span class="comment">//可读事件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> POLLOUT    <span class="comment">//可写事件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> POLLERR    <span class="comment">//错误事件</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> POLLNVAL   <span class="comment">//fd未打开</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// pollfd结构</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">pollfd</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> fd;     	  <span class="comment">/* 要监听的fd  */</span></span><br><span class="line">    <span class="keyword">short</span> <span class="keyword">int</span> events; <span class="comment">/* 要监听的事件类型：读、写、异常 */</span></span><br><span class="line">    <span class="keyword">short</span> <span class="keyword">int</span> revents;<span class="comment">/* 实际发生的事件类型 */</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// poll函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">poll</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    struct pollfd *fds, <span class="comment">// pollfd数组，可以自定义大小</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">nfds_t</span> nfds, <span class="comment">// 数组元素个数</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> timeout <span class="comment">// 超时时间</span></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
+<h2 id="epoll" id="epoll">epoll</h2>
+<p>epoll模式是对select和poll的改进，它提供了三个函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">eventpoll</span> &#123;</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">rb_root</span>  <span class="title">rbr</span>;</span> <span class="comment">// 一颗红黑树，记录要监听的FD</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">rdlist</span>;</span><span class="comment">// 一个链表，记录就绪的FD</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// 1.创建一个epoll实例,内部是event poll，返回对应的句柄epfd</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_create</span><span class="params">(<span class="keyword">int</span> size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.将一个FD添加到epoll的红黑树中，并设置ep_poll_callback</span></span><br><span class="line"><span class="comment">// callback触发时，就把对应的FD加入到rdlist这个就绪列表中</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_ctl</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> epfd,  <span class="comment">// epoll实例的句柄</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> op,    <span class="comment">// 要执行的操作，包括：ADD、MOD、DEL</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> fd,    <span class="comment">// 要监听的FD</span></span></span></span><br><span class="line"><span class="params"><span class="function">    struct epoll_event *event <span class="comment">// 要监听的事件类型：读、写、异常等</span></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.检查rdlist列表是否为空，不为空则返回就绪的FD的数量</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">epoll_wait</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> epfd,                   <span class="comment">// epoll实例的句柄</span></span></span></span><br><span class="line"><span class="params"><span class="function">    struct epoll_event *events, <span class="comment">// 空event数组，用于接收就绪的FD</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> maxevents,              <span class="comment">// events数组的最大长度</span></span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> timeout   <span class="comment">// 超时时间，-1用不超时；0不阻塞；大于0为阻塞时间</span></span></span></span><br><span class="line"><span class="params"><span class="function">)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705163619695.png" alt="image-20220705163619695"></p>
+<p>select模式存在的三个问题：</p>
+<ul>
+<li>能监听的FD最大不超过1024</li>
+<li>每次select都需要把所有要监听的FD都拷贝到内核空间</li>
+<li>每次都要遍历所有FD来判断就绪状态</li>
+</ul>
+<p>poll模式的问题：</p>
+<ul>
+<li>poll利用链表解决了select中监听FD上限的问题，但依然要遍历所有FD，如果监听较多，性能会下降</li>
+</ul>
+<p>epoll模式中如何解决这些问题的？</p>
+<ol>
+<li>基于epoll实例中的红黑树保存要监听的FD，理论上无上限，而且增删改查效率都非常高</li>
+<li>每个FD只需要执行一次epoll_ctl添加到红黑树，以后每次epol_wait无需传递任何参数，无需重复拷贝FD到内核空间</li>
+<li>利用ep_poll_callback机制来监听FD状态，无需遍历所有FD，因此性能不会随监听的FD数量增多而下降</li>
+</ol>
+<h2 id="io-duo-lu-fu-yong-shi-jian-tong-zhi-ji-zhi" id="IO多路复用-事件通知机制">IO多路复用-事件通知机制</h2>
+<p>当FD有数据可读时，我们调用epoll_wait（或者select、poll）可以得到通知。但是事件通知的模式有两种：</p>
+<ul>
+<li>
+<p>LevelTriggered：简称LT，也叫做<strong>水平触发</strong>。只要某个FD中有数据可读，每次调用epoll_wait都会得到通知。</p>
+</li>
+<li>
+<p>EdgeTriggered：简称ET，也叫做<strong>边沿触发</strong>。只有在某个FD有状态变化时，调用epoll_wait才会被通知。</p>
+<p>ET模式也可以重复通知：</p>
+<ol>
+<li>当读取到数据后调用epoll_ctl修改内核空间监听的FD状态再去检查是否还有消息再把它添加到就绪队列中。</li>
+<li>使用while循环不断的去读取数据，千万不能使用阻塞io，当有数据返回就处理，没有了就结束循环</li>
+</ol>
+</li>
+</ul>
+<p>举个栗子：</p>
+<ol>
+<li>
+<p>假设一个客户端socket对应的FD已经注册到了epoll实例中</p>
+</li>
+<li>
+<p>客户端socket发送了2kb的数据</p>
+</li>
+<li>
+<p>服务端调用epoll_wait，得到通知说FD就绪</p>
+</li>
+<li>
+<p>服务端从FD读取了1kb数据</p>
+</li>
+<li>
+<p>回到步骤3（再次调用epoll_wait，形成循环）<br>
+结果：</p>
+<p>√ 如果我们采用LT模式，因为FD中仍有1kb数据，则第⑤步依然会返回结果，并且得到通知<br>
+√ 如果我们采用ET模式，因为第③步已经消费了FD可读事件，第⑤步FD状态没有变化，因此epoll_wait不会返回，数据无法读取，客户端响应超时。</p>
+</li>
+</ol>
+<p>LT：事件通知频率较高，会有重复通知，影响性能<br>
+ET：仅通知一次，效率高。可以基于非阻塞IO循环读取解决数据读取不完整问题</p>
+<p>select和poll仅支持LT模式，epoll可以自由选择LT和ET两种模式</p>
+<h2 id="io-duo-lu-fu-yong-web-fu-wu-liu-cheng" id="IO多路复用-web服务流程">IO多路复用-web服务流程</h2>
+<p>基于epoll模式的web服务的基本流程如图：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705165556539.png" alt="image-20220705165556539"></p>
+<h1 id="xin-hao-qu-dong">信号驱动</h1>
+<p>信号驱动IO是与内核建立SIGIO的信号关联并设置回调，当内核有FD就绪时，会发出SIGIO信号通知用户，期间用户应用可以执行其它业务，无需阻塞等待。<img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705170135567.png" alt="image-20220705170135567"></p>
+<p>阶段一：</p>
+<ol>
+<li>用户进程调用sigaction，注册信号处理函数</li>
+<li>内核返回成功，开始监听FD</li>
+<li>用户进程不阻塞等待，可以执行其它业务</li>
+<li>当内核数据就绪后，回调用户进程的SIGIO处理函数</li>
+</ol>
+<p>阶段二：</p>
+<ol>
+<li>收到SIGIO回调信号</li>
+<li>调用recvfrom，读取</li>
+<li>内核将数据拷贝到用户空间</li>
+<li>用户进程处理数据</li>
+</ol>
+<p>当有大量IO操作时，信号较多，SIGIO处理函数不能及时处理可能导致信号队列溢出，而且内核空间与用户空间的频繁信号交互性能也较低。</p>
+<h1 id="yi-bu-io">异步IO</h1>
+<p>异步IO的整个过程都是非阻塞的，用户进程调用完异步API后就可以去做其它事情，内核等待数据就绪并拷贝到用户空间后才会递交信号，通知用户进程。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220705170427999.png" alt="image-20220705170427999"></p>
+<p>阶段一：</p>
+<ol>
+<li>用户进程调用aio_read，创建信号回调函数</li>
+<li>内核等待数据就绪</li>
+<li>用户进程无需阻塞，可以做任何事情</li>
+</ol>
+<p>阶段二：</p>
+<ol>
+<li>
+<p>内核数据就绪</p>
+</li>
+<li>
+<p>内核数据拷贝到用户缓冲区</p>
+</li>
+<li>
+<p>拷贝完成，内核递交信号触发aio_read中的回调函数</p>
+</li>
+<li>
+<p>用户进程处理数据</p>
+<p>可以看到，异步IO模型中，用户进程在两个阶段都是非阻塞状态。</p>
+</li>
+</ol>
+<h1 id="redis-wang-luo-mo-xing">Redis网络模型</h1>
+<p>Redis到底是单线程还是多线程？</p>
+<p>如果仅仅聊Redis的核心业务部分（命令处理），答案是单线程<br>
+如果是聊整个Redis，那么答案就是多线程<br>
+在Redis版本迭代过程中，在两个重要的时间节点上引入了多线程的支持：<br>
+Redis v4.0：引入多线程异步处理一些耗时较旧的任务，例如异步删除命令unlink<br>
+Redis v6.0：在核心网络模型中引入 多线程，进一步提高对于多核CPU的利用率</p>
+<p>因此，对于Redis的核心网络模型，在Redis 6.0之前确实都是单线程。是利用epoll（Linux系统）这样的IO多路复用技术在事件循环中不断处理客户端情况。</p>
+<p><strong>为什么Redis要选择单线程？</strong><br>
+抛开持久化不谈，Redis是纯内存操作，执行速度非常快，它的性能瓶颈是网络延迟而不是执行速度，因此多线程并不会带来巨大的性能提升。<br>
+多线程会导致过多的上下文切换，带来不必要的开销<br>
+引入多线程会面临线程安全问题，必然要引入线程锁这样的安全手段，实现复杂度增高，而且性能也会大打折扣</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> argc,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">char</span> **argv</span></span></span><br><span class="line"><span class="params"><span class="function">)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 初始化服务</span></span><br><span class="line">    initServer();</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 开始监听事件循环</span></span><br><span class="line">    aeMain(server.el);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>initServer() :</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initServer</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 内部会调用 aeApiCreate(eventLoop)，类似epoll_create</span></span><br><span class="line">    server.el = aeCreateEventLoop(</span><br><span class="line">                    server.maxclients+CONFIG_FDSET_INCR);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 监听TCP端口，创建ServerSocket，并得到FD</span></span><br><span class="line">    listenToPort(server.port,&amp;server.ipfd)</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 注册 连接处理器，内部会调用 aeApiCreate(&amp;server.ipfd)监听FD</span></span><br><span class="line">    createSocketAcceptHandler(&amp;server.ipfd, acceptTcpHandler)</span><br><span class="line">    <span class="comment">// 注册 ae_api_poll 前的处理器</span></span><br><span class="line">    aeSetBeforeSleepProc(server.el,beforeSleep);</span><br><span class="line">&#125;</span><br><span class="line">    <span class="comment">// 数据读处理器</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">acceptTcpHandler</span><span class="params">(...)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 接收socket连接，获取FD</span></span><br><span class="line">    fd = accept(s,sa,len);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 创建connection，关联fd</span></span><br><span class="line">    connection *conn = connCreateSocket();</span><br><span class="line">    conn.fd = fd;</span><br><span class="line">    <span class="comment">// ... </span></span><br><span class="line">    <span class="comment">// 内部调用aeApiAddEvent(fd,READABLE)，</span></span><br><span class="line">    <span class="comment">// 监听socket的FD读事件，并绑定读处理器readQueryFromClient</span></span><br><span class="line">    connSetReadHandler(conn, readQueryFromClient);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>aeMain:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">aeMain</span><span class="params">(aeEventLoop *eventLoop)</span> </span>&#123;</span><br><span class="line">    eventLoop-&gt;stop = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 循环监听事件</span></span><br><span class="line">    <span class="keyword">while</span> (!eventLoop-&gt;stop) &#123;</span><br><span class="line">        aeProcessEvents(</span><br><span class="line">            eventLoop, </span><br><span class="line">            AE_ALL_EVENTS|</span><br><span class="line">                AE_CALL_BEFORE_SLEEP|</span><br><span class="line">                AE_CALL_AFTER_SLEEP);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">aeProcessEvents</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    aeEventLoop *eventLoop,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="keyword">int</span> flags )</span></span>&#123;</span><br><span class="line">    <span class="comment">// ...  调用前置处理器 beforeSleep</span></span><br><span class="line">    eventLoop-&gt;beforesleep(eventLoop);</span><br><span class="line">    <span class="comment">// 等待FD就绪，类似epoll_wait</span></span><br><span class="line">    numevents = aeApiPoll(eventLoop, tvp);</span><br><span class="line">    <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; numevents; j++) &#123;</span><br><span class="line">        <span class="comment">// 遍历处理就绪的FD，调用对应的处理器</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706130657802.png" alt="image-20220706130657802"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">readQueryFromClient</span><span class="params">(connection *conn)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 获取当前客户端，客户端中有缓冲区用来读和写</span></span><br><span class="line">    client *c = connGetPrivateData(conn);</span><br><span class="line">    <span class="comment">// 获取c-&gt;querybuf缓冲区大小</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">int</span> qblen = sdslen(c-&gt;querybuf);</span><br><span class="line">    <span class="comment">// 读取请求数据到 c-&gt;querybuf 缓冲区</span></span><br><span class="line">    connRead(c-&gt;conn, c-&gt;querybuf+qblen, readlen);</span><br><span class="line">    <span class="comment">// ... </span></span><br><span class="line">    <span class="comment">// 解析缓冲区字符串，转为Redis命令参数存入 c-&gt;argv 数组</span></span><br><span class="line">    processInputBuffer(c);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 处理 c-&gt;argv 中的命令</span></span><br><span class="line">    processCommand(c);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">processCommand</span><span class="params">(client *c)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 根据命令名称，寻找命令对应的command，例如 setCommand</span></span><br><span class="line">    c-&gt;cmd = c-&gt;lastcmd = lookupCommand(c-&gt;argv[<span class="number">0</span>]-&gt;ptr);</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 执行command，得到响应结果，例如ping命令，对应pingCommand</span></span><br><span class="line">    c-&gt;cmd-&gt;proc(c);</span><br><span class="line">    <span class="comment">// 把执行结果写出，例如ping命令，就返回&quot;pong&quot;给client，</span></span><br><span class="line">    <span class="comment">// shared.pong是 字符串&quot;pong&quot;的SDS对象</span></span><br><span class="line">    addReply(c,shared.pong); </span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">addReply</span><span class="params">(client *c, robj *obj)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 尝试把结果写到 c-buf 客户端写缓存区</span></span><br><span class="line">    <span class="keyword">if</span> (_addReplyToBuffer(c,obj-&gt;ptr,sdslen(obj-&gt;ptr)) != C_OK)</span><br><span class="line">            <span class="comment">// 如果c-&gt;buf写不下，则写到 c-&gt;reply，这是一个链表，容量无上限</span></span><br><span class="line">            _addReplyProtoToList(c,obj-&gt;ptr,sdslen(obj-&gt;ptr));</span><br><span class="line">    <span class="comment">// 将客户端添加到server.clients_pending_write这个队列，等待被写出</span></span><br><span class="line">    listAddNodeHead(server.clients_pending_write,c);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">beforeSleep</span><span class="params">(struct aeEventLoop *eventLoop)</span></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 定义迭代器，指向server.clients_pending_write-&gt;head;</span></span><br><span class="line">    listIter li;</span><br><span class="line">    li-&gt;next = server.clients_pending_write-&gt;head;</span><br><span class="line">    li-&gt;direction = AL_START_HEAD;</span><br><span class="line">    <span class="comment">// 循环遍历待写出的client</span></span><br><span class="line">    <span class="keyword">while</span> ((ln = listNext(&amp;li))) &#123;</span><br><span class="line">        <span class="comment">// 内部调用aeApiAddEvent(fd，WRITEABLE)，监听socket的FD读事件</span></span><br><span class="line">        <span class="comment">// 并且绑定 写处理器 sendReplyToClient，可以把响应写到客户端socket</span></span><br><span class="line">        connSetWriteHandlerWithBarrier(c-&gt;conn, sendReplyToClient, ae_barrier)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Redis 6.0版本中引入了多线程，目的是为了提高IO读写效率。因此在解析客户端命令、写响应结果时采用了多线程。核心的命令执行、IO多路复用模块依然是由主线程执行。</strong></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706131338467.png" alt="image-20220706131338467"></p>
+<h1 id="resp-xie-yi-2">RESP协议2</h1>
+<p>Redis是一个CS架构的软件，通信一般分两步（不包括pipeline和PubSub）：</p>
+<ol>
+<li>客户端（client）向服务端（server）发送一条命令</li>
+<li>服务端解析并执行命令，返回响应结果给客户端</li>
+</ol>
+<p>因此客户端发送命令的格式、服务端响应结果的格式必须有一个规范，这个规范就是通信协议。</p>
+<p>而在Redis中采用的是RESP（Redis Serialization Protocol）协议：</p>
+<ul>
+<li>Redis 1.2版本引入了RESP协议</li>
+<li>Redis 2.0版本中成为与Redis服务端通信的标准，称为RESP2</li>
+<li>Redis 6.0版本中，从RESP2升级到了RESP3协议，增加了更多数据类型并且支持6.0的新特性–客户端缓存</li>
+</ul>
+<p>但目前，默认使用的依然是RESP2协议，也是我们要学习的协议版本（以下简称RESP）。</p>
+<p>在RESP中，通过首字节的字符来区分不同数据类型，常用的数据类型包括5种：</p>
+<ul>
+<li>
+<p>单行字符串：首字节是 ‘+’ ，后面跟上单行字符串，以CRLF（ “\r\n” ）结尾。例如返回&quot;OK&quot;： “+OK\r\n”</p>
+</li>
+<li>
+<p>错误（Errors）：首字节是 ‘-’ ，与单行字符串格式一样，只是字符串是异常信息，例如：“-Error message\r\n”</p>
+</li>
+<li>
+<p>数值：首字节是 ‘:’ ，后面跟上数字格式的字符串，以CRLF结尾。例如：“:10\r\n”</p>
+</li>
+<li>
+<p>多行字符串：首字节是 ‘$’ ，表示二进制安全的字符串，最大支持512MB：</p>
+<ul>
+<li>
+<p>如果大小为0，则代表空字符串：“$0\r\n\r\n”</p>
+</li>
+<li>
+<p>如果大小为-1，则代表不存在：“$-1\r\n”</p>
+</li>
+</ul>
+</li>
+<li>
+<p>数组：首字节是 ‘*’，后面跟上数组元素个数，再跟上元素，元素数据类型不限:</p>
+</li>
+</ul>
+<h2 id="mo-ni-redis-ke-hu-duan" id="模拟redis客户端">模拟redis客户端</h2>
+<h3 id="socket-shi-xian" id="socket实现">socket实现</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> Socket socket;</span><br><span class="line">    <span class="keyword">static</span> PrintWriter writer;</span><br><span class="line">    <span class="keyword">static</span> BufferedReader reader;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//1 建立连接</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            socket = <span class="keyword">new</span> Socket(<span class="string">&quot;192.168.32.3&quot;</span>, <span class="number">6379</span>);</span><br><span class="line">            <span class="comment">//2 获取输出输入流</span></span><br><span class="line">            writer = <span class="keyword">new</span> PrintWriter(<span class="keyword">new</span> OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));</span><br><span class="line">            reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));</span><br><span class="line">            <span class="comment">//3 发出请求 set name 张</span></span><br><span class="line">            sendRequest(<span class="string">&quot;auth&quot;</span>,<span class="string">&quot;123456&quot;</span>);</span><br><span class="line">            Object o=handlerResponse();</span><br><span class="line">            System.out.println(<span class="string">&quot;o = &quot;</span> + o);</span><br><span class="line">            sendRequest(<span class="string">&quot;set&quot;</span>,<span class="string">&quot;name&quot;</span>,<span class="string">&quot;张&quot;</span>);</span><br><span class="line">            <span class="comment">//3 解析响应</span></span><br><span class="line">            Object o1=handlerResponse();</span><br><span class="line">            System.out.println(<span class="string">&quot;o = &quot;</span> + o1);</span><br><span class="line">            <span class="comment">//4 释放连接</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (reader != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    reader.close();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (writer != <span class="keyword">null</span>) writer.close();</span><br><span class="line">                <span class="keyword">if</span> (socket != <span class="keyword">null</span>) socket.close();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Object <span class="title">handlerResponse</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//读取首字节</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> prefix =  reader.read();</span><br><span class="line">            <span class="comment">//判断数据类型</span></span><br><span class="line">            <span class="keyword">switch</span> (prefix)&#123;</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;+&#x27;</span>: <span class="comment">//单行字符串 直接读一行</span></span><br><span class="line">                    <span class="keyword">return</span>  reader.readLine();</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;-&#x27;</span>:<span class="comment">//异常 也读一行</span></span><br><span class="line">                    <span class="keyword">throw</span>  <span class="keyword">new</span> RuntimeException(reader.readLine());</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;:&#x27;</span>:<span class="comment">// 数字</span></span><br><span class="line">                    <span class="keyword">return</span> Long.parseLong(reader.readLine());</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;$&#x27;</span>:<span class="comment">//读多行字符串</span></span><br><span class="line">                    <span class="keyword">int</span> len =Integer.parseInt(reader.readLine());</span><br><span class="line">                    <span class="keyword">if</span> (len==-<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="keyword">return</span>  <span class="keyword">null</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (len==<span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span>  reader.readLine();</span><br><span class="line">                <span class="keyword">case</span> <span class="string">&#x27;*&#x27;</span>:<span class="comment">//数组</span></span><br><span class="line">                    <span class="keyword">return</span> readBulkString();</span><br><span class="line">                <span class="keyword">default</span>:</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span>  RuntimeException(<span class="string">&quot;未知格式异常&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Object <span class="title">readBulkString</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">//获取数组大小</span></span><br><span class="line">        <span class="keyword">int</span> len=Integer.parseInt(reader.readLine());</span><br><span class="line">        <span class="keyword">if</span> (len&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//定义集合 接受多个元素</span></span><br><span class="line">        ArrayList&lt;Object&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">//遍历一次读取每个元素</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">          Object o=  handlerResponse();</span><br><span class="line">          list.add(o);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//set name 张</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sendRequest</span><span class="params">(String ... args)</span> </span>&#123;</span><br><span class="line">        writer.println(<span class="string">&quot;*&quot;</span>+args.length);</span><br><span class="line">        <span class="keyword">for</span> (String arg : args) &#123;</span><br><span class="line">            writer.println(<span class="string">&quot;$&quot;</span>+arg.getBytes(StandardCharsets.UTF_8).length);</span><br><span class="line">            writer.println(arg);</span><br><span class="line">        &#125;</span><br><span class="line">        writer.flush();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="netty-shi-xian" id="Netty实现">Netty实现:</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestRedis</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        NioEventLoopGroup worker = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">        <span class="keyword">byte</span>[] LINE = &#123;<span class="number">13</span>, <span class="number">10</span>&#125;;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Bootstrap bootstrap = <span class="keyword">new</span> Bootstrap();</span><br><span class="line">            bootstrap.channel(NioSocketChannel.class);</span><br><span class="line">            bootstrap.group(worker);</span><br><span class="line">            bootstrap.handler(<span class="keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initChannel</span><span class="params">(SocketChannel ch)</span> </span>&#123;</span><br><span class="line">                    ch.pipeline().addLast(<span class="keyword">new</span> LoggingHandler());</span><br><span class="line">                    ch.pipeline().addLast(<span class="keyword">new</span> ChannelInboundHandlerAdapter() &#123;</span><br><span class="line">                        <span class="comment">// 会在连接 channel 建立成功后，会触发 active 事件</span></span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelActive</span><span class="params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">                            auth(ctx);</span><br><span class="line">                            set(ctx);</span><br><span class="line">                            get(ctx);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">auth</span><span class="params">(ChannelHandlerContext ctx)</span></span>&#123;</span><br><span class="line">                            ByteBuf buf = ctx.alloc().buffer();</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;*2&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;$4&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;auth&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;$6&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;123456&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            ctx.writeAndFlush(buf);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">get</span><span class="params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">                            ByteBuf buf = ctx.alloc().buffer();</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;*2&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;$3&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;get&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;$3&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;aaa&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            ctx.writeAndFlush(buf);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(ChannelHandlerContext ctx)</span> </span>&#123;</span><br><span class="line">                            ByteBuf buf = ctx.alloc().buffer();</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;*3&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;$3&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;set&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;$3&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;aaa&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;$3&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            buf.writeBytes(<span class="string">&quot;bbb&quot;</span>.getBytes());</span><br><span class="line">                            buf.writeBytes(LINE);</span><br><span class="line">                            ctx.writeAndFlush(buf);</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelRead</span><span class="params">(ChannelHandlerContext ctx, Object msg)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">                            ByteBuf buf = (ByteBuf) msg;</span><br><span class="line">                            System.out.println(buf.toString(Charset.defaultCharset()));</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            ChannelFuture channelFuture = bootstrap.connect(<span class="string">&quot;192.168.32.3&quot;</span>, <span class="number">6379</span>).sync();</span><br><span class="line">            channelFuture.channel().closeFuture().sync();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            log.error(<span class="string">&quot;client error&quot;</span>, e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            worker.shutdownGracefully();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="redis-nei-cun-ce-lue">Redis内存策略</h1>
+<h2 id="redis-nei-cun-hui-shou" id="Redis内存回收">Redis内存回收</h2>
+<p>Redis之所以性能强，最主要的原因就是基于内存存储。然而单节点的Redis其内存大小不宜过大，会影响持久化或主从同步性能。<br>
+我们可以通过修改配置文件来设置Redis的最大内存：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 格式：</span></span><br><span class="line"><span class="comment"># maxmemory &lt;bytes&gt;</span></span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line">maxmemory 1gb</span><br></pre></td></tr></table></figure>
+<p>当内存使用达到上限时，就无法存储更多数据了。为了解决这个问题，Redis提供了一些策略实现内存回收：</p>
+<ul>
+<li>内存过期策略</li>
+<li>内存淘汰策略</li>
+</ul>
+<p>在学习Redis缓存的时候我们说过，可以通过expire命令给Redis的key设置TTL（存活时间）：</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706150519388.png" alt="image-20220706150519388"></p>
+<p>可以发现，当key的TTL到期以后，再次访问name返回的是nil，说明这个key已经不存在了，对应的内存也得到释放。从而起到内存回收的目的。</p>
+<p>这里有两个问题需要我们思考：<br>
+Redis是如何知道一个key是否过期呢？</p>
+<ul>
+<li>利用两个Dict分别记录key-value对及key-ttl对</li>
+</ul>
+<p>是不是TTL到期就立即删除了呢？</p>
+<ul>
+<li>惰性删除</li>
+<li>周期删除</li>
+</ul>
+<p>Redis本身是一个典型的key-value内存存储数据库，因此所有的key、value都保存在之前学习过的Dict结构中。不过在其database结构体中，有两个Dict：一个用来记录key-value；另一个用来记录key-TTL。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisDb</span> &#123;</span></span><br><span class="line">    dict *dict;                 <span class="comment">/* 存放所有key及value的地方，也被称为keyspace*/</span></span><br><span class="line">    dict *expires;              <span class="comment">/* 存放每一个key及其对应的TTL存活时间，只包含设置了TTL的key*/</span></span><br><span class="line">    dict *blocking_keys;        <span class="comment">/* Keys with clients waiting for data (BLPOP)*/</span></span><br><span class="line">    dict *ready_keys;           <span class="comment">/* Blocked keys that received a PUSH */</span></span><br><span class="line">    dict *watched_keys;         <span class="comment">/* WATCHED keys for MULTI/EXEC CAS */</span></span><br><span class="line">    <span class="keyword">int</span> id;                     <span class="comment">/* Database ID，0~15 */</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> avg_ttl;          <span class="comment">/* 记录平均TTL时长 */</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> expires_cursor; <span class="comment">/* expire检查时在dict中抽样的索引位置. */</span></span><br><span class="line">    <span class="built_in">list</span> *defrag_later;         <span class="comment">/* 等待碎片整理的key列表. */</span></span><br><span class="line">&#125; redisDb;</span><br></pre></td></tr></table></figure>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706150613431.png" alt="image-20220706150613431"></p>
+<h2 id="duo-xing-shan-chu" id="惰性删除">惰性删除</h2>
+<p>顾明思议并不是在TTL到期后就立刻删除，而是在访问一个key的时候，检查该key的存活时间，如果已经过期才执行删除。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查找一个key执行写操作</span></span><br><span class="line"><span class="function">robj *<span class="title">lookupKeyWriteWithFlags</span><span class="params">(redisDb *db, robj *key, <span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 检查key是否过期</span></span><br><span class="line">    expireIfNeeded(db,key);</span><br><span class="line">    <span class="keyword">return</span> lookupKey(db,key,flags);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 查找一个key执行读操作</span></span><br><span class="line"><span class="function">robj *<span class="title">lookupKeyReadWithFlags</span><span class="params">(redisDb *db, robj *key, <span class="keyword">int</span> flags)</span> </span>&#123;</span><br><span class="line">    robj *val;</span><br><span class="line">    <span class="comment">// 检查key是否过期    if (expireIfNeeded(db,key) == 1) &#123;</span></span><br><span class="line">        <span class="comment">// ...略</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">expireIfNeeded</span><span class="params">(redisDb *db, robj *key)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 判断是否过期，如果未过期直接结束并返回0</span></span><br><span class="line">    <span class="keyword">if</span> (!keyIsExpired(db,key)) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// ... 略</span></span><br><span class="line">    <span class="comment">// 删除过期key</span></span><br><span class="line">    deleteExpiredKeyAndPropagate(db,key);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="zhou-qi-shan-chu" id="周期删除">周期删除:</h2>
+<p>周期删除：顾明思议是通过一个定时任务，周期性的<strong>抽样部分过期的key</strong>，然后执行删除。执行周期有两种：</p>
+<ul>
+<li>Redis服务初始化函数initServer()中设置定时任务，按照server.hz的频率来执行过期key清理，模式为SLOW</li>
+<li>Redis的每个事件循环前会调用beforeSleep()函数，执行过期key清理，模式为FAST</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// server.c</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initServer</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 创建定时器，关联回调函数serverCron，处理周期取决于server.hz，默认10</span></span><br><span class="line">    aeCreateTimeEvent(server.el, <span class="number">1</span>, serverCron, <span class="literal">NULL</span>, <span class="literal">NULL</span>) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// server.c</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">serverCron</span><span class="params">(struct aeEventLoop *eventLoop, <span class="keyword">long</span> <span class="keyword">long</span> id, <span class="keyword">void</span> *clientData)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 更新lruclock到当前时间，为后期的LRU和LFU做准备</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> lruclock = getLRUClock();</span><br><span class="line">    atomicSet(server.lruclock,lruclock);</span><br><span class="line">    <span class="comment">// 执行database的数据清理，例如过期key处理</span></span><br><span class="line">    databasesCron();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">databasesCron</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 尝试清理部分过期key，清理模式默认为SLOW</span></span><br><span class="line">    activeExpireCycle(</span><br><span class="line">          ACTIVE_EXPIRE_CYCLE_SLOW);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">beforeSleep</span><span class="params">(struct aeEventLoop *eventLoop)</span></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    <span class="comment">// 尝试清理部分过期key，清理模式默认为FAST</span></span><br><span class="line">    activeExpireCycle(</span><br><span class="line">         ACTIVE_EXPIRE_CYCLE_FAST);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>SLOW模式规则：</strong></p>
+<ol>
+<li>执行频率受server.hz影响，默认为10，即每秒执行10次，每个执行周期100ms。</li>
+<li>执行清理耗时不超过一次执行周期的25%.默认slow模式耗时不超过25ms</li>
+<li>逐个遍历db，逐个遍历db中的bucket，抽取20个key判断是否过期</li>
+<li>如果没达到时间上限（25ms）并且过期key比例大于10%，再进行一次抽样，否则结束</li>
+</ol>
+<p><strong>FAST模式规则（过期key比例小于10%不执行 ）：</strong></p>
+<ol>
+<li>执行频率受beforeSleep()调用频率影响，但两次FAST模式间隔不低于2ms</li>
+<li>执行清理耗时不超过1ms</li>
+<li>逐个遍历db，逐个遍历db中的bucket，抽取20个key判断是否过期</li>
+<li>如果没达到时间上限（1ms）并且过期key比例大于10%，再进行一次抽样，否则结束</li>
+</ol>
+<p>RedisKey的TTL记录方式：</p>
+<ul>
+<li>在RedisDB中通过一个Dict记录每个Key的TTL时间</li>
+</ul>
+<p>过期key的删除策略：</p>
+<ul>
+<li>惰性清理：每次查找key时判断是否过期，如果过期则删除</li>
+<li>定期清理：定期抽样部分key，判断是否过期，如果过期则删除。</li>
+</ul>
+<p>定期清理的两种模式：</p>
+<ul>
+<li>SLOW模式执行频率默认为10，每次不超过25ms</li>
+<li>FAST模式执行频率不固定，但两次间隔不低于2ms，每次耗时不超过1ms</li>
+</ul>
+<h1 id="nei-cun-tao-tai">内存淘汰</h1>
+<p>内存淘汰：就是当Redis内存使用达到设置的上限时，主动挑选部分key删除以释放更多内存的流程。Redis会在处理客户端命令的方法processCommand()中尝试做内存淘汰：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">processCommand</span><span class="params">(client *c)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 如果服务器设置了server.maxmemory属性，并且并未有执行lua脚本</span></span><br><span class="line">    <span class="keyword">if</span> (server.maxmemory &amp;&amp; !server.lua_timedout) &#123;</span><br><span class="line">        <span class="comment">// 尝试进行内存淘汰performEvictions</span></span><br><span class="line">        <span class="keyword">int</span> out_of_memory = (performEvictions() == EVICT_FAIL);</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">        <span class="keyword">if</span> (out_of_memory &amp;&amp; reject_cmd_on_oom) &#123;</span><br><span class="line">            rejectCommand(c, shared.oomerr);</span><br><span class="line">            <span class="keyword">return</span> C_OK;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// ....</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Redis支持8种不同策略来选择要删除的key：</p>
+<ul>
+<li>noeviction： 不淘汰任何key，但是内存满时不允许写入新数据，默认就是这种策略。</li>
+<li>volatile-ttl： 对设置了TTL的key，比较key的剩余TTL值，TTL越小越先被淘汰</li>
+<li>allkeys-random：对全体key ，随机进行淘汰。也就是直接从db-&gt;dict中随机挑选</li>
+<li>volatile-random：对设置了TTL的key ，随机进行淘汰。也就是从db-&gt;expires中随机挑选。</li>
+<li>allkeys-lru： 对全体key，基于LRU算法进行淘汰</li>
+<li>volatile-lru： 对设置了TTL的key，基于LRU算法进行淘汰</li>
+<li>allkeys-lfu： 对全体key，基于LFU算法进行淘汰</li>
+<li>volatile-lfu： 对设置了TTL的key，基于LFI算法进行淘汰</li>
+</ul>
+<p>比较容易混淆的有两个：</p>
+<ul>
+<li>LRU（Least Recently Used），最少最近使用。用当前时间减去最后一次访问时间，这个值越大则淘汰优先级越高。</li>
+<li>LFU（Least Frequently Used），最少频率使用。会统计每个key的访问频率，值越小淘汰优先级越高。</li>
+</ul>
+<p>Redis的数据都会被封装为RedisObject结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisObject</span> &#123;</span></span><br><span class="line">    <span class="keyword">unsigned</span> type:<span class="number">4</span>;        <span class="comment">// 对象类型</span></span><br><span class="line">    <span class="keyword">unsigned</span> encoding:<span class="number">4</span>;    <span class="comment">// 编码方式</span></span><br><span class="line">    <span class="keyword">unsigned</span> lru:LRU_BITS;  <span class="comment">// LRU：以秒为单位记录最近一次访问时间，长度24bit</span></span><br><span class="line">			  <span class="comment">// LFU：高16位以分钟为单位记录最近一次访问时间，低8位记录逻辑访问次数</span></span><br><span class="line">    <span class="keyword">int</span> refcount;           <span class="comment">// 引用计数，计数为0则可以回收</span></span><br><span class="line">    <span class="keyword">void</span> *ptr;              <span class="comment">// 数据指针，指向真实数据</span></span><br><span class="line">&#125; robj;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>LFU的访问次数之所以叫做逻辑访问次数，是因为并不是每次key被访问都计数，而是通过运算：</p>
+<ul>
+<li>生成0~1之间的随机数R</li>
+<li>计算 (旧次数 * lfu_log_factor + 1)，记录为P</li>
+<li>如果 R &lt; P ，则计数器 + 1，且最大不超过255</li>
+<li>访问次数会随时间衰减，距离上一次访问时间每隔 lfu_decay_time 分钟，计数器 -1</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220706160511015.png" alt="image-20220706160511015"></p>
+<p>当eviction_pool池子满了后，DB中的元素要比较当前元素的idleTIme是否比eviction_pool中最小的还要大，否则就淘汰；</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	
+	</div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/06/27/Redis%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%8E%9F%E7%90%86%E7%AF%87/" rel="next" title="Redis数据结构原理篇">
+                <i class="fa fa-chevron-left"></i> Redis数据结构原理篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="张浩宇" />
+            
+              <p class="site-author-name" itemprop="name">张浩宇</p>
+              <p class="site-description motion-element" itemprop="description">日积月累,积少成多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">150</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanghaoyu0724" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#yong-hu-kong-jian-he-nei-he-kong-jian"><span class="nav-number">1.</span> <span class="nav-text">用户空间和内核空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#io-duo-lu-fu-yong"><span class="nav-number">2.</span> <span class="nav-text">IO多路复用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#select"><span class="nav-number">2.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#poll"><span class="nav-number">2.2.</span> <span class="nav-text">poll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#epoll"><span class="nav-number">2.3.</span> <span class="nav-text">epoll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#io-duo-lu-fu-yong-shi-jian-tong-zhi-ji-zhi"><span class="nav-number">2.4.</span> <span class="nav-text">IO多路复用-事件通知机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#io-duo-lu-fu-yong-web-fu-wu-liu-cheng"><span class="nav-number">2.5.</span> <span class="nav-text">IO多路复用-web服务流程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xin-hao-qu-dong"><span class="nav-number">3.</span> <span class="nav-text">信号驱动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yi-bu-io"><span class="nav-number">4.</span> <span class="nav-text">异步IO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-wang-luo-mo-xing"><span class="nav-number">5.</span> <span class="nav-text">Redis网络模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#resp-xie-yi-2"><span class="nav-number">6.</span> <span class="nav-text">RESP协议2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mo-ni-redis-ke-hu-duan"><span class="nav-number">6.1.</span> <span class="nav-text">模拟redis客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#socket-shi-xian"><span class="nav-number">6.1.1.</span> <span class="nav-text">socket实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#netty-shi-xian"><span class="nav-number">6.1.2.</span> <span class="nav-text">Netty实现:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#redis-nei-cun-ce-lue"><span class="nav-number">7.</span> <span class="nav-text">Redis内存策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#redis-nei-cun-hui-shou"><span class="nav-number">7.1.</span> <span class="nav-text">Redis内存回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#duo-xing-shan-chu"><span class="nav-number">7.2.</span> <span class="nav-text">惰性删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zhou-qi-shan-chu"><span class="nav-number">7.3.</span> <span class="nav-text">周期删除:</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nei-cun-tao-tai"><span class="nav-number">8.</span> <span class="nav-text">内存淘汰</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Hao Hu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数&#58;</span>
+    
+    <span title="博客全站字数">399k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
