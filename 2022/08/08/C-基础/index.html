@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="zhy, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="C# 程序的通用结构 C# 程序由一个或多个文件组成。 每个文件均包含零个或多个命名空间。 一个命名空间包含类、结构、接口、枚举、委托等类型或其他命名空间。 以下示例是包含所有这些元素的 C# 程序主干。 1234567891011121314151617181920212223242526272829303132using System;Console.WriteLine(&quot;Hello">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C#基础">
+<meta property="og:url" content="https://zhanghaoyu0724.github.io/2022/08/08/C-%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="蓝天の博客">
+<meta property="og:description" content="C# 程序的通用结构 C# 程序由一个或多个文件组成。 每个文件均包含零个或多个命名空间。 一个命名空间包含类、结构、接口、枚举、委托等类型或其他命名空间。 以下示例是包含所有这些元素的 C# 程序主干。 1234567891011121314151617181920212223242526272829303132using System;Console.WriteLine(&quot;Hello">
+<meta property="og:locale">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220808220437295.png">
+<meta property="article:published_time" content="2022-08-08T13:57:53.000Z">
+<meta property="article:modified_time" content="2022-08-08T14:04:41.791Z">
+<meta property="article:author" content="Zhang Hao Hu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220808220437295.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":8,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhanghaoyu0724.github.io/2022/08/08/C-基础/"/>
+
+
+
+
+
+  <title>C#基础 | 蓝天の博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蓝天の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanghaoyu0724.github.io/2022/08/08/C-%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张浩宇">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蓝天の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C#基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2022-08-08T21:57:53+08:00">
+                2022-08-08
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2022-08-08T22:04:41+08:00">
+                2022-08-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index">
+                    <span itemprop="name">C#</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  29
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="c-cheng-xu-de-tong-yong-jie-gou">C# 程序的通用结构</h1>
+<p>C# 程序由一个或多个文件组成。 每个文件均包含零个或多个命名空间。 一个命名空间包含类、结构、接口、枚举、委托等类型或其他命名空间。 以下示例是包含所有这些元素的 C# 程序主干。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Console.WriteLine(&quot;Hello world!&quot;);</span><br><span class="line"></span><br><span class="line">namespace YourNamespace</span><br><span class="line">&#123;</span><br><span class="line">    class YourClass</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    struct YourStruct</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    interface IYourInterface</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    delegate int YourDelegate();</span><br><span class="line"></span><br><span class="line">    enum YourEnum</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    namespace YourNestedNamespace</span><br><span class="line">    &#123;</span><br><span class="line">        struct YourStruct</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前面的示例使用顶级语句作为程序的入口点。 C# 9 中添加了此功能。 在 C# 9 之前，入口点是名为 <code>Main</code> 的静态方法，如以下示例所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">namespace YourNamespace</span><br><span class="line">&#123;</span><br><span class="line">    class YourClass</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    struct YourStruct</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    interface IYourInterface</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    delegate int YourDelegate();</span><br><span class="line"></span><br><span class="line">    enum YourEnum</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    namespace YourNestedNamespace</span><br><span class="line">    &#123;</span><br><span class="line">        struct YourStruct</span><br><span class="line">        &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            //Your program starts here...</span><br><span class="line">            Console.WriteLine(&quot;Hello world!&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="c-lei-xing-xi-tong">C# 类型系统</h1>
+<p>C# 是一种强类型语言。 <strong>每个变量和常量都有一个类型</strong>，每个求值的表达式也是如此。 每个方法声明都为每个输入参数和返回值指定名称、类型和种类（值、引用或输出）。 .NET 类库定义了内置数值类型和表示各种构造的复杂类型。 其中包括文件系统、网络连接、对象的集合和数组以及日期。 典型的 C# 程序使用类库中的类型，以及对程序问题域的专属概念进行建模的用户定义类型。</p>
+<p>类型中可存储的信息包括以下项：</p>
+<ul>
+<li>类型变量所需的存储空间。</li>
+<li>可以表示的最大值和最小值。</li>
+<li>包含的成员（方法、字段、事件等）。</li>
+<li>继承自的基类型。</li>
+<li>它实现的接口。</li>
+<li>允许执行的运算种类</li>
+</ul>
+<p>编译器使用类型信息来确保在代码中执行的所有操作都是类型安全的。 例如，如果声明 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>int</code></a> 类型的变量，那么编译器允许在加法和减法运算中使用此变量。 如果尝试对 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/bool"><code>bool</code></a> 类型的变量执行这些相同操作，则编译器将生成错误，如以下示例所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int a = 5;</span><br><span class="line">int b = a + 2; //OK</span><br><span class="line">bool test = true;</span><br><span class="line">int c = a + test; // Error</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意:C 和 C++ 开发人员请注意，在 C# 中，<code>bool</code> 不能转换为 <code>int</code>。</p>
+</blockquote>
+<p>编译器将类型信息作为元数据嵌入可执行文件中。 公共语言运行时 (CLR) 在运行时使用元数据，以在分配和回收内存时进一步保证类型安全性。</p>
+<h2 id="nei-zhi-lei-xing" id="内置类型">内置类型</h2>
+<p>C# 提供了一组标准的内置类型。 这些类型表示整数、浮点值、布尔表达式、文本字符、十进制值和其他数据类型。 还有内置的 <code>string</code> 和 <code>object</code> 类型。 这些类型可供在任何 C# 程序中使用。 有关内置类型的完整列表</p>
+<p>下表列出了 C# 内置值类型:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">C# 类型关键字</th>
+<th style="text-align:center">.NET 类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/bool"><code>bool</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.boolean"> System.Boolean</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>byte</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.byte">System.Byte</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>sbyte</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.sbyte">System.SByte</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/char"><code>char</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.char">System.Char</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types"><code>decimal</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.decimal">System.Decimal</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types"><code>double</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.double">System.Double</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/floating-point-numeric-types"><code>float</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.single">System.Single</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>int</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.int32">System.Int32</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>uint</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.uint32">System.UInt32</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>nint</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.intptr">System.IntPtr</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>nuint</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.uintptr">System.UIntPtr</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>long</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.int64">System.Int64</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>ulong</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.uint64">System.UInt64</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>short</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.int16">System.Int16</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/integral-numeric-types"><code>ushort</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.uint16">System.UInt16</a></td>
+</tr>
+</tbody>
+</table>
+<p>下表列出了 C# 内置<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/reference-types">引用</a>类型：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">C# 类型关键字</th>
+<th style="text-align:center">.NET 类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/reference-types#the-object-type"><code>object</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.object">System.Object</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type"><code>string</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.string">System.String</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/reference-types#the-dynamic-type"><code>dynamic</code></a></td>
+<td style="text-align:center"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.object">System.Object</a></td>
+</tr>
+</tbody>
+</table>
+<p>在上表中，左侧列中的每个 C# 类型关键字（<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/reference-types#the-dynamic-type">dynamic</a> 除外）都是相应 .NET 类型的别名。 它们是可互换的。 例如，以下声明声明了相同类型的变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 123;</span><br><span class="line">System.Int32 b = 123;</span><br></pre></td></tr></table></figure>
+<h2 id="zi-ding-yi-lei-xing" id="自定义类型">自定义类型</h2>
+<p>可以使用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/struct"><code>struct</code></a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/class"><code>class</code></a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/interface"><code>interface</code></a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/enum"><code>enum</code></a> 和 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/record"><code>record</code></a> 构造来创建自己的自定义类型。 .NET 类库本身是一组自定义类型，以供你在自己的应用程序中使用。 默认情况下，类库中最常用的类型在任何 C# 程序中均可用。 其他类型只有在显式添加对定义这些类型的程序集的项目引用时才可用。 编译器引用程序集之后，你可以声明在源代码的此程序集中声明的类型的变量（和常量）。</p>
+<h2 id="tong-yong-lei-xing-xi-tong" id="通用类型系统">通用类型系统</h2>
+<p>对于 .NET 中的类型系统，请务必了解以下两个基本要点：</p>
+<ul>
+<li>它支持继承原则。 类型可以派生自其他类型（称为<em>基类型</em>）。 派生类型继承（有一些限制）基类型的方法、属性和其他成员。 基类型可以继而从某种其他类型派生，在这种情况下，派生类型继承其继承层次结构中的两种基类型的成员。 所有类型（包括 System.Int32 (C# keyword: <code>int</code>) 等内置数值类型）最终都派生自单个基类型，即 System.Object(C# keyword: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/reference-types"><code>object</code></a>)。 这样的统一类型层次结构称为<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/common-type-system">通用类型系统</a> (CTS)。 若要详细了解 C# 中的继承，请参阅<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/fundamentals/object-oriented/inheritance">继承</a>。</li>
+<li>CTS 中的每种类型被定义为值类型或引用类型。 这些类型包括 .NET 类库中的所有自定义类型以及你自己的用户定义类型。 使用 <code>struct</code> 关键字定义的类型是值类型；所有内置数值类型都是 <code>structs</code>。 使用 <code>class</code> 或 <code>record</code> 关键字定义的类型是引用类型。 引用类型和值类型遵循不同的编译时规则和运行时行为。</li>
+</ul>
+<p>下图展示了 CTS 中值类型和引用类型之间的关系。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220808220437295.png" alt="image-20220808220437295"></p>
+<p>类和结构是 .NET 通用类型系统的两种基本构造。 C# 9 添加记录，记录是一种类。 每种本质上都是一种数据结构，其中封装了同属一个逻辑单元的一组数据和行为。 数据和行为是类、结构或记录的成员。 这些行为包括方法、属性和事件等，本文稍后将具体列举。</p>
+<p>类、结构或记录声明类似于一张蓝图，用于在运行时创建实例或对象。 如果定义名为 <code>Person</code> 的类、结构或记录，则 <code>Person</code> 是类型的名称。 如果声明和初始化 <code>Person</code> 类型的变量 <code>p</code>，那么 <code>p</code> 就是所谓的 <code>Person</code> 对象或实例。 可以创建同一 <code>Person</code> 类型的多个实例，每个实例都可以有不同的属性和字段值。</p>
+<p>类是引用类型。 创建类型的对象后，向其分配对象的变量仅保留对相应内存的引用。 将对象引用分配给新变量后，新变量会引用原始对象。 通过一个变量所做的更改将反映在另一个变量中，因为它们引用相同的数据。</p>
+<p>结构是值类型。 创建结构时，向其分配结构的变量保留结构的实际数据。 将结构分配给新变量时，会复制结构。 因此，新变量和原始变量包含相同数据的副本（共两个）。 对一个副本所做的更改不会影响另一个副本。</p>
+<p>记录类型可以是引用类型 (<code>record class</code>) 或值类型 (<code>record struct</code>)。</p>
+<p>一般来说，类用于对更复杂的行为建模。 类通常存储计划在创建类对象后进行修改的数据。 结构最适用于小型数据结构。 结构通常存储不打算在创建结构后修改的数据。 记录类型是具有附加编译器合成成员的数据结构。 记录通常存储不打算在创建对象后修改的数据。</p>
+<h3 id="net-zhong-de-lei-xing" id="NET-中的类型">.NET 中的类型</h3>
+<p>NET 中的所有类型不是值类型就是引用类型。<br>
+值类型是使用对象实际值来表示对象的数据类型。 如果向一个变量分配值类型的实例，则该变量将被赋以该值的全新副本。<br>
+引用类型是使用对对象实际值的引用（类似于指针）来表示对象的数据类型。 如果为某个变量分配一个引用类型，则该变量将引用（或指向）原始值。 不创建任何副本。<br>
+.NET 中的通用类型系统支持以下五种类别的类型：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/common-type-system#classes">类</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/common-type-system#structures">结构</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/common-type-system#enumerations">枚举</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/common-type-system#interfaces">接口</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/standard/base-types/common-type-system#delegates">委托</a></li>
+</ul>
+<h3 id="lei-xing-cheng-yuan-de-te-zheng" id="类型成员的特征">类型成员的特征</h3>
+<p>通用类型系统允许类型成员具有多种特征，但并不要求语言能支持所有这些特征。 下表介绍了这些成员特征。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特征</th>
+<th style="text-align:left">可应用到</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">abstract</td>
+<td style="text-align:left">方法、属性和事件</td>
+<td style="text-align:left">类型不提供方法的实现。 继承或实现抽象方法的类型必须提供方法的实现。 只有当派生的类型本身是抽象类型的时候，情况例外。 所有的抽象方法都是虚的。</td>
+</tr>
+<tr>
+<td style="text-align:left">private、family、assembly、family 和 assembly、family 或 assembly，或者 public</td>
+<td style="text-align:left">全部</td>
+<td style="text-align:left">定义成员的可访问性：  private 只能在与成员相同的类型或在嵌套类型中访问。  family 在与成员相同的类型中和从它继承的派生类型访问。  程序集 只能在定义该类型的程序集中访问。  family 和 assembly 只能从同时具备族和程序集访问权的类型进行访问。  family 或 assembly 只能从具备族和程序集访问权的类型进行访问。  public 可从任何类型访问。</td>
+</tr>
+<tr>
+<td style="text-align:left">final</td>
+<td style="text-align:left">方法、属性和事件</td>
+<td style="text-align:left">虚方法不能在派生类型中被重写。</td>
+</tr>
+<tr>
+<td style="text-align:left">initialize-only</td>
+<td style="text-align:left">字段</td>
+<td style="text-align:left">该值只能被初始化，不能在初始化之后写入。</td>
+</tr>
+<tr>
+<td style="text-align:left">实例</td>
+<td style="text-align:left">字段、方法、属性和事件</td>
+<td style="text-align:left">如果成员未标记为 <code>static</code>（C# 和 C++）、<code>Shared</code> (Visual Basic)、<code>virtual</code>（C# 和 C++）或 <code>Overridable</code> (Visual Basic)，则它是一个实例成员（没有实例关键字）。 内存中这些成员的副本数将会像使用它们的对象数一样多。</td>
+</tr>
+<tr>
+<td style="text-align:left">文本</td>
+<td style="text-align:left">字段</td>
+<td style="text-align:left">分配给该字段的值是一个内置值类型的固定值（在编译时已知）。 文本字段有时指的是常数。</td>
+</tr>
+<tr>
+<td style="text-align:left">newslot 或 override</td>
+<td style="text-align:left">全部</td>
+<td style="text-align:left">定义成员如何与具有相同签名的继承成员进行交互：  newslot 隐藏具有相同签名的继承成员。  override 替换继承的虚方法的定义。  默认为 newslot。</td>
+</tr>
+<tr>
+<td style="text-align:left">静态</td>
+<td style="text-align:left">字段、方法、属性和事件</td>
+<td style="text-align:left">成员属于定义它的类型，而不属于该类型的特定实例；即使不创建类型的实例，成员也会存在，并且它由该类型的所有实例共享。</td>
+</tr>
+<tr>
+<td style="text-align:left">virtual</td>
+<td style="text-align:left">方法、属性和事件</td>
+<td style="text-align:left">此方法可以由派生类型实现，并且既可静态调用，也可动态调用。 如果使用动态调用，在运行时执行调用的实例类型（而不是编译时已知的类型）将确定调用方法的哪一种实现。 若要静态调用虚方法，可能必须将变量强制转换为使用所需方法版本的类型。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="zhong-zai" id="重载">重载</h3>
+<p>每个类型成员都有一个唯一的签名。 方法签名由方法名称和一个参数列表（方法的参数的顺序和类型）组成。 可以在一种类型内定义具有相同名称的多种方法，只要这些方法的签名不同。 当定义两种或多种具有相同名称的方法时，就称作重载。 例如，在 System.Char中，重载了 IsDigit方法。 一个方法采用 Char。 另一个方法采用 String和 Int32。</p>
+<h3 id="ji-cheng-zhong-xie-he-yin-cang-cheng-yuan" id="继承、重写和隐藏成员">继承、重写和隐藏成员</h3>
+<p>派生类型继承其基类型的所有成员；也就是说，会在派生类型上定义这些成员，并供派生类型使用。 继承成员的行为和质量可以通过以下两种方式来修改：</p>
+<ul>
+<li>派生类型可通过使用相同的签名定义一个新成员，从而隐藏继承的成员。 将先前的公共成员变成私有成员，或者为标记为 <code>final</code> 的继承方法定义新行为时，可以采取这种方法。</li>
+<li>派生类型可以重写继承的虚方法。 重写方法提供了对方法的一种新定义，将根据运行时的值的类型，而不是编译时已知的变量类型来调用方法。 只有在虚拟方法未标记为 <code>final</code> 且新方法至少可以像虚拟方法一样进行访问的情况下，方法才能重写虚拟方法。</li>
+</ul>
+<h1 id="cheng-yuan">成员</h1>
+<p>类型的成员包括所有方法、字段、常量、属性和事件。 C# 没有全局变量或方法，这一点其他某些语言不同。 即使是编程的入口点（<code>Main</code> 方法），也必须在类或结构中声明（使用顶级语句时，隐式声明）。</p>
+<p>下面列出了所有可以在类、结构或记录中声明的各种成员。</p>
+<ul>
+<li>字段</li>
+<li>常量</li>
+<li>属性</li>
+<li>方法</li>
+<li>构造函数</li>
+<li>事件</li>
+<li>终结器</li>
+<li>索引器</li>
+<li>运算符</li>
+<li>嵌套类型</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">成员</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/fields">字段</a></td>
+<td style="text-align:left">字段是在类范围声明的变量。 字段可以是内置数值类型或其他类的实例。 例如，日历类可能具有一个包含当前日期的字段。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/constants">常量</a></td>
+<td style="text-align:left">常量是在编译时设置其值并且不能更改其值的字段。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/properties">属性</a></td>
+<td style="text-align:left">属性是类中可以像类中的字段一样访问的方法。 属性可以为类字段提供保护，以避免字段在对象不知道的情况下被更改。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/methods">方法</a></td>
+<td style="text-align:left">方法定义类可以执行的操作。 方法可接受提供输入数据的参数，并可通过参数返回输出数据。 方法还可以不使用参数而直接返回值。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/events/">事件</a></td>
+<td style="text-align:left">事件向其他对象提供有关发生的事情（如单击按钮或成功完成某个方法）的通知。 事件是使用委托定义和触发的。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/">运算符</a></td>
+<td style="text-align:left">重载运算符被视为类型成员。 重载运算符时，将其定义为类型中的公共静态方法。 有关详细信息，请参阅<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/operator-overloading">运算符重载</a>。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/indexers/">索引器</a></td>
+<td style="text-align:left">使用索引器可以用类似于数组的方式为对象建立索引。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/constructors">构造函数</a></td>
+<td style="text-align:left">构造函数是首次创建对象时调用的方法。 它们通常用于初始化对象的数据。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/finalizers">终结器</a></td>
+<td style="text-align:left">C# 中很少使用终结器。 终结器是当对象即将从内存中移除时由运行时执行引擎调用的方法。 它们通常用来确保任何必须释放的资源都得到适当的处理。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/nested-types">嵌套类型</a></td>
+<td style="text-align:left">嵌套类型是在其他类型中声明的类型。 嵌套类型通常用于描述仅由包含它们的类型使用的对象。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="guan-jian-zi">关键字</h1>
+<p>关键字是预定义的保留标识符，对编译器有特殊意义。 除非前面有 <code>@</code> 前缀，否则不能在程序中用作标识符。 例如，<code>@if</code> 是有效标识符，而 <code>if</code> 则不是，因为 <code>if</code> 是关键字。</p>
+<p>此主题中的第一个表列出了是 C# 程序任意部分中的保留标识符的关键字。 此主题中的第二个表列出了 C# 中的上下文关键字。 上下文关键字仅在一部分程序上下文中有特殊含义，可以在相应上下文范围之外用作标识符。 一般来说，C# 语言中新增的关键字会作为上下文关键字添加，以免破坏用旧版语言编写的程序。</p>
+<h1 id="c-yun-suan-fu-he-biao-da-shi">C# 运算符和表达式</h1>
+<p>C# 提供了许多运算符。 其中许多都受到<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/built-in-types">内置类型</a>的支持，可用于对这些类型的值执行基本操作。 这些运算符包括以下组：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators">算术运算符</a>，将对数值操作数执行算术运算</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/comparison-operators">比较运算符</a>，将比较数值操作数</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators">布尔逻辑运算符</a>，将对 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/bool"><code>bool</code></a> 操作数执行逻辑运算</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators">位运算符和移位运算符</a>，将对整数类型的操作数执行位运算或移位运算</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/equality-operators">相等运算符</a>，将检查其操作数是否相等</li>
+</ul>
+<p>通常可以<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/operator-overloading">重载</a>这些运算符，也就是说，可以为用户定义类型的操作数指定运算符行为。</p>
+<h2 id="yun-suan-fu-zhong-zai" id="运算符重载：">运算符重载：</h2>
+<p>使用 <code>operator</code> 关键字来声明运算符。 运算符声明必须符合以下规则：</p>
+<ul>
+<li>同时包含 <code>public</code> 和 <code>static</code> 修饰符。</li>
+<li>一元运算符有一个输入参数。 二元运算符有两个输入参数。 在每种情况下，都至少有一个参数必须具有类型 <code>T</code> 或 <code>T?</code>，其中 <code>T</code> 是包含运算符声明的类型。</li>
+</ul>
+<p>下面的示例定义了一个表示有理数的简单结构。 该结构会重载一些算术运算符：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">public readonly struct Fraction</span><br><span class="line">&#123;</span><br><span class="line">    private readonly int num;</span><br><span class="line">    private readonly int den;</span><br><span class="line"></span><br><span class="line">    public Fraction(int numerator, int denominator)</span><br><span class="line">    &#123;</span><br><span class="line">        if (denominator == 0)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new ArgumentException(&quot;Denominator cannot be zero.&quot;, nameof(denominator));</span><br><span class="line">        &#125;</span><br><span class="line">        num = numerator;</span><br><span class="line">        den = denominator;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static Fraction operator +(Fraction a) =&gt; a;</span><br><span class="line">    public static Fraction operator -(Fraction a) =&gt; new Fraction(-a.num, a.den);</span><br><span class="line"></span><br><span class="line">    public static Fraction operator +(Fraction a, Fraction b)</span><br><span class="line">        =&gt; new Fraction(a.num * b.den + b.num * a.den, a.den * b.den);</span><br><span class="line"></span><br><span class="line">    public static Fraction operator -(Fraction a, Fraction b)</span><br><span class="line">        =&gt; a + (-b);</span><br><span class="line"></span><br><span class="line">    public static Fraction operator *(Fraction a, Fraction b)</span><br><span class="line">        =&gt; new Fraction(a.num * b.num, a.den * b.den);</span><br><span class="line"></span><br><span class="line">    public static Fraction operator /(Fraction a, Fraction b)</span><br><span class="line">    &#123;</span><br><span class="line">        if (b.num == 0)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new DivideByZeroException();</span><br><span class="line">        &#125;</span><br><span class="line">        return new Fraction(a.num * b.den, a.den * b.num);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public override string ToString() =&gt; $&quot;&#123;num&#125; / &#123;den&#125;&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static class OperatorOverloading</span><br><span class="line">&#123;</span><br><span class="line">    public static void Main()</span><br><span class="line">    &#123;</span><br><span class="line">        var a = new Fraction(5, 4);</span><br><span class="line">        var b = new Fraction(1, 2);</span><br><span class="line">        Console.WriteLine(-a);   // output: -5 / 4</span><br><span class="line">        Console.WriteLine(a + b);  // output: 14 / 8</span><br><span class="line">        Console.WriteLine(a - b);  // output: 6 / 8</span><br><span class="line">        Console.WriteLine(a * b);  // output: 5 / 8</span><br><span class="line">        Console.WriteLine(a / b);  // output: 10 / 4</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="yong-hu-ding-yi-zhuan-huan-yun-suan-fu" id="用户定义转换运算符">用户定义转换运算符</h3>
+<p>用户定义类型可以定义从或到另一个类型的自定义隐式或显式转换。</p>
+<p>隐式转换无需调用特殊语法，并且可以在各种情况（例如，在赋值和方法调用中）下发生。 预定义的 C# 隐式转换始终成功，且永远不会引发异常。 用户定义隐式转换也应如此。 如果自定义转换可能会引发异常或丢失信息，请将其定义为显式转换。</p>
+<p>is和 as运算符不考虑使用用户定义转换。 强制转换表达式用于调用用户定义显式转换。</p>
+<p><code>operator</code> 和 <code>implicit</code> 或 <code>explicit</code> 关键字分别用于定义隐式转换或显式转换。 定义转换的类型必须是该转换的源类型或目标类型。 可用两种类型中的任何一种类型来定义两种用户定义类型之间的转换。</p>
+<p>下面的示例展示如何定义隐式转换和显式转换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line"></span><br><span class="line">public readonly struct Digit</span><br><span class="line">&#123;</span><br><span class="line">    private readonly byte digit;</span><br><span class="line"></span><br><span class="line">    public Digit(byte digit)</span><br><span class="line">    &#123;</span><br><span class="line">        if (digit &gt; 9)</span><br><span class="line">        &#123;</span><br><span class="line">            throw new ArgumentOutOfRangeException(nameof(digit), &quot;Digit cannot be greater than nine.&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        this.digit = digit;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static implicit operator byte(Digit d) =&gt; d.digit;</span><br><span class="line">    public static explicit operator Digit(byte b) =&gt; new Digit(b);</span><br><span class="line"></span><br><span class="line">    public override string ToString() =&gt; $&quot;&#123;digit&#125;&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public static class UserDefinedConversions</span><br><span class="line">&#123;</span><br><span class="line">    public static void Main()</span><br><span class="line">    &#123;</span><br><span class="line">        var d = new Digit(7);</span><br><span class="line"></span><br><span class="line">        byte number = d;</span><br><span class="line">        Console.WriteLine(number);  // output: 7</span><br><span class="line"></span><br><span class="line">        Digit digit = (Digit)number;</span><br><span class="line">        Console.WriteLine(digit);  // output: 7</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ke-zhong-zai-yun-suan-fu" id="可重载运算符">可重载运算符</h3>
+<p>下表提供了 C# 运算符可重载性的相关信息：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">运算符</th>
+<th style="text-align:left">可重载性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#unary-plus-and-minus-operators">+x</a>, <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#unary-plus-and-minus-operators">-x</a>, <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#logical-negation-operator-">!x</a>, <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#bitwise-complement-operator-">~x</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#increment-operator-">++</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#decrement-operator---">–</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/true-false-operators">true</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/true-false-operators">false</a></td>
+<td style="text-align:left">这些一元运算符可以进行重载。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/addition-operator">x + y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/subtraction-operator">x - y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#multiplication-operator-">x * y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#division-operator-">x / y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#remainder-operator-">x % y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#logical-and-operator-">x &amp; y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#logical-or-operator-">x | y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#logical-exclusive-or-operator-">x ^ y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#left-shift-operator-">x &lt;&lt; y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#right-shift-operator-">x &gt;&gt; y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/equality-operators#equality-operator-">x == y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/equality-operators#inequality-operator-">x != y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/comparison-operators#less-than-operator-">x &lt; y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/comparison-operators#greater-than-operator-">x &gt; y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/comparison-operators#less-than-or-equal-operator-">x &lt;= y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/comparison-operators#greater-than-or-equal-operator-">x &gt;= y</a></td>
+<td style="text-align:left">这些二元运算符可以进行重载。 某些运算符必须成对重载；有关详细信息，请查看此表后面的备注。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#conditional-logical-and-operator-">x &amp;&amp; y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#conditional-logical-or-operator-">x || y</a></td>
+<td style="text-align:left">无法重载条件逻辑运算符。 但是，如果具有已重载的 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/true-false-operators"><code>true</code> 和 <code>false</code> 运算符</a>的类型还以某种方式重载了 <code>&amp;</code> 或 `</td>
+</tr>
+<tr>
+<td style="text-align:left">[a<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/member-access-operators#indexer-operator-">i]</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/member-access-operators#null-conditional-operators--and-"><code>a?[i\]</code></a></td>
+<td style="text-align:left">元素访问不被视为可重载运算符，但你可定义<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/indexers/">索引器</a>。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/type-testing-and-cast#cast-expression">(T)x</a></td>
+<td style="text-align:left">强制转换运算符不能重载，但可以定义可由强制转换表达式执行的自定义类型转换。 有关详细信息，请参阅<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/user-defined-conversion-operators">用户定义转换运算符</a>。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#compound-assignment">+=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#compound-assignment">-=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#compound-assignment">*=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#compound-assignment">/=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/arithmetic-operators#compound-assignment">%=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#compound-assignment">&amp;=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#compound-assignment">|=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/boolean-logical-operators#compound-assignment">^=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#compound-assignment">&lt;&lt;=</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators#compound-assignment">&gt;&gt;=</a></td>
+<td style="text-align:left">复合赋值运算符不能显式重载。 但在重载二元运算符时，也会隐式重载相应的复合赋值运算符（若有）。 例如，使用 <code>+</code>（可以进行重载）计算 <code>+=</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/member-access-operators#index-from-end-operator-">^x</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/assignment-operator">x = y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/member-access-operators#member-access-expression-">x.y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/member-access-operators#null-conditional-operators--and-"><code>x?.y</code></a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/conditional-operator">c ? t : f</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/null-coalescing-operator">x ?? y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/null-coalescing-operator">x ??= y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/member-access-operators#range-operator-">x…y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/pointer-related-operators#pointer-member-access-operator--">x-&gt;y</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/lambda-operator">=&gt;</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/member-access-operators#invocation-expression-">f(x)</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/type-testing-and-cast#as-operator">as</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/await">await</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/checked">checked</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/unchecked">unchecked</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/default">default</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/delegate-operator">delegate</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/type-testing-and-cast#is-operator">is</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/nameof">nameof</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/new-operator">new</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/sizeof">sizeof</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/stackalloc">stackalloc</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/switch-expression">switch</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/type-testing-and-cast#typeof-operator">typeof</a>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/with-expression">with</a></td>
+<td style="text-align:left">这些运算符无法进行重载。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="xiang-deng-yun-suan-fu" id="相等运算符">相等运算符 ==</h2>
+<h3 id="zhi-lei-xing-de-xiang-deng-xing" id="值类型的相等性">值类型的相等性</h3>
+<p>如果内置值类型的值相等，则其操作数相等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">int a = 1 + 2 + 3;</span><br><span class="line">int b = 6;</span><br><span class="line">Console.WriteLine(a == b);  // output: True</span><br><span class="line"></span><br><span class="line">char c1 = &#x27;a&#x27;;</span><br><span class="line">char c2 = &#x27;A&#x27;;</span><br><span class="line">Console.WriteLine(c1 == c2);  // output: False</span><br><span class="line">Console.WriteLine(c1 == char.ToLower(c2));  // output: True</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对于 <code>==</code>、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/comparison-operators"><code>&lt;</code>、<code>&gt;</code>、<code>&lt;=</code> 和 <code>&gt;=</code></a> 运算符，如果任何操作数不是数字（<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.double.nan">Double.NaN</a> 或 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.single.nan">Single.NaN</a>），则运算的结果为 <code>false</code>。 这意味着 <code>NaN</code> 值不大于、小于或等于任何其他 <code>double</code>（或 <code>float</code>）值，包括 <code>NaN</code></p>
+</blockquote>
+<p>如果基本整数类型的相应值相等，则相同枚举类型的两个操作数相等。</p>
+<p>用户定义的 struct类型默认情况下不支持 <code>==</code> 运算符。 要支持 <code>==</code> 运算符，用户定义的结构必须重载它。</p>
+<h4 id="yuan-zu-xiang-deng" id="元组相等">元组相等</h4>
+<p>从 C# 7.3 开始，元组类型支持 <code>==</code> 和 <code>!=</code> 运算符。 这些运算符按照元组元素的顺序将左侧操作数的成员与相应的右侧操作数的成员进行比较。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(int a, byte b) left = (5, 10);</span><br><span class="line">(long a, int b) right = (5, 10);</span><br><span class="line">Console.WriteLine(left == right);  // output: True</span><br><span class="line">Console.WriteLine(left != right);  // output: False</span><br><span class="line"></span><br><span class="line">var t1 = (A: 5, B: 10);</span><br><span class="line">var t2 = (B: 5, A: 10);</span><br><span class="line">Console.WriteLine(t1 == t2);  // output: True</span><br><span class="line">Console.WriteLine(t1 != t2);  // output: False</span><br></pre></td></tr></table></figure>
+<p>如前面的示例所示，<code>==</code> 和 <code>!=</code> 操作不会考虑元组字段名称。</p>
+<p>同时满足以下两个条件时，两个元组可比较：</p>
+<ul>
+<li>两个元组具有相同数量的元素。 例如，如果 <code>t1</code> 和 <code>t2</code> 具有不同数目的元素，<code>t1 != t2</code> 则不会进行编译。</li>
+<li>对于每个元组位置，可以使用 <code>==</code> 和 <code>!=</code> 运算符对左右侧元组操作数中的相应元素进行比较。 例如，<code>(1, (2, 3)) == ((1, 2), 3)</code> 不会进行编译，因为 <code>1</code> 不可与 <code>(1, 2)</code> 比较。</li>
+</ul>
+<p><code>==</code> 和 <code>!=</code> 运算符将以短路方式对元组进行比较。 也就是说，一旦遇见一对不相等的元素或达到元组的末尾，操作将立即停止。 但是，在进行任何比较之前，将对所有元组元素进行计算，如以下示例所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Console.WriteLine((Display(1), Display(2)) == (Display(3), Display(4)));</span><br><span class="line"></span><br><span class="line">int Display(int s)</span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(s);</span><br><span class="line">    return s;</span><br><span class="line">&#125;</span><br><span class="line">// Output:</span><br><span class="line">// 1</span><br><span class="line">// 2</span><br><span class="line">// 3</span><br><span class="line">// 4</span><br><span class="line">// False</span><br></pre></td></tr></table></figure>
+<h3 id="yin-yong-lei-xing-de-xiang-deng-xing" id="引用类型的相等性">引用类型的相等性</h3>
+<p>默认情况下，如果两个非记录引用类型操作符引用同一对象，则这两个操作符相等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class ReferenceTypesEquality</span><br><span class="line">&#123;</span><br><span class="line">    public class MyClass</span><br><span class="line">    &#123;</span><br><span class="line">        private int id;</span><br><span class="line"></span><br><span class="line">        public MyClass(int id) =&gt; this.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void Main()</span><br><span class="line">    &#123;</span><br><span class="line">        var a = new MyClass(1);</span><br><span class="line">        var b = new MyClass(1);</span><br><span class="line">        var c = a;</span><br><span class="line">        Console.WriteLine(a == b);  // output: False</span><br><span class="line">        Console.WriteLine(a == c);  // output: True</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如示例所示，默认情况下，用户定义的引用类型支持 <code>==</code> 运算符。 但是，引用类型可重载 <code>==</code> 运算符。 如果引用类型重载 <code>==</code> 运算符，使用 Object.ReferenceEquals= 方法来检查该类型的两个引用是否引用同一对象。</p>
+<h3 id="ji-lu-lei-xing-xiang-deng-xing" id="记录类型相等性">记录类型相等性</h3>
+<p>在 C# 9.0 和更高版本中提供，记录类型(引用类型)支持 <code>==</code> 和 <code>!=</code> 运算符，这些运算符默认提供值相等性语义。 也就是说，当两个记录操作数均为 <code>null</code> 或所有字段的对应值和自动实现的属性相等时，两个记录操作数都相等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class RecordTypesEquality</span><br><span class="line">&#123;</span><br><span class="line">    public record Point(int X, int Y, string Name);</span><br><span class="line">    public record TaggedNumber(int Number, List&lt;string&gt; Tags);</span><br><span class="line"></span><br><span class="line">    public static void Main()</span><br><span class="line">    &#123;</span><br><span class="line">        var p1 = new Point(2, 3, &quot;A&quot;);</span><br><span class="line">        var p2 = new Point(1, 3, &quot;B&quot;);</span><br><span class="line">        var p3 = new Point(2, 3, &quot;A&quot;);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(p1 == p2);  // output: False</span><br><span class="line">        Console.WriteLine(p1 == p3);  // output: True</span><br><span class="line"></span><br><span class="line">        var n1 = new TaggedNumber(2, new List&lt;string&gt;() &#123; &quot;A&quot; &#125;);</span><br><span class="line">        var n2 = new TaggedNumber(2, new List&lt;string&gt;() &#123; &quot;A&quot; &#125;);</span><br><span class="line">        Console.WriteLine(n1 == n2);  // output: False</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如前面的示例所示，对于非记录引用类型成员，比较的是它们的引用值，而不是所引用的实例。</p>
+<h3 id="zi-fu-chuan-xiang-deng-xing" id="字符串相等性">字符串相等性</h3>
+<p>如果两个字符串均为 <code>null</code> 或者两个字符串实例具有相等长度且在每个字符位置有相同字符，则这两个<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/reference-types#the-string-type">字符串</a>操作数相等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">string s1 = &quot;hello!&quot;;</span><br><span class="line">string s2 = &quot;HeLLo!&quot;;</span><br><span class="line">Console.WriteLine(s1 == s2.ToLower());  // output: True</span><br><span class="line"></span><br><span class="line">string s3 = &quot;Hello!&quot;;</span><br><span class="line">Console.WriteLine(s1 == s3);  // output: False</span><br></pre></td></tr></table></figure>
+<p>这就是区分大小写的序号比较。 有关字符串比较的详细信息，请参阅<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/how-to/compare-strings">如何在 C# 中比较字符串</a>。</p>
+<h3 id="wei-tuo-xiang-deng" id="委托相等">委托相等</h3>
+<p>若两个运行时间类型相同的<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/delegates/">委托</a>操作数均为 <code>null</code>，或其调用列表长度系统且在每个位置具有相同的条目，则二者相等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Action a = () =&gt; Console.WriteLine(&quot;a&quot;);</span><br><span class="line"></span><br><span class="line">Action b = a + a;</span><br><span class="line">Action c = a + a;</span><br><span class="line">Console.WriteLine(object.ReferenceEquals(b, c));  // output: False</span><br><span class="line">Console.WriteLine(b == c);  // output: True</span><br></pre></td></tr></table></figure>
+<p>有关详细信息，请参阅 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/language-specification/readme">C# 语言规范</a>中的<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/language-specification/expressions#11119-delegate-equality-operators">委托相等运算符</a>部分。</p>
+<p>通过计算语义上相同的 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/lambda-expressions">Lambda 表达式</a>生成的委托不相等，如以下示例所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Action a = () =&gt; Console.WriteLine(&quot;a&quot;);</span><br><span class="line">Action b = () =&gt; Console.WriteLine(&quot;a&quot;);</span><br><span class="line"></span><br><span class="line">Console.WriteLine(a == b);  // output: False</span><br><span class="line">Console.WriteLine(a + b == a + b);  // output: True</span><br><span class="line">Console.WriteLine(b + a == a + b);  // output: False</span><br></pre></td></tr></table></figure>
+<h3 id="bu-deng-yun-suan-fu" id="不等运算符">不等运算符 !=</h3>
+<p>如果操作数不相等，不等于运算符 <code>!=</code> 返回 <code>true</code>，否则返回 <code>false</code>。 对于<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/built-in-types">内置类型</a>的操作数，表达式 <code>x != y</code> 生成与表达式 <code>!(x == y)</code> 相同的结果。 有关类型相等性的更多信息，请参阅<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/equality-operators#equality-operator-">相等运算符</a>部分。</p>
+<p>下面的示例演示 <code>!=</code> 运算符的用法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">int a = 1 + 1 + 2 + 3;</span><br><span class="line">int b = 6;</span><br><span class="line">Console.WriteLine(a != b);  // output: True</span><br><span class="line"></span><br><span class="line">string s1 = &quot;Hello&quot;;</span><br><span class="line">string s2 = &quot;Hello&quot;;</span><br><span class="line">Console.WriteLine(s1 != s2);  // output: False</span><br><span class="line"></span><br><span class="line">object o1 = 1;</span><br><span class="line">object o2 = 1;</span><br><span class="line">Console.WriteLine(o1 != o2);  // output: True</span><br></pre></td></tr></table></figure>
+<h3 id="yun-suan-fu-ke-zhong-zai-xing" id="运算符可重载性">运算符可重载性</h3>
+<p>用户定义类型可以<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/operators/operator-overloading">重载</a><code>==</code> 和 <code>!=</code> 运算符。 如果某类型重载这两个运算符之一，它还必须重载另一个运算符。</p>
+<p>记录类型不能显式重载 <code>==</code> 和 <code>!=</code> 运算符。 如果需要更改记录类型 <code>T</code> 的 <code>==</code> 和 <code>!=</code> 运算符的行为，请使用以下签名实现 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system.iequatable-1.equals">IEquatable.Equals</a> 方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public virtual bool Equals(T? other);</span><br></pre></td></tr></table></figure>
+<h3 id="he-yun-suan-fu" id="？？和？？-运算符">？？和？？=运算符</h3>
+<p>如果左操作数的值不为 <code>null</code>，则 null 合并运算符 <code>??</code> 返回该值；否则，它会计算右操作数并返回其结果。 如果左操作数的计算结果为非 null，则 <code>??</code> 运算符不会计算其右操作数。</p>
+<p>C# 8.0 及更高版本中可使用空合并赋值运算符 <code>??=</code>，该运算符仅在左侧操作数的求值结果为 <code>null</code> 时，才将其右侧操作数的值赋值给左操作数。 如果左操作数的计算结果为非 null，则 <code>??=</code> 运算符不会计算其右操作数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;int&gt; numbers = null;</span><br><span class="line">int? a = null;</span><br><span class="line"></span><br><span class="line">//当numbers为null时把右操作数赋值给numbers</span><br><span class="line">(numbers ??= new List&lt;int&gt;()).Add(5);</span><br><span class="line">Console.WriteLine(string.Join(&quot; &quot;, numbers));  // output: 5</span><br><span class="line"></span><br><span class="line">numbers.Add(a ??= 0);</span><br><span class="line">Console.WriteLine(string.Join(&quot; &quot;, numbers));  // output: 5 0</span><br><span class="line">Console.WriteLine(a);  // output: 0</span><br></pre></td></tr></table></figure>
+<p><code>??=</code> 运算符的左操作数必须是变量、<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/classes-and-structs/properties">属性</a>或<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/programming-guide/indexers/">索引器</a>元素。</p>
+<p>在 C# 7.3 及更早版本中，<code>??</code> 运算符左操作数的类型必须是<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/reference-types">引用类型</a>或<a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/builtin-types/nullable-value-types">可以为 null 的值类型</a>。 从 C# 8.0 版本开始，该要求替换为以下内容：<code>??</code> 和 <code>??=</code> 运算符的左操作数的类型必须是可以为 null 的值类型。 特别是从 C# 8.0 开始，可以使用具有无约束类型参数的 null 合并运算符：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">private static void Display&lt;T&gt;(T a, T backup)</span><br><span class="line">&#123;</span><br><span class="line">    Console.WriteLine(a ?? backup);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>null 合并运算符是右结合运算符。 也就是说，是窗体的表达式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a ?? b ?? c</span><br><span class="line">d ??= e ??= f</span><br></pre></td></tr></table></figure>
+<p>会像这样求值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a ?? (b ?? c)</span><br><span class="line">d ??= (e ??= f)</span><br></pre></td></tr></table></figure>
+<h3 id="yun-suan-fu" id="运算符">:: 运算符</h3>
+<p>使用命名空间别名限定符 <code>::</code> 访问已设置别名的命名空间的成员。 只能使用两个标识符之间的 <code>::</code> 限定符。 左侧标识符可以是以下任意别名：</p>
+<p>使用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/using-directive">using 别名指令</a>创建的命名空间别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">using forwinforms = System.Drawing;</span><br><span class="line">using forwpf = System.Windows;</span><br><span class="line"></span><br><span class="line">public class Converters</span><br><span class="line">&#123;</span><br><span class="line">    public static forwpf::Point Convert(forwinforms::Point point) =&gt; new forwpf::Point(point.X, point.Y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/csharp/language-reference/keywords/extern-alias">外部别名</a>。</p>
+</li>
+<li>
+<p><code>global</code> 别名，该别名是全局命名空间别名。 全局命名空间是包含未在命名空间中声明的命名空间和类型的命名空间。 与 <code>::</code> 限定符一起使用时，<code>global</code> 别名始终引用全局命名空间，即使存在用户定义的 <code>global</code> 命名空间别名也是如此。</p>
+<p>以下示例使用 <code>global</code> 别名访问 .NET <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/dotnet/api/system">System</a> 命名空间，该命名空间是全局命名空间的成员。 如果没有 <code>global</code> 别名，则将访问用户定义的 <code>System</code> 命名空间（该命名空间是 <code>MyCompany.MyProduct</code> 命名空间的成员）：\</p>
+</li>
+</ul>
+<p>System 放在了 MyCompany.MyProduct.System 的非最开头的其余地方，作为子命名空间名称出现。在这种情况下，你完全无法使用任何 System 命名空间下的 .NET 自带 API（即库 API）。</p>
+<p>那么，你非得用的话，C# 1 是做不到的。在 C# 2 里，为了解决这一点，C# 新创建了一个关键字 global，用在命名空间的最开头，表示你使用的是，紧挨着 global 关键字后的这个 System，是整个你表达的命名空间的开头。啥意思呢？比如这样的代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">namespace MyCompany.MyProduct.System</span><br><span class="line">&#123;</span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        static void Main() =&gt; global::System.Console.WriteLine(&quot;Using global alias&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class Console</span><br><span class="line">    &#123;</span><br><span class="line">        string Suggestion =&gt; &quot;Consider renaming this class&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>仅当 <code>global</code> 关键字是 <code>::</code> 限定符的左侧标识符时，该关键字才是全局命名空间别名。</p>
+<h1 id="ji-he">集合：</h1>
+<h2 id="cast-t-he-of-type-t-shi-yong" id="Cast-T-和OfType-T-使用">Cast<T>()和OfType<T>()使用:</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">static void CastAndOfType()</span><br><span class="line">        &#123;</span><br><span class="line">            ArrayList fruits = new ArrayList(4);</span><br><span class="line">            fruits.Add(&quot;Apple&quot;);</span><br><span class="line">            fruits.Add(&quot;Pear&quot;);</span><br><span class="line">            fruits.Add(2);</span><br><span class="line">            fruits.Add(5);</span><br><span class="line"> </span><br><span class="line">            //下面这句会报错，因为ArrayList没有实现IEnumerable&lt;T&gt;接口，故无法使用标准查询运算</span><br><span class="line">            //IEnumerable&lt;string&gt; s=fruitShop.Select(str =&gt; str);</span><br><span class="line">            //但是使用Cast&lt;T&gt;和OfType&lt;T&gt;来进行转换</span><br><span class="line"> </span><br><span class="line">            IEnumerable&lt;string&gt; s1 = fruits.Cast&lt;string&gt;();</span><br><span class="line">            IEnumerable&lt;string&gt; s2 = fruits.OfType&lt;string&gt;();</span><br><span class="line">            //虽然Cast&lt;T&gt;和OfType&lt;T&gt;都可以用来进行转换，但是OfType&lt;T&gt;比Cast&lt;T&gt;更加强大，</span><br><span class="line">            //它可以对结果进行筛选，而Cast&lt;T&gt;遇到无法强制转换的则会报错</span><br><span class="line"> </span><br><span class="line">            try</span><br><span class="line">            &#123;</span><br><span class="line">                foreach (string fruit in s1)</span><br><span class="line">                &#123;</span><br><span class="line">                    Console.WriteLine(fruit);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            catch(InvalidCastException invalid)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(invalid.Message);</span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">            foreach (string fruit in s2)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(fruit);</span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	
+	</div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2022/07/25/QUIC/" rel="next" title="QUIC">
+                <i class="fa fa-chevron-left"></i> QUIC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="张浩宇" />
+            
+              <p class="site-author-name" itemprop="name">张浩宇</p>
+              <p class="site-description motion-element" itemprop="description">日积月累,积少成多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">151</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanghaoyu0724" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#c-cheng-xu-de-tong-yong-jie-gou"><span class="nav-number">1.</span> <span class="nav-text">C# 程序的通用结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c-lei-xing-xi-tong"><span class="nav-number">2.</span> <span class="nav-text">C# 类型系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nei-zhi-lei-xing"><span class="nav-number">2.1.</span> <span class="nav-text">内置类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#zi-ding-yi-lei-xing"><span class="nav-number">2.2.</span> <span class="nav-text">自定义类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tong-yong-lei-xing-xi-tong"><span class="nav-number">2.3.</span> <span class="nav-text">通用类型系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#net-zhong-de-lei-xing"><span class="nav-number">2.3.1.</span> <span class="nav-text">.NET 中的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lei-xing-cheng-yuan-de-te-zheng"><span class="nav-number">2.3.2.</span> <span class="nav-text">类型成员的特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zhong-zai"><span class="nav-number">2.3.3.</span> <span class="nav-text">重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ji-cheng-zhong-xie-he-yin-cang-cheng-yuan"><span class="nav-number">2.3.4.</span> <span class="nav-text">继承、重写和隐藏成员</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cheng-yuan"><span class="nav-number">3.</span> <span class="nav-text">成员</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#guan-jian-zi"><span class="nav-number">4.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c-yun-suan-fu-he-biao-da-shi"><span class="nav-number">5.</span> <span class="nav-text">C# 运算符和表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yun-suan-fu-zhong-zai"><span class="nav-number">5.1.</span> <span class="nav-text">运算符重载：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yong-hu-ding-yi-zhuan-huan-yun-suan-fu"><span class="nav-number">5.1.1.</span> <span class="nav-text">用户定义转换运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ke-zhong-zai-yun-suan-fu"><span class="nav-number">5.1.2.</span> <span class="nav-text">可重载运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xiang-deng-yun-suan-fu"><span class="nav-number">5.2.</span> <span class="nav-text">相等运算符 &#x3D;&#x3D;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zhi-lei-xing-de-xiang-deng-xing"><span class="nav-number">5.2.1.</span> <span class="nav-text">值类型的相等性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#yuan-zu-xiang-deng"><span class="nav-number">5.2.1.1.</span> <span class="nav-text">元组相等</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yin-yong-lei-xing-de-xiang-deng-xing"><span class="nav-number">5.2.2.</span> <span class="nav-text">引用类型的相等性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ji-lu-lei-xing-xiang-deng-xing"><span class="nav-number">5.2.3.</span> <span class="nav-text">记录类型相等性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zi-fu-chuan-xiang-deng-xing"><span class="nav-number">5.2.4.</span> <span class="nav-text">字符串相等性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wei-tuo-xiang-deng"><span class="nav-number">5.2.5.</span> <span class="nav-text">委托相等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bu-deng-yun-suan-fu"><span class="nav-number">5.2.6.</span> <span class="nav-text">不等运算符 !&#x3D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yun-suan-fu-ke-zhong-zai-xing"><span class="nav-number">5.2.7.</span> <span class="nav-text">运算符可重载性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#he-yun-suan-fu"><span class="nav-number">5.2.8.</span> <span class="nav-text">？？和？？&#x3D;运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yun-suan-fu"><span class="nav-number">5.2.9.</span> <span class="nav-text">:: 运算符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ji-he"><span class="nav-number">6.</span> <span class="nav-text">集合：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cast-t-he-of-type-t-shi-yong"><span class="nav-number">6.1.</span> <span class="nav-text">Cast()和OfType()使用:</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Hao Hu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数&#58;</span>
+    
+    <span title="博客全站字数">407.5k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
