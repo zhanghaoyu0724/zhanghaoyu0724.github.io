@@ -604,7 +604,7 @@
 <li>在选择组合索引的时候，如果某个字段可能出现范围查询时，尽量把这个字段放在索引次序的最后面。</li>
 </ul>
 <h1 id="guan-lian-cha-xun-you-hua">关联查询优化</h1>
-<h2 id="shu-ju-zhun-bei-1" id="数据准备">数据准备</h2>
+<h2 id="shu-ju-zhun-bei-1" id="数据准备-4">数据准备</h2>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE IF NOT EXISTS `type`(</span><br><span class="line">	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,</span><br><span class="line">	`card` INT(10) UNSIGNED NOT NULL,</span><br><span class="line">	PRIMARY KEY (`id`)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">CREATE TABLE IF NOT EXISTS `book`(</span><br><span class="line">	`bookid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,</span><br><span class="line">	`card` INT(10) UNSIGNED NOT NULL,</span><br><span class="line">	PRIMARY KEY(`bookid`)</span><br><span class="line">)</span><br><span class="line">#在每个表添加20条数据</span><br><span class="line">INSERT INTO TYPE(card) VALUES(FLOOR(1+(RAND()*20)));</span><br><span class="line"></span><br><span class="line">INSERT INTO book(card) VALUES(FLOOR(1+(RAND()*20)));</span><br></pre></td></tr></table></figure>
 <h2 id="cai-yong-zuo-wai-lian-jie" id="采用左外连接">采用左外连接</h2>
 <p>下面开始 EXPLAIN 分析</p>

@@ -575,7 +575,7 @@
 t1.start();</p>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">19</span>:<span class="number">41</span>:<span class="number">30</span> [main] c.<span class="symbol">TestStart</span> - do other things ...</span><br><span class="line"><span class="number">19</span>:<span class="number">41</span>:<span class="number">30</span> [t1] c.<span class="symbol">TestStart</span> - t1</span><br><span class="line"><span class="number">19</span>:<span class="number">41</span>:<span class="number">30</span> [t1] c.<span class="symbol">FileReader</span> - read [<span class="number">1.</span>mp4] start ...</span><br><span class="line"><span class="number">19</span>:<span class="number">41</span>:<span class="number">35</span> [t1] c.<span class="symbol">FileReader</span> - read [<span class="number">1.</span>mp4] end ... cost: <span class="number">4542</span> ms</span><br></pre></td></tr></table></figure>
 <p>程序在 t1 线程运行， FileReader.read() 方法调用是异步的</p>
-<h3 id="xiao-jie" id="小结-3">小结</h3>
+<h3 id="xiao-jie" id="小结-7">小结</h3>
 <ul>
 <li>直接调用 run 是在主线程中执行了 run，没有启动新的线程</li>
 <li>使用 start 是启动新的线程，通过新的线程间接执行 run 中的代码</li>

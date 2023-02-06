@@ -127,7 +127,7 @@
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220417140518177.png">
 <meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220417140754761.png">
 <meta property="article:published_time" content="2022-04-16T05:28:21.000Z">
-<meta property="article:modified_time" content="2022-04-19T08:51:02.352Z">
+<meta property="article:modified_time" content="2022-04-30T10:14:32.805Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220416133725187.png">
@@ -382,8 +382,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2022-04-19T16:51:02+08:00">
-                2022-04-19
+              <time title="更新于" itemprop="dateModified" datetime="2022-04-30T18:14:32+08:00">
+                2022-04-30
               </time>
             
           </span>
@@ -633,7 +633,7 @@ Orders表和OrderDetails表如下，此时符合第二范式。</p>
 <strong>范式的缺点</strong>:范式的使用，可能<strong>降低查询的效率</strong>。因为范式等级越高，设计出来的数据表就越多、越精细，数据的冗余度就越低，进行数据查询的时候就可能需要关联多张表，这不但代价昂贵，也可能使一些索引策略无效。</p>
 <p>范式只是提出了设计的标准，实际上设计数据表时，未必一定要符合这些标准。开发中，我们会出现为了性能和读取效率违反范式化的原则，通过增加少量的冗余或重复的数据来提高数据库的读性能，减少关联查询，join表的次数，实现空间换取时间的目的。因此在实际的设计过程中要理论结合实际，灵活运用。</p>
 <h1 id="fan-fan-shi-hua">反范式化</h1>
-<h2 id="gai-shu" id="概述-2">概述</h2>
+<h2 id="gai-shu" id="概述-3">概述</h2>
 <p>有的时候不能简单按照规范要求设计数据表，因为有的数据看似冗余，其实对业务来说十分重要。这个时候，我们就要遵循业务优先的原则，首先满足业务需求，再尽量减少冗余。<br>
 如果数据库中的数据量比较大，系统的UV和PV访问频次比较高，则完全按照MysQL的三大范式设计数据表，读数据时会产生大量的关联查询，在一定程度上会影响数据库的读性能。j如果我们想对查询效率进行优化，<strong>反范式优化也是一种优化思路</strong>。此时，可以通过在数据表中<strong>增加冗余字段</strong>来提高数据库的读性能。</p>
 <p><strong>规范化 vs 性能</strong></p>

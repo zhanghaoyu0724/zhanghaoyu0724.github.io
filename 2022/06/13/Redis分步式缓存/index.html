@@ -526,7 +526,7 @@
 <li>当主进程执行写操作时，则会拷贝一份数据，执行写操作。</li>
 </ul>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725151319695.png" alt="image-20210725151319695"></p>
-<h3 id="xiao-jie" id="小结">小结</h3>
+<h3 id="xiao-jie" id="小结-3">小结</h3>
 <p>RDB方式bgsave的基本流程？</p>
 <ul>
 <li>fork主进程得到一个子进程，共享内存空间</li>
@@ -623,7 +623,7 @@
 <li>限制一个master上的slave节点数量，如果实在是太多slave，则可以采用主-从-从链式结构，减少master压力</li>
 </ul>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20220614151206560.png" alt="image-20220614151206560"></p>
-<h2 id="xiao-jie-1" id="小结-2">小结</h2>
+<h2 id="xiao-jie-1" id="小结-4">小结</h2>
 <p>简述全量同步和增量同步区别？</p>
 <ul>
 <li>全量同步：master将完整内存数据生成RDB，发送RDB到slave。后续命令则记录在repl_baklog，逐个发送给slave。</li>
@@ -671,7 +671,7 @@
 <li>最后，会强制把故障节点的配置文件修改为:slaveof 192.168.32.3 7002 . sentinel将故障节点标记为slave，当故障节点恢复后会自动成为新的master的slave节点</li>
 </ul>
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725154816841.png" alt="image-20210725154816841"></p>
-<h3 id="xiao-jie-2" id="小结-3">小结</h3>
+<h3 id="xiao-jie-2" id="小结-5">小结</h3>
 <p>Sentinel的三个作用是什么？</p>
 <ul>
 <li>监控</li>
@@ -758,7 +758,7 @@
 <p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20210725155850200.png" alt="image-20210725155850200"></p>
 <p>如图，在7001这个节点执行set a 1时，对a做hash运算，对16384取余，得到的结果是15495，因此要存储到103节点。</p>
 <p>到了7003后，执行<code>get num</code>时，对num做hash运算，对16384取余，得到的结果是2765，因此需要切换到7001节点</p>
-<h3 id="xiao-jie-3" id="小结-4">小结</h3>
+<h3 id="xiao-jie-3" id="小结-6">小结</h3>
 <p>Redis如何判断某个key应该在哪个实例？</p>
 <ul>
 <li>将16384个插槽分配到不同的实例</li>

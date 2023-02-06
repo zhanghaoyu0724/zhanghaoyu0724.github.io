@@ -629,10 +629,10 @@
 <li>通过 FileOutputStream 获取的 channel 只能写</li>
 <li>通过 RandomAccessFile 是否能读写根据构造 RandomAccessFile 时的读写模式决定</li>
 </ul>
-<h4 id="du-qu" id="读取">读取</h4>
+<h4 id="du-qu" id="读取-2">读取</h4>
 <p>会从 channel 读取数据填充 ByteBuffer，返回值表示读到了多少字节，-1 表示到达了文件的末尾</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> readBytes = channel.read(buffer);</span><br></pre></td></tr></table></figure>
-<h4 id="xie-ru" id="写入">写入</h4>
+<h4 id="xie-ru" id="写入-2">写入</h4>
 <p>写入的正确姿势如下， SocketChannel</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ByteBuffer buffer = ...;</span><br><span class="line">buffer.put(...); <span class="comment">// 存入数据</span></span><br><span class="line">buffer.flip();   <span class="comment">// 切换读模式</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(buffer.hasRemaining()) &#123;</span><br><span class="line">    channel.write(buffer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在 while 中调用 channel.write 是因为 write 方法并不能保证一次将 buffer 中的内容全部写入 channel</p>
@@ -784,7 +784,7 @@
 <li>节约了线程的数量</li>
 <li>减少了线程上下文切换</li>
 </ul>
-<h4 id="chuang-jian" id="创建">创建</h4>
+<h4 id="chuang-jian" id="创建-2">创建</h4>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Selector selector = Selector.open();</span><br></pre></td></tr></table></figure>
 <h4 id="bang-ding-channel-shi-jian" id="绑定-Channel-事件">绑定 Channel 事件</h4>
 <p>也称之为注册事件，绑定的事件 selector 才会关心</p>
