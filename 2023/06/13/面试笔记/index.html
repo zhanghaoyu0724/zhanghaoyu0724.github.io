@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/32x32.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/16x16.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="zhy, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="事务是什么？ 一组逻辑操作单元，使数据从一种状态变换到另一种状态。 定义的一系列数据库操作，这些操作视为一个整体，要么都执行，要么都是失败 锁是什么？ 锁保证在并发场景下对共享资源访问的互斥，限制共享资源的访问的同步机制 项目 配单系统 开启异步任务去获取 运营商 返回的凭证 配但系统还是开启异步任务去拉去  推单系统的任务  推送服务 然后配单系统拿到凭证 在去调下游接口 **推送服务解决的问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试笔记">
+<meta property="og:url" content="https://zhanghaoyu0724.github.io/2023/06/13/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="蓝天の博客">
+<meta property="og:description" content="事务是什么？ 一组逻辑操作单元，使数据从一种状态变换到另一种状态。 定义的一系列数据库操作，这些操作视为一个整体，要么都执行，要么都是失败 锁是什么？ 锁保证在并发场景下对共享资源访问的互斥，限制共享资源的访问的同步机制 项目 配单系统 开启异步任务去获取 运营商 返回的凭证 配但系统还是开启异步任务去拉去  推单系统的任务  推送服务 然后配单系统拿到凭证 在去调下游接口 **推送服务解决的问题">
+<meta property="og:locale">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230205145245698.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230211182958446.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230205140202453.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/6927ef8e52594714af60b1cf96717ba4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAempjMzQ4,size_20,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230208211308890.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/699ca53ab07d43aa86ccd17f05e898e2.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230209184033700.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230211190851673.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/b76a7117595c4d618cbc982be113b0cd.png?x-oss-process=image,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5LiA5Liq5bCP56CB5Yac55qE6L-b6Zi25LmL5peF,size_18,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/4d47ed383bac459ebdd3c9a1a785ef50.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5LiA5Liq5bCP56CB5Yac55qE6L-b6Zi25LmL5peF,size_18,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/3413040a997a4964bc5b1b16a37efa9b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5LiA5Liq5bCP56CB5Yac55qE6L-b6Zi25LmL5peF,size_18,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/9637c27dfbdf47c5ac2b7f5546debf61.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5LiA5Liq5bCP56CB5Yac55qE6L-b6Zi25LmL5peF,size_17,color_FFFFFF,t_70,g_se,x_16">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/99c029991f6d401a866db07afcace263.png">
+<meta property="og:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230307220714966.png">
+<meta property="article:published_time" content="2023-06-13T13:44:49.000Z">
+<meta property="article:modified_time" content="2023-06-13T13:46:16.558Z">
+<meta property="article:author" content="Zhang Hao Hu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230205145245698.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":8,"b2t":true,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zhanghaoyu0724.github.io/2023/06/13/面试笔记/"/>
+
+
+
+
+
+  <title>面试笔记 | 蓝天の博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蓝天の博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhanghaoyu0724.github.io/2023/06/13/%E9%9D%A2%E8%AF%95%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张浩宇">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蓝天の博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面试笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-06-13T21:44:49+08:00">
+                2023-06-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2023-06-13T21:46:16+08:00">
+                2023-06-13
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="shi-wu-shi-shi-yao">事务是什么？</h1>
+<p>一组逻辑操作单元，使数据从一种状态变换到另一种状态。</p>
+<p>定义的一系列数据库操作，这些操作视为一个整体，要么都执行，要么都是失败</p>
+<h1 id="suo-shi-shi-yao">锁是什么？</h1>
+<p>锁保证在并发场景下对共享资源访问的互斥，限制共享资源的访问的同步机制</p>
+<h1 id="xiang-mu">项目</h1>
+<p>配单系统 开启异步任务去获取 运营商 返回的凭证</p>
+<p>配但系统还是开启异步任务去拉去  推单系统的任务</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230205145245698.png" alt="image-20230205145245698"></p>
+<h1 id="tui-song-fu-wu">推送服务</h1>
+<p>然后配单系统拿到凭证 在去调下游接口</p>
+<p>**推送服务解决的问题：**你有时候并发量一大上来，你和三方系统接口的调用，io，他对数据库，对机器的压力都很大，发生网络波动一下子就个服务压垮了</p>
+<p>推送服务从list拉出来发送http请求去调运营商代理 拉支付凭证回来，然后赛到redis里面</p>
+<h1 id="yi-bu-dao-zhi-de-wen-ti">异步导致的问题：</h1>
+<p><strong>异步的就可能出现redis宕机，重启了 数据就没了，所以说后台还会有配定时任务，把最经的单子拉出来，看看是不是长期没有反应的状态</strong></p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230211182958446.png" alt="image-20230211182958446"></p>
+<h1 id="si-suo">死锁</h1>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230205140202453.png" alt="image-20230205140202453"></p>
+<h2 id="wei-shi-yao-hui-si-suo" id="为什么会死锁">为什么会死锁</h2>
+<p><strong>配单回调状态去修改数据库 update a b c 和 上游成功之后再改状态 可能返回的时  c b a 这样就可能造成数据库死锁  如果排序会出现  如果排序加入新增了其他状态是不是也要排序 如果写另一个扩展业务的人不知道要排序 就又会有死锁  排序 强依赖业务代码   解决办法 是不是我们直接把表拆出来 它不冲突了，因为改的都不是一张表了 一个状态字段对应一张表  又叫做 热点数据的垂直分表</strong></p>
+<h2 id="huan-you-yi-ge-wen-ti" id="还有一个问题">还有一个问题</h2>
+<p>如现在线程A这里更新到 AB 了，另线程B要开始更新 a 了对吧？它是不是一定要等线程B   ABC 都更新完了，不，这个事务提交了。场所才会释放帮助</p>
+<h2 id="wei-shi-yao-bu-yong-pai-xu" id="为什么不用排序？">为什么不用排序？</h2>
+<p>它可能有好多字段对吧？好多状态字段。对，我刚才也说了，他要去借，有没有往下游去推成功，以及有没有接受他的回调，他有没有往上游去推，他上游有没有回调回来成功对吧？上游有没有处理成功，他是不是也要记状态对吧更新场景你是不是都要排序对吧？假如后面新增了其他状态？你是不是？也要排序对吧？一旦来，假如后面又新增了什么其他的系统，假如新增其他系统，你也要去回调，他也要去改状态。万一写业代码业务的人他忘了，</p>
+<p>其他：</p>
+<p>假如他一下扣 a b c 的对吧？可能 1 一个用户买 a b c 商品，另外一个用户买 c b a 商品，也要排序</p>
+<h1 id="oom-wen-ti">OOM问题：</h1>
+<p>1.调第三方接口当时没有做任何限流 缓冲处理 直接同步掉 偶发的http网络波动 直接把服务打崩  arthas 查看以下oom溢出的文件 放到 easty gc上分析</p>
+<p>2.线程池调用第三方接口，线程池参数太大 1000核心线程数 6000等待队列 一但调用第三方接口慢了 就会导致大量线程堆积</p>
+<h1 id="pei-dan-fu-wu-la-qu-ping-zheng-you-guo-qi-shi-jian">配单服务拉取凭证 有过期时间</h1>
+<p>推送服务 拉去凭证 存储到redis 必须先进后出</p>
+<h1 id="chu-xian-yi-chang">出现异常</h1>
+<p>定时任务一直去扫 进行重试</p>
+<h1 id="shu-ju-gui-dang">数据归档</h1>
+<p>每个月一次</p>
+<h1 id="rocket-mq-shi-wu-xiao-xi">RocketMQ事务消息</h1>
+<p><img src="https://img-blog.csdnimg.cn/6927ef8e52594714af60b1cf96717ba4.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAempjMzQ4,size_20,color_FFFFFF,t_70,g_se,x_16" alt="请添加图片描述"></p>
+<ol>
+<li>应用模块遇到要发送事务消息的场景时，先发送prepare消息给MQ。</li>
+<li>prepare消息发送成功后，应用模块执行数据库事务（本地事务）。</li>
+<li>根据数据库事务执行的结果，再返回Commit或Rollback给MQ。</li>
+<li>如果是Commit，MQ把消息下发给Consumer端，如果是Rollback，直接删掉prepare消息。</li>
+<li>第3步的执行结果如果没响应，或是超时的，启动定时任务回查事务状态（最多重试15次，超过了默认丢弃此消息），处理结果同第4步。</li>
+<li>MQ消费的成功机制由MQ自己保证</li>
+</ol>
+<h1 id="bing-fa-deng-lu">并发登录</h1>
+<p>微信登录 和手机号登陆 都是一样的手机号 rc 模式下  不加分步式锁 通过for update 加行锁 不会出现死锁  但是 会出现插入相同的手机号 因为并发情况下 2个线程同时开启事务 可能线程B查询数据的时候 线程A  执行了insert语句还没提交 ，然后执行insert 语句可能就会 产生同一个手机号 有两条 数据 ， 这里通过 手机号 做主键 虽然可以解决 但是 手机号 不是自增的 会影响效率问题</p>
+<p><strong>RC下数据不存在for update 不会加行锁</strong></p>
+<h1 id="wei-shi-yao-mq-hen-kuai">为什么mq很快？</h1>
+<p>内存映射</p>
+<p>没有事务</p>
+<p>消息队列持久化策略？</p>
+<p>类似Redis AOF，同步或者异步</p>
+<h1 id="lua-jiao-ben-yi-ge-key-mei-wen-ti-2-ge-key-luo-zai-ji-qun-kua-ji-qi-liao-hui-chu-wen-ti">Lua脚本 一个key没问题 ，2个key落在集群 跨机器了 会出问题</h1>
+<h1 id="ji-qun-redis-xia-2-ge-key-luo-xia-tong-yi-ge-cao">集群Redis下2个key落下同一个槽</h1>
+<p>分步式事务 基于xa的分布式事务  网络分区导致数据不一致性原因 MysqlA 和MysqlB 网络不一样 2阶段中可能一个commit成功了，一个网络中断commit失败</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230208211308890.png" alt="image-20230208211308890"><img src="https://img-blog.csdnimg.cn/699ca53ab07d43aa86ccd17f05e898e2.png" alt="img"></p>
+<p>在分布式环境中，通过一系列规则来定义逻辑时钟的变化，从而能通过逻辑时钟来对分布式系统中的事件的先后顺序进行判断。<strong>逻辑时钟并不度量时间本身，仅区分事件发生的前后顺序，其本质就是定义了一种 happens-before 关系。</strong></p>
+<p><strong>happens-before 原则表达的意义其实并不是一个操作发生在另外一个操作的前面，虽然这从程序员的角度上来说也并无大碍。更准确地来说，它更想表达的意义是前一个操作的结果对于后一个操作是可见的，无论这两个操作是否在同一个线程里。</strong></p>
+<p>如果重排序之后的执行结果，与按 happens-before 关系来执行的结果一致，那么 JMM 也允许这样的重排序。</p>
+<p>JMM提出的背景。</p>
+<p>让一套代码在不同平台下能到达相同的访问结果，实现平台的一致性，使得 Java 程序能够<strong>一次编写，到处运行</strong>。</p>
+<p><strong>JVM 与 JMM 间的区别？</strong></p>
+<p>实际上，JMM 是 Java 虚拟机(JVM)在计算机内存(RAM)中的工作方式，JMM 定义了线程和主内存之间的抽象关系：线程之间的共享变量存储在主内存（Main Memory）中，每个线程都有一个私有的本地内存（Local Memory），本地内存中存储了该线程以读/写共享变量的副本，本地内存是 JMM 的一个抽象概念，并不真实存在。它涵盖了缓存、写缓冲区、寄存器以及其他的硬件和编译器优化。而 JVM 则是描述的是 Java 虚拟机内部及各个结构间的关系。</p>
+<p>小伙伴这时可能会有疑问，既然 JMM 是定义线程和主内存之间的关系，那么它的出现是不是解决并发领域的问题啊？没错，我们先回顾一下并发领域中的关键问题。</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230209184033700.png" alt="image-20230209184033700"></p>
+<p><strong>hannpens-before定义</strong>：<br>
+1，如果一个操作hannpens-before另一个操作，第一个操作的执行结果将对第二个操作可见，                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             序排在第二个操作之前（<strong>这是对于程序员来说的，也就是你可以按这种顺序来理解程序</strong>）。</p>
+<p><strong>happens-before是JMM最核心的概念。程序员基于它提供的内存可见性保证来编程。</strong></p>
+<p><strong>我们也就是依据此保证来理解阅读源码的。</strong></p>
+<p>2，两个操作之间存在hannpens-before关系，并不意味着Java平台的具体实现必须要按照hannpens-before关系指定的顺序来执行，只要重排序之后的执行结果与按照happens-before关系来执行的结果一致就可。</p>
+<p>这是JMM对编译器和处理器重排序的约束原则。这一条阐述的是JMM设计遵守的一个基本原则：只要不改变程序的执行结果，想怎么优化都行。</p>
+<p>想想自己在阅读JUC下源码时是怎么理解那些正确同步的代码的，我们看到synchronized会想到互斥，锁的释放还会引起共享变量的刷新，一个线程的对锁的释放与随后获取的线程实质上是在通信；看到volatile会想到它的读/写是原子的，且与锁的获取/释放具有相同的内存语义；看到循环CAS想到原子操作，且它具有volatile读/写的内存语义；对于代码的执行顺序我们都默认是按顺序的，我们认为程序是按代码顺序来执行的，可编译器与处理器是会重排序的，那是谁给了你这种保障，让你有这种按顺序执行的幻觉？是JMM，<strong>你只要按照happens-before规则来编程，编写的程序是正确同步的，你就可以按顺序来理解它，编译器和处理器的重排序不会影响到你，因为JMM对他们的限制，禁止了那些会改变执行结果的重排序。</strong></p>
+<p>表分区 ： 多个b+树，用唯一索引和分区ID做区分</p>
+<h1 id="mian-shi-ti">面试题</h1>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230211190851673.png" alt="image-20230211190851673"></p>
+<p>TCP为什么是可靠的？三次握手四次挥手？</p>
+<p>Java 内存模型</p>
+<p>Redis有哪些数据类型，如何使用</p>
+<p>线上cpu 跑满了，如何排查问题？</p>
+<p>RPC框架有哪些</p>
+<p>redis中lua脚本    一个key没问题  两个key呢     集群模式有hash槽的概念     两个key如果落到同一个槽有什么问题</p>
+<p>简历问题 - 登录ip如何校验？怎么保证安全性？ 登录获取ip，看是否在黑名单里 request.getRemoteUrl() -</p>
+<p>多级回复的贴子，如何记住楼层数？ 循环遍历帖子，找到最后一个</p>
+<ul>
+<li>mybatis如何实现分页查询 pageHelper，不清楚原理 -</li>
+<li>redis存储了哪些数据，数据结构 只存了图片验证码 -</li>
+<li>怎么记录用户的登录状态 没讲出来 -</li>
+<li>es业务逻辑 没有讲出来 -</li>
+<li>如果现在有1000w帖子，如何设计搜索功能 - 没问</li>
+<li>【设计题】 - 没问 - 用户登陆验证模块设计：token、session、jwt、cookie等 -</li>
+<li>数据量很大，如何设计贴子的评分、回帖人数、回帖总数的存储</li>
+</ul>
+<p><strong>netty 的线程模型 ？</strong></p>
+<p>1.单reactor单线程</p>
+<p><img src="https://img-blog.csdnimg.cn/b76a7117595c4d618cbc982be113b0cd.png?x-oss-process=image,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5LiA5Liq5bCP56CB5Yac55qE6L-b6Zi25LmL5peF,size_18,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<p>2.单reactor多线程</p>
+<p><img src="https://img-blog.csdnimg.cn/4d47ed383bac459ebdd3c9a1a785ef50.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5LiA5Liq5bCP56CB5Yac55qE6L-b6Zi25LmL5peF,size_18,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<p>3.主从reactor多线程</p>
+<p><img src="https://img-blog.csdnimg.cn/3413040a997a4964bc5b1b16a37efa9b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5LiA5Liq5bCP56CB5Yac55qE6L-b6Zi25LmL5peF,size_18,color_FFFFFF,t_70,g_se,x_16" alt="img"></p>
+<p>netty线程模型</p>
+<ul>
+<li>
+<p>BossGroup 线程维护Selector , 只关注Accecpt；</p>
+</li>
+<li>
+<p>当接收到Accept事件，获取到对应的SocketChannel, 封装成 NIOScoketChannel并注册到 Worker 线程(事件循环)，并进行维护；</p>
+</li>
+<li>
+<p>当Worker线程监听到selector 中通道发生自己感兴趣的事件后，就进行处理(就由handler)， 注意 handler 已经加入到通道</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdnimg.cn/9637c27dfbdf47c5ac2b7f5546debf61.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBA5LiA5Liq5bCP56CB5Yac55qE6L-b6Zi25LmL5peF,size_17,color_FFFFFF,t_70,g_se,x_16" alt="在这里插入图片描述"></p>
+<ul>
+<li>
+<p>Nett y抽象出两组</p>
+<p><strong>线程池</strong>：<strong>BossGroup</strong>和<strong>WorkerGroup</strong></p>
+<ul>
+<li>BossGroup 专门负责接收客户端的连接</li>
+<li>WorkerGroup 专门负责网络的读写</li>
+</ul>
+</li>
+<li>
+<p><strong>BossGroup</strong> 和 <strong>WorkerGroup</strong> 类型都是 <strong>NioEventLoopGroup</strong>，NioEventLoopGroup 相当于一个 <strong><code>事件循环组</code></strong>，这个组中 <strong><code>含有多个事件循环</code></strong> ，每一个事件循环是 <strong>NioEventLoop</strong></p>
+</li>
+<li>
+<p>NioEventLoop 表示一个不断循环的执行处理任务的线程， <strong><code>每个NioEventLoop 都有一个selector</code></strong> , <strong>用于监听绑定在其上的socket的网络通讯</strong>。</p>
+</li>
+<li>
+<p>NioEventLoopGroup 可以有多个线程, 即可以含有多个NioEventLoop</p>
+</li>
+<li>
+<p>每个Boss Group 中的 NioEventLoop 循环执行的步骤：</p>
+<ul>
+<li>1）轮询accept 事件</li>
+<li>2）处理accept 事件，与client建立连接 , 生成 <strong><code>NioScocketChannel</code></strong>，<strong><code>并将其注册 Worker Group 上的某个 NIOEventLoop 上的 selector</code></strong></li>
+<li>3）处理任务队列的任务，即 runAllTasks</li>
+</ul>
+</li>
+<li>
+<p>每个 Worker Group 中的 NIOEventLoop 循环执行的步骤：</p>
+<ul>
+<li>1）轮询 read/write 事件</li>
+<li>2）处理 I/O 事件， 即 read/write 事件，在对应的 NioScocketChannel 上处理</li>
+<li>3）处理任务队列的任务 ， 即 runAllTasks</li>
+</ul>
+</li>
+<li>
+<p><strong>每个Worker NIOEventLoop 处理业务时，会使用 pipeline(管道)。pipline中包含了 channel，即通过pipline可以获取到对应的 channel，并且pipline维护了很多的 handler(处理器)来对我们的数据进行一系列的处理。</strong></p>
+</li>
+<li>
+<p>handler(处理器) 有Netty内置的，我们也可以自己定义。</p>
+</li>
+</ul>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/99c029991f6d401a866db07afcace263.png" alt="在这里插入图片描述"></p>
+</li>
+</ul>
+<p><strong>Spring Cloud 的组件</strong></p>
+<p>1、<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83&amp;spm=1001.2101.3001.7020">注册中心</a>组件（服务治理）：Netflix Eureka；</p>
+<p>2、负载均衡组件：<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Netflix&amp;spm=1001.2101.3001.7020">Netflix</a> Ribbon，各个微服务进行分摊，提高性能；</p>
+<p>3、熔断器组件（断路器）：Netflix Hystrix，Resilience4j ；保护系统，控制故障范围；</p>
+<p>4、网关服务组件：Zuul，Spring Cloud Gateway；api网关，路由，负载均衡等多种作用；</p>
+<p>5、配置中心：Spring Cloud Config，将配置文件组合起来，放在远程仓库，便于管理；</p>
+<p>6、服务调用</p>
+<h2 id="linux-chang-yong-ming-ling" id="linux常用命令">linux常用命令</h2>
+<p>toip 看cpu情况</p>
+<p>chown 权限</p>
+<p>free 看内存使用情况</p>
+<p>df -h <em>输出文件系统大小</em></p>
+<p>ps 看进程</p>
+<p>jps -l  看java进程</p>
+<p>jstat -gc  查看gc情况</p>
+<p>jmap -heap pid 查看堆空间详情信息</p>
+<p>jmap -dump 生成dump文件 和arthas heapdump命令生成的是一样的</p>
+<h2 id="mysql-mian-shi-ti" id="Mysql面试题">Mysql面试题</h2>
+<p>在可重复读级别下事务中执行 update where条件不走索引 会导致锁表  因为有间隙锁</p>
+<p>查询锁表</p>
+<p><img src="https://edu-1395430748.oss-cn-beijing.aliyuncs.com/images/imgs/image-20230307220714966.png" alt="image-20230307220714966"></p>
+<p>在写分组查询的时候，最好按照标准的规范来写，select后面出现的列必须在group by中或者必须使用聚合函数。</p>
+<p>除非没有重复数据，不然select @@sql_mode;查询中包括ONLY_FULL_GROUP_BY必定报错</p>
+<p>LRU</p>
+<p>跳表</p>
+<p><strong>超卖</strong></p>
+<p>在redis做真正的库存扣减，mysql做持久化 ，redis提供lua脚本和串行化能够很好的防超卖</p>
+<p>防刷</p>
+<ul>
+<li>ip的防控 提高攻击成本，想经办法提高攻击成本</li>
+<li>单用户，单设备同一台手机，同一个wifi，同一个网络环境，短期之内不能超过多少次</li>
+<li>验证码功能</li>
+<li>token的验证，访问你页面的时候带一个随机数，然后拿着这个随机数做接口的校验，防止脚本刷</li>
+</ul>
+<p>流量过滤：</p>
+<ul>
+<li>前端做一些流量的丢弃，流量不打到后端 ，前端返回提示信息  ，</li>
+<li>或者网关做一些流量的丢弃</li>
+</ul>
+<p>日志打印遇到瓶颈：所有的io都在打印日志上</p>
+<ul>
+<li>异步打印日志</li>
+<li>批量打印日志</li>
+</ul>
+<p>如何设计一个高平发的系统</p>
+<ul>
+<li>分步式，集群</li>
+<li>缓存（本地缓存，分布式缓存）</li>
+<li>异步式编程，事件驱动，消息队列</li>
+<li>预加载，提前预知热点请求，减少用户的等待时间</li>
+<li>代码层面：1.异步、future 2.线程池  3.减少锁的粒度 ，避免长事务，减少代码的循环迭代， 快速失败，再执行业务操作之前先做一些参数的校验 ，异常分支的处理 快速的返回接口</li>
+<li>数据库层面：分库分表 、 数据隔离，索引</li>
+<li>安全防护，防控，防止雪崩校验，限流、熔断、降级，容灾（异地多活），备份处理</li>
+<li>压力测试，全链路压测，抗高迸发</li>
+</ul>
+<p>分库分表是两件事情</p>
+<p>不同的业务逻辑在不同的库，你有多个数据库 去处理连接</p>
+<p>两千万以上才考虑，分库分表，最后考虑分库分表 ，也会带来很多问题，事务问题，跨表查询问题 ，分步式id，分表字段选择问题，可以先考虑，独写分离，分区，归档，索引的优化，用es 高性能查询</p>
+<p>分步式id leaf，雪花算法</p>
+<p>kafka 快的原因：分区，顺序io，零拷贝，批量，页缓存，时间轮</p>
+<p>正常拷贝4次：？</p>
+<p>零拷贝：？</p>
+<p>分库 和 分表</p>
+<p>分库 可以放在不同的物理机上面，提高性能</p>
+<p>分表 是在数据量大的时候</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+	
+	</div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/02/26/Redis%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" rel="next" title="Redis最佳实践">
+                <i class="fa fa-chevron-left"></i> Redis最佳实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.png"
+                alt="张浩宇" />
+            
+              <p class="site-author-name" itemprop="name">张浩宇</p>
+              <p class="site-description motion-element" itemprop="description">日积月累,积少成多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">152</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhanghaoyu0724" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shi-wu-shi-shi-yao"><span class="nav-number">1.</span> <span class="nav-text">事务是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#suo-shi-shi-yao"><span class="nav-number">2.</span> <span class="nav-text">锁是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xiang-mu"><span class="nav-number">3.</span> <span class="nav-text">项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tui-song-fu-wu"><span class="nav-number">4.</span> <span class="nav-text">推送服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#yi-bu-dao-zhi-de-wen-ti"><span class="nav-number">5.</span> <span class="nav-text">异步导致的问题：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#si-suo"><span class="nav-number">6.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-shi-yao-hui-si-suo"><span class="nav-number">6.1.</span> <span class="nav-text">为什么会死锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#huan-you-yi-ge-wen-ti"><span class="nav-number">6.2.</span> <span class="nav-text">还有一个问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wei-shi-yao-bu-yong-pai-xu"><span class="nav-number">6.3.</span> <span class="nav-text">为什么不用排序？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oom-wen-ti"><span class="nav-number">7.</span> <span class="nav-text">OOM问题：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pei-dan-fu-wu-la-qu-ping-zheng-you-guo-qi-shi-jian"><span class="nav-number">8.</span> <span class="nav-text">配单服务拉取凭证 有过期时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chu-xian-yi-chang"><span class="nav-number">9.</span> <span class="nav-text">出现异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shu-ju-gui-dang"><span class="nav-number">10.</span> <span class="nav-text">数据归档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rocket-mq-shi-wu-xiao-xi"><span class="nav-number">11.</span> <span class="nav-text">RocketMQ事务消息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bing-fa-deng-lu"><span class="nav-number">12.</span> <span class="nav-text">并发登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wei-shi-yao-mq-hen-kuai"><span class="nav-number">13.</span> <span class="nav-text">为什么mq很快？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lua-jiao-ben-yi-ge-key-mei-wen-ti-2-ge-key-luo-zai-ji-qun-kua-ji-qi-liao-hui-chu-wen-ti"><span class="nav-number">14.</span> <span class="nav-text">Lua脚本 一个key没问题 ，2个key落在集群 跨机器了 会出问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ji-qun-redis-xia-2-ge-key-luo-xia-tong-yi-ge-cao"><span class="nav-number">15.</span> <span class="nav-text">集群Redis下2个key落下同一个槽</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mian-shi-ti"><span class="nav-number">16.</span> <span class="nav-text">面试题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#linux-chang-yong-ming-ling"><span class="nav-number">16.1.</span> <span class="nav-text">linux常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql-mian-shi-ti"><span class="nav-number">16.2.</span> <span class="nav-text">Mysql面试题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2021 &mdash; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhang Hao Hu</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站字数&#58;</span>
+    
+    <span title="博客全站字数">411.5k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.json";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
