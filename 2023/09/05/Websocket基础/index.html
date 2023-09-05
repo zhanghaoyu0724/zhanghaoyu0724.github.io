@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="日积月累,积少成多">
+<meta name="description" content="websocket介绍 WebSocket协议是基于TCP的一种新的网络协议。它实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端  websocket使用场景分享:         * 弹幕，         * 网页聊天系统         * 实时监控         * 股票行情推送  框架介绍： Socketjs： ​	1、是一个浏览器JavaSc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Websocket基础">
 <meta property="og:url" content="https://zhanghaoyu0724.github.io/2023/09/05/Websocket%E5%9F%BA%E7%A1%80/index.html">
 <meta property="og:site_name" content="蓝天の博客">
-<meta property="og:description" content="日积月累,积少成多">
+<meta property="og:description" content="websocket介绍 WebSocket协议是基于TCP的一种新的网络协议。它实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端  websocket使用场景分享:         * 弹幕，         * 网页聊天系统         * 实时监控         * 股票行情推送  框架介绍： Socketjs： ​	1、是一个浏览器JavaSc">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-09-05T12:50:10.000Z">
-<meta property="article:modified_time" content="2023-09-05T12:54:37.459Z">
+<meta property="article:modified_time" content="2023-09-05T16:50:15.194Z">
 <meta property="article:author" content="Zhang Hao Hu">
 <meta name="twitter:card" content="summary">
 
@@ -341,8 +341,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2023-09-05T20:54:37+08:00">
-                2023-09-05
+              <time title="更新于" itemprop="dateModified" datetime="2023-09-06T00:50:15+08:00">
+                2023-09-06
               </time>
             
           </span>
@@ -396,7 +396,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  340
                 </span>
               
 
@@ -433,7 +433,27 @@
       
 
       
-        
+        <h1 id="websocket-jie-shao">websocket介绍</h1>
+<pre><code>WebSocket协议是基于TCP的一种新的网络协议。它实现了浏览器与服务器全双工(full-duplex)通信——允许服务器主动发送信息给客户端
+</code></pre>
+<p><strong>websocket使用场景分享</strong>:</p>
+<pre><code>        * 弹幕，
+        * 网页聊天系统
+        * 实时监控
+        * 股票行情推送
+</code></pre>
+<h1 id="kuang-jia-jie-shao">框架介绍：</h1>
+<h2 id="socketjs" id="Socketjs：">Socketjs：</h2>
+<p>​	1、是一个浏览器JavaScript库，提供了一个类似WebSocket的对象。</p>
+<p>​	 2、提供了一个连贯的跨浏览器的JavaScriptAPI，在浏览器和Web服务器之间创建了一个低延迟，全双工，跨域的通信通道</p>
+<p>​	3、在底层SockJS首先尝试使用本地WebSocket。如果失败了，它可以使用各种浏览器特定的传输协议，并通过类似WebSocket的抽象方式呈现它们</p>
+<p>​	4、SockJS旨在适用于所有现代浏览器和不支持WebSocket协议的环境。</p>
+<p>​	学习资料：git地址：<a target="_blank" rel="noopener" href="https://github.com/sockjs/sockjs-client">https://github.com/sockjs/sockjs-client</a></p>
+<h2 id="stompjs" id="stompjs：">stompjs：</h2>
+<p>​                      1、STOMP Simple (or Streaming) Text Orientated Messaging Protocol</p>
+<p>​                      它定义了可互操作的连线格式，以便任何可用的STOMP客户端都可以与任何STOMP消息代理进行通信，以在语言和平台之间提供简单而广泛的消息互操作性（归纳一句话：是一个简单的面向文本的消息传递协</p>
+<p>​		学习资料:<a target="_blank" rel="noopener" href="https://stomp-js.github.io/stomp-websocket/codo/class/Client.html#connect-dynamic">https://stomp-js.github.io/stomp-websocket/codo/class/Client.html#connect-dynamic</a></p>
+
       
     </div>
     
@@ -528,8 +548,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -604,6 +633,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#websocket-jie-shao"><span class="nav-number">1.</span> <span class="nav-text">websocket介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kuang-jia-jie-shao"><span class="nav-number">2.</span> <span class="nav-text">框架介绍：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#socketjs"><span class="nav-number">2.1.</span> <span class="nav-text">Socketjs：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#stompjs"><span class="nav-number">2.2.</span> <span class="nav-text">stompjs：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
         <div class="back-to-top">
@@ -638,7 +683,7 @@
     
       <span class="post-meta-item-text">博客全站字数&#58;</span>
     
-    <span title="博客全站字数">411.6k</span>
+    <span title="博客全站字数">412k</span>
   
 </div>
 
